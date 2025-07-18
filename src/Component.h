@@ -1,0 +1,49 @@
+#pragma once
+
+#include <memory>
+#include <string>
+
+namespace engine {
+
+struct Context;
+
+class Component {
+public:
+    explicit Component(uint32_t id, const std::string& name, uint32_t owner);
+    virtual ~Component() = default;
+
+    Component(const Component&) = delete;
+    Component(Component&&) = delete;
+    Component& operator=(const Component&) = delete;
+    Component& operator=(Component&&) = delete;
+
+    void setContext(const std::weak_ptr<Context>& context);
+    [[nodiscard]]
+    auto context() const -> std::weak_ptr<Context>;
+
+    [[nodiscard]]
+    bool isActive() const;
+    void setActive(bool active);
+
+    [[nodiscard]]
+    uint32_t id() const;
+    [[nodiscard]]
+    const std::string& name() const;
+    [[nodiscard]]
+    uint32_t owner() const;
+
+    virtual void update(uint64_t dt) = 0;
+
+    virtual bool isDirty() = 0;
+
+private:
+    std::weak_ptr<Context> m_context;
+
+    uint32_t m_id = 0;
+    std::string m_name;
+    uint32_t m_owner;
+
+    bool m_is_active = true;
+};
+
+}

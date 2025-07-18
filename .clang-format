@@ -1,0 +1,11 @@
+---
+AccessModifierOffset: -4
+IndentWidth: 4
+NamespaceIndentation: None
+UseTab: Never
+BreakBeforeBraces: Custom
+SpaceBeforeParens: Never
+BraceWrapping:
+  AfterFunction: true
+AllowShortFunctionsOnASingleLine: None
+Language: Cpp

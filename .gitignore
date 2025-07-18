@@ -1,0 +1,78 @@
+# Сгенерированные каталоги сборки
+/build/
+/build-*/
+out/
+bin/
+lib/
+
+# CMake файлы
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+install_manifest.txt
+
+# Ninja файловая система (если используете Ninja)
+.ninja_deps
+.ninja_log
+build.ninja
+rules.ninja
+
+# Visual Studio
+*.sln
+*.vcxproj*
+*.user
+*.filters
+
+# Xcode
+*.xcodeproj
+*.xcworkspace
+*.xcuserstate
+
+# Кэш CLion и других IDE
+.idea/
+*.iml
+
+# Файлы компиляции
+*.o
+*.obj
+*.lo
+*.la
+*.al
+*.libs
+*.so
+*.so.*
+*.a
+*.dll
+*.dylib
+
+# Прочие исполняемые файлы
+*.exe
+*.out
+*.app
+
+# Логи и временные файлы
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Тестовые результаты
+Testing/
+CTestTestfile.cmake
+DartConfiguration.tcl
+
+# Кэш CTest
+LastTest.log
+LastTestsFailed.log
+
+# Покрытие кода
+*.gcno
+*.gcda
+*.gcov
+
+# Конфиденциальные файлы (по необходимости)
+.env
