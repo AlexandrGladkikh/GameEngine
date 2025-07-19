@@ -12,7 +12,7 @@ void MeshData::unbind() const
         glBindVertexArray(0);
 }
 
-auto MeshStore::get(const std::string& id) const -> std::optional<std::shared_ptr<MeshData>>
+auto MeshStore::get(uint32_t id) const -> std::optional<std::shared_ptr<MeshData>>
 {
     auto it = m_meshes.find(id);
     if (it == m_meshes.end()) {
@@ -21,7 +21,7 @@ auto MeshStore::get(const std::string& id) const -> std::optional<std::shared_pt
     return it->second;
 }
 
-void MeshStore::add(const std::string& id, const std::shared_ptr<MeshData>& meshData)
+void MeshStore::add(uint32_t id, const std::shared_ptr<MeshData>& meshData)
 {
     m_meshes[id] = meshData;
 }

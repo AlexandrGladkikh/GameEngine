@@ -170,12 +170,11 @@ auto buildScene(std::shared_ptr<Context> context, const std::filesystem::path &p
 
         auto type = component_json["type"].GetString();
         auto component = ComponentBuilder::build(type, component_json);
+         if (!component.has_value()) {
+            continue;
+        }
 
-        // auto id = component_json["id"].GetUint();
-        // auto name = component_json["name"].GetString();
-        // auto owner = component_json["owner"].GetUint();
-        // auto component = std::make_shared<Component>(id, name, owner);
-        scene->addComponent(component->id(), std::move(component));
+        scene->addComponent(component.value()->id(), std::move(component.value()));
     }
 
     auto resources_json = document["resources"].GetArray();

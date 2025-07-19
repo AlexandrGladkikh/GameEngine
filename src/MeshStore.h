@@ -3,7 +3,6 @@
 #include <glad/glad.h>
 
 #include <vector>
-#include <string>
 #include <unordered_map>
 #include <optional>
 #include <memory>
@@ -34,11 +33,11 @@ public:
     MeshStore& operator=(const MeshStore&) = delete;
     MeshStore& operator=(MeshStore&&) = delete;
 
-    auto get(const std::string& id) const -> std::optional<std::shared_ptr<MeshData>>;
-    void add(const std::string& id, const std::shared_ptr<MeshData>& meshData);
+    auto get(uint32_t id) const -> std::optional<std::shared_ptr<MeshData>>;
+    void add(uint32_t id, const std::shared_ptr<MeshData>& meshData);
 
 private:
-    std::unordered_map<std::string, std::shared_ptr<MeshData>> m_meshes;
+    std::unordered_map<uint32_t, std::shared_ptr<MeshData>> m_meshes;
 };
 
 }

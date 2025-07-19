@@ -39,6 +39,8 @@ add_executable(learnProject main.cpp glad.c
         src/SceneStore.h
         src/ComponentBuilder.cpp
         src/ComponentBuilder.h
+        src/CameraComponent.cpp
+        src/CameraComponent.h
 )
 
 target_link_directories(learnProject PUBLIC ${CMAKE_SOURCE_DIR}/../3rdparts/libs/)

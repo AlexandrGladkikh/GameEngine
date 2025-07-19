@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <string>
+#include <optional>
 
 #include <rapidjson/document.h>
 
@@ -11,7 +12,7 @@ class Component;
 
 class ComponentBuilder {
 public:
-    static std::unique_ptr<Component> build(const std::string& type, rapidjson::Value& component);
+    static std::optional<std::unique_ptr<Component>> build(const std::string& type, rapidjson::Value& component);
 };
 
 }

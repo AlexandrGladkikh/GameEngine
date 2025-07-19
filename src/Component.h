@@ -34,7 +34,10 @@ public:
 
     virtual void update(uint64_t dt) = 0;
 
-    virtual bool isDirty() = 0;
+    [[nodiscard]]
+    virtual bool isDirty() const = 0;
+    virtual void markDirty() = 0;
+    virtual void clearDirty() = 0;
 
 private:
     std::weak_ptr<Context> m_context;

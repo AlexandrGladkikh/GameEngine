@@ -1,0 +1,67 @@
+#pragma once
+
+#include "Component.h"
+
+#include <glad/glad.h>
+#include <glm/glm.hpp>
+
+namespace engine {
+
+class CameraComponent final : public Component {
+public:
+    explicit CameraComponent(uint32_t id, const std::string& name, uint32_t owner);
+    ~CameraComponent() override = default;
+
+    void update(uint64_t dt) override;
+
+    [[nodiscard]]
+    bool isDirty() const override;
+    void markDirty() override;
+    void clearDirty() override;
+
+    auto getView() const -> glm::mat4;
+
+    void setPosition(const glm::vec3& position);
+    auto getPosition() const -> glm::vec3;
+
+    void setYaw(GLfloat yaw);
+    void setPitch(GLfloat pitch);
+
+    auto getYaw() const -> GLfloat;
+    auto getPitch() const -> GLfloat;
+
+private:
+    void updateView();
+
+    glm::vec3 m_position;
+    glm::vec3 m_front;
+    glm::vec3 m_up;
+    glm::vec3 m_right;
+    glm::vec3 m_world_up;
+
+    GLfloat m_yaw;
+    GLfloat m_pitch;
+
+    GLfloat m_fov;
+    GLfloat m_near;
+    GLfloat m_far;
+
+    glm::mat4 m_view;
+
+    bool m_dirty;
+
+    constexpr static GLfloat DEFAULT_FOV = 45.0f;
+    constexpr static GLfloat DEFAULT_NEAR = 0.1f;
+    constexpr static GLfloat DEFAULT_FAR = 100.0f;
+
+    constexpr static glm::vec3 DEFAULT_UP = glm::vec3(0.0f, 1.0f, 0.0f);
+    constexpr static glm::vec3 DEFAULT_FRONT = glm::vec3(0.0f, 0.0f, -1.0f);
+    constexpr static glm::vec3 DEFAULT_RIGHT = glm::vec3(1.0f, 0.0f, 0.0f);
+    constexpr static glm::vec3 DEFAULT_POS = glm::vec3(0.0f, 0.0f, 0.0f);
+    constexpr static glm::vec3 DEFAULT_TARGET = glm::vec3(0.0f, 0.0f, 0.0f);
+
+    constexpr static GLfloat DEFAULT_YAW = -90.0f;
+    constexpr static GLfloat DEFAULT_PITCH = 0.0f;
+};
+
+}

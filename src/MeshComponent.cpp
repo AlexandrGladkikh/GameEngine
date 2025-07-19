@@ -4,9 +4,33 @@
 
 namespace engine {
 
-MeshComponent::MeshComponent(const std::string& meshId) :
-    m_id(meshId)
+MeshComponent::MeshComponent(uint32_t id, const std::string& name, uint32_t owner,
+    uint32_t meshId) :
+    Component(id, name, owner),
+    m_id(meshId),
+    m_dirty(true)
 {
+}
+
+void MeshComponent::update(uint64_t dt)
+{
+
+}
+
+[[nodiscard]]
+bool MeshComponent::isDirty() const
+{
+    return m_dirty;
+}
+
+void MeshComponent::markDirty()
+{
+    m_dirty = true;
+}
+
+void MeshComponent::clearDirty()
+{
+    m_dirty = false;
 }
 
 void MeshComponent::bind() const
@@ -16,7 +40,7 @@ void MeshComponent::bind() const
         return;
     }
 
-    auto mesh =ctx->meshStore->get(m_id);
+    auto mesh = ctx->meshStore->get(m_id);
 
     if (mesh.has_value()) {
         mesh.value()->bind();

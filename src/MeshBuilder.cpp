@@ -26,6 +26,9 @@ auto buildMeshGL(const std::vector<GLfloat>& vertices,
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride * sizeof(GLfloat), (void*)offset);
     glEnableVertexAttribArray(0);
 
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, stride * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+    glEnableVertexAttribArray(1);
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data->EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size(), indices.data(), GL_STATIC_DRAW);
 
@@ -59,7 +62,7 @@ auto buildMesh(const std::filesystem::path& path) -> std::optional<std::unique_p
     std::vector<GLuint> indices_data_gl(indices_data.size() / sizeof(GLuint), 0);
     std::memcpy(indices_data_gl.data(), indices_data.data(), indices_data.size());
 
-    return buildMeshGL(vertices_data_gl, indices_data_gl, 1, 0);
+    return buildMeshGL(vertices_data_gl, indices_data_gl, 5, 0);
 }
 
 }
