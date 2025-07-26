@@ -32,6 +32,11 @@ void MaterialComponent::clearDirty()
     m_dirty = false;
 }
 
+std::string MaterialComponent::type() const
+{
+    return "material";
+}
+
 auto MaterialComponent::shader() const
 {
     return m_shader_id;

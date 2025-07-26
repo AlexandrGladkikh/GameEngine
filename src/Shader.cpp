@@ -53,8 +53,8 @@ auto buildShader(const std::filesystem::path& path) -> std::optional<std::unique
         return std::nullopt;
     }
 
-    auto vertexShaderSource = FileSystem::file(vertexShaderPath, std::ios::out).readText();
-    auto fragmentShaderSource = FileSystem::file(fragmentShaderPath, std::ios::out).readText();
+    auto vertexShaderSource = FileSystem::file(vertexShaderPath, std::ios::in).readText();
+    auto fragmentShaderSource = FileSystem::file(fragmentShaderPath, std::ios::in).readText();
     return std::make_unique<Shader>(vertexShaderSource, fragmentShaderSource);
 }
 

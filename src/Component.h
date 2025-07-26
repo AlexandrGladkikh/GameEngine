@@ -39,6 +39,9 @@ public:
     virtual void markDirty() = 0;
     virtual void clearDirty() = 0;
 
+    [[nodiscard]]
+    virtual std::string type() const = 0;
+
 private:
     std::weak_ptr<Context> m_context;
 

@@ -29,7 +29,7 @@ std::filesystem::path FileSystem::Directory::path() const
 
 FileSystem::File::File(const std::filesystem::path& path, std::ios::openmode type)
 {
-    m_file.open(path, std::ios::out | type);
+    m_file.open(path, type);
     m_file.seekg(0, std::ios::beg);
 }
 
@@ -57,6 +57,18 @@ auto FileSystem::File::readText() const -> std::string
     return result;
 }
 
+auto FileSystem::File::writeBinary(const std::vector<uint8_t>& data) const -> bool
+{
+    m_file.write(reinterpret_cast<const char*>(data.data()), data.size());
+    return true;
+}
+
+auto FileSystem::File::writeText(const std::string& data) const -> bool
+{
+    m_file.write(data.c_str(), data.size());
+    return true;
+}
+
 bool FileSystem::exists(const std::filesystem::path& path)
 {
     return std::filesystem::exists(path);
@@ -77,7 +89,7 @@ auto FileSystem::directory(const std::filesystem::path &path)
     return Directory(path);
 }
 
-auto FileSystem::file(const std::filesystem::path &path, std::ios::openmode type)
+auto FileSystem::file(const std::filesystem::path& path, std::ios::openmode type)
 {
     return File(path, type);
 }

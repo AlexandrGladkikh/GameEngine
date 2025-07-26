@@ -1,7 +1,6 @@
 #pragma once
 
 #include <unordered_map>
-#include <string>
 #include <memory>
 #include <optional>
 
@@ -18,11 +17,11 @@ public:
     TextureStore& operator=(const TextureStore&) = delete;
     TextureStore& operator=(TextureStore&&) = delete;
 
-    auto get(const std::string& id) const -> std::optional<std::shared_ptr<Texture>>;
-    void add(const std::string& id, std::unique_ptr<Texture> texture);
+    auto get(uint32_t id) const -> std::optional<std::shared_ptr<Texture>>;
+    void add(uint32_t id, std::unique_ptr<Texture> texture);
 
 private:
-    std::unordered_map<std::string, std::shared_ptr<Texture>> m_textures;
+    std::unordered_map<uint32_t, std::shared_ptr<Texture>> m_textures;
 };
 
 }

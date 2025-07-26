@@ -3,7 +3,7 @@
 
 namespace engine {
 
-auto TextureStore::get(const std::string& id) const -> std::optional<std::shared_ptr<Texture>>
+auto TextureStore::get(uint32_t id) const -> std::optional<std::shared_ptr<Texture>>
 {
     auto it = m_textures.find(id);
     if (it == m_textures.end()) {
@@ -12,7 +12,7 @@ auto TextureStore::get(const std::string& id) const -> std::optional<std::shared
     return it->second;
 }
 
-void TextureStore::add(const std::string& id, std::unique_ptr<Texture> texture)
+void TextureStore::add(uint32_t id, std::unique_ptr<Texture> texture)
 {
     m_textures[id] = std::move(texture);
 }

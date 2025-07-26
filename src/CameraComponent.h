@@ -19,7 +19,12 @@ public:
     void markDirty() override;
     void clearDirty() override;
 
+    std::string type() const override;
+
+    void setOrtho(GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat near, GLfloat far);
+
     auto getView() const -> glm::mat4;
+    auto getProjection() const -> glm::mat4;
 
     void setPosition(const glm::vec3& position);
     auto getPosition() const -> glm::vec3;
@@ -47,6 +52,8 @@ private:
     GLfloat m_far;
 
     glm::mat4 m_view;
+
+    glm::mat4 m_projection;
 
     bool m_dirty;
 

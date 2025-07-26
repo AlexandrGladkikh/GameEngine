@@ -1,5 +1,6 @@
 #include "CameraComponent.h"
 
+#include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
 
 namespace engine {
@@ -42,9 +43,24 @@ void CameraComponent::clearDirty()
     m_dirty = false;
 }
 
+std::string CameraComponent::type() const
+{
+    return "camera";
+}
+
+void CameraComponent::setOrtho(GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat near, GLfloat far)
+{
+    m_view = glm::ortho(left, right, bottom, top, near, far);
+}
+
 auto CameraComponent::getView() const -> glm::mat4
 {
     return m_view;
+}
+
+auto CameraComponent::getProjection() const -> glm::mat4
+{
+    return m_projection;
 }
 
 void CameraComponent::setPosition(const glm::vec3& position)

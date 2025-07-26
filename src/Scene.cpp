@@ -5,14 +5,16 @@
 #include "ComponentBuilder.h"
 
 #include <rapidjson/document.h>
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/writer.h>
 
 #include <ranges>
 
 namespace engine {
 
-Scene::Scene(const std::shared_ptr<Context>& context, std::string id, std::string name) :
+Scene::Scene(const std::shared_ptr<Context>& context, uint32_t id, std::string name) :
     m_context(context),
-    m_id(std::move(id)),
+    m_id(id),
     m_name(std::move(name))
 {
 }
@@ -28,6 +30,16 @@ void Scene::update(uint64_t dt)
             setDirty(true);
         }
     }
+}
+
+uint32_t Scene::id() const
+{
+    return m_id;
+}
+
+std::string Scene::name() const
+{
+    return m_name;
 }
 
 bool Scene::isActive() const
@@ -111,6 +123,16 @@ auto Scene::getNode(uint32_t id) const
     return it->second;
 }
 
+auto Scene::getComponents() const
+{
+    return m_components;
+}
+
+auto Scene::getNodes() const
+{
+    return m_nodes;
+}
+
 auto Scene::getRoot() const
 {
     auto it = m_nodes.find(m_root);
@@ -136,7 +158,47 @@ void Scene::addResource(uint32_t id)
     m_resources_id.push_back(id);
 }
 
-auto buildScene(std::shared_ptr<Context> context, const std::filesystem::path &path)
+auto saveScene(const std::shared_ptr<Scene>& scene, const std::filesystem::path& path) -> bool
+{
+    auto file = FileSystem::file(path, std::ios::out);
+
+    rapidjson::Document document;
+    document.SetObject();
+    rapidjson::StringBuffer buffer;
+    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    document.Accept(writer);
+
+    document.AddMember("id", scene->id(), document.GetAllocator());
+    document.AddMember("name", scene->name(), document.GetAllocator());
+
+    document.AddMember("root", scene->getRoot().value()->id(), document.GetAllocator());
+
+    rapidjson::Value nodes(rapidjson::kArrayType);
+    for (const auto& node : scene->getNodes()) {
+        rapidjson::Value node_json(rapidjson::kObjectType);
+        saveNode(node.second, node_json, document.GetAllocator());
+        nodes.PushBack(node_json, document.GetAllocator());
+    }
+    document.AddMember("nodes", nodes, document.GetAllocator());
+
+    rapidjson::Value components(rapidjson::kArrayType);
+    for (const auto& component : scene->getComponents()) {
+        rapidjson::Value component_json(rapidjson::kObjectType);
+        ComponentBuilder::save(component.second, component_json, document.GetAllocator());
+        components.PushBack(component_json, document.GetAllocator());
+    }
+    document.AddMember("components", components, document.GetAllocator());
+
+    rapidjson::Value resources(rapidjson::kArrayType);
+    for (const auto id : scene->getResources()) {
+        resources.PushBack(id, document.GetAllocator());
+    }
+    document.AddMember("resources", resources, document.GetAllocator());
+
+    return file.writeText(buffer.GetString());
+}
+
+auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::path &path)
 {
     if (!FileSystem::exists(path) || !FileSystem::isFile(path)) {
         return std::nullopt;
@@ -148,7 +210,7 @@ auto buildScene(std::shared_ptr<Context> context, const std::filesystem::path &p
     rapidjson::Document document;
     document.Parse(text.c_str());
 
-    auto id = document["id"].GetString();
+    auto id = document["id"].GetUint();
     auto name = document["name"].GetString();
 
     auto scene = std::make_unique<Scene>(context, id, name);
@@ -158,11 +220,13 @@ auto buildScene(std::shared_ptr<Context> context, const std::filesystem::path &p
 
     auto nodes_json = document["nodes"].GetArray();
     for (auto node_json : nodes_json) {
-        auto id = node_json["id"].GetUint();
-        auto name = node_json["name"].GetString();
-        auto parent = node_json["parent"].GetUint();
-        auto node = std::make_shared<Node>(id, name, parent);
-        scene->addNode(id, node);
+        auto node = buildNode(node_json);
+        if (!node.has_value()) {
+            continue;
+        }
+        auto id = node.value()->id();
+
+        scene->addNode(id, std::move(node.value()));
     }
 
     auto components_json = document["components"].GetArray();

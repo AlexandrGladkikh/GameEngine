@@ -18,8 +18,12 @@ public:
     void markDirty() override;
     void clearDirty() override;
 
+    std::string type() const override;
+
     void bind() const;
     void unbind() const;
+
+    uint32_t meshId() const;
 
 private:
     uint32_t m_id;

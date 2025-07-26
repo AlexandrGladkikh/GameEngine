@@ -1,8 +1,12 @@
 #pragma once
 
+#include <rapidjson/document.h>
+
 #include <cstdint>
 #include <string>
 #include <unordered_set>
+#include <memory>
+#include <optional>
 
 namespace engine {
 
@@ -36,5 +40,8 @@ private:
     std::unordered_set<uint32_t> m_children_id;
     std::unordered_set<uint32_t> m_components_id;
 };
+
+auto buildNode(rapidjson::Value& node_json) -> std::optional<std::unique_ptr<Node>>;
+void saveNode(const std::shared_ptr<Node>& node, rapidjson::Value& node_json, rapidjson::Document::AllocatorType& allocator);
 
 }

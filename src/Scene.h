@@ -15,9 +15,12 @@ class Node;
 
 class Scene {
 public:
-    explicit Scene(const std::shared_ptr<Context>& context, std::string id, std::string name);
+    explicit Scene(const std::shared_ptr<Context>& context, uint32_t id, std::string name);
 
     void update(uint64_t dt);
+
+    uint32_t id() const;
+    auto name() const -> std::string;
 
     bool isActive() const;
     bool isDirty() const;
@@ -34,6 +37,9 @@ public:
     auto getComponent(uint32_t id) const -> std::optional<std::shared_ptr<Component>>;
     auto getNode(uint32_t id) const -> std::optional<std::shared_ptr<Node>>;
 
+    auto getComponents() const -> const std::unordered_map<uint32_t, std::shared_ptr<Component>>&;
+    auto getNodes() const -> const std::unordered_map<uint32_t, std::shared_ptr<Node>>&;
+
     auto getRoot() const -> std::optional<std::shared_ptr<Node>>;
 
     void setRoot(uint32_t id);
@@ -42,7 +48,7 @@ public:
     void addResource(uint32_t id);
 
 private:
-    std::string m_id;
+    uint32_t m_id;
     std::string m_name;
 
     bool m_is_active = false;
@@ -58,6 +64,8 @@ private:
     std::vector<uint32_t> m_resources_id;
 };
 
-auto buildScene(std::shared_ptr<Context> context, const std::filesystem::path& path) -> std::optional<std::unique_ptr<Scene>>;
+auto saveScene(const std::shared_ptr<Scene>& scene, const std::filesystem::path& path) -> bool;
+
+auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::path& path) -> std::optional<std::unique_ptr<Scene>>;
 
 }

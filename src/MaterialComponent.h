@@ -16,6 +16,8 @@ public:
     void markDirty() override;
     void clearDirty() override;
 
+    std::string type() const override;
+
     auto shader() const -> uint32_t;
     auto texture() const -> uint32_t;
 

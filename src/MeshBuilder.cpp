@@ -44,13 +44,13 @@ auto buildMesh(const std::filesystem::path& path) -> std::optional<std::unique_p
     auto pathVertices = path / "vertices.bin";
     auto pathIndices = path / "indices.bin";
 
-    auto vertices_file = FileSystem::file(pathVertices, std::ios::out | std::ios::binary);
+    auto vertices_file = FileSystem::file(pathVertices, std::ios::in | std::ios::binary);
     auto vertices_data = vertices_file.readBinary();
     if (vertices_data.empty()) {
         return std::nullopt;
     }
 
-    auto indices_file = FileSystem::file(pathIndices, std::ios::out | std::ios::binary);
+    auto indices_file = FileSystem::file(pathIndices, std::ios::in | std::ios::binary);
     auto indices_data = indices_file.readBinary();
     if (indices_data.empty()) {
         return std::nullopt;

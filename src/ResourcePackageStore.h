@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <optional>
 #include <memory>
+#include <filesystem>
 #include <string>
 
 namespace engine {
@@ -18,11 +19,19 @@ public:
     ResourcePackageStore& operator=(const ResourcePackageStore&) = delete;
     ResourcePackageStore& operator=(ResourcePackageStore&&) = delete;
 
-    auto get(const std::string& id) const -> std::optional<std::shared_ptr<ResourcePackage>>;
-    void add(const std::string& id, const std::shared_ptr<ResourcePackage>& resourcePackage);
+    auto get(uint32_t id) const -> std::optional<std::shared_ptr<ResourcePackage>>;
+    void add(uint32_t id, const std::shared_ptr<ResourcePackage>& resourcePackage);
+    void remove(uint32_t id);
+
+    auto getResourcePackagesInformation() const -> const std::unordered_map<uint32_t, std::filesystem::path>&;
+    auto getResourcePackageInformation(uint32_t id) const -> std::optional<std::filesystem::path>;
+
+    void initResourcePackagesInformation(const std::filesystem::path& location);
 
 private:
-    std::unordered_map<std::string, std::shared_ptr<ResourcePackage>> m_resourcePackages;
+    std::unordered_map<uint32_t, std::shared_ptr<ResourcePackage>> m_resourcePackages;
+
+    std::unordered_map<uint32_t, std::filesystem::path> m_resourcePackagesInformation;
 };
 
 }

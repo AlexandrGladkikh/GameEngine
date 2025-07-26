@@ -1,7 +1,6 @@
 #pragma once
 
 #include <unordered_map>
-#include <string>
 #include <optional>
 #include <memory>
 
@@ -20,11 +19,11 @@ public:
     ShaderStore(ShaderStore&&) = delete;
     ShaderStore& operator=(ShaderStore&&) = delete;
 
-    auto get(const std::string& id) const -> std::optional<std::shared_ptr<Shader>>;
-    void add(const std::string& id, std::unique_ptr<Shader> shader);
+    auto get(uint32_t id) const -> std::optional<std::shared_ptr<Shader>>;
+    void add(uint32_t id, std::unique_ptr<Shader> shader);
 
 private:
-    std::unordered_map<std::string, std::shared_ptr<Shader>> m_shaders;
+    std::unordered_map<uint32_t, std::shared_ptr<Shader>> m_shaders;
 };
 
 }

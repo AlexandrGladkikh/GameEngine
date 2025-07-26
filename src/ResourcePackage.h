@@ -1,7 +1,6 @@
 #pragma once
 
 #include <list>
-#include <string>
 #include <filesystem>
 #include <memory>
 #include <optional>
@@ -11,7 +10,7 @@ namespace engine {
 struct Context;
 
 struct ResourceInfo {
-    std::string id;
+    uint32_t id;
     std::filesystem::path path;
 };
 

@@ -33,6 +33,11 @@ void MeshComponent::clearDirty()
     m_dirty = false;
 }
 
+std::string MeshComponent::type() const
+{
+    return "mesh";
+}
+
 void MeshComponent::bind() const
 {
     auto ctx = context().lock();
@@ -59,6 +64,11 @@ void MeshComponent::unbind() const
     if (mesh.has_value()) {
         mesh.value()->unbind();
     }
+}
+
+uint32_t MeshComponent::meshId() const
+{
+    return m_id;
 }
 
 }

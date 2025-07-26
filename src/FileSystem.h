@@ -39,6 +39,9 @@ public:
         auto readBinary() const -> std::vector<uint8_t>;
         auto readText() const -> std::string;
 
+        auto writeBinary(const std::vector<uint8_t>& data) const -> bool;
+        auto writeText(const std::string& data) const -> bool;
+
     private:
         mutable std::fstream m_file;
     };
