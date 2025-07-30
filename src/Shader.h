@@ -2,6 +2,8 @@
 
 #include <glad/glad.h>
 
+#include <glm/glm.hpp>
+
 #include <string>
 #include <filesystem>
 #include <memory>
@@ -19,6 +21,9 @@ public:
     Shader& operator=(Shader&&) = delete;
 
     void use() const;
+
+    void setUniform4mat(const std::string& name, const glm::mat4& value) const;
+    void setUniform1i(const std::string& name, int value) const;
 
 private:
     GLuint m_program;

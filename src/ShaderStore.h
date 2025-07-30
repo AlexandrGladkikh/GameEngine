@@ -21,6 +21,7 @@ public:
 
     auto get(uint32_t id) const -> std::optional<std::shared_ptr<Shader>>;
     void add(uint32_t id, std::unique_ptr<Shader> shader);
+    void remove(uint32_t id);
 
 private:
     std::unordered_map<uint32_t, std::shared_ptr<Shader>> m_shaders;

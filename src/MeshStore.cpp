@@ -21,6 +21,11 @@ auto MeshStore::get(uint32_t id) const -> std::optional<std::shared_ptr<MeshData
     return it->second;
 }
 
+void MeshStore::remove(uint32_t id)
+{
+    m_meshes.erase(id);
+}
+
 void MeshStore::add(uint32_t id, const std::shared_ptr<MeshData>& meshData)
 {
     m_meshes[id] = meshData;

@@ -7,6 +7,7 @@
 namespace engine {
 
 class Context;
+class SceneTransition;
 
 class Engine final {
 public:
@@ -20,10 +21,16 @@ public:
 
     bool initialize(const std::filesystem::path& config_path);
 
+    void run();
+
 private:
     std::shared_ptr<Context> m_context;
 
+    std::unique_ptr<SceneTransition> m_sceneTransition;
+
     std::unordered_map<uint32_t, std::filesystem::path> m_scenesInfo;
+
+    uint32_t m_active_scene_id = 0;
 };
 
 }

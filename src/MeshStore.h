@@ -35,6 +35,7 @@ public:
 
     auto get(uint32_t id) const -> std::optional<std::shared_ptr<MeshData>>;
     void add(uint32_t id, const std::shared_ptr<MeshData>& meshData);
+    void remove(uint32_t id);
 
 private:
     std::unordered_map<uint32_t, std::shared_ptr<MeshData>> m_meshes;

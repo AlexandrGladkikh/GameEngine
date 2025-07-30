@@ -17,4 +17,9 @@ void ShaderStore::add(uint32_t id, std::unique_ptr<Shader> shader)
     m_shaders[id] = std::move(shader);
 }
 
+void ShaderStore::remove(uint32_t id)
+{
+    m_shaders.erase(id);
+}
+
 }

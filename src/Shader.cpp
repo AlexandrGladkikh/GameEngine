@@ -1,5 +1,7 @@
 #include "Shader.h"
-#include <FileSystem.h>
+#include "FileSystem.h"
+
+#include <glm/gtc/type_ptr.hpp>
 
 namespace engine {
 
@@ -34,6 +36,16 @@ Shader::~Shader()
 void Shader::use() const
 {
     glUseProgram(m_program);
+}
+
+void Shader::setUniform4mat(const std::string& name, const glm::mat4& value) const
+{
+    glUniformMatrix4fv(glGetUniformLocation(m_program, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+}
+
+void Shader::setUniform1i(const std::string& name, int value) const
+{
+    glUniform1i(glGetUniformLocation(m_program, name.c_str()), value);
 }
 
 auto buildShader(const std::filesystem::path& path) -> std::optional<std::unique_ptr<Shader>>

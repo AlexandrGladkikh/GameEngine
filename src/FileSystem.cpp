@@ -84,12 +84,12 @@ bool FileSystem::isFile(const std::filesystem::path& path)
     return std::filesystem::is_regular_file(path);
 }
 
-auto FileSystem::directory(const std::filesystem::path &path)
+auto FileSystem::directory(const std::filesystem::path &path) -> Directory
 {
     return Directory(path);
 }
 
-auto FileSystem::file(const std::filesystem::path& path, std::ios::openmode type)
+auto FileSystem::file(const std::filesystem::path& path, std::ios::openmode type) -> File
 {
     return File(path, type);
 }

@@ -25,9 +25,11 @@ auto buildMaterialComponent(rapidjson::Value& componentData) -> std::optional<st
 
 auto saveMaterialComponent(const std::shared_ptr<MaterialComponent>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
 {
+    rapidjson::Value value;
+    value.SetString(component->name().c_str(), allocator);
     component_json.AddMember("type", "material", allocator);
     component_json.AddMember("id", component->id(), allocator);
-    component_json.AddMember("name", component->name(), allocator);
+    component_json.AddMember("name", value, allocator);
     component_json.AddMember("owner", component->owner(), allocator);
     component_json.AddMember("shader", component->shader(), allocator);
     component_json.AddMember("texture", component->texture(), allocator);
@@ -47,9 +49,11 @@ auto buildMeshComponent(rapidjson::Value& componentData) -> std::optional<std::u
 
 auto saveMeshComponent(const std::shared_ptr<MeshComponent>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
 {
+    rapidjson::Value value;
+    value.SetString(component->name().c_str(), allocator);
     component_json.AddMember("type", "mesh", allocator);
     component_json.AddMember("id", component->id(), allocator);
-    component_json.AddMember("name", component->name(), allocator);
+    component_json.AddMember("name", value, allocator);
     component_json.AddMember("owner", component->owner(), allocator);
     component_json.AddMember("mesh", component->meshId(), allocator);
 }
@@ -67,9 +71,11 @@ auto buildCameraComponent(rapidjson::Value& componentData) -> std::optional<std:
 
 void saveCameraComponent(const std::shared_ptr<CameraComponent>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
 {
+    rapidjson::Value value;
+    value.SetString(component->name().c_str(), allocator);
     component_json.AddMember("type", "camera", allocator);
     component_json.AddMember("id", component->id(), allocator);
-    component_json.AddMember("name", component->name(), allocator);
+    component_json.AddMember("name", value, allocator);
     component_json.AddMember("owner", component->owner(), allocator);
 }
 
@@ -98,9 +104,11 @@ auto buildTransformComponent(rapidjson::Value& componentData) -> std::optional<s
 
 void saveTransformComponent(const std::shared_ptr<TransformComponent>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
 {
+    rapidjson::Value value;
+    value.SetString(component->name().c_str(), allocator);
     component_json.AddMember("type", "transform", allocator);
     component_json.AddMember("id", component->id(), allocator);
-    component_json.AddMember("name", component->name(), allocator);
+    component_json.AddMember("name", value, allocator);
     component_json.AddMember("owner", component->owner(), allocator);
 
     rapidjson::Value position(rapidjson::kArrayType);
@@ -122,7 +130,7 @@ void saveTransformComponent(const std::shared_ptr<TransformComponent>& component
     component_json.AddMember("scale", scale, allocator);
 }
 
-auto ComponentBuilder::build(const std::string& type, rapidjson::Value& component)
+auto ComponentBuilder::build(const std::string& type, rapidjson::Value& component) -> std::optional<std::unique_ptr<Component>>
 {
     if (type == "material") {
         return buildMaterialComponent(component);

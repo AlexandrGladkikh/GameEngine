@@ -37,12 +37,12 @@ std::string MaterialComponent::type() const
     return "material";
 }
 
-auto MaterialComponent::shader() const
+auto MaterialComponent::shader() const -> uint32_t
 {
     return m_shader_id;
 }
 
-auto MaterialComponent::texture() const
+auto MaterialComponent::texture() const -> uint32_t
 {
     return m_texture_id;
 }

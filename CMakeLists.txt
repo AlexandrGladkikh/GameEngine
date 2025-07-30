@@ -51,6 +51,13 @@ add_executable(learnProject main.cpp glad.c
         src/Engine.h
         src/SceneTransition.cpp
         src/SceneTransition.h
+        src/Renderer.cpp
+        src/Renderer.h
+        src/SceneRequester.cpp
+        src/SceneRequester.h
+        src/SceneRequesterHelper.h
+        src/Logger.cpp
+        src/Logger.h
 )
 
 target_link_directories(learnProject PUBLIC ${CMAKE_SOURCE_DIR}/../3rdparts/libs/)

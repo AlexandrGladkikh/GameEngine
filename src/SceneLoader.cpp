@@ -7,7 +7,7 @@
 
 namespace engine {
 
-auto SceneLoader::loadScene(const std::shared_ptr<Context>& context, const std::filesystem::path& path)
+auto SceneLoader::loadScene(const std::shared_ptr<Context>& context, const std::filesystem::path& path) -> std::optional<std::unique_ptr<Scene>>
 {
     auto scene = buildScene(context, path);
 

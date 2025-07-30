@@ -8,6 +8,8 @@
 #include "ResourcePackageStore.h"
 #include "SceneStore.h"
 #include "FileSystem.h"
+#include "SceneTransition.h"
+#include "Renderer.h"
 
 #include <rapidjson/document.h>
 
@@ -36,7 +38,8 @@ bool configScenesInfo(const rapidjson::Value& value, std::unordered_map<uint32_t
 }
 
 Engine::Engine() :
-        m_context(std::make_shared<Context>())
+    m_context(std::make_shared<Context>()),
+    m_sceneTransition(std::make_unique<SceneTransition>(m_context))
 {
     m_context->meshStore = std::make_unique<MeshStore>();
     m_context->shaderStore = std::make_unique<ShaderStore>();
@@ -74,7 +77,21 @@ bool Engine::initialize(const std::filesystem::path& config_path)
         return false;
     }
 
+    m_active_scene_id = document["main_scene_id"].GetUint();
+
+    m_sceneTransition->transition(m_scenesInfo, -1, m_active_scene_id);
+
     return true;
+}
+
+void Engine::run()
+{
+    while (true) {
+        auto scene = m_context->sceneStore->get(m_active_scene_id);
+        if (scene.has_value()) {
+            Renderer::render(m_context, scene.value());
+        }
+    }
 }
 
 }

@@ -1,7 +1,5 @@
 #include "Window.h"
 
-#include <glad/glad.h>
-
 namespace engine {
 
 Window::Window(const std::string& title, GLint width, GLint height)
@@ -32,14 +30,14 @@ Window::~Window()
     glfwTerminate();
 }
 
-auto Window::size() const
+auto Window::size() const -> std::pair<int, int>
 {
     int width, height;
     glfwGetFramebufferSize(m_window, &width, &height);
     return std::make_pair(width, height);
 }
 
-auto Window::title() const
+auto Window::title() const -> std::string
 {
     return glfwGetWindowTitle(m_window);
 }

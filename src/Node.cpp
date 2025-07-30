@@ -76,8 +76,10 @@ auto buildNode(rapidjson::Value& node_json) -> std::optional<std::unique_ptr<Nod
 
 void saveNode(const std::shared_ptr<Node>& node, rapidjson::Value& node_json, rapidjson::Document::AllocatorType& allocator)
 {
+    rapidjson::Value value;
+    value.SetString(node->name().c_str(), allocator);
     node_json.AddMember("id", node->id(), allocator);
-    node_json.AddMember("name", node->name(), allocator);
+    node_json.AddMember("name", value, allocator);
     node_json.AddMember("parent", node->parent(), allocator);
 
     rapidjson::Value children(rapidjson::kArrayType);

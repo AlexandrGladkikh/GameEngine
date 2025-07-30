@@ -10,7 +10,7 @@ namespace engine {
 
 class ResourcePackage;
 
-class ResourcePackageStore {
+class ResourcePackageStore final {
 public:
     ResourcePackageStore() = default;
     ~ResourcePackageStore() = default;

@@ -103,7 +103,7 @@ bool Scene::removeNode(uint32_t id)
     return false;
 }
 
-auto Scene::getComponent(uint32_t id) const
+auto Scene::getComponent(uint32_t id) const -> std::optional<std::shared_ptr<Component>>
 {
     auto it = m_components.find(id);
     if (it == m_components.end()) {
@@ -113,7 +113,7 @@ auto Scene::getComponent(uint32_t id) const
     return it->second;
 }
 
-auto Scene::getNode(uint32_t id) const
+auto Scene::getNode(uint32_t id) const -> std::optional<std::shared_ptr<Node>>
 {
     auto it = m_nodes.find(id);
     if (it == m_nodes.end()) {
@@ -123,17 +123,17 @@ auto Scene::getNode(uint32_t id) const
     return it->second;
 }
 
-auto Scene::getComponents() const
+auto Scene::getComponents() const -> const std::unordered_map<uint32_t, std::shared_ptr<Component>>&
 {
     return m_components;
 }
 
-auto Scene::getNodes() const
+auto Scene::getNodes() const -> const std::unordered_map<uint32_t, std::shared_ptr<Node>>&
 {
     return m_nodes;
 }
 
-auto Scene::getRoot() const
+auto Scene::getRoot() const -> std::optional<std::shared_ptr<Node>>
 {
     auto it = m_nodes.find(m_root);
     if (it == m_nodes.end()) {
@@ -148,7 +148,7 @@ void Scene::setRoot(uint32_t id)
     m_root = id;
 }
 
-auto Scene::getResources() const
+auto Scene::getResources() const -> const std::vector<uint32_t>&
 {
     return m_resources_id;
 }
@@ -168,8 +168,10 @@ auto saveScene(const std::shared_ptr<Scene>& scene, const std::filesystem::path&
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     document.Accept(writer);
 
+    rapidjson::Value value;
+    value.SetString(scene->name().c_str(), document.GetAllocator());
     document.AddMember("id", scene->id(), document.GetAllocator());
-    document.AddMember("name", scene->name(), document.GetAllocator());
+    document.AddMember("name", value, document.GetAllocator());
 
     document.AddMember("root", scene->getRoot().value()->id(), document.GetAllocator());
 
@@ -198,7 +200,7 @@ auto saveScene(const std::shared_ptr<Scene>& scene, const std::filesystem::path&
     return file.writeText(buffer.GetString());
 }
 
-auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::path &path)
+auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::path &path) -> std::optional<std::unique_ptr<Scene>>
 {
     if (!FileSystem::exists(path) || !FileSystem::isFile(path)) {
         return std::nullopt;
@@ -219,7 +221,7 @@ auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::
     scene->setRoot(root);
 
     auto nodes_json = document["nodes"].GetArray();
-    for (auto node_json : nodes_json) {
+    for (auto& node_json : nodes_json) {
         auto node = buildNode(node_json);
         if (!node.has_value()) {
             continue;
@@ -230,7 +232,7 @@ auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::
     }
 
     auto components_json = document["components"].GetArray();
-    for (auto component_json : components_json) {
+    for (auto& component_json : components_json) {
 
         auto type = component_json["type"].GetString();
         auto component = ComponentBuilder::build(type, component_json);
@@ -242,7 +244,7 @@ auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::
     }
 
     auto resources_json = document["resources"].GetArray();
-    for (auto resource_json : resources_json) {
+    for (auto& resource_json : resources_json) {
         auto id = resource_json["id"].GetUint();
         scene->addResource(id);
     }

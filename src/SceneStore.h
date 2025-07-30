@@ -2,7 +2,6 @@
 
 #include <memory>
 #include <optional>
-#include <string>
 #include <unordered_map>
 
 namespace engine {
@@ -18,11 +17,12 @@ public:
     SceneStore& operator=(const SceneStore&) = delete;
     SceneStore& operator=(SceneStore&&) = delete;
 
-    auto get(const std::string& id) const -> std::optional<std::shared_ptr<Scene>>;
-    void add(const std::string& id, std::unique_ptr<Scene> scene);
+    auto get(uint32_t id) const -> std::optional<std::shared_ptr<Scene>>;
+    void add(uint32_t id, std::unique_ptr<Scene> scene);
+    void remove(uint32_t id);
 
 private:
-    std::unordered_map<std::string, std::shared_ptr<Scene>> m_scenes;
+    std::unordered_map<uint32_t, std::shared_ptr<Scene>> m_scenes;
 };
 
 }

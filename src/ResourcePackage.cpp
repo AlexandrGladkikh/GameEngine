@@ -29,7 +29,7 @@ std::optional<ResourcePackage> buildResourcePackage(const std::filesystem::path&
     auto loadResourceInfo = [&document](const std::string& name, std::list<ResourceInfo>& resources) {
         if (document.HasMember(name.c_str())) {
             auto resources_json = document[name.c_str()].GetArray();
-            for (auto resource_json : resources_json) {
+            for (auto& resource_json : resources_json) {
                 auto id = resource_json["id"].GetUint();
                 auto path = resource_json["path"].GetString();
                 auto resource = ResourceInfo{id, path};
@@ -54,8 +54,11 @@ void saveResourcePackage(const std::filesystem::path& path, const ResourcePackag
         rapidjson::Value resources_json(rapidjson::kArrayType);
         for (const auto& resource : resources) {
             auto resource_json = rapidjson::Value(rapidjson::kObjectType);
+
+            rapidjson::Value value;
+            value.SetString(resource.path.string().c_str(), document.GetAllocator());
             resource_json.AddMember("id", resource.id, document.GetAllocator());
-            resource_json.AddMember("path", resource.path, document.GetAllocator());
+            resource_json.AddMember("path", value, document.GetAllocator());
             resources_json.PushBack(resource_json, document.GetAllocator());
         }
 

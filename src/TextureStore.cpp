@@ -17,4 +17,9 @@ void TextureStore::add(uint32_t id, std::unique_ptr<Texture> texture)
     m_textures[id] = std::move(texture);
 }
 
+void TextureStore::remove(uint32_t id)
+{
+    m_textures.erase(id);
+}
+
 }
