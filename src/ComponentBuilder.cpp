@@ -4,6 +4,7 @@
 #include "MaterialComponent.h"
 #include "MeshComponent.h"
 #include "TransformComponent.h"
+#include "Logger.h"
 
 #include <optional>
 
@@ -64,7 +65,18 @@ auto buildCameraComponent(rapidjson::Value& componentData) -> std::optional<std:
     auto name = componentData["name"].GetString();
     auto owner = componentData["owner"].GetUint();
 
+    auto projection = componentData["projection"].GetObject();
+
+    auto left = projection["left"].GetFloat();
+    auto right = projection["right"].GetFloat();
+    auto top = projection["top"].GetFloat();
+    auto bottom = projection["bottom"].GetFloat();
+    auto near = projection["near"].GetFloat();
+    auto far = projection["far"].GetFloat();
+
     auto component = std::make_unique<CameraComponent>(id, name, owner);
+
+    component->setOrtho(left, right, top, bottom, near, far);
 
     return component;
 }
@@ -81,6 +93,8 @@ void saveCameraComponent(const std::shared_ptr<CameraComponent>& component, rapi
 
 auto buildTransformComponent(rapidjson::Value& componentData) -> std::optional<std::unique_ptr<TransformComponent>>
 {
+    Logger::info(__FUNCTION__);
+
     auto id = componentData["id"].GetUint();
     auto name = componentData["name"].GetString();
     auto owner = componentData["owner"].GetUint();
@@ -132,6 +146,8 @@ void saveTransformComponent(const std::shared_ptr<TransformComponent>& component
 
 auto ComponentBuilder::build(const std::string& type, rapidjson::Value& component) -> std::optional<std::unique_ptr<Component>>
 {
+    Logger::info(std::string(__FUNCTION__) + " component type: {}", type);
+
     if (type == "material") {
         return buildMaterialComponent(component);
     } else if (type == "mesh") {

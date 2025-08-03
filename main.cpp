@@ -3,9 +3,9 @@
 int main()
 {
     engine::Engine engine;
-    engine.initialize("");
-
-    engine.run();
+    if (engine.initialize("../configs/engine.json")) {
+        engine.run();
+    }
 
     return 0;
 }

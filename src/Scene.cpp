@@ -3,6 +3,7 @@
 #include "FileSystem.h"
 #include "Node.h"
 #include "ComponentBuilder.h"
+#include "Logger.h"
 
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
@@ -202,7 +203,10 @@ auto saveScene(const std::shared_ptr<Scene>& scene, const std::filesystem::path&
 
 auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::path &path) -> std::optional<std::unique_ptr<Scene>>
 {
+    Logger::info(__FUNCTION__);
+
     if (!FileSystem::exists(path) || !FileSystem::isFile(path)) {
+        Logger::error("buildScene() File not found: {}", path.string());
         return std::nullopt;
     }
 
@@ -233,19 +237,24 @@ auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::
 
     auto components_json = document["components"].GetArray();
     for (auto& component_json : components_json) {
-
         auto type = component_json["type"].GetString();
         auto component = ComponentBuilder::build(type, component_json);
          if (!component.has_value()) {
             continue;
         }
 
-        scene->addComponent(component.value()->id(), std::move(component.value()));
+        component.value()->setContext(context);
+
+        Logger::info("add component type: {}", type);
+        uint32_t id = component.value()->id();
+        scene->addComponent(id, std::move(component.value()));
     }
 
     auto resources_json = document["resources"].GetArray();
     for (auto& resource_json : resources_json) {
         auto id = resource_json["id"].GetUint();
+
+        Logger::info("add resource id: {}", id);
         scene->addResource(id);
     }
 

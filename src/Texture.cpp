@@ -11,7 +11,9 @@ Texture::Texture()
     glGenTextures(1, &m_texture);
 }
 
-Texture::Texture(void* data, GLsizei width, GLsizei height)
+Texture::Texture(void* data, GLsizei width, GLsizei height) :
+    m_width(width),
+    m_height(height)
 {
     glGenTextures(1, &m_texture);
     glBindTexture(GL_TEXTURE_2D, m_texture);
@@ -39,6 +41,16 @@ void Texture::bind() const
 void Texture::unbind() const
 {
     glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+GLuint Texture::width() const
+{
+    return m_width;
+}
+
+GLuint Texture::height() const
+{
+    return m_height;
 }
 
 auto buildTexture(const std::filesystem::path& path) -> std::optional<std::unique_ptr<Texture>>

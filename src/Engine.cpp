@@ -10,12 +10,16 @@
 #include "FileSystem.h"
 #include "SceneTransition.h"
 #include "Renderer.h"
+#include "Logger.h"
 
 #include <rapidjson/document.h>
 
 namespace engine {
 
-std::optional<std::unique_ptr<Window>> configWindow(const rapidjson::Value& value) {
+std::optional<std::unique_ptr<Window>> configWindow(const rapidjson::Value& value)
+{
+    Logger::info(__FUNCTION__);
+
     GLint window_width = value["width"].GetInt();
     GLint window_height = value["height"].GetInt();
     std::string window_title = value["title"].GetString();
@@ -25,8 +29,12 @@ std::optional<std::unique_ptr<Window>> configWindow(const rapidjson::Value& valu
     return window;
 }
 
-bool configScenesInfo(const rapidjson::Value& value, std::unordered_map<uint32_t, std::filesystem::path>& infos) {
+bool configScenesInfo(const rapidjson::Value& value, std::unordered_map<uint32_t, std::filesystem::path>& infos)
+{
+    Logger::info(__FUNCTION__);
+
     if (!value.IsArray()) {
+        Logger::error("scenes must be an array");
         return false;
     }
 
@@ -41,6 +49,8 @@ Engine::Engine() :
     m_context(std::make_shared<Context>()),
     m_sceneTransition(std::make_unique<SceneTransition>(m_context))
 {
+    Logger::info(__FUNCTION__);
+
     m_context->meshStore = std::make_unique<MeshStore>();
     m_context->shaderStore = std::make_unique<ShaderStore>();
     m_context->textureStore = std::make_unique<TextureStore>();
@@ -55,7 +65,10 @@ Engine::~Engine()
 
 bool Engine::initialize(const std::filesystem::path& config_path)
 {
+    Logger::info(__FUNCTION__);
+
     if (!FileSystem::exists(config_path) || !FileSystem::isFile(config_path)) {
+        Logger::error("config file not found");
         return false;
     }
 
@@ -73,24 +86,35 @@ bool Engine::initialize(const std::filesystem::path& config_path)
         return false;
     }
 
+    m_context->resourcePackageStore->initResourcePackagesInformation(document["resource_packages"].GetString());
+
     if (!configScenesInfo(document["scenes"], m_scenesInfo)) {
         return false;
     }
 
     m_active_scene_id = document["main_scene_id"].GetUint();
 
-    m_sceneTransition->transition(m_scenesInfo, -1, m_active_scene_id);
-
-    return true;
+    return m_sceneTransition->transition(m_scenesInfo, -1, m_active_scene_id);
 }
 
 void Engine::run()
 {
+    GLdouble update_time = glfwGetTime();
+    uint64_t delta_time = 0;
+
     while (true) {
+        delta_time = (glfwGetTime() - update_time) * 1000000;
+        update_time = glfwGetTime();
+        Logger::info("delta time: {}", delta_time);
+
+        m_context->window->update(delta_time);
+
         auto scene = m_context->sceneStore->get(m_active_scene_id);
         if (scene.has_value()) {
             Renderer::render(m_context, scene.value());
         }
+
+        m_context->window->swapBuffer();
     }
 }
 

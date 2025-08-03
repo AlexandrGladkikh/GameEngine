@@ -1,0 +1,21 @@
+{
+  "id": 1,
+  "meshes": [
+    {
+      "id": 1,
+      "path": "../meshes/quad"
+    }
+  ],
+  "shaders": [
+    {
+      "id": 1,
+      "path": "../shaders/default"
+    }
+  ],
+  "textures": [
+    {
+      "id": 1,
+      "path": "../textures/container.jpg"
+    }
+  ]
+}

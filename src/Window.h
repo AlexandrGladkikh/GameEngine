@@ -17,6 +17,10 @@ public:
     Window& operator=(const Window&) = delete;
     Window& operator=(Window&&) = delete;
 
+    void update(uint64_t dt);
+
+    void swapBuffer();
+
     auto size() const -> std::pair<int, int> ;
 
     std::string title() const;

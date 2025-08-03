@@ -4,11 +4,14 @@
 #include "ResourcePackageStore.h"
 #include "Context.h"
 #include "ResourcePackage.h"
+#include "Logger.h"
 
 namespace engine {
 
 auto SceneLoader::loadScene(const std::shared_ptr<Context>& context, const std::filesystem::path& path) -> std::optional<std::unique_ptr<Scene>>
 {
+    Logger::info(__FUNCTION__);
+
     auto scene = buildScene(context, path);
 
     if (!scene.has_value()) {

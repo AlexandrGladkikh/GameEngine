@@ -22,6 +22,9 @@ public:
     void bind() const;
     void unbind() const;
 
+    GLuint width() const;
+    GLuint height() const;
+
 private:
     GLuint m_texture = 0;
 

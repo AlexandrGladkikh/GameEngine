@@ -14,6 +14,12 @@ auto buildMeshGL(const std::vector<GLfloat>& vertices,
         GLuint offset) -> std::unique_ptr<MeshData>
 {
     auto data = std::make_unique<MeshData>();
+
+    data->vertices = vertices;
+    data->indices = indices;
+    data->stride = stride;
+    data->offset = offset;
+
     glGenVertexArrays(1, &data->VAO);
     glGenBuffers(1, &data->VBO);
     glGenBuffers(1, &data->EBO);
@@ -21,7 +27,7 @@ auto buildMeshGL(const std::vector<GLfloat>& vertices,
     glBindVertexArray(data->VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, data->VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size(), vertices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride * sizeof(GLfloat), (void*)offset);
     glEnableVertexAttribArray(0);
@@ -30,7 +36,7 @@ auto buildMeshGL(const std::vector<GLfloat>& vertices,
     glEnableVertexAttribArray(1);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, data->EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size(), indices.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), indices.data(), GL_STATIC_DRAW);
 
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);

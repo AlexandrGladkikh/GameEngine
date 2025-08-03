@@ -1,0 +1,82 @@
+{
+  "id": 1,
+  "name": "Main Scene",
+  "root": 1,
+  "nodes": [
+    {
+      "id": 1,
+      "name": "root",
+      "parent": 0,
+      "children": [2, 3],
+      "components": []
+    },
+    {
+      "id": 2,
+      "name": "quad_object",
+      "parent": 1,
+      "children": [],
+      "components": [1, 2, 3]
+    },
+    {
+      "id": 3,
+      "name": "camera_object",
+      "parent": 1,
+      "children": [],
+      "components": [4, 5]
+    }
+  ],
+  "components": [
+    {
+      "type": "transform",
+      "id": 1,
+      "name": "quad_transform",
+      "owner": 2,
+      "position": [400.0, 300.0, -500.0],
+      "rotation": [0.0, 0.0, 0.0],
+      "scale": [1.0, 1.0, 1.0]
+    },
+    {
+      "type": "mesh",
+      "id": 2,
+      "name": "quad_mesh",
+      "owner": 2,
+      "mesh": 1
+    },
+    {
+      "type": "material",
+      "id": 3,
+      "name": "quad_material",
+      "owner": 2,
+      "shader": 1,
+      "texture": 1
+    },
+    {
+      "type": "camera",
+      "id": 4,
+      "name": "main_camera",
+      "owner": 3,
+      "projection": {
+        "left": 0,
+        "right": 800,
+        "top": 600,
+        "bottom": 0,
+        "near": 0.1,
+        "far": 1000.0
+      }
+    },
+    {
+      "type": "transform",
+      "id": 5,
+      "name": "camera_transform",
+      "owner": 3,
+      "position": [0.0, 0.0, 3.0],
+      "rotation": [0.0, 0.0, 0.0],
+      "scale": [1.0, 1.0, 1.0]
+    }
+  ],
+  "resources": [
+    {
+      "id": 1
+    }
+  ]
+}

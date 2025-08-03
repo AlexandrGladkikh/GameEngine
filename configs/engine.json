@@ -1,0 +1,15 @@
+{
+  "window": {
+    "width": 800,
+    "height": 600,
+    "title": "Game Engine"
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "path": "../configs/main_scene.json"
+    }
+  ],
+  "main_scene_id": 1,
+  "resource_packages": "../configs/packages_info.json"
+}

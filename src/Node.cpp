@@ -1,5 +1,5 @@
 #include "Node.h"
-
+#include "Logger.h"
 
 namespace engine {
 
@@ -56,11 +56,13 @@ bool Node::removeComponent(uint32_t id)
 
 auto buildNode(rapidjson::Value& node_json) -> std::optional<std::unique_ptr<Node>>
 {
+    Logger::info(__FUNCTION__);
+
     auto id = node_json["id"].GetUint();
     auto name = node_json["name"].GetString();
     auto parent = node_json["parent"].GetUint();
 
-    auto node = std::make_shared<Node>(id, name, parent);
+    auto node = std::make_unique<Node>(id, name, parent);
 
     auto children = node_json["children"].GetArray();
     for (auto& child : children) {
@@ -71,7 +73,7 @@ auto buildNode(rapidjson::Value& node_json) -> std::optional<std::unique_ptr<Nod
     for (auto& component : components) {
         node->addComponent(component.GetUint());
     }
-    return std::make_unique<Node>(id, name, parent);
+    return std::move(node);
 }
 
 void saveNode(const std::shared_ptr<Node>& node, rapidjson::Value& node_json, rapidjson::Document::AllocatorType& allocator)

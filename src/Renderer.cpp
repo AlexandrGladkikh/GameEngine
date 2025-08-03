@@ -12,23 +12,54 @@
 #include "TextureStore.h"
 #include "Texture.h"
 #include "MeshStore.h"
+#include "Logger.h"
+
+#include <glm/ext/matrix_transform.hpp>
 
 namespace engine {
 
+glm::mat4 transformTune(const glm::mat4& transform, GLuint width, GLuint height)
+{
+    return glm::scale(transform, glm::vec3(width, height, 1.0f));
+}
+
 void Renderer::render(const std::shared_ptr<Context>& context, const std::shared_ptr<Scene>& scene)
 {
+    Logger::info(__FUNCTION__);
+
+     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
     static auto requester = SceneRequester(context);
     auto nodes = requester.GetNodes(scene, ComponentType::Mesh).
                                                  GetNodes(ComponentType::Material).
                                                  GetNodes(ComponentType::Transform).Unwrap();
 
+    auto camera_node = requester.GetNodes(scene, ComponentType::Camera).GetNodes(ComponentType::Transform).Unwrap().front();
+
+    if (!camera_node) {
+        return;
+    }
+
+    auto camera_component = getComponent<CameraComponent>(scene, camera_node);
+    if (!camera_component.has_value()) {
+        return;
+    }
+
+    auto camera_node_transform = getComponent<TransformComponent>(scene, camera_node);
+    if (!camera_node_transform.has_value()) {
+        return;
+    }
+
+    auto camera = camera_component.value();
+    camera->setPosition(camera_node_transform.value()->getPosition());
+
     for (const auto& node : nodes) {
         auto mesh = getComponent<MeshComponent>(scene, node);
         auto material = getComponent<MaterialComponent>(scene, node);
         auto transform = getComponent<TransformComponent>(scene, node);
-        auto camera = getComponent<CameraComponent>(scene, node);
 
-        if (!mesh.has_value() || !material.has_value() || !transform.has_value() || !camera.has_value()) {
+        if (!mesh.has_value() || !material.has_value() || !transform.has_value()) {
             continue;
         }
 
@@ -38,20 +69,22 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
             continue;
         }
 
-        shader_program.value()->use();
-        shader_program.value()->setUniform4mat("model", transform.value()->getModel());
-        shader_program.value()->setUniform4mat("view", camera.value()->getView());
-        shader_program.value()->setUniform4mat("projection", camera.value()->getProjection());
-
         auto texture_id = material.value()->texture();
         auto texture = context->textureStore->get(texture_id);
         if (!texture.has_value()) {
             continue;
         }
 
-        texture.value()->bind();
+        auto transform_mtx = transformTune(transform.value()->getModel(), texture.value()->width(), texture.value()->height());
 
-        shader_program.value()->setUniform1i("texture", 0);
+        shader_program.value()->use();
+        shader_program.value()->setUniform4mat("model", transform_mtx);
+        shader_program.value()->setUniform4mat("view", camera->getView());
+        shader_program.value()->setUniform4mat("projection", camera->getProjection());
+
+        glActiveTexture(GL_TEXTURE0);
+        texture.value()->bind();
+        shader_program.value()->setUniform1i("texture1", 0);
 
         mesh.value()->bind();
 
@@ -60,7 +93,7 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
             continue;
         }
 
-        glDrawArrays(GL_TRIANGLES, 0, mesh_data.value()->vertices.size());
+        glDrawElements(GL_TRIANGLES, mesh_data.value()->indices.size(),  GL_UNSIGNED_INT, nullptr);
     }
 }
 

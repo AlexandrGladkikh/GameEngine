@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <vector>
+#include <unordered_map>
 
 namespace engine {
 
@@ -20,7 +21,7 @@ class SceneRequester final {
 public:
     class SceneSlice final {
     public:
-        explicit SceneSlice(const std::shared_ptr<Context>& context, const std::shared_ptr<Scene>& scene);
+        explicit SceneSlice(const std::shared_ptr<Scene>& scene, const std::shared_ptr<Context>& context, const std::unordered_map<uint32_t, std::shared_ptr<Node>>& nodes);
 
         auto GetNodes(ComponentType type) const -> SceneSlice;
 
@@ -30,6 +31,7 @@ public:
         void addNode(const std::shared_ptr<Node>& node);
 
         std::shared_ptr<Context> m_context;
+
         std::shared_ptr<Scene> m_scene;
 
         std::vector<std::shared_ptr<Node>> m_nodes;

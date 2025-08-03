@@ -7,6 +7,7 @@
 #include "Shader.h"
 #include "Texture.h"
 #include "MeshBuilder.h"
+#include "Logger.h"
 
 #include <rapidjson/document.h>
 
@@ -14,6 +15,8 @@ namespace engine {
 
 std::optional<ResourcePackage> buildResourcePackage(const std::filesystem::path& path)
 {
+    Logger::info(__FUNCTION__);
+
     if (!exists(path) || (path.extension() != ".pkg" && path.extension() != ".json")) {
         return {};
     }
@@ -78,6 +81,8 @@ void saveResourcePackage(const std::filesystem::path& path, const ResourcePackag
 
 void loadResourcePackage(const std::shared_ptr<Context>& context, const ResourcePackage& package)
 {
+    Logger::info(__FUNCTION__);
+
     for (auto& shaderInfo : package.shaders) {
         auto shader_existed = context->shaderStore->get(shaderInfo.id);
         if (shader_existed.has_value()) {

@@ -1,5 +1,6 @@
 #include "Shader.h"
 #include "FileSystem.h"
+#include "Logger.h"
 
 #include <glm/gtc/type_ptr.hpp>
 
@@ -7,6 +8,8 @@ namespace engine {
 
 Shader::Shader(const std::string& vertexShader, const std::string& fragmentShader)
 {
+    Logger::info(__FUNCTION__);
+
     GLuint vertex = 0;
     GLuint fragment = 0;
 
@@ -15,14 +18,36 @@ Shader::Shader(const std::string& vertexShader, const std::string& fragmentShade
     const char* vertexSource = vertexShader.c_str();
     glShaderSource(vertex, 1, &vertexSource, nullptr);
     glCompileShader(vertex);
+
+    GLint success = 0;
+    GLchar infoLog[512];
+
+    glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetShaderInfoLog(vertex, 512, nullptr, infoLog);
+        Logger::error("ERROR::SHADER::VERTEX::COMPILATION_FAILED, info: {}", infoLog);
+    }
+
     const char* fragmentSource = fragmentShader.c_str();
     glShaderSource(fragment, 1, &fragmentSource, nullptr);
     glCompileShader(fragment);
+
+    glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetShaderInfoLog(fragment, 512, nullptr, infoLog);
+        Logger::error("ERROR::SHADER::VERTEX::COMPILATION_FAILED, info: {}", infoLog);
+    }
 
     m_program = glCreateProgram();
     glAttachShader(m_program, vertex);
     glAttachShader(m_program, fragment);
     glLinkProgram(m_program);
+
+    glGetProgramiv(m_program, GL_LINK_STATUS, &success);
+    if (!success) {
+        glGetProgramInfoLog(m_program, 512, nullptr, infoLog);
+        Logger::error("ERROR::SHADER::PROGRAM::LINKING_FAILED, info: {}", infoLog);
+    }
 
     glDeleteShader(vertex);
     glDeleteShader(fragment);
@@ -50,6 +75,8 @@ void Shader::setUniform1i(const std::string& name, int value) const
 
 auto buildShader(const std::filesystem::path& path) -> std::optional<std::unique_ptr<Shader>>
 {
+    Logger::info(__FUNCTION__);
+
     if (!FileSystem::exists(path) || !FileSystem::isDirectory(path)) {
         return std::nullopt;
     }

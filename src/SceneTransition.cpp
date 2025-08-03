@@ -7,6 +7,7 @@
 #include "MeshStore.h"
 #include "ShaderStore.h"
 #include "TextureStore.h"
+#include "Logger.h"
 
 #include <algorithm>
 
@@ -20,10 +21,14 @@ SceneTransition::SceneTransition(const std::shared_ptr<Context>& context) :
 
 bool SceneTransition::transition(const std::unordered_map<uint32_t, std::filesystem::path>& scene_infos, uint32_t scene_id_from, uint32_t scene_id_to)
 {
+    Logger::info(__FUNCTION__);
+
     auto scene_from = m_context->sceneStore->get(scene_id_from);
     std::vector<uint32_t> scene_from_resources;
 
-    if (!scene_from.has_value() || !scene_from.value()->isActive()) {
+    if (scene_from.has_value() && scene_from.value()->isActive()) {
+        Logger::info("Scene {} disable", scene_id_from);
+
         scene_from.value()->setActive(false);
 
         scene_from_resources = scene_from.value()->getResources();
@@ -58,7 +63,9 @@ bool SceneTransition::transition(const std::unordered_map<uint32_t, std::filesys
 
     scene_to.value()->setActive(true);
 
-    m_context->sceneStore->add(scene_to.value()->id(), std::move(scene_to.value()));
+    Logger::info("Scene {} enable", scene_id_to);
+    uint32_t scene_id = scene_to.value()->id();
+    m_context->sceneStore->add(scene_id, std::move(scene_to.value()));
 
     return true;
 }

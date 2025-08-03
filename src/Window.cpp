@@ -8,13 +8,14 @@ Window::Window(const std::string& title, GLint width, GLint height)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
     m_window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 
-    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(m_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 
     glfwMakeContextCurrent(m_window);
+    glfwSwapInterval(1);
 
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
@@ -28,6 +29,16 @@ Window::~Window()
 {
     glfwDestroyWindow(m_window);
     glfwTerminate();
+}
+
+void Window::update(uint64_t dt)
+{
+    glfwPollEvents();
+}
+
+void Window::swapBuffer()
+{
+    glfwSwapBuffers(m_window);
 }
 
 auto Window::size() const -> std::pair<int, int>

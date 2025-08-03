@@ -8,42 +8,46 @@
 #include "MaterialComponent.h"
 #include "CameraComponent.h"
 
+#include <ranges>
+
 namespace engine {
 
-SceneRequester::SceneSlice::SceneSlice(const std::shared_ptr<Context>& context, const std::shared_ptr<Scene>& scene) :
-        m_context(context), m_scene(scene)
+SceneRequester::SceneSlice::SceneSlice(const std::shared_ptr<Scene>& scene, const std::shared_ptr<Context>& context, const std::unordered_map<uint32_t, std::shared_ptr<Node>>& nodes) :
+    m_context(context), m_scene(scene)
 {
-
+    for (auto& [id, node] : nodes) {
+        m_nodes.push_back(node);
+    }
 }
 
 auto SceneRequester::SceneSlice::GetNodes(ComponentType type) const -> SceneSlice
 {
-    SceneSlice scene_slice(m_context, m_scene);
+    SceneSlice scene_slice(m_scene, m_context, {});
 
     switch (type) {
         case ComponentType::Transform:
-            for (const auto& [id, node] : m_scene->getNodes()) {
+            for (const auto& node : m_nodes) {
                 if (hasComponent<TransformComponent>(m_scene, node)) {
                     scene_slice.addNode(node);
                 }
             }
             break;
         case ComponentType::Mesh:
-            for (const auto& [id, node] : m_scene->getNodes()) {
+            for (const auto& node : m_nodes) {
                 if (hasComponent<MeshComponent>(m_scene, node)) {
                     scene_slice.addNode(node);
                 }
             }
             break;
         case ComponentType::Material:
-            for (const auto& [id, node] : m_scene->getNodes()) {
+            for (const auto& node : m_nodes) {
                 if (hasComponent<MaterialComponent>(m_scene, node)) {
                     scene_slice.addNode(node);
                 }
             }
             break;
         case ComponentType::Camera:
-            for (const auto& [id, node] : m_scene->getNodes()) {
+            for (const auto& node : m_nodes) {
                 if (hasComponent<CameraComponent>(m_scene, node)) {
                     scene_slice.addNode(node);
                 }
@@ -71,7 +75,7 @@ SceneRequester::SceneRequester(const std::shared_ptr<Context>& context) :
 
 auto SceneRequester::GetNodes(const std::shared_ptr<Scene>& scene, ComponentType type) -> SceneSlice
 {
-    return SceneSlice(m_context, scene).GetNodes(type);
+    return SceneSlice(scene, m_context, scene->getNodes()).GetNodes(type);
 }
 
 }

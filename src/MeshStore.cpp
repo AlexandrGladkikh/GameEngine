@@ -4,12 +4,12 @@ namespace engine {
 
 void MeshData::bind() const
 {
-        glBindVertexArray(VAO);
+    glBindVertexArray(VAO);
 }
 
 void MeshData::unbind() const
 {
-        glBindVertexArray(0);
+    glBindVertexArray(0);
 }
 
 auto MeshStore::get(uint32_t id) const -> std::optional<std::shared_ptr<MeshData>>
