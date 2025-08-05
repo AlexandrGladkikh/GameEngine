@@ -6,8 +6,10 @@ namespace engine {
 
 class MaterialComponent final : public Component {
 public:
-    MaterialComponent(uint32_t id, const std::string& name, uint32_t owner,
+    explicit MaterialComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene,
         uint32_t shader_id, uint32_t texture_id);
+
+    void init() override;
 
     void update(uint64_t dt) override;
 

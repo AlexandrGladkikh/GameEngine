@@ -7,8 +7,7 @@
 #include "MeshComponent.h"
 #include "MaterialComponent.h"
 #include "CameraComponent.h"
-
-#include <ranges>
+#include "Node.h"
 
 namespace engine {
 
@@ -27,28 +26,28 @@ auto SceneRequester::SceneSlice::GetNodes(ComponentType type) const -> SceneSlic
     switch (type) {
         case ComponentType::Transform:
             for (const auto& node : m_nodes) {
-                if (hasComponent<TransformComponent>(m_scene, node)) {
+                if (SceneRequesterHelper::hasComponent<TransformComponent>(m_scene, node->components())) {
                     scene_slice.addNode(node);
                 }
             }
             break;
         case ComponentType::Mesh:
             for (const auto& node : m_nodes) {
-                if (hasComponent<MeshComponent>(m_scene, node)) {
+                if (SceneRequesterHelper::hasComponent<MeshComponent>(m_scene, node->components())) {
                     scene_slice.addNode(node);
                 }
             }
             break;
         case ComponentType::Material:
             for (const auto& node : m_nodes) {
-                if (hasComponent<MaterialComponent>(m_scene, node)) {
+                if (SceneRequesterHelper::hasComponent<MaterialComponent>(m_scene, node->components())) {
                     scene_slice.addNode(node);
                 }
             }
             break;
         case ComponentType::Camera:
             for (const auto& node : m_nodes) {
-                if (hasComponent<CameraComponent>(m_scene, node)) {
+                if (SceneRequesterHelper::hasComponent<CameraComponent>(m_scene, node->components())) {
                     scene_slice.addNode(node);
                 }
             }

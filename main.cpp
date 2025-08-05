@@ -1,8 +1,113 @@
 #include "Engine.h"
+#include "UserComponentsBuilder.h"
+#include "Component.h"
+#include "InputManager.h"
+#include "TransformComponent.h"
+#include "Node.h"
+#include "Logger.h"
+
+#include <GLFW/glfw3.h>
+
+class MoveComponent : public engine::Component {
+public:
+    MoveComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene) : engine::Component(id, name, owner_node, owner_scene)
+    {
+
+    }
+
+    void init() override
+    {
+        context().lock()->inputManager->registerHandler(GLFW_KEY_W, [this](int key, int action) {
+            if (action == GLFW_PRESS) {
+                m_up = true;
+            } else if (action == GLFW_RELEASE) {
+                m_up = false;
+            }
+        });
+        context().lock()->inputManager->registerHandler(GLFW_KEY_S, [this](int key, int action) {
+            if (action == GLFW_PRESS) {
+                m_down = true;
+            } else if (action == GLFW_RELEASE) {
+                m_down = false;
+            }
+        });
+        context().lock()->inputManager->registerHandler(GLFW_KEY_A, [this](int key, int action) {
+            if (action == GLFW_PRESS) {
+                m_left = true;
+            } else if (action == GLFW_RELEASE) {
+                m_left = false;
+            }
+        });
+        context().lock()->inputManager->registerHandler(GLFW_KEY_D, [this](int key, int action) {
+            if (action == GLFW_PRESS) {
+                m_right = true;
+            } else if (action == GLFW_RELEASE) {
+                m_right = false;
+            }
+        });
+
+        context().lock()->inputManager->registerHandler(GLFW_KEY_ESCAPE, [this](int key, int action) {
+            if (action == GLFW_PRESS) {
+                context().lock()->engineAccessor->stop();
+            };
+        });
+    }
+
+    void update(uint64_t dt) override
+    {
+        engine::Logger::info("MoveComponent::update");
+        std::optional<std::shared_ptr<engine::TransformComponent>> transform = getNode().value()->getComponent<engine::TransformComponent>();
+
+        if (m_up) {
+            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(0.0f, 1.0f, 0.0f));
+        }
+        if (m_down) {
+            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(0.0f, -1.0f, 0.0f));
+        }
+        if (m_left) {
+            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(-1.0f, 0.0f, 0.0f));
+        }
+        if (m_right) {
+            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(1.0f, 0.0f, 0.0f));
+        }
+    }
+
+    [[nodiscard]]
+    bool isDirty() const override { return true; }
+    void markDirty() override {}
+    void clearDirty() override {}
+
+    [[nodiscard]]
+    std::string type() const override { return "move"; }
+
+private:
+    bool m_up = false;
+    bool m_down = false;
+    bool m_left = false;
+    bool m_right = false;
+};
+
+class ComponentBuilder : public engine::UserComponentsBuilder {
+public:
+    std::optional<std::unique_ptr<engine::Component>> buildComponent(const std::string& type, rapidjson::Value& component) const override
+    {
+        if (type == "move") {
+            auto id = component["id"].GetUint();
+            auto name = component["name"].GetString();
+            auto owner_node = component["owner_node"].GetUint();
+            auto owner_scene = component["owner_scene"].GetUint();
+
+            return std::make_unique<MoveComponent>(id, name, owner_node, owner_scene);
+        }
+
+        return {};
+    }
+};
 
 int main()
 {
     engine::Engine engine;
+    engine.setUserComponentsBuilder(std::make_unique<ComponentBuilder>());
     if (engine.initialize("../configs/engine.json")) {
         engine.run();
     }

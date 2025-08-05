@@ -9,8 +9,10 @@ namespace engine {
 
 class CameraComponent final : public Component {
 public:
-    explicit CameraComponent(uint32_t id, const std::string& name, uint32_t owner);
+    explicit CameraComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene);
     ~CameraComponent() override = default;
+
+    void init() override;
 
     void update(uint64_t dt) override;
 

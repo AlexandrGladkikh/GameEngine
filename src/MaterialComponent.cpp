@@ -2,13 +2,18 @@
 
 namespace engine {
 
-MaterialComponent::MaterialComponent(uint32_t id, const std::string& name, uint32_t owner,
+MaterialComponent::MaterialComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene,
     uint32_t shader_id, uint32_t texture_id) :
-    Component(id, name, owner),
+    Component(id, name, owner_node, owner_scene),
     m_shader_id(shader_id),
     m_texture_id(texture_id),
     m_dirty(true)
 {
+}
+
+void MaterialComponent::init()
+{
+
 }
 
 void MaterialComponent::update(uint64_t dt)

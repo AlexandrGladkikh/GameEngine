@@ -6,10 +6,12 @@ namespace engine {
 
 class MeshComponent final : public Component {
 public:
-    explicit MeshComponent(uint32_t id, const std::string& name, uint32_t owner,
+    explicit MeshComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene,
         uint32_t meshId);
 
     ~MeshComponent() override = default;
+
+    void init() override;
 
     void update(uint64_t dt) override;
 

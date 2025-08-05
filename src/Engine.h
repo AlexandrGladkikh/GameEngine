@@ -8,6 +8,23 @@ namespace engine {
 
 class Context;
 class SceneTransition;
+class UserComponentsBuilder;
+class Engine;
+
+class EngineAccessor final {
+public:
+    explicit EngineAccessor(Engine& engine);
+    ~EngineAccessor() = default;
+    EngineAccessor(const EngineAccessor&) = delete;
+    EngineAccessor(EngineAccessor&&) = delete;
+    EngineAccessor& operator=(const EngineAccessor&) = delete;
+    EngineAccessor& operator=(EngineAccessor&&) = delete;
+
+    void stop() const;
+
+private:
+    Engine& m_engine;
+};
 
 class Engine final {
 public:
@@ -21,9 +38,13 @@ public:
 
     bool initialize(const std::filesystem::path& config_path);
 
+    void setUserComponentsBuilder(std::unique_ptr<UserComponentsBuilder> userComponentsBuilder);
+
     void run();
 
 private:
+    bool m_run = false;
+
     std::shared_ptr<Context> m_context;
 
     std::unique_ptr<SceneTransition> m_sceneTransition;
@@ -31,6 +52,8 @@ private:
     std::unordered_map<uint32_t, std::filesystem::path> m_scenesInfo;
 
     uint32_t m_active_scene_id = 0;
+
+    friend class EngineAccessor;
 };
 
 }

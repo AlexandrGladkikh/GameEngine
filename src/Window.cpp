@@ -1,5 +1,7 @@
 #include "Window.h"
 
+#include <cstring>
+
 namespace engine {
 
 Window::Window(const std::string& title, GLint width, GLint height)
@@ -23,6 +25,13 @@ Window::Window(const std::string& title, GLint width, GLint height)
 
     auto window_size = size();
     glViewport(0, 0, window_size.first, window_size.second);
+
+    glfwSetWindowUserPointer(m_window, this);
+    glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+        auto window_ptr = static_cast<Window*>(glfwGetWindowUserPointer(window));
+        window_ptr->m_key.push_back(key);
+        window_ptr->m_action.push_back(action);
+    });
 }
 
 Window::~Window()
@@ -31,9 +40,22 @@ Window::~Window()
     glfwTerminate();
 }
 
+void Window::setKeyInputHandler(const std::function<void(int, int)>& handler)
+{
+    m_keyInputHandler = handler;
+}
+
 void Window::update(uint64_t dt)
 {
     glfwPollEvents();
+
+    if (m_keyInputHandler) {
+        for (size_t i = 0; i < m_key.size(); ++i) {
+            m_keyInputHandler(m_key[i], m_action[i]);
+        }
+        m_key.clear();
+        m_action.clear();
+    }
 }
 
 void Window::swapBuffer()

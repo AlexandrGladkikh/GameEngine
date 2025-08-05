@@ -2,14 +2,16 @@
 
 #include <memory>
 #include <string>
+#include <optional>
 
 namespace engine {
 
 struct Context;
+class Node;
 
 class Component {
 public:
-    explicit Component(uint32_t id, const std::string& name, uint32_t owner);
+    explicit Component(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene);
     virtual ~Component() = default;
 
     Component(const Component&) = delete;
@@ -25,12 +27,18 @@ public:
     bool isActive() const;
     void setActive(bool active);
 
+    std::optional<std::shared_ptr<Node>> getNode() const;
+
     [[nodiscard]]
     uint32_t id() const;
     [[nodiscard]]
     const std::string& name() const;
     [[nodiscard]]
-    uint32_t owner() const;
+    uint32_t ownerNode() const;
+    [[nodiscard]]
+    uint32_t ownerScene() const;
+
+    virtual void init() = 0;
 
     virtual void update(uint64_t dt) = 0;
 
@@ -47,7 +55,8 @@ private:
 
     uint32_t m_id = 0;
     std::string m_name;
-    uint32_t m_owner;
+    uint32_t m_owner_node;
+    uint32_t m_owner_scene;
 
     bool m_is_active = true;
 };

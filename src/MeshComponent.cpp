@@ -4,12 +4,17 @@
 
 namespace engine {
 
-MeshComponent::MeshComponent(uint32_t id, const std::string& name, uint32_t owner,
+MeshComponent::MeshComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene,
     uint32_t meshId) :
-    Component(id, name, owner),
+    Component(id, name, owner_node, owner_scene),
     m_id(meshId),
     m_dirty(true)
 {
+}
+
+void MeshComponent::init()
+{
+
 }
 
 void MeshComponent::update(uint64_t dt)

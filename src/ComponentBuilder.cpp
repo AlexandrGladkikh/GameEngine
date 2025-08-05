@@ -14,12 +14,13 @@ auto buildMaterialComponent(rapidjson::Value& componentData) -> std::optional<st
 {
     auto id = componentData["id"].GetUint();
     auto name = componentData["name"].GetString();
-    auto owner = componentData["owner"].GetUint();
+    auto owner_node = componentData["owner_node"].GetUint();
+    auto owner_scene = componentData["owner_scene"].GetUint();
 
     auto shader_id = componentData["shader"].GetUint();
     auto texture_id = componentData["texture"].GetUint();
 
-    auto component = std::make_unique<MaterialComponent>(id, name, owner, shader_id, texture_id);
+    auto component = std::make_unique<MaterialComponent>(id, name, owner_node, owner_scene, shader_id, texture_id);
 
     return component;
 }
@@ -31,7 +32,8 @@ auto saveMaterialComponent(const std::shared_ptr<MaterialComponent>& component, 
     component_json.AddMember("type", "material", allocator);
     component_json.AddMember("id", component->id(), allocator);
     component_json.AddMember("name", value, allocator);
-    component_json.AddMember("owner", component->owner(), allocator);
+    component_json.AddMember("owner_node", component->ownerNode(), allocator);
+    component_json.AddMember("owner_scene", component->ownerScene(), allocator);
     component_json.AddMember("shader", component->shader(), allocator);
     component_json.AddMember("texture", component->texture(), allocator);
 }
@@ -40,10 +42,11 @@ auto buildMeshComponent(rapidjson::Value& componentData) -> std::optional<std::u
 {
         auto id = componentData["id"].GetUint();
         auto name = componentData["name"].GetString();
-        auto owner = componentData["owner"].GetUint();
+        auto owner_node = componentData["owner_node"].GetUint();
+        auto owner_scene = componentData["owner_scene"].GetUint();
         auto meshId = componentData["mesh"].GetUint();
 
-        auto component = std::make_unique<MeshComponent>(id, name, owner, meshId);
+        auto component = std::make_unique<MeshComponent>(id, name, owner_node, owner_scene, meshId);
 
         return component;
 }
@@ -55,7 +58,8 @@ auto saveMeshComponent(const std::shared_ptr<MeshComponent>& component, rapidjso
     component_json.AddMember("type", "mesh", allocator);
     component_json.AddMember("id", component->id(), allocator);
     component_json.AddMember("name", value, allocator);
-    component_json.AddMember("owner", component->owner(), allocator);
+    component_json.AddMember("owner_node", component->ownerNode(), allocator);
+    component_json.AddMember("owner_scene", component->ownerScene(), allocator);
     component_json.AddMember("mesh", component->meshId(), allocator);
 }
 
@@ -63,7 +67,8 @@ auto buildCameraComponent(rapidjson::Value& componentData) -> std::optional<std:
 {
     auto id = componentData["id"].GetUint();
     auto name = componentData["name"].GetString();
-    auto owner = componentData["owner"].GetUint();
+    auto owner_node = componentData["owner_node"].GetUint();
+    auto owner_scene = componentData["owner_scene"].GetUint();
 
     auto projection = componentData["projection"].GetObject();
 
@@ -74,7 +79,7 @@ auto buildCameraComponent(rapidjson::Value& componentData) -> std::optional<std:
     auto near = projection["near"].GetFloat();
     auto far = projection["far"].GetFloat();
 
-    auto component = std::make_unique<CameraComponent>(id, name, owner);
+    auto component = std::make_unique<CameraComponent>(id, name, owner_node, owner_scene);
 
     component->setOrtho(left, right, top, bottom, near, far);
 
@@ -88,7 +93,8 @@ void saveCameraComponent(const std::shared_ptr<CameraComponent>& component, rapi
     component_json.AddMember("type", "camera", allocator);
     component_json.AddMember("id", component->id(), allocator);
     component_json.AddMember("name", value, allocator);
-    component_json.AddMember("owner", component->owner(), allocator);
+    component_json.AddMember("owner_node", component->ownerNode(), allocator);
+    component_json.AddMember("owner_scene", component->ownerScene(), allocator);
 }
 
 auto buildTransformComponent(rapidjson::Value& componentData) -> std::optional<std::unique_ptr<TransformComponent>>
@@ -97,9 +103,10 @@ auto buildTransformComponent(rapidjson::Value& componentData) -> std::optional<s
 
     auto id = componentData["id"].GetUint();
     auto name = componentData["name"].GetString();
-    auto owner = componentData["owner"].GetUint();
+    auto owner_node = componentData["owner_node"].GetUint();
+    auto owner_scene = componentData["owner_scene"].GetUint();
 
-    auto component = std::make_unique<TransformComponent>(id, name, owner);
+    auto component = std::make_unique<TransformComponent>(id, name, owner_node, owner_scene);
 
     auto position_json = componentData["position"].GetArray();
     auto position = glm::vec3(position_json[0].GetFloat(), position_json[1].GetFloat(), position_json[2].GetFloat());
@@ -123,7 +130,8 @@ void saveTransformComponent(const std::shared_ptr<TransformComponent>& component
     component_json.AddMember("type", "transform", allocator);
     component_json.AddMember("id", component->id(), allocator);
     component_json.AddMember("name", value, allocator);
-    component_json.AddMember("owner", component->owner(), allocator);
+    component_json.AddMember("owner_node", component->ownerNode(), allocator);
+    component_json.AddMember("owner_scene", component->ownerScene(), allocator);
 
     rapidjson::Value position(rapidjson::kArrayType);
     position.PushBack(component->getPosition().x, allocator);

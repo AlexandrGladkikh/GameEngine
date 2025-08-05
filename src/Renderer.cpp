@@ -13,6 +13,7 @@
 #include "Texture.h"
 #include "MeshStore.h"
 #include "Logger.h"
+#include "Node.h"
 
 #include <glm/ext/matrix_transform.hpp>
 
@@ -41,12 +42,12 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
         return;
     }
 
-    auto camera_component = getComponent<CameraComponent>(scene, camera_node);
+    auto camera_component = SceneRequesterHelper::getComponent<CameraComponent>(scene, camera_node->components());
     if (!camera_component.has_value()) {
         return;
     }
 
-    auto camera_node_transform = getComponent<TransformComponent>(scene, camera_node);
+    auto camera_node_transform = SceneRequesterHelper::getComponent<TransformComponent>(scene, camera_node->components());
     if (!camera_node_transform.has_value()) {
         return;
     }
@@ -55,11 +56,13 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
     camera->setPosition(camera_node_transform.value()->getPosition());
 
     for (const auto& node : nodes) {
-        auto mesh = getComponent<MeshComponent>(scene, node);
-        auto material = getComponent<MaterialComponent>(scene, node);
-        auto transform = getComponent<TransformComponent>(scene, node);
+        auto mesh = SceneRequesterHelper::getComponent<MeshComponent>(scene, node->components());
+        auto material = SceneRequesterHelper::getComponent<MaterialComponent>(scene, node->components());
+        auto transform = SceneRequesterHelper::getComponent<TransformComponent>(scene, node->components());
 
-        if (!mesh.has_value() || !material.has_value() || !transform.has_value()) {
+        if (!mesh.has_value() || !mesh.value()->isActive() ||
+            !material.has_value() || !material.value()->isActive() ||
+            !transform.has_value() || !transform.value()->isActive()) {
             continue;
         }
 

@@ -3,11 +3,17 @@
 
 namespace engine {
 
-Node::Node(std::uint32_t id, const std::string& name, uint32_t parent) :
+Node::Node(std::uint32_t id, const std::string& name, uint32_t parent, uint32_t owner_scene) :
     m_id(id),
     m_name(name),
-    m_parent(parent)
+    m_parent(parent),
+    m_owner_scene(owner_scene)
 {}
+
+void Node::setContext(const std::weak_ptr<Context>& context)
+{
+    m_context = context;
+}
 
 std::uint32_t Node::id() const
 {
@@ -61,8 +67,9 @@ auto buildNode(rapidjson::Value& node_json) -> std::optional<std::unique_ptr<Nod
     auto id = node_json["id"].GetUint();
     auto name = node_json["name"].GetString();
     auto parent = node_json["parent"].GetUint();
+    auto owner_scene = node_json["owner_scene"].GetUint();
 
-    auto node = std::make_unique<Node>(id, name, parent);
+    auto node = std::make_unique<Node>(id, name, parent, owner_scene);
 
     auto children = node_json["children"].GetArray();
     for (auto& child : children) {

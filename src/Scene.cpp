@@ -4,6 +4,8 @@
 #include "Node.h"
 #include "ComponentBuilder.h"
 #include "Logger.h"
+#include "Context.h"
+#include "UserComponentsBuilder.h"
 
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
@@ -230,6 +232,8 @@ auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::
         if (!node.has_value()) {
             continue;
         }
+
+        node.value()->setContext(context);
         auto id = node.value()->id();
 
         scene->addNode(id, std::move(node.value()));
@@ -240,10 +244,14 @@ auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::
         auto type = component_json["type"].GetString();
         auto component = ComponentBuilder::build(type, component_json);
          if (!component.has_value()) {
-            continue;
+             component = context->userComponentsBuilder->buildComponent(type, component_json);
+             if (!component.has_value()) {
+                 continue;
+             }
         }
 
         component.value()->setContext(context);
+        component.value()->init();
 
         Logger::info("add component type: {}", type);
         uint32_t id = component.value()->id();

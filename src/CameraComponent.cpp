@@ -5,8 +5,8 @@
 
 namespace engine {
 
-CameraComponent::CameraComponent(uint32_t id, const std::string& name, uint32_t owner) :
-    Component(id, name, owner),
+CameraComponent::CameraComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene) :
+    Component(id, name, owner_node, owner_scene),
     m_position(DEFAULT_POS),
     m_front(DEFAULT_FRONT),
     m_up(DEFAULT_UP),
@@ -19,6 +19,11 @@ CameraComponent::CameraComponent(uint32_t id, const std::string& name, uint32_t 
     m_far(DEFAULT_FAR),
     m_view(glm::mat4(1.0f)),
     m_dirty(true)
+{
+
+}
+
+void CameraComponent::init()
 {
 
 }

@@ -1,45 +1,48 @@
 #pragma once
 
 #include "Scene.h"
-#include "Node.h"
 
 #include <memory>
 #include <optional>
+#include <unordered_set>
 
 namespace engine {
 
-template<typename T>
-std::optional<std::shared_ptr<T>> getComponent(const std::shared_ptr<Scene>& scene, const std::shared_ptr<Node>& node)
-{
-    for (auto component_id : node->components()) {
-        auto component = scene->getComponent(component_id);
-        if (!component.has_value()) {
-            continue;
+class SceneRequesterHelper {
+public:
+    template<typename T>
+    static std::optional<std::shared_ptr<T>> getComponent(const std::shared_ptr<Scene>& scene, const std::unordered_set<uint32_t>& components)
+    {
+        for (auto component_id : components) {
+            auto component = scene->getComponent(component_id);
+            if (!component.has_value()) {
+                continue;
+            }
+
+            if (auto typed_component = std::dynamic_pointer_cast<T>(component.value())) {
+                return typed_component;
+            }
         }
 
-        if (auto typed_component = std::dynamic_pointer_cast<T>(component.value())) {
-            return typed_component;
-        }
+        return std::nullopt;
     }
 
-    return std::nullopt;
-}
+    template<typename T>
+    static bool hasComponent(const std::shared_ptr<Scene>& scene, const std::unordered_set<uint32_t>& components)
+    {
+        for (auto component_id : components) {
+            auto component = scene->getComponent(component_id);
+            if (!component.has_value()) {
+                continue;
+            }
 
-template<typename T>
-bool hasComponent(const std::shared_ptr<Scene>& scene, const std::shared_ptr<Node>& node)
-{
-    for (auto component_id : node->components()) {
-        auto component = scene->getComponent(component_id);
-        if (!component.has_value()) {
-            continue;
+            if (auto typed_component = std::dynamic_pointer_cast<T>(component.value())) {
+                return true;
+            }
         }
 
-        if (auto typed_component = std::dynamic_pointer_cast<T>(component.value())) {
-            return true;
-        }
+        return false;
     }
-
-    return false;
-}
+};
 
 }

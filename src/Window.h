@@ -4,6 +4,8 @@
 #include <GLFW/glfw3.h>
 
 #include <string>
+#include <functional>
+#include <vector>
 
 namespace engine {
 
@@ -17,6 +19,8 @@ public:
     Window& operator=(const Window&) = delete;
     Window& operator=(Window&&) = delete;
 
+    void setKeyInputHandler(const std::function<void(int, int)>& handler);
+
     void update(uint64_t dt);
 
     void swapBuffer();
@@ -27,6 +31,11 @@ public:
 
 private:
     GLFWwindow* m_window;
+
+    std::function<void(int, int)> m_keyInputHandler;
+
+    std::vector<int> m_key;
+    std::vector<int> m_action;
 };
 
 }

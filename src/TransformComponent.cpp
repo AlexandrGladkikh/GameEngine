@@ -4,13 +4,18 @@
 
 namespace engine {
 
-TransformComponent::TransformComponent(uint32_t id, const std::string& name, uint32_t owner) :
-    Component(id, name, owner),
+TransformComponent::TransformComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene) :
+    Component(id, name, owner_node, owner_scene),
     m_dirty(true),
     m_model(glm::mat4(1.0f)),
     m_position(glm::vec3(0.0f, 0.0f, 0.0f)),
     m_rotation(glm::vec3(0.0f, 0.0f, 0.0f)),
     m_scale(glm::vec3(1.0f, 1.0f, 1.0f))
+{
+
+}
+
+void TransformComponent::init()
 {
 
 }

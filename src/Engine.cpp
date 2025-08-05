@@ -10,9 +10,15 @@
 #include "FileSystem.h"
 #include "SceneTransition.h"
 #include "Renderer.h"
+#include "InputManager.h"
 #include "Logger.h"
+#include "Scene.h"
+#include "Component.h"
+#include "UserComponentsBuilder.h"
 
 #include <rapidjson/document.h>
+
+#include <ranges>
 
 namespace engine {
 
@@ -45,6 +51,17 @@ bool configScenesInfo(const rapidjson::Value& value, std::unordered_map<uint32_t
     return true;
 }
 
+EngineAccessor::EngineAccessor(Engine& engine) :
+    m_engine(engine)
+{
+
+}
+
+void EngineAccessor::stop() const
+{
+    m_engine.m_run = false;
+}
+
 Engine::Engine() :
     m_context(std::make_shared<Context>()),
     m_sceneTransition(std::make_unique<SceneTransition>(m_context))
@@ -56,6 +73,7 @@ Engine::Engine() :
     m_context->textureStore = std::make_unique<TextureStore>();
     m_context->resourcePackageStore = std::make_unique<ResourcePackageStore>();
     m_context->sceneStore = std::make_unique<SceneStore>();
+    m_context->engineAccessor = std::make_unique<EngineAccessor>(*this);
 }
 
 Engine::~Engine()
@@ -86,6 +104,8 @@ bool Engine::initialize(const std::filesystem::path& config_path)
         return false;
     }
 
+    m_context->inputManager = std::make_unique<InputManager>(m_context->window);
+
     m_context->resourcePackageStore->initResourcePackagesInformation(document["resource_packages"].GetString());
 
     if (!configScenesInfo(document["scenes"], m_scenesInfo)) {
@@ -97,20 +117,34 @@ bool Engine::initialize(const std::filesystem::path& config_path)
     return m_sceneTransition->transition(m_scenesInfo, -1, m_active_scene_id);
 }
 
+void Engine::setUserComponentsBuilder(std::unique_ptr<UserComponentsBuilder> userComponentsBuilder)
+{
+    m_context->userComponentsBuilder = std::move(userComponentsBuilder);
+}
+
 void Engine::run()
 {
+    m_run = true;
+
     GLdouble update_time = glfwGetTime();
     uint64_t delta_time = 0;
 
-    while (true) {
+    while (m_run) {
         delta_time = (glfwGetTime() - update_time) * 1000000;
         update_time = glfwGetTime();
         Logger::info("delta time: {}", delta_time);
 
         m_context->window->update(delta_time);
+        m_context->inputManager->update(delta_time);
 
         auto scene = m_context->sceneStore->get(m_active_scene_id);
         if (scene.has_value()) {
+            for (auto& component : scene.value()->getComponents() | std::views::values) {
+                if (component->isActive()) {
+                    component->update(delta_time);
+                }
+            }
+
             Renderer::render(m_context, scene.value());
         }
 
