@@ -5,6 +5,7 @@
 #include "MeshComponent.h"
 #include "TransformComponent.h"
 #include "Logger.h"
+#include "Utils.h"
 
 #include <optional>
 
@@ -17,10 +18,13 @@ auto buildMaterialComponent(rapidjson::Value& componentData) -> std::optional<st
     auto owner_node = componentData["owner_node"].GetUint();
     auto owner_scene = componentData["owner_scene"].GetUint();
 
+    auto component = std::make_unique<MaterialComponent>(id, name, owner_node, owner_scene);
+
     auto shader_id = componentData["shader"].GetUint();
     auto texture_id = componentData["texture"].GetUint();
 
-    auto component = std::make_unique<MaterialComponent>(id, name, owner_node, owner_scene, shader_id, texture_id);
+    component->setShader(shader_id);
+    component->setTexture(texture_id);
 
     return component;
 }
@@ -40,15 +44,18 @@ auto saveMaterialComponent(const std::shared_ptr<MaterialComponent>& component, 
 
 auto buildMeshComponent(rapidjson::Value& componentData) -> std::optional<std::unique_ptr<MeshComponent>>
 {
-        auto id = componentData["id"].GetUint();
-        auto name = componentData["name"].GetString();
-        auto owner_node = componentData["owner_node"].GetUint();
-        auto owner_scene = componentData["owner_scene"].GetUint();
-        auto meshId = componentData["mesh"].GetUint();
+    auto id = componentData["id"].GetUint();
+    auto name = componentData["name"].GetString();
+    auto owner_node = componentData["owner_node"].GetUint();
+    auto owner_scene = componentData["owner_scene"].GetUint();
 
-        auto component = std::make_unique<MeshComponent>(id, name, owner_node, owner_scene, meshId);
+    auto component = std::make_unique<MeshComponent>(id, name, owner_node, owner_scene);
 
-        return component;
+    auto meshId = componentData["mesh"].GetUint();
+
+    component->setMesh(meshId);
+
+    return component;
 }
 
 auto saveMeshComponent(const std::shared_ptr<MeshComponent>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
@@ -152,7 +159,7 @@ void saveTransformComponent(const std::shared_ptr<TransformComponent>& component
     component_json.AddMember("scale", scale, allocator);
 }
 
-auto ComponentBuilder::build(const std::string& type, rapidjson::Value& component) -> std::optional<std::unique_ptr<Component>>
+auto ComponentBuilder::buildFromJson(const std::string& type, rapidjson::Value& component) -> std::optional<std::unique_ptr<Component>>
 {
     Logger::info(std::string(__FUNCTION__) + " component type: {}", type);
 
@@ -169,7 +176,7 @@ auto ComponentBuilder::build(const std::string& type, rapidjson::Value& componen
     return std::nullopt;
 }
 
-void ComponentBuilder::save(const std::shared_ptr<Component>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
+void ComponentBuilder::saveToJson(const std::shared_ptr<Component>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
 {
     if (component->type() == "material") {
         saveMaterialComponent(std::static_pointer_cast<MaterialComponent>(component), component_json, allocator);
@@ -180,6 +187,31 @@ void ComponentBuilder::save(const std::shared_ptr<Component>& component, rapidjs
     } else if (component->type() == "transform") {
         saveTransformComponent(std::static_pointer_cast<TransformComponent>(component), component_json, allocator);
     }
+}
+
+
+template<>
+std::optional<std::unique_ptr<Component>> ComponentBuilder::buildEmptyComponent<CameraComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
+{
+    return std::make_unique<CameraComponent>(generateUniqueId(), name, owner_node, owner_scene);
+}
+
+template<>
+std::optional<std::unique_ptr<Component>> ComponentBuilder::buildEmptyComponent<MeshComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
+{
+    return std::make_unique<MeshComponent>(generateUniqueId(), name, owner_node, owner_scene);
+}
+
+template<>
+std::optional<std::unique_ptr<Component>> ComponentBuilder::buildEmptyComponent<MaterialComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
+{
+    return std::make_unique<MaterialComponent>(generateUniqueId(), name, owner_node, owner_scene);
+}
+
+template<>
+std::optional<std::unique_ptr<Component>> ComponentBuilder::buildEmptyComponent<TransformComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
+{
+    return std::make_unique<TransformComponent>(generateUniqueId(), name, owner_node, owner_scene);
 }
 
 }

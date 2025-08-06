@@ -57,6 +57,18 @@ bool Node::removeChild(uint32_t id)
 
 bool Node::removeComponent(uint32_t id)
 {
+    auto context = m_context.lock();
+    if (!context) {
+        return false;
+    }
+
+    auto scene = context->sceneStore->get(m_owner_scene);
+    if (!scene.has_value()) {
+        return false;
+    }
+
+    scene.value()->removeComponent(id);
+
     return m_components_id.erase(id) == 1;
 }
 

@@ -4,6 +4,7 @@
 #include "SceneStore.h"
 #include "Scene.h"
 #include "SceneRequesterHelper.h"
+#include "ComponentBuilder.h"
 
 #include <rapidjson/document.h>
 
@@ -45,7 +46,43 @@ public:
     template<typename T>
     std::optional<std::shared_ptr<T>> getComponent() const
     {
-        return SceneRequesterHelper::getComponent<T>(m_context.lock()->sceneStore->get(m_owner_scene).value(), components());
+        auto context = m_context.lock();
+        if (!context) {
+            return std::nullopt;
+        }
+
+        auto scene = context->sceneStore->get(m_owner_scene);
+        if (!scene.has_value()) {
+            return std::nullopt;
+        }
+
+        return SceneRequesterHelper::getComponent<T>(scene.value(), components());
+    }
+
+    template<typename T>
+    bool hasComponent() const
+    {
+        auto context = m_context.lock();
+        if (!context) {
+            return false;
+        }
+
+        auto scene = context->sceneStore->get(m_owner_scene);
+        if (!scene.has_value()) {
+            return false;
+        }
+
+        return SceneRequesterHelper::hasComponent<T>(scene.value(), components());
+    }
+
+    template<typename T>
+    std::optional<std::shared_ptr<Component>> addComponent(const std::string& name)
+    {
+        if (hasComponent<T>()) {
+            return std::nullopt;
+        }
+
+        return ComponentBuilder::buildEmptyComponent<T>(name, id(), m_owner_scene);
     }
 
 private:

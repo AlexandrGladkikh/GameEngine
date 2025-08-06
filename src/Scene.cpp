@@ -189,7 +189,7 @@ auto saveScene(const std::shared_ptr<Scene>& scene, const std::filesystem::path&
     rapidjson::Value components(rapidjson::kArrayType);
     for (const auto& component : scene->getComponents()) {
         rapidjson::Value component_json(rapidjson::kObjectType);
-        ComponentBuilder::save(component.second, component_json, document.GetAllocator());
+        ComponentBuilder::saveToJson(component.second, component_json, document.GetAllocator());
         components.PushBack(component_json, document.GetAllocator());
     }
     document.AddMember("components", components, document.GetAllocator());
@@ -242,7 +242,7 @@ auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::
     auto components_json = document["components"].GetArray();
     for (auto& component_json : components_json) {
         auto type = component_json["type"].GetString();
-        auto component = ComponentBuilder::build(type, component_json);
+        auto component = ComponentBuilder::buildFromJson(type, component_json);
          if (!component.has_value()) {
              component = context->userComponentsBuilder->buildComponent(type, component_json);
              if (!component.has_value()) {

@@ -10,7 +10,7 @@
 
 class MoveComponent : public engine::Component {
 public:
-    MoveComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene) : engine::Component(id, name, owner_node, owner_scene)
+    MoveComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene) : Component(id, name, owner_node, owner_scene)
     {
 
     }
@@ -55,20 +55,21 @@ public:
 
     void update(uint64_t dt) override
     {
+        static float speed = 200;
         engine::Logger::info("MoveComponent::update");
         std::optional<std::shared_ptr<engine::TransformComponent>> transform = getNode().value()->getComponent<engine::TransformComponent>();
 
         if (m_up) {
-            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(0.0f, 1.0f, 0.0f));
+            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(0.0f, 1.0f * speed * dt / 1000000, 0.0f));
         }
         if (m_down) {
-            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(0.0f, -1.0f, 0.0f));
+            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(0.0f, -1.0f * speed * dt / 1000000, 0.0f));
         }
         if (m_left) {
-            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(-1.0f, 0.0f, 0.0f));
+            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(-1.0f * speed * dt / 1000000, 0.0f, 0.0f));
         }
         if (m_right) {
-            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(1.0f, 0.0f, 0.0f));
+            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(1.0f * speed * dt / 1000000, 0.0f, 0.0f));
         }
     }
 

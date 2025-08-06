@@ -2,11 +2,8 @@
 
 namespace engine {
 
-MaterialComponent::MaterialComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene,
-    uint32_t shader_id, uint32_t texture_id) :
+MaterialComponent::MaterialComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene) :
     Component(id, name, owner_node, owner_scene),
-    m_shader_id(shader_id),
-    m_texture_id(texture_id),
     m_dirty(true)
 {
 }
@@ -40,6 +37,18 @@ void MaterialComponent::clearDirty()
 std::string MaterialComponent::type() const
 {
     return "material";
+}
+
+void MaterialComponent::setShader(uint32_t shader_id)
+{
+    m_shader_id = shader_id;
+    m_dirty = true;
+}
+
+void MaterialComponent::setTexture(uint32_t texture_id)
+{
+    m_texture_id = texture_id;
+    m_dirty = true;
 }
 
 auto MaterialComponent::shader() const -> uint32_t
