@@ -63,6 +63,8 @@ add_executable(learnProject main.cpp glad.c
         src/UserComponentsBuilder.h
         src/Utils.h
         src/Utils.cpp
+        src/FlipbookAnimationComponent.h
+        src/FlipbookAnimationComponent.cpp
 )
 
 target_link_directories(learnProject PUBLIC ${CMAKE_SOURCE_DIR}/../3rdparts/libs/)

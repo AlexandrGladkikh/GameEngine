@@ -38,10 +38,14 @@ public:
     std::unordered_set<uint32_t> components() const;
 
     bool addChild(uint32_t id);
+    std::shared_ptr<Node> addChild(const std::string& name);
     bool addComponent(uint32_t id);
 
     bool removeChild(uint32_t id);
     bool removeComponent(uint32_t id);
+
+    auto getChild(uint32_t id) const -> std::optional<std::shared_ptr<Node>>;
+    auto getChild(const std::string& name) const -> std::optional<std::shared_ptr<Node>>;
 
     template<typename T>
     std::optional<std::shared_ptr<T>> getComponent() const
@@ -76,13 +80,36 @@ public:
     }
 
     template<typename T>
-    std::optional<std::shared_ptr<Component>> addComponent(const std::string& name)
+    std::optional<std::shared_ptr<T>> addComponent(const std::string& name)
     {
         if (hasComponent<T>()) {
             return std::nullopt;
         }
 
-        return ComponentBuilder::buildEmptyComponent<T>(name, id(), m_owner_scene);
+        auto component = ComponentBuilder::buildEmptyComponent<T>(name, id(), m_owner_scene);
+
+        if (!component.has_value()) {
+            return std::nullopt;
+        }
+
+        component.value()->setContext(m_context);
+
+        auto context = m_context.lock();
+        if (!context) {
+            return std::nullopt;
+        }
+
+        auto scene = context->sceneStore->get(m_owner_scene);
+        if (!scene.has_value()) {
+            return std::nullopt;
+        }
+
+        auto component_id = component.value()->id();
+        scene.value()->addComponent(component_id, std::move(component.value()));
+
+        addComponent(component_id);
+
+        return std::static_pointer_cast<T>(scene.value()->getComponent(component_id).value());
     }
 
 private:

@@ -5,6 +5,10 @@
 #include "TransformComponent.h"
 #include "Node.h"
 #include "Logger.h"
+#include "MaterialComponent.h"
+#include "Window.h"
+#include "MeshComponent.h"
+#include "FlipbookAnimationComponent.h"
 
 #include <GLFW/glfw3.h>
 
@@ -49,8 +53,104 @@ public:
         context().lock()->inputManager->registerHandler(GLFW_KEY_ESCAPE, [this](int key, int action) {
             if (action == GLFW_PRESS) {
                 context().lock()->engineAccessor->stop();
-            };
+            }
         });
+
+        auto windowSize = context().lock()->window->size();
+
+        auto selfNodeOpt = getNode();
+        if (!selfNodeOpt.has_value()) {
+            return;
+        }
+
+        auto selfNode = selfNodeOpt.value();
+
+        auto topPipe = selfNode->addChild("topPipe");
+        auto topTransform = topPipe->addComponent<engine::TransformComponent>("top pipe transform");
+        if (!topTransform.has_value()) {
+            return;
+        }
+
+        auto topPipeMaterial = topPipe->addComponent<engine::MaterialComponent>("top pipe texture");
+        if (!topPipeMaterial.has_value()) {
+            return;
+        }
+        topPipeMaterial.value()->setTexture(4);
+        topPipeMaterial.value()->setShader(1);
+
+        auto topPipeSize = topPipeMaterial.value()->textureSize();
+
+        topTransform.value()->setPosition(glm::vec3(windowSize.first / 2, windowSize.second - topPipeSize.second / 2 + 100, -100));
+
+        auto topMesh = topPipe->addComponent<engine::MeshComponent>("top pipe mesh");
+        if (!topMesh.has_value()) {
+            return;
+        }
+        topMesh.value()->setMesh(1);
+
+        auto bottomPipe = selfNode->addChild("bottomPipe");
+        auto bottomTransform = bottomPipe->addComponent<engine::TransformComponent>("bottom pipe transform");
+        if (!bottomTransform.has_value()) {
+            return;
+        }
+        bottomTransform.value()->setScale(glm::vec3(1, -1, 1));
+
+        auto bottomPipeMaterial = bottomPipe->addComponent<engine::MaterialComponent>("bottom pipe texture");
+        if (!bottomPipeMaterial.has_value()) {
+            return;
+        }
+        bottomPipeMaterial.value()->setTexture(4);
+        bottomPipeMaterial.value()->setShader(1);
+
+        auto bottomPipeSize = bottomPipeMaterial.value()->textureSize();
+
+        bottomTransform.value()->setPosition(glm::vec3(windowSize.first / 2, bottomPipeSize.second / 2 - 100, -100));
+
+        auto bottomMesh = bottomPipe->addComponent<engine::MeshComponent>("top pipe mesh");
+        if (!bottomMesh.has_value()) {
+            return;
+        }
+        bottomMesh.value()->setMesh(1);
+
+        auto backgroundCity = selfNode->addChild("background");
+
+        auto backgroundPipeMaterial = backgroundCity->addComponent<engine::MaterialComponent>("background texture");
+        if (!backgroundPipeMaterial.has_value()) {
+            return;
+        }
+        backgroundPipeMaterial.value()->setTexture(2);
+        backgroundPipeMaterial.value()->setShader(1);
+
+        auto backgroundTransform = backgroundCity->addComponent<engine::TransformComponent>("background transform");
+        if (!backgroundTransform.has_value()) {
+            return;
+        }
+        backgroundTransform.value()->setPosition(glm::vec3(windowSize.first / 2, windowSize.second / 2, -101));
+
+        auto backgroundSize = backgroundPipeMaterial.value()->textureSize();
+
+        auto scaleBackground = glm::vec3(static_cast<GLfloat>(windowSize.first) / backgroundSize.first, static_cast<GLfloat>(-windowSize.second) / backgroundSize.second, 1);
+        backgroundTransform.value()->setScale(scaleBackground);
+
+        auto backgroundMesh = backgroundCity->addComponent<engine::MeshComponent>("background mesh");
+        if (!backgroundMesh.has_value()) {
+            return;
+        }
+        backgroundMesh.value()->setMesh(1);
+
+        auto flipbookAnimation = selfNode->addComponent<engine::FlipbookAnimationComponent>("flipbook animation");
+        auto birdMid = selfNode->addChild("bird mid");
+        auto birdMidTransform = birdMid->addComponent<engine::TransformComponent>("bird mid transform");
+        birdMidTransform.value()->setPosition(glm::vec3(windowSize.first / 4, windowSize.second / 2, -100));
+        birdMidTransform.value()->setScale(glm::vec3(1.0f, -1.0f, 1.0f));
+        auto birdMidMaterial = birdMid->addComponent<engine::MaterialComponent>("bird mid texture");
+        birdMidMaterial.value()->setTexture("yellowbird-midflap");
+        birdMidMaterial.value()->setShader("default");
+        auto birdMidMesh = birdMid->addComponent<engine::MeshComponent>("bird mid mesh");
+        birdMidMesh.value()->setMesh("quad");
+
+        auto birdTop = selfNode->addChild("bird top");
+        auto birdBottom = selfNode->addChild("bird bottom");
     }
 
     void update(uint64_t dt) override

@@ -23,6 +23,9 @@ Window::Window(const std::string& title, GLint width, GLint height)
 
     glEnable(GL_DEPTH_TEST);
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     auto window_size = size();
     glViewport(0, 0, window_size.first, window_size.second);
 

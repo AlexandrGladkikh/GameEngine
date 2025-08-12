@@ -75,6 +75,21 @@ void MeshComponent::setMesh(uint32_t meshId)
     markDirty();
 }
 
+void MeshComponent::setMesh(const std::string& mesh_name)
+{
+    auto ctx = context().lock();
+    if (!ctx) {
+        return;
+    }
+
+    auto mesh = ctx->meshStore->getIdByName(mesh_name);
+
+    if (mesh.has_value()) {
+        m_id = mesh.value();
+        markDirty();
+    }
+}
+
 uint32_t MeshComponent::meshId() const
 {
     return m_id;

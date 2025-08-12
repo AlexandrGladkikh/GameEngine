@@ -13,12 +13,14 @@ namespace engine {
 
 class Shader {
 public:
-    Shader(const std::string& vertexShader, const std::string& fragmentShader);
+    Shader(const std::string& name, const std::string& vertexShader, const std::string& fragmentShader);
     ~Shader();
     Shader(const Shader&) = delete;
     Shader& operator=(const Shader&) = delete;
     Shader(Shader&&) = delete;
     Shader& operator=(Shader&&) = delete;
+
+    auto name() const -> std::string;
 
     void use() const;
 
@@ -26,6 +28,8 @@ public:
     void setUniform1i(const std::string& name, int value) const;
 
 private:
+    std::string m_name;
+
     GLuint m_program;
 };
 

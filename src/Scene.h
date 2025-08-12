@@ -35,7 +35,9 @@ public:
     bool removeNode(uint32_t id);
 
     auto getComponent(uint32_t id) const -> std::optional<std::shared_ptr<Component>>;
+    auto getComponent(const std::string& name) const -> std::optional<std::shared_ptr<Component>>;
     auto getNode(uint32_t id) const -> std::optional<std::shared_ptr<Node>>;
+    auto getNode(const std::string& name) const -> std::optional<std::shared_ptr<Node>>;
 
     auto getComponents() const -> const std::unordered_map<uint32_t, std::shared_ptr<Component>>&;
     auto getNodes() const -> const std::unordered_map<uint32_t, std::shared_ptr<Node>>&;

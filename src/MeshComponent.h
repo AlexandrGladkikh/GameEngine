@@ -25,11 +25,12 @@ public:
     void unbind() const;
 
     void setMesh(uint32_t meshId);
+    void setMesh(const std::string& mesh_name);
 
     uint32_t meshId() const;
 
 private:
-    uint32_t m_id;
+    uint32_t m_id = 0;
 
     bool m_dirty;
 };

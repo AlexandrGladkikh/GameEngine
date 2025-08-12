@@ -6,7 +6,8 @@
 
 namespace engine {
 
-Shader::Shader(const std::string& vertexShader, const std::string& fragmentShader)
+Shader::Shader(const std::string& name, const std::string& vertexShader, const std::string& fragmentShader) :
+    m_name(name)
 {
     Logger::info(__FUNCTION__);
 
@@ -58,6 +59,11 @@ Shader::~Shader()
     glDeleteProgram(m_program);
 }
 
+auto Shader::name() const -> std::string
+{
+    return m_name;
+}
+
 void Shader::use() const
 {
     glUseProgram(m_program);
@@ -94,7 +100,7 @@ auto buildShader(const std::filesystem::path& path) -> std::optional<std::unique
 
     auto vertexShaderSource = FileSystem::file(vertexShaderPath, std::ios::in).readText();
     auto fragmentShaderSource = FileSystem::file(fragmentShaderPath, std::ios::in).readText();
-    return std::make_unique<Shader>(vertexShaderSource, fragmentShaderSource);
+    return std::make_unique<Shader>(path.stem().string(), vertexShaderSource, fragmentShaderSource);
 }
 
 }

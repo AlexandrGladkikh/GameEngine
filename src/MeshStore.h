@@ -10,6 +10,8 @@
 namespace engine {
 
 struct MeshData {
+    std::string name;
+
     std::vector<GLfloat> vertices;
     std::vector<GLuint> indices;
 
@@ -34,6 +36,8 @@ public:
     MeshStore& operator=(MeshStore&&) = delete;
 
     auto get(uint32_t id) const -> std::optional<std::shared_ptr<MeshData>>;
+    auto get(const std::string& name) const -> std::optional<std::shared_ptr<MeshData>>;
+    auto getIdByName(const std::string& name) const -> std::optional<uint32_t>;
     void add(uint32_t id, const std::shared_ptr<MeshData>& meshData);
     void remove(uint32_t id);
 

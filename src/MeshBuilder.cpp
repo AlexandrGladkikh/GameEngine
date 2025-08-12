@@ -8,13 +8,15 @@
 
 namespace engine {
 
-auto buildMeshGL(const std::vector<GLfloat>& vertices,
-        const std::vector<GLuint>& indices,
-        GLuint stride,
-        GLuint offset) -> std::unique_ptr<MeshData>
+auto buildMeshGL(const std::string& name,
+    const std::vector<GLfloat>& vertices,
+    const std::vector<GLuint>& indices,
+    GLuint stride,
+    GLuint offset) -> std::unique_ptr<MeshData>
 {
     auto data = std::make_unique<MeshData>();
 
+    data->name = name;
     data->vertices = vertices;
     data->indices = indices;
     data->stride = stride;
@@ -68,7 +70,7 @@ auto buildMesh(const std::filesystem::path& path) -> std::optional<std::unique_p
     std::vector<GLuint> indices_data_gl(indices_data.size() / sizeof(GLuint), 0);
     std::memcpy(indices_data_gl.data(), indices_data.data(), indices_data.size());
 
-    return buildMeshGL(vertices_data_gl, indices_data_gl, 5, 0);
+    return buildMeshGL(path.stem().string(), vertices_data_gl, indices_data_gl, 5, 0);
 }
 
 }

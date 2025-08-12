@@ -8,7 +8,7 @@ namespace engine {
 
 class TransformComponent : public Component {
 public:
-    TransformComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene);
+    explicit TransformComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene);
     ~TransformComponent() override = default;
 
     void init() override;

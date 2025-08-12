@@ -18,6 +18,8 @@ public:
     TextureStore& operator=(TextureStore&&) = delete;
 
     auto get(uint32_t id) const -> std::optional<std::shared_ptr<Texture>>;
+    auto get(const std::string& name) const -> std::optional<std::shared_ptr<Texture>>;
+    auto getIdByName(const std::string& name) const -> std::optional<uint32_t>;
     void add(uint32_t id, std::unique_ptr<Texture> texture);
     void remove(uint32_t id);
 

@@ -116,6 +116,13 @@ auto Scene::getComponent(uint32_t id) const -> std::optional<std::shared_ptr<Com
     return it->second;
 }
 
+auto Scene::getComponent(const std::string& name) const -> std::optional<std::shared_ptr<Component>>
+{
+    return std::ranges::find_if(m_components, [&](const auto& component) {
+        return component.second->name() == name;
+    })->second;
+}
+
 auto Scene::getNode(uint32_t id) const -> std::optional<std::shared_ptr<Node>>
 {
     auto it = m_nodes.find(id);
@@ -124,6 +131,13 @@ auto Scene::getNode(uint32_t id) const -> std::optional<std::shared_ptr<Node>>
     }
 
     return it->second;
+}
+
+auto Scene::getNode(const std::string& name) const -> std::optional<std::shared_ptr<Node>>
+{
+    return std::ranges::find_if(m_nodes, [&](const auto& node) {
+        return node.second->name() == name;
+    })->second;
 }
 
 auto Scene::getComponents() const -> const std::unordered_map<uint32_t, std::shared_ptr<Component>>&
@@ -251,7 +265,6 @@ auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::
         }
 
         component.value()->setContext(context);
-        component.value()->init();
 
         Logger::info("add component type: {}", type);
         uint32_t id = component.value()->id();

@@ -16,6 +16,30 @@
     {
       "id": 1,
       "path": "../textures/container.jpg"
+    },
+    {
+      "id": 2,
+      "path": "../textures/Game Objects/background-day.png"
+    },
+    {
+      "id": 3,
+      "path": "../textures/Game Objects/base.png"
+    },
+    {
+      "id": 4,
+      "path": "../textures/Game Objects/pipe-green.png"
+    },
+    {
+      "id": 5,
+      "path": "../textures/Game Objects/yellowbird-downflap.png"
+    },
+    {
+      "id": 6,
+      "path": "../textures/Game Objects/yellowbird-midflap.png"
+    },
+    {
+      "id": 7,
+      "path": "../textures/Game Objects/yellowbird-upflap.png"
     }
   ]
 }

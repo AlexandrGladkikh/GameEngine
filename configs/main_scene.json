@@ -43,7 +43,7 @@
       "name": "quad_transform",
       "owner_node": 2,
       "owner_scene" : 1,
-      "position": [400.0, 300.0, -500.0],
+      "position": [2400.0, 300.0, 0.0],
       "rotation": [0.0, 0.0, 0.0],
       "scale": [1.0, 1.0, 1.0]
     },
@@ -53,7 +53,7 @@
       "name": "quad_transform",
       "owner_node": 20,
       "owner_scene" : 1,
-      "position": [1400.0, 800.0, -501.0],
+      "position": [1400.0, 800.0, -1.0],
       "rotation": [0.0, 0.0, 0.0],
       "scale": [1.0, 1.0, 1.0]
     },
@@ -106,8 +106,8 @@
       "owner_scene" : 1,
       "projection": {
         "left": 0,
-        "right": 1920,
-        "top": 1080,
+        "right": 360,
+        "top": 640,
         "bottom": 0,
         "near": 0.1,
         "far": 1000.0

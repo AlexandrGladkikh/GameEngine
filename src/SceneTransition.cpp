@@ -8,8 +8,10 @@
 #include "ShaderStore.h"
 #include "TextureStore.h"
 #include "Logger.h"
+#include "Component.h"
 
 #include <algorithm>
+#include <ranges>
 
 namespace engine {
 
@@ -66,6 +68,10 @@ bool SceneTransition::transition(const std::unordered_map<uint32_t, std::filesys
     Logger::info("Scene {} enable", scene_id_to);
     uint32_t scene_id = scene_to.value()->id();
     m_context->sceneStore->add(scene_id, std::move(scene_to.value()));
+
+    for (auto& component : m_context->sceneStore->get(scene_id).value()->getComponents() | std::views::values) {
+        component->init();
+    }
 
     return true;
 }

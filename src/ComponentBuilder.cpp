@@ -6,6 +6,7 @@
 #include "TransformComponent.h"
 #include "Logger.h"
 #include "Utils.h"
+#include "FlipbookAnimationComponent.h"
 
 #include <optional>
 
@@ -159,6 +160,47 @@ void saveTransformComponent(const std::shared_ptr<TransformComponent>& component
     component_json.AddMember("scale", scale, allocator);
 }
 
+auto buildFlipbookAnimationComponent(rapidjson::Value& componentData) -> std::optional<std::unique_ptr<FlipbookAnimationComponent>>
+{
+    Logger::info(__FUNCTION__);
+
+    auto id = componentData["id"].GetUint();
+    auto name = componentData["name"].GetString();
+    auto owner_node = componentData["owner_node"].GetUint();
+    auto owner_scene = componentData["owner_scene"].GetUint();
+
+    auto component = std::make_unique<FlipbookAnimationComponent>(id, name, owner_node, owner_scene);
+
+    auto materials = componentData["materials"].GetArray();
+    for (rapidjson::SizeType i = 0; i < materials.Size(); ++i) {
+        component->addMaterial(materials[i].GetUint());
+    }
+
+    auto update_time = componentData["update_time"].GetUint();
+    component->setUpdateTime(update_time);
+
+    return component;
+}
+
+void saveFlipbookAnimationComponent(const std::shared_ptr<FlipbookAnimationComponent>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value value;
+    value.SetString(component->name().c_str(), allocator);
+    component_json.AddMember("type", "flipbook_animation", allocator);
+    component_json.AddMember("id", component->id(), allocator);
+    component_json.AddMember("name", value, allocator);
+    component_json.AddMember("owner_node", component->ownerNode(), allocator);
+    component_json.AddMember("owner_scene", component->ownerScene(), allocator);
+
+    rapidjson::Value materials(rapidjson::kArrayType);
+    for (const auto material : component->materialIds()) {
+        materials.PushBack(material, allocator);
+    }
+    component_json.AddMember("materials", materials, allocator);
+
+    component_json.AddMember("update_time", component->updateTime(), allocator);
+}
+
 auto ComponentBuilder::buildFromJson(const std::string& type, rapidjson::Value& component) -> std::optional<std::unique_ptr<Component>>
 {
     Logger::info(std::string(__FUNCTION__) + " component type: {}", type);
@@ -171,6 +213,8 @@ auto ComponentBuilder::buildFromJson(const std::string& type, rapidjson::Value& 
         return buildCameraComponent(component);
     } else if (type == "transform") {
         return buildTransformComponent(component);
+    } else if (type == "flipbook_animation") {
+        return buildFlipbookAnimationComponent(component);
     }
 
     return std::nullopt;
@@ -179,39 +223,46 @@ auto ComponentBuilder::buildFromJson(const std::string& type, rapidjson::Value& 
 void ComponentBuilder::saveToJson(const std::shared_ptr<Component>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
 {
     if (component->type() == "material") {
-        saveMaterialComponent(std::static_pointer_cast<MaterialComponent>(component), component_json, allocator);
+        saveMaterialComponent(std::dynamic_pointer_cast<MaterialComponent>(component), component_json, allocator);
     } else if (component->type() == "mesh") {
-        saveMeshComponent(std::static_pointer_cast<MeshComponent>(component), component_json, allocator);
+        saveMeshComponent(std::dynamic_pointer_cast<MeshComponent>(component), component_json, allocator);
     } else if (component->type() == "camera") {
-        saveCameraComponent(std::static_pointer_cast<CameraComponent>(component), component_json, allocator);
+        saveCameraComponent(std::dynamic_pointer_cast<CameraComponent>(component), component_json, allocator);
     } else if (component->type() == "transform") {
-        saveTransformComponent(std::static_pointer_cast<TransformComponent>(component), component_json, allocator);
+        saveTransformComponent(std::dynamic_pointer_cast<TransformComponent>(component), component_json, allocator);
+    } else if (component->type() == "flipbook_animation") {
+        saveFlipbookAnimationComponent(std::dynamic_pointer_cast<FlipbookAnimationComponent>(component), component_json, allocator);
     }
 }
 
-
 template<>
-std::optional<std::unique_ptr<Component>> ComponentBuilder::buildEmptyComponent<CameraComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
+std::optional<std::unique_ptr<CameraComponent>> ComponentBuilder::buildEmptyComponent<CameraComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
 {
     return std::make_unique<CameraComponent>(generateUniqueId(), name, owner_node, owner_scene);
 }
 
 template<>
-std::optional<std::unique_ptr<Component>> ComponentBuilder::buildEmptyComponent<MeshComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
+std::optional<std::unique_ptr<MeshComponent>> ComponentBuilder::buildEmptyComponent<MeshComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
 {
     return std::make_unique<MeshComponent>(generateUniqueId(), name, owner_node, owner_scene);
 }
 
 template<>
-std::optional<std::unique_ptr<Component>> ComponentBuilder::buildEmptyComponent<MaterialComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
+std::optional<std::unique_ptr<MaterialComponent>> ComponentBuilder::buildEmptyComponent<MaterialComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
 {
     return std::make_unique<MaterialComponent>(generateUniqueId(), name, owner_node, owner_scene);
 }
 
 template<>
-std::optional<std::unique_ptr<Component>> ComponentBuilder::buildEmptyComponent<TransformComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
+std::optional<std::unique_ptr<TransformComponent>> ComponentBuilder::buildEmptyComponent<TransformComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
 {
     return std::make_unique<TransformComponent>(generateUniqueId(), name, owner_node, owner_scene);
+}
+
+template<>
+std::optional<std::unique_ptr<FlipbookAnimationComponent>> ComponentBuilder::buildEmptyComponent<FlipbookAnimationComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
+{
+    return std::make_unique<FlipbookAnimationComponent>(generateUniqueId(), name, owner_node, owner_scene);
 }
 
 }

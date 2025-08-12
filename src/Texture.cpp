@@ -6,12 +6,14 @@
 
 namespace engine {
 
-Texture::Texture()
+Texture::Texture(const std::string& name) :
+    m_name(name)
 {
     glGenTextures(1, &m_texture);
 }
 
-Texture::Texture(void* data, GLsizei width, GLsizei height) :
+Texture::Texture(const std::string& name, void* data, GLsizei width, GLsizei height, GLint channels) :
+    m_name(name),
     m_width(width),
     m_height(height)
 {
@@ -23,7 +25,7 @@ Texture::Texture(void* data, GLsizei width, GLsizei height) :
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, channels == 3 ? GL_RGB : GL_RGBA, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
 
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -32,6 +34,11 @@ Texture::Texture(void* data, GLsizei width, GLsizei height) :
 Texture::~Texture()
 {
     glDeleteTextures(1, &m_texture);
+}
+
+std::string Texture::name() const
+{
+    return m_name;
 }
 
 void Texture::bind() const
@@ -64,7 +71,7 @@ auto buildTexture(const std::filesystem::path& path) -> std::optional<std::uniqu
     int widthTex, heightTex, nrChannels;
     unsigned char* image = stbi_load_from_memory(data.data(), data.size(), &widthTex, &heightTex, &nrChannels, 0);
 
-    return std::make_unique<Texture>(image, widthTex, heightTex);
+    return std::make_unique<Texture>(path.stem().string(), image, widthTex, heightTex, nrChannels);
 }
 
 }

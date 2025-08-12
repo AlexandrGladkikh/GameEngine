@@ -1,5 +1,6 @@
 #include "Node.h"
 #include "Logger.h"
+#include "Utils.h"
 
 namespace engine {
 
@@ -45,6 +46,25 @@ bool Node::addChild(uint32_t id)
     return m_children_id.insert(id).second;
 }
 
+std::shared_ptr<Node> Node::addChild(const std::string& name)
+{
+    auto context = m_context.lock();
+    if (!context) {
+        return nullptr;
+    }
+
+    auto scene = context->sceneStore->get(m_owner_scene);
+    if (!scene.has_value()) {
+        return nullptr;
+    }
+
+    auto newNode = std::make_shared<Node>(generateUniqueId(), name, m_id, m_owner_scene);
+    newNode->setContext(m_context);
+    scene.value()->addNode(newNode->id(), newNode);
+
+    return newNode;
+}
+
 bool Node::addComponent(uint32_t id)
 {
     return m_components_id.insert(id).second;
@@ -70,6 +90,36 @@ bool Node::removeComponent(uint32_t id)
     scene.value()->removeComponent(id);
 
     return m_components_id.erase(id) == 1;
+}
+
+auto Node::getChild(uint32_t id) const -> std::optional<std::shared_ptr<Node>>
+{
+    auto context = m_context.lock();
+    if (!context) {
+        return std::nullopt;
+    }
+
+    auto scene = context->sceneStore->get(m_owner_scene);
+    if (!scene.has_value()) {
+        return std::nullopt;
+    }
+
+    return scene.value()->getNode(id);
+}
+
+auto Node::getChild(const std::string& name) const -> std::optional<std::shared_ptr<Node>>
+{
+    auto context = m_context.lock();
+    if (!context) {
+        return std::nullopt;
+    }
+
+    auto scene = context->sceneStore->get(m_owner_scene);
+    if (!scene.has_value()) {
+        return std::nullopt;
+    }
+
+    return scene.value()->getNode(name);
 }
 
 auto buildNode(rapidjson::Value& node_json) -> std::optional<std::unique_ptr<Node>>

@@ -84,8 +84,8 @@ void loadResourcePackage(const std::shared_ptr<Context>& context, const Resource
     Logger::info(__FUNCTION__);
 
     for (auto& shaderInfo : package.shaders) {
-        auto shader_existed = context->shaderStore->get(shaderInfo.id);
-        if (shader_existed.has_value()) {
+        auto shader_exist = context->shaderStore->get(shaderInfo.id);
+        if (shader_exist.has_value()) {
             continue;
         }
 
@@ -98,8 +98,8 @@ void loadResourcePackage(const std::shared_ptr<Context>& context, const Resource
     }
 
     for (auto& textureInfo : package.textures) {
-        auto texture_existed = context->textureStore->get(textureInfo.id);
-        if (texture_existed.has_value()) {
+        auto texture_exist = context->textureStore->get(textureInfo.id);
+        if (texture_exist.has_value()) {
             continue;
         }
 
@@ -112,8 +112,8 @@ void loadResourcePackage(const std::shared_ptr<Context>& context, const Resource
     }
 
     for (auto& meshInfo : package.meshes) {
-        auto mesh_existed = context->meshStore->get(meshInfo.id);
-        if (mesh_existed.has_value()) {
+        auto mesh_exist = context->meshStore->get(meshInfo.id);
+        if (mesh_exist.has_value()) {
             continue;
         }
 

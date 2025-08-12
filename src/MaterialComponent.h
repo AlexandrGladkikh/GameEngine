@@ -20,16 +20,20 @@ public:
     std::string type() const override;
 
     void setShader(uint32_t shader_id);
+    void setShader(const std::string& shader_name);
     void setTexture(uint32_t texture_id);
+    void setTexture(const std::string& texture_name);
 
     auto shader() const -> uint32_t;
     auto texture() const -> uint32_t;
 
-private:
-    uint32_t m_shader_id;
-    uint32_t m_texture_id;
+    auto textureSize() const -> std::pair<uint32_t, uint32_t>;
 
-    bool m_dirty;
+private:
+    uint32_t m_shader_id = 0;
+    uint32_t m_texture_id = 0;
+
+    bool m_dirty = true;
 };
 
 }

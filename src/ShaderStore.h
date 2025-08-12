@@ -20,6 +20,8 @@ public:
     ShaderStore& operator=(ShaderStore&&) = delete;
 
     auto get(uint32_t id) const -> std::optional<std::shared_ptr<Shader>>;
+    auto get(const std::string& name) const -> std::optional<std::shared_ptr<Shader>>;
+    auto getIdByName(const std::string& name) const -> std::optional<uint32_t>;
     void add(uint32_t id, std::unique_ptr<Shader> shader);
     void remove(uint32_t id);
 
