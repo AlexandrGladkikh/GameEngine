@@ -32,13 +32,15 @@ public:
 
     std::uint32_t id() const;
     std::string name() const;
-    uint32_t parent() const;
+    uint32_t getParentId() const;
+
+    auto getParentNode() const -> std::optional<std::shared_ptr<Node>>;
 
     std::unordered_set<uint32_t> children() const;
     std::unordered_set<uint32_t> components() const;
 
     bool addChild(uint32_t id);
-    std::shared_ptr<Node> addChild(const std::string& name);
+    auto addChild(const std::string& name) -> std::shared_ptr<Node>;
     bool addComponent(uint32_t id);
 
     bool removeChild(uint32_t id);

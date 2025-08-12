@@ -78,7 +78,25 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
             continue;
         }
 
-        auto transform_mtx = transformTune(transform.value()->getModel(), texture.value()->width(), texture.value()->height());
+        auto model_mtx = transform.value()->getModel();
+
+        auto parent = node->getParentNode();
+        while (parent.has_value()) {
+            if (!parent.value()->hasComponent<TransformComponent>()) {
+                parent = parent.value()->getParentNode();
+                continue;
+            }
+
+            auto transform_parent = parent.value()->getComponent<TransformComponent>();
+            if (!transform_parent.has_value() || !transform_parent.value()->isActive()) {
+                break;
+            }
+
+            model_mtx = transform_parent.value()->getModel() * model_mtx;
+            parent = parent.value()->getParentNode();
+        }
+
+        auto transform_mtx = transformTune(model_mtx, texture.value()->width(), texture.value()->height());
 
         shader_program.value()->use();
         shader_program.value()->setUniform4mat("model", transform_mtx);

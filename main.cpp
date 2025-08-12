@@ -58,7 +58,7 @@ public:
 
         auto windowSize = context().lock()->window->size();
 
-        auto selfNodeOpt = getNode();
+        auto selfNodeOpt = context().lock()->sceneStore->get(ownerScene()).value()->getNode("root");
         if (!selfNodeOpt.has_value()) {
             return;
         }
@@ -125,7 +125,7 @@ public:
         if (!backgroundTransform.has_value()) {
             return;
         }
-        backgroundTransform.value()->setPosition(glm::vec3(windowSize.first / 2, windowSize.second / 2, -101));
+        backgroundTransform.value()->setPosition(glm::vec3(windowSize.first / 2, windowSize.second / 2, -200));
 
         auto backgroundSize = backgroundPipeMaterial.value()->textureSize();
 
@@ -138,19 +138,48 @@ public:
         }
         backgroundMesh.value()->setMesh(1);
 
-        auto flipbookAnimation = selfNode->addComponent<engine::FlipbookAnimationComponent>("flipbook animation");
-        auto birdMid = selfNode->addChild("bird mid");
+        auto birdNode = selfNode->addChild("bird");
+        auto birdTransform = birdNode->addComponent<engine::TransformComponent>("bird transform");
+
+        auto birdMid = birdNode->addChild("bird mid");
         auto birdMidTransform = birdMid->addComponent<engine::TransformComponent>("bird mid transform");
         birdMidTransform.value()->setPosition(glm::vec3(windowSize.first / 4, windowSize.second / 2, -100));
         birdMidTransform.value()->setScale(glm::vec3(1.0f, -1.0f, 1.0f));
-        auto birdMidMaterial = birdMid->addComponent<engine::MaterialComponent>("bird mid texture");
+        auto birdMidMaterial = birdMid->addComponent<engine::MaterialComponent>("bird mid material");
         birdMidMaterial.value()->setTexture("yellowbird-midflap");
         birdMidMaterial.value()->setShader("default");
         auto birdMidMesh = birdMid->addComponent<engine::MeshComponent>("bird mid mesh");
         birdMidMesh.value()->setMesh("quad");
 
-        auto birdTop = selfNode->addChild("bird top");
-        auto birdBottom = selfNode->addChild("bird bottom");
+        auto birdTop = birdNode->addChild("bird top");
+        auto birdTopTransform = birdTop->addComponent<engine::TransformComponent>("bird top transform");
+        birdTopTransform.value()->setPosition(glm::vec3(windowSize.first / 4, windowSize.second / 2, -100));
+        birdTopTransform.value()->setScale(glm::vec3(1.0f, -1.0f, 1.0f));
+        auto birdTopMaterial = birdTop->addComponent<engine::MaterialComponent>("bird top material");
+        birdTopMaterial.value()->setTexture("yellowbird-upflap");
+        birdTopMaterial.value()->setShader("default");
+        auto birdTopMesh = birdTop->addComponent<engine::MeshComponent>("bird top mesh");
+        birdTopMesh.value()->setMesh("quad");
+
+        auto birdBottom = birdNode->addChild("bird bottom");
+        auto birdBottomTransform = birdBottom->addComponent<engine::TransformComponent>("bird bottom transform");
+        birdBottomTransform.value()->setPosition(glm::vec3(windowSize.first / 4, windowSize.second / 2, -100));
+        birdBottomTransform.value()->setScale(glm::vec3(1.0f, -1.0f, 1.0f));
+        auto birdBottomMaterial = birdBottom->addComponent<engine::MaterialComponent>("bird bottom material");
+        birdBottomMaterial.value()->setTexture("yellowbird-downflap");
+        birdBottomMaterial.value()->setShader("default");
+        auto birdBottomMesh = birdBottom->addComponent<engine::MeshComponent>("bird bottom mesh");
+        birdBottomMesh.value()->setMesh("quad");
+
+        auto flipbookAnimation = selfNode->addComponent<engine::FlipbookAnimationComponent>("flipbook animation");
+        if (!flipbookAnimation.has_value()) {
+            return;
+        }
+        flipbookAnimation.value()->addMaterial("bird mid material");
+        flipbookAnimation.value()->addMaterial("bird top material");
+        flipbookAnimation.value()->addMaterial("bird bottom material");
+        flipbookAnimation.value()->setUpdateTime(100000);
+        flipbookAnimation.value()->start();
     }
 
     void update(uint64_t dt) override

@@ -26,9 +26,24 @@ std::string Node::name() const
     return m_name;
 }
 
-uint32_t Node::parent() const
+uint32_t Node::getParentId() const
 {
     return m_parent;
+}
+
+auto Node::getParentNode() const -> std::optional<std::shared_ptr<Node>>
+{
+    auto context = m_context.lock();
+    if (!context) {
+        return std::nullopt;
+    }
+
+    auto scene = context->sceneStore->get(m_owner_scene);
+    if (!scene.has_value()) {
+        return std::nullopt;
+    }
+
+    return scene.value()->getNode(m_parent);
 }
 
 std::unordered_set<uint32_t> Node::children() const
@@ -46,7 +61,7 @@ bool Node::addChild(uint32_t id)
     return m_children_id.insert(id).second;
 }
 
-std::shared_ptr<Node> Node::addChild(const std::string& name)
+auto Node::addChild(const std::string& name) -> std::shared_ptr<Node>
 {
     auto context = m_context.lock();
     if (!context) {
@@ -151,7 +166,7 @@ void saveNode(const std::shared_ptr<Node>& node, rapidjson::Value& node_json, ra
     value.SetString(node->name().c_str(), allocator);
     node_json.AddMember("id", node->id(), allocator);
     node_json.AddMember("name", value, allocator);
-    node_json.AddMember("parent", node->parent(), allocator);
+    node_json.AddMember("parent", node->getParentId(), allocator);
 
     rapidjson::Value children(rapidjson::kArrayType);
     for (const auto child : node->children()) {

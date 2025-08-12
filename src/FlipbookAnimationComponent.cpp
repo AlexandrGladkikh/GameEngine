@@ -77,6 +77,16 @@ std::string FlipbookAnimationComponent::type() const
     return "animation";
 }
 
+void FlipbookAnimationComponent::start()
+{
+    m_run = true;
+}
+
+void FlipbookAnimationComponent::stop()
+{
+    m_run = false;
+}
+
 void FlipbookAnimationComponent::addMaterial(uint32_t material_id)
 {
     m_material_ids.push_back(material_id);

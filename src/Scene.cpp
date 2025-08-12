@@ -91,7 +91,7 @@ bool Scene::removeNode(uint32_t id)
             removeComponent(component_id);
         }
 
-        auto parent = getNode(node->parent());
+        auto parent = getNode(node->getParentId());
         if (parent.has_value()) {
             parent.value()->removeChild(id);
         }
@@ -118,9 +118,14 @@ auto Scene::getComponent(uint32_t id) const -> std::optional<std::shared_ptr<Com
 
 auto Scene::getComponent(const std::string& name) const -> std::optional<std::shared_ptr<Component>>
 {
-    return std::ranges::find_if(m_components, [&](const auto& component) {
+    auto component = std::ranges::find_if(m_components, [&](const auto& component) {
         return component.second->name() == name;
-    })->second;
+    });
+
+    if (component == m_components.end()) {
+        return std::nullopt;
+    }
+    return component->second;
 }
 
 auto Scene::getNode(uint32_t id) const -> std::optional<std::shared_ptr<Node>>
@@ -135,9 +140,14 @@ auto Scene::getNode(uint32_t id) const -> std::optional<std::shared_ptr<Node>>
 
 auto Scene::getNode(const std::string& name) const -> std::optional<std::shared_ptr<Node>>
 {
-    return std::ranges::find_if(m_nodes, [&](const auto& node) {
+    auto node = std::ranges::find_if(m_nodes, [&](const auto& node) {
         return node.second->name() == name;
-    })->second;
+    });
+
+    if (node == m_nodes.end()) {
+        return std::nullopt;
+    }
+    return node->second;
 }
 
 auto Scene::getComponents() const -> const std::unordered_map<uint32_t, std::shared_ptr<Component>>&
