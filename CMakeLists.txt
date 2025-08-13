@@ -3,73 +3,77 @@ project(learnProject)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(learnProject main.cpp glad.c
-        Shader.cpp
-        Shader.h
-        src/Component.h
-        src/MeshComponent.cpp
-        src/MeshComponent.h
-        src/MaterialComponent.cpp
-        src/MaterialComponent.h
-        src/Texture.cpp
-        src/Texture.h
-        src/FileSystem.cpp
-        src/FileSystem.h
-        src/MeshStore.cpp
-        src/MeshStore.h
-        src/Context.h
-        src/Component.cpp
-        src/TextureStore.cpp
-        src/TextureStore.h
-        src/MeshBuilder.cpp
-        src/MeshBuilder.h
-        src/Shader.cpp
-        src/Shader.h
-        src/ShaderStore.cpp
-        src/ShaderStore.h
-        src/ResourcePackage.h
-        src/ResourcePackage.cpp
-        src/ResourcePackageStore.cpp
-        src/ResourcePackageStore.h
-        src/Scene.cpp
-        src/Scene.h
-        src/Node.cpp
-        src/Node.h
-        src/SceneStore.cpp
-        src/SceneStore.h
-        src/ComponentBuilder.cpp
-        src/ComponentBuilder.h
-        src/CameraComponent.cpp
-        src/CameraComponent.h
-        src/TransformComponent.cpp
-        src/TransformComponent.h
-        src/SceneLoader.cpp
-        src/SceneLoader.h
-        src/Window.cpp
-        src/Window.h
-        src/Engine.cpp
-        src/Engine.h
-        src/SceneTransition.cpp
-        src/SceneTransition.h
-        src/Renderer.cpp
-        src/Renderer.h
-        src/SceneRequester.cpp
-        src/SceneRequester.h
-        src/SceneRequesterHelper.h
-        src/Logger.cpp
-        src/Logger.h
-        src/InputManager.cpp
-        src/InputManager.h
-        src/UserComponentsBuilder.h
-        src/Utils.h
-        src/Utils.cpp
-        src/FlipbookAnimationComponent.h
-        src/FlipbookAnimationComponent.cpp
+add_library(engine src/engine/glad.c
+
+        src/engine/Component.h
+        src/engine/MeshComponent.cpp
+        src/engine/MeshComponent.h
+        src/engine/MaterialComponent.cpp
+        src/engine/MaterialComponent.h
+        src/engine/Texture.cpp
+        src/engine/Texture.h
+        src/engine/FileSystem.cpp
+        src/engine/FileSystem.h
+        src/engine/MeshStore.cpp
+        src/engine/MeshStore.h
+        src/engine/Context.h
+        src/engine/Component.cpp
+        src/engine/TextureStore.cpp
+        src/engine/TextureStore.h
+        src/engine/MeshBuilder.cpp
+        src/engine/MeshBuilder.h
+        src/engine/Shader.cpp
+        src/engine/Shader.h
+        src/engine/ShaderStore.cpp
+        src/engine/ShaderStore.h
+        src/engine/ResourcePackage.h
+        src/engine/ResourcePackage.cpp
+        src/engine/ResourcePackageStore.cpp
+        src/engine/ResourcePackageStore.h
+        src/engine/Scene.cpp
+        src/engine/Scene.h
+        src/engine/Node.cpp
+        src/engine/Node.h
+        src/engine/SceneStore.cpp
+        src/engine/SceneStore.h
+        src/engine/ComponentBuilder.cpp
+        src/engine/ComponentBuilder.h
+        src/engine/CameraComponent.cpp
+        src/engine/CameraComponent.h
+        src/engine/TransformComponent.cpp
+        src/engine/TransformComponent.h
+        src/engine/SceneLoader.cpp
+        src/engine/SceneLoader.h
+        src/engine/Window.cpp
+        src/engine/Window.h
+        src/engine/Engine.cpp
+        src/engine/Engine.h
+        src/engine/SceneTransition.cpp
+        src/engine/SceneTransition.h
+        src/engine/Renderer.cpp
+        src/engine/Renderer.h
+        src/engine/SceneRequester.cpp
+        src/engine/SceneRequester.h
+        src/engine/SceneRequesterHelper.h
+        src/engine/Logger.cpp
+        src/engine/Logger.h
+        src/engine/InputManager.cpp
+        src/engine/InputManager.h
+        src/engine/UserComponentsBuilder.h
+        src/engine/Utils.h
+        src/engine/Utils.cpp
+        src/engine/FlipbookAnimationComponent.h
+        src/engine/FlipbookAnimationComponent.cpp
 )
 
-target_link_directories(learnProject PUBLIC ${CMAKE_SOURCE_DIR}/../3rdparts/libs/)
+target_include_directories(engine PUBLIC ${CMAKE_SOURCE_DIR}/../3rdparts/include/)
+target_link_directories(engine PUBLIC ${CMAKE_SOURCE_DIR}/../3rdparts/libs/)
+target_link_libraries(engine PUBLIC glfw3 opengl32)
 
-target_link_libraries(learnProject PUBLIC glfw3 opengl32)
+#find_package(Qt6 REQUIRED COMPONENTS Core Gui Widgets)
 
-target_include_directories(learnProject PUBLIC ${CMAKE_SOURCE_DIR}/../3rdparts/include/)
+add_executable(learnProject main.cpp)
+
+target_link_libraries(learnProject PUBLIC engine)
+
 target_include_directories(learnProject PUBLIC ${CMAKE_SOURCE_DIR}/src)

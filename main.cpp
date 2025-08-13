@@ -1,14 +1,14 @@
-#include "Engine.h"
-#include "UserComponentsBuilder.h"
-#include "Component.h"
-#include "InputManager.h"
-#include "TransformComponent.h"
-#include "Node.h"
-#include "Logger.h"
-#include "MaterialComponent.h"
-#include "Window.h"
-#include "MeshComponent.h"
-#include "FlipbookAnimationComponent.h"
+#include "engine/Engine.h"
+#include "engine/UserComponentsBuilder.h"
+#include "engine/Component.h"
+#include "engine/InputManager.h"
+#include "engine/TransformComponent.h"
+#include "engine/Node.h"
+#include "engine/Logger.h"
+#include "engine/MaterialComponent.h"
+#include "engine/Window.h"
+#include "engine/MeshComponent.h"
+#include "engine/FlipbookAnimationComponent.h"
 
 #include <GLFW/glfw3.h>
 
@@ -18,6 +18,11 @@ public:
     {
 
     }
+
+    std::shared_ptr<engine::Node> m_birdNode;
+
+    const float m_gravity = -9.81f;
+    float m_currentBirdSpeed = 0.0f;
 
     void init() override
     {
@@ -53,6 +58,14 @@ public:
         context().lock()->inputManager->registerHandler(GLFW_KEY_ESCAPE, [this](int key, int action) {
             if (action == GLFW_PRESS) {
                 context().lock()->engineAccessor->stop();
+            }
+        });
+
+        context().lock()->inputManager->registerHandler(GLFW_KEY_SPACE, [this](int key, int action) {
+            if (action == GLFW_PRESS) {
+                m_space = true;
+            } else {
+                m_space = false;
             }
         });
 
@@ -138,12 +151,12 @@ public:
         }
         backgroundMesh.value()->setMesh(1);
 
-        auto birdNode = selfNode->addChild("bird");
-        auto birdTransform = birdNode->addComponent<engine::TransformComponent>("bird transform");
+        m_birdNode = selfNode->addChild("bird");
+        auto birdTransform = m_birdNode->addComponent<engine::TransformComponent>("bird transform");
+        birdTransform.value()->setPosition(glm::vec3(windowSize.first / 4, windowSize.second / 2, -100));
 
-        auto birdMid = birdNode->addChild("bird mid");
+        auto birdMid = m_birdNode->addChild("bird mid");
         auto birdMidTransform = birdMid->addComponent<engine::TransformComponent>("bird mid transform");
-        birdMidTransform.value()->setPosition(glm::vec3(windowSize.first / 4, windowSize.second / 2, -100));
         birdMidTransform.value()->setScale(glm::vec3(1.0f, -1.0f, 1.0f));
         auto birdMidMaterial = birdMid->addComponent<engine::MaterialComponent>("bird mid material");
         birdMidMaterial.value()->setTexture("yellowbird-midflap");
@@ -151,9 +164,8 @@ public:
         auto birdMidMesh = birdMid->addComponent<engine::MeshComponent>("bird mid mesh");
         birdMidMesh.value()->setMesh("quad");
 
-        auto birdTop = birdNode->addChild("bird top");
+        auto birdTop = m_birdNode->addChild("bird top");
         auto birdTopTransform = birdTop->addComponent<engine::TransformComponent>("bird top transform");
-        birdTopTransform.value()->setPosition(glm::vec3(windowSize.first / 4, windowSize.second / 2, -100));
         birdTopTransform.value()->setScale(glm::vec3(1.0f, -1.0f, 1.0f));
         auto birdTopMaterial = birdTop->addComponent<engine::MaterialComponent>("bird top material");
         birdTopMaterial.value()->setTexture("yellowbird-upflap");
@@ -161,9 +173,8 @@ public:
         auto birdTopMesh = birdTop->addComponent<engine::MeshComponent>("bird top mesh");
         birdTopMesh.value()->setMesh("quad");
 
-        auto birdBottom = birdNode->addChild("bird bottom");
+        auto birdBottom = m_birdNode->addChild("bird bottom");
         auto birdBottomTransform = birdBottom->addComponent<engine::TransformComponent>("bird bottom transform");
-        birdBottomTransform.value()->setPosition(glm::vec3(windowSize.first / 4, windowSize.second / 2, -100));
         birdBottomTransform.value()->setScale(glm::vec3(1.0f, -1.0f, 1.0f));
         auto birdBottomMaterial = birdBottom->addComponent<engine::MaterialComponent>("bird bottom material");
         birdBottomMaterial.value()->setTexture("yellowbird-downflap");
@@ -200,6 +211,16 @@ public:
         if (m_right) {
             transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(1.0f * speed * dt / 1000000, 0.0f, 0.0f));
         }
+
+        if (m_space) {
+            m_currentBirdSpeed = 5.0f;
+        }
+
+        m_currentBirdSpeed = m_currentBirdSpeed + m_gravity * dt / 1000000;
+        engine::Logger::info("m_currentBirdSpeed: {}", m_currentBirdSpeed);
+        auto birdTransform = m_birdNode->getComponent<engine::TransformComponent>();
+        birdTransform.value()->setPosition(birdTransform.value()->getPosition() + glm::vec3(0.0f, m_currentBirdSpeed, 0.0f));
+        birdTransform.value()->setRotation(glm::vec3(0.0f, 0.0f, m_currentBirdSpeed * 10 > -90.0f ? m_currentBirdSpeed * 10 : -90.0f));
     }
 
     [[nodiscard]]
@@ -215,6 +236,7 @@ private:
     bool m_down = false;
     bool m_left = false;
     bool m_right = false;
+    bool m_space = false;
 };
 
 class ComponentBuilder : public engine::UserComponentsBuilder {

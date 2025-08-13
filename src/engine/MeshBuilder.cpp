@@ -1,5 +1,5 @@
 #include "MeshBuilder.h"
-#include <MeshStore.h>
+#include "MeshStore.h"
 #include "FileSystem.h"
 
 #include <glad/glad.h>
