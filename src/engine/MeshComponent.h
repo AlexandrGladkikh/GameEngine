@@ -29,6 +29,8 @@ public:
 
     uint32_t meshId() const;
 
+    auto meshName() const -> std::string;
+
 private:
     uint32_t m_id = 0;
 

@@ -49,6 +49,8 @@ public:
     auto getChild(uint32_t id) const -> std::optional<std::shared_ptr<Node>>;
     auto getChild(const std::string& name) const -> std::optional<std::shared_ptr<Node>>;
 
+    auto getComponent(uint32_t id) const -> std::optional<std::shared_ptr<Component>>;
+
     template<typename T>
     std::optional<std::shared_ptr<T>> getComponent() const
     {

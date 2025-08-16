@@ -24,8 +24,11 @@ public:
     void setTexture(uint32_t texture_id);
     void setTexture(const std::string& texture_name);
 
-    auto shader() const -> uint32_t;
-    auto texture() const -> uint32_t;
+    auto shaderId() const -> uint32_t;
+    auto textureId() const -> uint32_t;
+
+    auto shaderName() const -> std::string;
+    auto textureName() const -> std::string;
 
     auto textureSize() const -> std::pair<uint32_t, uint32_t>;
 

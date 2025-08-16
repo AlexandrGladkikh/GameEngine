@@ -66,13 +66,13 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
             continue;
         }
 
-        auto shader_id = material.value()->shader();
+        auto shader_id = material.value()->shaderId();
         auto shader_program = context->shaderStore->get(shader_id);
         if (!shader_program.has_value()) {
             continue;
         }
 
-        auto texture_id = material.value()->texture();
+        auto texture_id = material.value()->textureId();
         auto texture = context->textureStore->get(texture_id);
         if (!texture.has_value()) {
             continue;

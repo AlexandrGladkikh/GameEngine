@@ -39,8 +39,8 @@ auto saveMaterialComponent(const std::shared_ptr<MaterialComponent>& component, 
     component_json.AddMember("name", value, allocator);
     component_json.AddMember("owner_node", component->ownerNode(), allocator);
     component_json.AddMember("owner_scene", component->ownerScene(), allocator);
-    component_json.AddMember("shader", component->shader(), allocator);
-    component_json.AddMember("texture", component->texture(), allocator);
+    component_json.AddMember("shader", component->shaderId(), allocator);
+    component_json.AddMember("texture", component->textureId(), allocator);
 }
 
 auto buildMeshComponent(rapidjson::Value& componentData) -> std::optional<std::unique_ptr<MeshComponent>>

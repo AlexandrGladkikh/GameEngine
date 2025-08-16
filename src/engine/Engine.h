@@ -42,6 +42,10 @@ public:
 
     void run();
 
+    auto context() const -> std::shared_ptr<Context>;
+
+    auto getActiveSceneId() const -> uint32_t;
+
 private:
     bool m_run = false;
 

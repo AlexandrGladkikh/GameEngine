@@ -12,6 +12,60 @@
 
 #include <GLFW/glfw3.h>
 
+#ifdef ENABLE_EDITOR
+#include <QApplication>
+
+#include "editor/SceneNodeTree.h"
+#include "editor/UserComponentBuilder.h"
+
+#include <QWidget>
+#include <QVBoxLayout>
+#include <QLabel>
+class EditorComponentBuilder : public editor::UserComponentBuilder {
+public:
+    [[nodiscard]]
+    std::optional<QWidget*> buildComponent(const std::shared_ptr<engine::Component>& component) const override;
+};
+
+#endif
+
+#include <future>
+
+class EngineComponentBuilder : public engine::UserComponentsBuilder {
+public:
+    std::optional<std::unique_ptr<engine::Component>> buildComponent(const std::string& type, rapidjson::Value& component) const override;
+};
+
+int main(int argc, char *argv[])
+{
+    int appResult = 0;
+
+    engine::Engine engine;
+    engine.setUserComponentsBuilder(std::make_unique<EngineComponentBuilder>());
+    if (!engine.initialize("../configs/engine.json")) {
+        return 1;
+    }
+
+#ifdef ENABLE_EDITOR
+    QApplication a(argc, argv);
+
+    auto context = engine.context();
+
+    auto currentScene = context->sceneStore->get(engine.getActiveSceneId());
+
+    editor::SceneNodeTree sceneNodeTree;
+    sceneNodeTree.setUserComponentsBuilder(std::make_unique<EditorComponentBuilder>());
+    sceneNodeTree.build(currentScene);
+    sceneNodeTree.show();
+
+#endif
+
+    engine.run();
+    appResult = a.exec();
+
+    return appResult;
+}
+
 class MoveComponent : public engine::Component {
 public:
     MoveComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene) : Component(id, name, owner_node, owner_scene)
@@ -219,7 +273,7 @@ public:
         m_currentBirdSpeed = m_currentBirdSpeed + m_gravity * dt / 1000000;
         engine::Logger::info("m_currentBirdSpeed: {}", m_currentBirdSpeed);
         auto birdTransform = m_birdNode->getComponent<engine::TransformComponent>();
-        birdTransform.value()->setPosition(birdTransform.value()->getPosition() + glm::vec3(0.0f, m_currentBirdSpeed, 0.0f));
+        // birdTransform.value()->setPosition(birdTransform.value()->getPosition() + glm::vec3(0.0f, m_currentBirdSpeed, 0.0f));
         birdTransform.value()->setRotation(glm::vec3(0.0f, 0.0f, m_currentBirdSpeed * 10 > -90.0f ? m_currentBirdSpeed * 10 : -90.0f));
     }
 
@@ -239,32 +293,42 @@ private:
     bool m_space = false;
 };
 
-class ComponentBuilder : public engine::UserComponentsBuilder {
-public:
-    std::optional<std::unique_ptr<engine::Component>> buildComponent(const std::string& type, rapidjson::Value& component) const override
-    {
-        if (type == "move") {
-            auto id = component["id"].GetUint();
-            auto name = component["name"].GetString();
-            auto owner_node = component["owner_node"].GetUint();
-            auto owner_scene = component["owner_scene"].GetUint();
 
-            return std::make_unique<MoveComponent>(id, name, owner_node, owner_scene);
-        }
-
-        return {};
-    }
-};
-
-int main()
+#ifdef ENABLE_EDITOR
+std::optional<QWidget*> EditorComponentBuilder::buildComponent(const std::shared_ptr<engine::Component>& component) const
 {
-    engine::Engine engine;
-    engine.setUserComponentsBuilder(std::make_unique<ComponentBuilder>());
-    if (engine.initialize("../configs/engine.json")) {
-        engine.run();
+    QWidget* widget = nullptr;
+    if (component->type() == "move") {
+        widget = new QWidget;
+
+        QVBoxLayout* layout = new QVBoxLayout;
+        layout->setSpacing(1);
+        layout->setContentsMargins(0, 0, 0, 0);
+
+        auto* label = new QLabel("Move");
+        label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        layout->addWidget(label);
+        layout->addStretch();
+
+        widget->setLayout(layout);
     }
 
-    return 0;
+    return widget;
+}
+#endif
+
+std::optional<std::unique_ptr<engine::Component>> EngineComponentBuilder::buildComponent(const std::string& type, rapidjson::Value& component) const
+{
+    if (type == "move") {
+        auto id = component["id"].GetUint();
+        auto name = component["name"].GetString();
+        auto owner_node = component["owner_node"].GetUint();
+        auto owner_scene = component["owner_scene"].GetUint();
+
+        return std::make_unique<MoveComponent>(id, name, owner_node, owner_scene);
+    }
+
+    return {};
 }
 
 // #include "Shader.h"

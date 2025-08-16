@@ -75,6 +75,7 @@ auto Node::addChild(const std::string& name) -> std::shared_ptr<Node>
 
     auto newNode = std::make_shared<Node>(generateUniqueId(), name, m_id, m_owner_scene);
     newNode->setContext(m_context);
+    addChild(newNode->id());
     scene.value()->addNode(newNode->id(), newNode);
 
     return newNode;
@@ -135,6 +136,21 @@ auto Node::getChild(const std::string& name) const -> std::optional<std::shared_
     }
 
     return scene.value()->getNode(name);
+}
+
+auto Node::getComponent(uint32_t id) const -> std::optional<std::shared_ptr<Component>>
+{
+    auto context = m_context.lock();
+    if (!context) {
+        return std::nullopt;
+    }
+
+    auto scene = context->sceneStore->get(m_owner_scene);
+    if (!scene.has_value()) {
+        return std::nullopt;
+    }
+
+    return scene.value()->getComponent(id);
 }
 
 auto buildNode(rapidjson::Value& node_json) -> std::optional<std::unique_ptr<Node>>

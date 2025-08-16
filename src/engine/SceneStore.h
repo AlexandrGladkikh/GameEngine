@@ -18,6 +18,7 @@ public:
     SceneStore& operator=(SceneStore&&) = delete;
 
     auto get(uint32_t id) const -> std::optional<std::shared_ptr<Scene>>;
+    auto get(const std::string& name) const -> std::optional<std::shared_ptr<Scene>>;
     void add(uint32_t id, std::unique_ptr<Scene> scene);
     void remove(uint32_t id);
 

@@ -74,7 +74,7 @@ void FlipbookAnimationComponent::clearDirty()
 
 std::string FlipbookAnimationComponent::type() const
 {
-    return "animation";
+    return "flipbook_animation";
 }
 
 void FlipbookAnimationComponent::start()

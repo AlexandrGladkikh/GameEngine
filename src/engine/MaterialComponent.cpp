@@ -3,12 +3,12 @@
 #include "TextureStore.h"
 #include "Texture.h"
 #include "ShaderStore.h"
+#include "Shader.h"
 
 namespace engine {
 
 MaterialComponent::MaterialComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene) :
-    Component(id, name, owner_node, owner_scene),
-    m_dirty(true)
+    Component(id, name, owner_node, owner_scene)
 {
 }
 
@@ -73,14 +73,34 @@ void MaterialComponent::setTexture(const std::string& texture_name)
     }
 }
 
-auto MaterialComponent::shader() const -> uint32_t
+auto MaterialComponent::shaderId() const -> uint32_t
 {
     return m_shader_id;
 }
 
-auto MaterialComponent::texture() const -> uint32_t
+auto MaterialComponent::textureId() const -> uint32_t
 {
     return m_texture_id;
+}
+
+auto MaterialComponent::shaderName() const -> std::string
+{
+    const auto shader = context().lock()->shaderStore->get(m_shader_id);
+    if (!shader.has_value()) {
+        return "";
+    }
+
+    return shader.value()->name();
+}
+
+auto MaterialComponent::textureName() const -> std::string
+{
+    const auto texture = context().lock()->textureStore->get(m_texture_id);
+    if (!texture.has_value()) {
+        return "";
+    }
+
+    return texture.value()->name();
 }
 
 auto MaterialComponent::textureSize() const -> std::pair<uint32_t, uint32_t>

@@ -12,6 +12,17 @@ auto SceneStore::get(uint32_t id) const -> std::optional<std::shared_ptr<Scene>>
     return it->second;
 }
 
+auto SceneStore::get(const std::string& name) const -> std::optional<std::shared_ptr<Scene>>
+{
+    auto it = std::ranges::find_if(m_scenes, [&](const auto& scene) {
+        return scene.second->name() == name;
+    });
+    if (it == m_scenes.end()) {
+        return std::nullopt;
+    }
+    return it->second;
+}
+
 void SceneStore::add(uint32_t id, std::unique_ptr<Scene> scene)
 {
     m_scenes.insert({id, std::move(scene)});

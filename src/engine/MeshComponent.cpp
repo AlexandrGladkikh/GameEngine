@@ -95,4 +95,19 @@ uint32_t MeshComponent::meshId() const
     return m_id;
 }
 
+auto MeshComponent::meshName() const -> std::string
+{
+    auto ctx = context().lock();
+    if (!ctx) {
+        return "";
+    }
+
+    auto mesh = ctx->meshStore->get(m_id);
+    if (!mesh.has_value()) {
+        return "";
+    }
+
+    return mesh.value()->name;
+}
+
 }

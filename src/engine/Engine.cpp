@@ -152,4 +152,16 @@ void Engine::run()
     }
 }
 
+auto Engine::context() const -> std::shared_ptr<Context>
+{
+    return m_context;
+}
+
+auto Engine::getActiveSceneId() const -> uint32_t
+{
+    return m_active_scene_id;
+}
+
+
+
 }

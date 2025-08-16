@@ -8,8 +8,8 @@
       "name": "root",
       "parent": 0,
       "owner_scene": 1,
-      "children": [2, 3],
-      "components": []
+      "children": [20, 2, 3],
+      "components": [50]
     },
     {
       "id": 2,
@@ -17,7 +17,7 @@
       "parent": 1,
       "owner_scene": 1,
       "children": [],
-      "components": [1, 2, 3]
+      "components": [1, 2, 3, 6]
     },
     {
       "id": 20,
@@ -120,6 +120,16 @@
       "owner_node": 3,
       "owner_scene" : 1,
       "position": [0.0, 0.0, 3.0],
+      "rotation": [0.0, 0.0, 0.0],
+      "scale": [1.0, 1.0, 1.0]
+    },
+    {
+      "type": "transform",
+      "id": 50,
+      "name": "root_transform",
+      "owner_node": 1,
+      "owner_scene" : 1,
+      "position": [100.0, 0.0, 0.0],
       "rotation": [0.0, 0.0, 0.0],
       "scale": [1.0, 1.0, 1.0]
     }
