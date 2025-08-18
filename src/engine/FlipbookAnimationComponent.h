@@ -27,6 +27,8 @@ public:
     void start();
     void stop();
 
+    bool isRunning() const;
+
     void addMaterial(uint32_t material_id);
     void addMaterial(const std::string& material_name);
 

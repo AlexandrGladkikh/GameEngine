@@ -10,7 +10,7 @@
 
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
-#include <rapidjson/writer.h>
+#include <rapidjson/prettywriter.h>
 
 #include <ranges>
 
@@ -201,15 +201,20 @@ void Scene::addResource(uint32_t id)
     m_resources_id.push_back(id);
 }
 
-auto saveScene(const std::shared_ptr<Scene>& scene, const std::filesystem::path& path) -> bool
+auto saveSceneToFile(const std::shared_ptr<Scene>& scene, const std::filesystem::path& path) -> bool
 {
+    if (!FileSystem::isFile(path)) {
+        return false;
+    }
+
+    if (FileSystem::exists(path)) {
+        FileSystem::removeFile(path);
+    }
+
     auto file = FileSystem::file(path, std::ios::out);
 
     rapidjson::Document document;
     document.SetObject();
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-    document.Accept(writer);
 
     rapidjson::Value value;
     value.SetString(scene->name().c_str(), document.GetAllocator());
@@ -236,9 +241,18 @@ auto saveScene(const std::shared_ptr<Scene>& scene, const std::filesystem::path&
 
     rapidjson::Value resources(rapidjson::kArrayType);
     for (const auto id : scene->getResources()) {
-        resources.PushBack(id, document.GetAllocator());
+        rapidjson::Value resource_json(rapidjson::kObjectType);
+        resource_json.AddMember("id", id, document.GetAllocator());
+        resources.PushBack(resource_json, document.GetAllocator());
     }
     document.AddMember("resources", resources, document.GetAllocator());
+
+    rapidjson::StringBuffer buffer;
+    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
+    document.Accept(writer);
+
+    Logger::info("Saving scene: {}", path.string());
+    Logger::info("Scene data: {}", buffer.GetString());
 
     return file.writeText(buffer.GetString());
 }

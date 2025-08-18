@@ -40,7 +40,11 @@ private slots:
     void onAddComponent();
     void onRemoveComponent();
 
+    void onSaveScene();
+
 private:
+    void initMenuBar();
+
     void initHeaderContextMenu();
     void initContextMenu();
 

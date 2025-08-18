@@ -68,7 +68,7 @@ private:
     std::vector<uint32_t> m_resources_id;
 };
 
-auto saveScene(const std::shared_ptr<Scene>& scene, const std::filesystem::path& path) -> bool;
+auto saveSceneToFile(const std::shared_ptr<Scene>& scene, const std::filesystem::path& path) -> bool;
 
 auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::path& path) -> std::optional<std::unique_ptr<Scene>>;
 

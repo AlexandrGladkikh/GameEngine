@@ -108,13 +108,13 @@ bool Engine::initialize(const std::filesystem::path& config_path)
 
     m_context->resourcePackageStore->initResourcePackagesInformation(document["resource_packages"].GetString());
 
-    if (!configScenesInfo(document["scenes"], m_scenesInfo)) {
+    if (!configScenesInfo(document["scenes"], m_scenes_info)) {
         return false;
     }
 
     m_active_scene_id = document["main_scene_id"].GetUint();
 
-    return m_sceneTransition->transition(m_scenesInfo, -1, m_active_scene_id);
+    return m_sceneTransition->transition(m_scenes_info, -1, m_active_scene_id);
 }
 
 void Engine::setUserComponentsBuilder(std::unique_ptr<UserComponentsBuilder> userComponentsBuilder)
@@ -162,6 +162,19 @@ auto Engine::getActiveSceneId() const -> uint32_t
     return m_active_scene_id;
 }
 
+bool Engine::saveScene(uint32_t id)
+{
+    auto scene_info = m_scenes_info.find(id);
+    if (scene_info == m_scenes_info.end()) {
+        return false;
+    }
 
+    auto scene = m_context->sceneStore->get(id);
+    if (!scene.has_value()) {
+        return false;
+    }
+
+    return saveSceneToFile(scene.value(), scene_info->second);
+}
 
 }

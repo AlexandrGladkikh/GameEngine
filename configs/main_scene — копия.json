@@ -1,0 +1,142 @@
+{
+  "id": 1,
+  "name": "Main Scene",
+  "root": 1,
+  "nodes": [
+    {
+      "id": 1,
+      "name": "root",
+      "parent": 0,
+      "owner_scene": 1,
+      "children": [20, 2, 3],
+      "components": [50]
+    },
+    {
+      "id": 2,
+      "name": "quad_object1",
+      "parent": 1,
+      "owner_scene": 1,
+      "children": [],
+      "components": [1, 2, 3, 6]
+    },
+    {
+      "id": 20,
+      "name": "quad_object2",
+      "parent": 1,
+      "owner_scene": 1,
+      "children": [],
+      "components": [10, 20, 30]
+    },
+    {
+      "id": 3,
+      "name": "camera_object",
+      "parent": 1,
+      "owner_scene": 1,
+      "children": [],
+      "components": [4, 5]
+    }
+  ],
+  "components": [
+    {
+      "type": "transform",
+      "id": 1,
+      "name": "quad_transform",
+      "owner_node": 2,
+      "owner_scene" : 1,
+      "position": [2400.0, 300.0, 0.0],
+      "rotation": [0.0, 0.0, 0.0],
+      "scale": [1.0, 1.0, 1.0]
+    },
+    {
+      "type": "transform",
+      "id": 10,
+      "name": "quad_transform",
+      "owner_node": 20,
+      "owner_scene" : 1,
+      "position": [1400.0, 800.0, -1.0],
+      "rotation": [0.0, 0.0, 0.0],
+      "scale": [1.0, 1.0, 1.0]
+    },
+    {
+      "type": "mesh",
+      "id": 2,
+      "name": "quad_mesh",
+      "owner_node": 2,
+      "owner_scene" : 1,
+      "mesh": 1
+    },
+    {
+      "type": "mesh",
+      "id": 20,
+      "name": "quad_mesh",
+      "owner_node": 20,
+      "owner_scene" : 1,
+      "mesh": 1
+    },
+    {
+      "type": "material",
+      "id": 3,
+      "name": "quad_material",
+      "owner_node": 2,
+      "owner_scene" : 1,
+      "shader": 1,
+      "texture": 1
+    },
+    {
+      "type": "material",
+      "id": 30,
+      "name": "quad_material",
+      "owner_node": 20,
+      "owner_scene" : 1,
+      "shader": 1,
+      "texture": 1
+    },
+    {
+      "type": "move",
+      "id": 6,
+      "name": "move_component",
+      "owner_node": 2,
+      "owner_scene" : 1
+    },
+    {
+      "type": "camera",
+      "id": 4,
+      "name": "main_camera",
+      "owner_node": 3,
+      "owner_scene" : 1,
+      "projection": {
+        "left": 0,
+        "right": 360,
+        "top": 640,
+        "bottom": 0,
+        "near": 0.1,
+        "far": 1000.0
+      }
+    },
+    {
+      "type": "transform",
+      "id": 5,
+      "name": "camera_transform",
+      "owner_node": 3,
+      "owner_scene" : 1,
+      "position": [0.0, 0.0, 3.0],
+      "rotation": [0.0, 0.0, 0.0],
+      "scale": [1.0, 1.0, 1.0]
+    },
+    {
+      "type": "transform",
+      "id": 50,
+      "name": "root_transform",
+      "owner_node": 1,
+      "owner_scene" : 1,
+      "position": [100.0, 0.0, 0.0],
+      "rotation": [0.0, 0.0, 0.0],
+      "scale": [1.0, 1.0, 1.0]
+    }
+  ],
+  "resources": [
+    {
+      "id": 1
+    }
+  ]
+}

@@ -17,6 +17,7 @@
 #include <QAction>
 #include <QInputDialog>
 #include <QHeaderView>
+#include <QMenuBar>
 
 #include <functional>
 
@@ -27,6 +28,11 @@ SceneNodeTree::SceneNodeTree(engine::Engine* engine, QWidget* parent) :
     m_scene_tree(new QTreeWidget(parent)),
     m_engine(engine)
 {
+    setWindowTitle("Scene node tree");
+    resize(500, 800);
+
+    initMenuBar();
+
     setCentralWidget(m_scene_tree);
 
     m_scene_tree->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -217,6 +223,11 @@ void SceneNodeTree::onRemoveComponent()
     m_selected_item = nullptr;
 }
 
+void SceneNodeTree::onSaveScene()
+{
+    m_engine->saveScene(m_engine->getActiveSceneId());
+}
+
 void SceneNodeTree::build(std::optional<std::shared_ptr<engine::Scene>> scene)
 {
     if (!scene.has_value()) {
@@ -289,6 +300,12 @@ void SceneNodeTree::build(std::optional<std::shared_ptr<engine::Scene>> scene)
     handle_node(root_node, nullptr);
 
     m_scene_tree->expandAll();
+}
+
+void SceneNodeTree::initMenuBar()
+{
+    QMenu* fileMenu = menuBar()->addMenu("&File");
+    fileMenu->addAction("&Save Scane", this, &SceneNodeTree::onSaveScene);
 }
 
 void SceneNodeTree::initHeaderContextMenu()

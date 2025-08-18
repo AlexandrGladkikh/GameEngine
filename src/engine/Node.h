@@ -34,6 +34,8 @@ public:
     std::string name() const;
     uint32_t getParentId() const;
 
+    uint32_t ownerScene() const;
+
     auto getScene() const -> std::optional<std::shared_ptr<Scene>>;
 
     auto getParentNode() const -> std::optional<std::shared_ptr<Node>>;

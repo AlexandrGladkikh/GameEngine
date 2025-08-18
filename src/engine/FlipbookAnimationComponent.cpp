@@ -87,6 +87,11 @@ void FlipbookAnimationComponent::stop()
     m_run = false;
 }
 
+bool FlipbookAnimationComponent::isRunning() const
+{
+    return m_run;
+}
+
 void FlipbookAnimationComponent::addMaterial(uint32_t material_id)
 {
     m_material_ids.push_back(material_id);

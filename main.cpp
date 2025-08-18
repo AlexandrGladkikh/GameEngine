@@ -63,7 +63,10 @@ int main(int argc, char *argv[])
 #endif
 
     engine.run();
+
+#ifdef ENABLE_EDITOR
     appResult = a.exec();
+#endif
 
     return appResult;
 }

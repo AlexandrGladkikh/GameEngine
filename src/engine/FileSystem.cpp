@@ -84,6 +84,11 @@ bool FileSystem::isFile(const std::filesystem::path& path)
     return std::filesystem::is_regular_file(path);
 }
 
+bool FileSystem::removeFile(const std::filesystem::path& path)
+{
+    return std::filesystem::remove(path);
+}
+
 auto FileSystem::directory(const std::filesystem::path &path) -> Directory
 {
     return Directory(path);

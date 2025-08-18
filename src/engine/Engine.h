@@ -46,6 +46,8 @@ public:
 
     auto getActiveSceneId() const -> uint32_t;
 
+    bool saveScene(uint32_t id);
+
 private:
     bool m_run = false;
 
@@ -53,7 +55,7 @@ private:
 
     std::unique_ptr<SceneTransition> m_sceneTransition;
 
-    std::unordered_map<uint32_t, std::filesystem::path> m_scenesInfo;
+    std::unordered_map<uint32_t, std::filesystem::path> m_scenes_info;
 
     uint32_t m_active_scene_id = 0;
 

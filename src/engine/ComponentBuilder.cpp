@@ -104,6 +104,17 @@ void saveCameraComponent(const std::shared_ptr<CameraComponent>& component, rapi
     component_json.AddMember("name", value, allocator);
     component_json.AddMember("owner_node", component->ownerNode(), allocator);
     component_json.AddMember("owner_scene", component->ownerScene(), allocator);
+
+    auto ortho = component->getOrtho();
+
+    rapidjson::Value projection(rapidjson::kObjectType);
+    projection.AddMember("left", ortho.left, allocator);
+    projection.AddMember("right", ortho.right, allocator);
+    projection.AddMember("top", ortho.top, allocator);
+    projection.AddMember("bottom", ortho.bottom, allocator);
+    projection.AddMember("near", ortho.near, allocator);
+    projection.AddMember("far", ortho.far, allocator);
+    component_json.AddMember("projection", projection, allocator);
 }
 
 auto buildTransformComponent(rapidjson::Value& componentData) -> std::optional<std::unique_ptr<TransformComponent>>
@@ -170,7 +181,15 @@ auto buildFlipbookAnimationComponent(rapidjson::Value& componentData) -> std::op
     auto owner_node = componentData["owner_node"].GetUint();
     auto owner_scene = componentData["owner_scene"].GetUint();
 
+    bool running = componentData["running"].GetBool();
+
     auto component = std::make_unique<FlipbookAnimationComponent>(id, name, owner_node, owner_scene);
+
+    if (running) {
+        component->start();
+    } else {
+        component->stop();
+    }
 
     auto materials = componentData["materials"].GetArray();
     for (rapidjson::SizeType i = 0; i < materials.Size(); ++i) {
@@ -192,6 +211,8 @@ void saveFlipbookAnimationComponent(const std::shared_ptr<FlipbookAnimationCompo
     component_json.AddMember("name", value, allocator);
     component_json.AddMember("owner_node", component->ownerNode(), allocator);
     component_json.AddMember("owner_scene", component->ownerScene(), allocator);
+
+    component_json.AddMember("running", component->isRunning(), allocator);
 
     rapidjson::Value materials(rapidjson::kArrayType);
     for (const auto material : component->materialIds()) {

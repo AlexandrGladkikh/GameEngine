@@ -49,6 +49,7 @@ public:
     static bool exists(const std::filesystem::path& path);
     static bool isDirectory(const std::filesystem::path& path);
     static bool isFile(const std::filesystem::path& path);
+    static bool removeFile(const std::filesystem::path& path);
 
     static auto directory(const std::filesystem::path& path) -> Directory;
     static auto file(const std::filesystem::path& path, std::ios::openmode type) -> File;

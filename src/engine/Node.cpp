@@ -32,6 +32,11 @@ uint32_t Node::getParentId() const
     return m_parent;
 }
 
+uint32_t Node::ownerScene() const
+{
+    return m_owner_scene;
+}
+
 auto Node::getScene() const -> std::optional<std::shared_ptr<Scene>>
 {
     auto context = m_context.lock();
@@ -227,6 +232,8 @@ auto buildNode(rapidjson::Value& node_json) -> std::optional<std::unique_ptr<Nod
     auto parent = node_json["parent"].GetUint();
     auto owner_scene = node_json["owner_scene"].GetUint();
 
+    Logger::info("id: {}, name: {}, parent: {}, owner_scene: {}", id, name, parent, owner_scene);
+
     auto node = std::make_unique<Node>(id, name, parent, owner_scene);
 
     auto children = node_json["children"].GetArray();
@@ -248,6 +255,7 @@ void saveNode(const std::shared_ptr<Node>& node, rapidjson::Value& node_json, ra
     node_json.AddMember("id", node->id(), allocator);
     node_json.AddMember("name", value, allocator);
     node_json.AddMember("parent", node->getParentId(), allocator);
+    node_json.AddMember("owner_scene", node->ownerScene(), allocator);
 
     rapidjson::Value children(rapidjson::kArrayType);
     for (const auto child : node->children()) {
