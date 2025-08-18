@@ -199,6 +199,9 @@ void SceneNodeTree::onAddComponent()
 
     auto component_widget = NodeTreeBuilder::buildWidgetForComponent(component_value);
     if (!component_widget.has_value()) {
+        component_widget = m_user_components_builder->buildWidgetForComponent(component_value);
+    }
+    if (!component_widget.has_value()) {
         return;
     }
 

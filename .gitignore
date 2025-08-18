@@ -4,6 +4,7 @@
 out/
 bin/
 lib/
+cmake-build-*/
 
 # CMake файлы
 CMakeFiles/

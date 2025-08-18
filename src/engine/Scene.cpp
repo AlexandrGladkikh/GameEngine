@@ -46,6 +46,11 @@ std::string Scene::name() const
     return m_name;
 }
 
+auto Scene::context() const -> std::shared_ptr<Context>
+{
+    return m_context.lock();
+}
+
 bool Scene::isActive() const
 {
     return m_is_active;
@@ -231,10 +236,14 @@ auto saveSceneToFile(const std::shared_ptr<Scene>& scene, const std::filesystem:
     }
     document.AddMember("nodes", nodes, document.GetAllocator());
 
+    auto ctx = scene->context();
     rapidjson::Value components(rapidjson::kArrayType);
     for (const auto& component : scene->getComponents()) {
         rapidjson::Value component_json(rapidjson::kObjectType);
         ComponentBuilder::saveToJson(component.second, component_json, document.GetAllocator());
+        if (component_json.ObjectEmpty()) {
+            ctx->userComponentsBuilder->saveToJson(component.second, component_json, document.GetAllocator());
+        }
         components.PushBack(component_json, document.GetAllocator());
     }
     document.AddMember("components", components, document.GetAllocator());

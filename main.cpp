@@ -19,6 +19,7 @@
 #include "editor/SceneNodeTree.h"
 #include "editor/UserNodeTreeBuilder.h"
 #include "editor/ComponentWidget.h"
+#include "editor/Utils.h"
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -35,6 +36,9 @@ class EngineComponentBuilder : public engine::UserComponentsBuilder {
 public:
     std::optional<std::unique_ptr<engine::Component>> buildComponent(const std::string& type, rapidjson::Value& component) const override;
     auto buildEmptyComponent(const std::string& type, const std::string& name, uint32_t owner_node, uint32_t owner_scene) -> std::optional<std::unique_ptr<engine::Component>> override;
+
+    void saveToJson(const std::shared_ptr<engine::Component>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator) const override;
+
     auto componentTypes() const -> const std::vector<std::string>& override;
 };
 
@@ -78,10 +82,15 @@ public:
 
     }
 
+    void setSpeed(float speed) { m_speed = speed; }
+    float getSpeed() const { return m_speed; }
+
     std::shared_ptr<engine::Node> m_birdNode;
 
     const float m_gravity = -9.81f;
     float m_currentBirdSpeed = 0.0f;
+
+    float m_speed = 200.0f;
 
     void init() override
     {
@@ -128,148 +137,147 @@ public:
             }
         });
 
-        auto windowSize = context().lock()->window->size();
-
-        auto selfNodeOpt = context().lock()->sceneStore->get(ownerScene()).value()->getNode("root");
-        if (!selfNodeOpt.has_value()) {
-            return;
-        }
-
-        auto selfNode = selfNodeOpt.value();
-
-        auto topPipe = selfNode->addChild("topPipe");
-        auto topTransform = topPipe->addComponent<engine::TransformComponent>("top pipe transform");
-        if (!topTransform.has_value()) {
-            return;
-        }
-
-        auto topPipeMaterial = topPipe->addComponent<engine::MaterialComponent>("top pipe texture");
-        if (!topPipeMaterial.has_value()) {
-            return;
-        }
-        topPipeMaterial.value()->setTexture(4);
-        topPipeMaterial.value()->setShader(1);
-
-        auto topPipeSize = topPipeMaterial.value()->textureSize();
-
-        topTransform.value()->setPosition(glm::vec3(windowSize.first / 2, windowSize.second - topPipeSize.second / 2 + 100, -100));
-
-        auto topMesh = topPipe->addComponent<engine::MeshComponent>("top pipe mesh");
-        if (!topMesh.has_value()) {
-            return;
-        }
-        topMesh.value()->setMesh(1);
-
-        auto bottomPipe = selfNode->addChild("bottomPipe");
-        auto bottomTransform = bottomPipe->addComponent<engine::TransformComponent>("bottom pipe transform");
-        if (!bottomTransform.has_value()) {
-            return;
-        }
-        bottomTransform.value()->setScale(glm::vec3(1, -1, 1));
-
-        auto bottomPipeMaterial = bottomPipe->addComponent<engine::MaterialComponent>("bottom pipe texture");
-        if (!bottomPipeMaterial.has_value()) {
-            return;
-        }
-        bottomPipeMaterial.value()->setTexture(4);
-        bottomPipeMaterial.value()->setShader(1);
-
-        auto bottomPipeSize = bottomPipeMaterial.value()->textureSize();
-
-        bottomTransform.value()->setPosition(glm::vec3(windowSize.first / 2, bottomPipeSize.second / 2 - 100, -100));
-
-        auto bottomMesh = bottomPipe->addComponent<engine::MeshComponent>("top pipe mesh");
-        if (!bottomMesh.has_value()) {
-            return;
-        }
-        bottomMesh.value()->setMesh(1);
-
-        auto backgroundCity = selfNode->addChild("background");
-
-        auto backgroundPipeMaterial = backgroundCity->addComponent<engine::MaterialComponent>("background texture");
-        if (!backgroundPipeMaterial.has_value()) {
-            return;
-        }
-        backgroundPipeMaterial.value()->setTexture(2);
-        backgroundPipeMaterial.value()->setShader(1);
-
-        auto backgroundTransform = backgroundCity->addComponent<engine::TransformComponent>("background transform");
-        if (!backgroundTransform.has_value()) {
-            return;
-        }
-        backgroundTransform.value()->setPosition(glm::vec3(windowSize.first / 2, windowSize.second / 2, -200));
-
-        auto backgroundSize = backgroundPipeMaterial.value()->textureSize();
-
-        auto scaleBackground = glm::vec3(static_cast<GLfloat>(windowSize.first) / backgroundSize.first, static_cast<GLfloat>(-windowSize.second) / backgroundSize.second, 1);
-        backgroundTransform.value()->setScale(scaleBackground);
-
-        auto backgroundMesh = backgroundCity->addComponent<engine::MeshComponent>("background mesh");
-        if (!backgroundMesh.has_value()) {
-            return;
-        }
-        backgroundMesh.value()->setMesh(1);
-
-        m_birdNode = selfNode->addChild("bird");
-        auto birdTransform = m_birdNode->addComponent<engine::TransformComponent>("bird transform");
-        birdTransform.value()->setPosition(glm::vec3(windowSize.first / 4, windowSize.second / 2, -100));
-
-        auto birdMid = m_birdNode->addChild("bird mid");
-        auto birdMidTransform = birdMid->addComponent<engine::TransformComponent>("bird mid transform");
-        birdMidTransform.value()->setScale(glm::vec3(1.0f, -1.0f, 1.0f));
-        auto birdMidMaterial = birdMid->addComponent<engine::MaterialComponent>("bird mid material");
-        birdMidMaterial.value()->setTexture("yellowbird-midflap");
-        birdMidMaterial.value()->setShader("default");
-        auto birdMidMesh = birdMid->addComponent<engine::MeshComponent>("bird mid mesh");
-        birdMidMesh.value()->setMesh("quad");
-
-        auto birdTop = m_birdNode->addChild("bird top");
-        auto birdTopTransform = birdTop->addComponent<engine::TransformComponent>("bird top transform");
-        birdTopTransform.value()->setScale(glm::vec3(1.0f, -1.0f, 1.0f));
-        auto birdTopMaterial = birdTop->addComponent<engine::MaterialComponent>("bird top material");
-        birdTopMaterial.value()->setTexture("yellowbird-upflap");
-        birdTopMaterial.value()->setShader("default");
-        auto birdTopMesh = birdTop->addComponent<engine::MeshComponent>("bird top mesh");
-        birdTopMesh.value()->setMesh("quad");
-
-        auto birdBottom = m_birdNode->addChild("bird bottom");
-        auto birdBottomTransform = birdBottom->addComponent<engine::TransformComponent>("bird bottom transform");
-        birdBottomTransform.value()->setScale(glm::vec3(1.0f, -1.0f, 1.0f));
-        auto birdBottomMaterial = birdBottom->addComponent<engine::MaterialComponent>("bird bottom material");
-        birdBottomMaterial.value()->setTexture("yellowbird-downflap");
-        birdBottomMaterial.value()->setShader("default");
-        auto birdBottomMesh = birdBottom->addComponent<engine::MeshComponent>("bird bottom mesh");
-        birdBottomMesh.value()->setMesh("quad");
-
-        auto flipbookAnimation = selfNode->addComponent<engine::FlipbookAnimationComponent>("flipbook animation");
-        if (!flipbookAnimation.has_value()) {
-            return;
-        }
-        flipbookAnimation.value()->addMaterial("bird mid material");
-        flipbookAnimation.value()->addMaterial("bird top material");
-        flipbookAnimation.value()->addMaterial("bird bottom material");
-        flipbookAnimation.value()->setUpdateTime(100000);
-        flipbookAnimation.value()->start();
+        // auto windowSize = context().lock()->window->size();
+        //
+        // auto selfNodeOpt = context().lock()->sceneStore->get(ownerScene()).value()->getNode("root");
+        // if (!selfNodeOpt.has_value()) {
+        //     return;
+        // }
+        //
+        // auto selfNode = selfNodeOpt.value();
+        //
+        // auto topPipe = selfNode->addChild("topPipe");
+        // auto topTransform = topPipe->addComponent<engine::TransformComponent>("top pipe transform");
+        // if (!topTransform.has_value()) {
+        //     return;
+        // }
+        //
+        // auto topPipeMaterial = topPipe->addComponent<engine::MaterialComponent>("top pipe texture");
+        // if (!topPipeMaterial.has_value()) {
+        //     return;
+        // }
+        // topPipeMaterial.value()->setTexture(4);
+        // topPipeMaterial.value()->setShader(1);
+        //
+        // auto topPipeSize = topPipeMaterial.value()->textureSize();
+        //
+        // topTransform.value()->setPosition(glm::vec3(windowSize.first / 2, windowSize.second - topPipeSize.second / 2 + 100, -100));
+        //
+        // auto topMesh = topPipe->addComponent<engine::MeshComponent>("top pipe mesh");
+        // if (!topMesh.has_value()) {
+        //     return;
+        // }
+        // topMesh.value()->setMesh(1);
+        //
+        // auto bottomPipe = selfNode->addChild("bottomPipe");
+        // auto bottomTransform = bottomPipe->addComponent<engine::TransformComponent>("bottom pipe transform");
+        // if (!bottomTransform.has_value()) {
+        //     return;
+        // }
+        // bottomTransform.value()->setScale(glm::vec3(1, -1, 1));
+        //
+        // auto bottomPipeMaterial = bottomPipe->addComponent<engine::MaterialComponent>("bottom pipe texture");
+        // if (!bottomPipeMaterial.has_value()) {
+        //     return;
+        // }
+        // bottomPipeMaterial.value()->setTexture(4);
+        // bottomPipeMaterial.value()->setShader(1);
+        //
+        // auto bottomPipeSize = bottomPipeMaterial.value()->textureSize();
+        //
+        // bottomTransform.value()->setPosition(glm::vec3(windowSize.first / 2, bottomPipeSize.second / 2 - 100, -100));
+        //
+        // auto bottomMesh = bottomPipe->addComponent<engine::MeshComponent>("top pipe mesh");
+        // if (!bottomMesh.has_value()) {
+        //     return;
+        // }
+        // bottomMesh.value()->setMesh(1);
+        //
+        // auto backgroundCity = selfNode->addChild("background");
+        //
+        // auto backgroundPipeMaterial = backgroundCity->addComponent<engine::MaterialComponent>("background texture");
+        // if (!backgroundPipeMaterial.has_value()) {
+        //     return;
+        // }
+        // backgroundPipeMaterial.value()->setTexture(2);
+        // backgroundPipeMaterial.value()->setShader(1);
+        //
+        // auto backgroundTransform = backgroundCity->addComponent<engine::TransformComponent>("background transform");
+        // if (!backgroundTransform.has_value()) {
+        //     return;
+        // }
+        // backgroundTransform.value()->setPosition(glm::vec3(windowSize.first / 2, windowSize.second / 2, -200));
+        //
+        // auto backgroundSize = backgroundPipeMaterial.value()->textureSize();
+        //
+        // auto scaleBackground = glm::vec3(static_cast<GLfloat>(windowSize.first) / backgroundSize.first, static_cast<GLfloat>(-windowSize.second) / backgroundSize.second, 1);
+        // backgroundTransform.value()->setScale(scaleBackground);
+        //
+        // auto backgroundMesh = backgroundCity->addComponent<engine::MeshComponent>("background mesh");
+        // if (!backgroundMesh.has_value()) {
+        //     return;
+        // }
+        // backgroundMesh.value()->setMesh(1);
+        //
+        // m_birdNode = selfNode->addChild("bird");
+        // auto birdTransform = m_birdNode->addComponent<engine::TransformComponent>("bird transform");
+        // birdTransform.value()->setPosition(glm::vec3(windowSize.first / 4, windowSize.second / 2, -100));
+        //
+        // auto birdMid = m_birdNode->addChild("bird mid");
+        // auto birdMidTransform = birdMid->addComponent<engine::TransformComponent>("bird mid transform");
+        // birdMidTransform.value()->setScale(glm::vec3(1.0f, -1.0f, 1.0f));
+        // auto birdMidMaterial = birdMid->addComponent<engine::MaterialComponent>("bird mid material");
+        // birdMidMaterial.value()->setTexture("yellowbird-midflap");
+        // birdMidMaterial.value()->setShader("default");
+        // auto birdMidMesh = birdMid->addComponent<engine::MeshComponent>("bird mid mesh");
+        // birdMidMesh.value()->setMesh("quad");
+        //
+        // auto birdTop = m_birdNode->addChild("bird top");
+        // auto birdTopTransform = birdTop->addComponent<engine::TransformComponent>("bird top transform");
+        // birdTopTransform.value()->setScale(glm::vec3(1.0f, -1.0f, 1.0f));
+        // auto birdTopMaterial = birdTop->addComponent<engine::MaterialComponent>("bird top material");
+        // birdTopMaterial.value()->setTexture("yellowbird-upflap");
+        // birdTopMaterial.value()->setShader("default");
+        // auto birdTopMesh = birdTop->addComponent<engine::MeshComponent>("bird top mesh");
+        // birdTopMesh.value()->setMesh("quad");
+        //
+        // auto birdBottom = m_birdNode->addChild("bird bottom");
+        // auto birdBottomTransform = birdBottom->addComponent<engine::TransformComponent>("bird bottom transform");
+        // birdBottomTransform.value()->setScale(glm::vec3(1.0f, -1.0f, 1.0f));
+        // auto birdBottomMaterial = birdBottom->addComponent<engine::MaterialComponent>("bird bottom material");
+        // birdBottomMaterial.value()->setTexture("yellowbird-downflap");
+        // birdBottomMaterial.value()->setShader("default");
+        // auto birdBottomMesh = birdBottom->addComponent<engine::MeshComponent>("bird bottom mesh");
+        // birdBottomMesh.value()->setMesh("quad");
+        //
+        // auto flipbookAnimation = selfNode->addComponent<engine::FlipbookAnimationComponent>("flipbook animation");
+        // if (!flipbookAnimation.has_value()) {
+        //     return;
+        // }
+        // flipbookAnimation.value()->addMaterial("bird mid material");
+        // flipbookAnimation.value()->addMaterial("bird top material");
+        // flipbookAnimation.value()->addMaterial("bird bottom material");
+        // flipbookAnimation.value()->setUpdateTime(100000);
+        // flipbookAnimation.value()->start();
     }
 
     void update(uint64_t dt) override
     {
-        static float speed = 200;
         engine::Logger::info("MoveComponent::update");
-        // std::optional<std::shared_ptr<engine::TransformComponent>> transform = getNode().value()->getComponent<engine::TransformComponent>();
-        //
-        // if (m_up) {
-        //     transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(0.0f, 1.0f * speed * dt / 1000000, 0.0f));
-        // }
-        // if (m_down) {
-        //     transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(0.0f, -1.0f * speed * dt / 1000000, 0.0f));
-        // }
-        // if (m_left) {
-        //     transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(-1.0f * speed * dt / 1000000, 0.0f, 0.0f));
-        // }
-        // if (m_right) {
-        //     transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(1.0f * speed * dt / 1000000, 0.0f, 0.0f));
-        // }
+        std::optional<std::shared_ptr<engine::TransformComponent>> transform = getNode().value()->getComponent<engine::TransformComponent>();
+
+        if (m_up) {
+            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(0.0f, 1.0f * m_speed * dt / 1000000, 0.0f));
+        }
+        if (m_down) {
+            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(0.0f, -1.0f * m_speed * dt / 1000000, 0.0f));
+        }
+        if (m_left) {
+            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(-1.0f * m_speed * dt / 1000000, 0.0f, 0.0f));
+        }
+        if (m_right) {
+            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(1.0f * m_speed * dt / 1000000, 0.0f, 0.0f));
+        }
         //
         // if (m_space) {
         //     m_currentBirdSpeed = 5.0f;
@@ -304,6 +312,8 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
 {
     editor::ComponentWidget* widget = nullptr;
     if (component->type() == "move") {
+        auto move = std::dynamic_pointer_cast<MoveComponent>(component);
+
         widget = new editor::ComponentWidget;
 
         QVBoxLayout* layout = new QVBoxLayout;
@@ -313,6 +323,28 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
         auto* label = new QLabel("Move");
         label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
         layout->addWidget(label);
+
+        auto speedChangeHandler = [move](const std::string& value) {
+            move->setSpeed(std::stof(value));
+        };
+
+        auto speedUpdater = [move]() {
+            if (!move->isValid()) {
+                return std::string();
+            }
+            return editor::formatFloat(move->getSpeed());
+        };
+
+        QHBoxLayout* position_layout = new QHBoxLayout();
+        position_layout->setSpacing(1);
+        position_layout->setContentsMargins(0, 0, 0, 0);
+        label = new QLabel("Speed");
+        label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        position_layout->addWidget(label);
+        position_layout->addWidget(editor::createLabelLineEditorWidget("speed", editor::formatFloat(move->getSpeed()), speedChangeHandler, speedUpdater));
+        position_layout->addStretch();
+        layout->addLayout(position_layout);
+
         layout->addStretch();
 
         widget->setLayout(layout);
@@ -330,7 +362,12 @@ std::optional<std::unique_ptr<engine::Component>> EngineComponentBuilder::buildC
         auto owner_node = component["owner_node"].GetUint();
         auto owner_scene = component["owner_scene"].GetUint();
 
-        return std::make_unique<MoveComponent>(id, name, owner_node, owner_scene);
+        auto move = component["move"].GetFloat();
+
+        auto new_component = std::make_unique<MoveComponent>(id, name, owner_node, owner_scene);
+        new_component->setSpeed(move);
+
+        return new_component;
     }
 
     return {};
@@ -343,6 +380,22 @@ auto EngineComponentBuilder::buildEmptyComponent(const std::string& type, const 
     }
 
     return std::nullopt;
+}
+
+void EngineComponentBuilder::saveToJson(const std::shared_ptr<engine::Component>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator) const
+{
+    rapidjson::Value value_name;
+    value_name.SetString(component->name().c_str(), allocator);
+    if (component->type() == "move") {
+        auto move = std::dynamic_pointer_cast<MoveComponent>(component);
+
+        component_json.AddMember("type", "move", allocator);
+        component_json.AddMember("id", move->id(), allocator);
+        component_json.AddMember("name", value_name, allocator);
+        component_json.AddMember("owner_node", move->ownerNode(), allocator);
+        component_json.AddMember("owner_scene", move->ownerScene(), allocator);
+        component_json.AddMember("move", move->getSpeed(), allocator);
+    }
 }
 
 auto EngineComponentBuilder::componentTypes() const -> const std::vector<std::string>&

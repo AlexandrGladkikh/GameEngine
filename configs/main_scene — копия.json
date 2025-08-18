@@ -96,7 +96,8 @@
       "id": 6,
       "name": "move_component",
       "owner_node": 2,
-      "owner_scene" : 1
+      "owner_scene" : 1,
+      "move": 200
     },
     {
       "type": "camera",

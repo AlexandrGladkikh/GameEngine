@@ -2,6 +2,7 @@
 #include "Logger.h"
 #include "Utils.h"
 #include "Component.h"
+#include "UserComponentsBuilder.h"
 
 namespace engine {
 
@@ -110,13 +111,20 @@ auto Node::addComponent(const std::string& type, const std::string& name) -> std
 
     auto component = ComponentBuilder::buildEmptyComponent(type, name, id(), m_owner_scene);
 
+    auto context = m_context.lock();
+    if (!context) {
+        return std::nullopt;
+    }
+    if (!component.has_value()) {
+        component = context->userComponentsBuilder->buildEmptyComponent(type, name, id(), m_owner_scene);
+    }
+
     if (!component.has_value()) {
         return std::nullopt;
     }
 
     component.value()->setContext(m_context);
 
-    auto context = m_context.lock();
     if (!context) {
         return std::nullopt;
     }
@@ -130,6 +138,8 @@ auto Node::addComponent(const std::string& type, const std::string& name) -> std
     scene.value()->addComponent(component_id, std::move(component.value()));
 
     addComponent(component_id);
+
+    scene.value()->getComponent(component_id).value()->init();
 
     return scene.value()->getComponent(component_id).value();
 }

@@ -22,6 +22,8 @@ public:
     uint32_t id() const;
     auto name() const -> std::string;
 
+    auto context() const -> std::shared_ptr<Context>;
+
     bool isActive() const;
     bool isDirty() const;
 
