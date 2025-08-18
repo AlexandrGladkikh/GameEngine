@@ -34,6 +34,8 @@ public:
     std::string name() const;
     uint32_t getParentId() const;
 
+    auto getScene() const -> std::optional<std::shared_ptr<Scene>>;
+
     auto getParentNode() const -> std::optional<std::shared_ptr<Node>>;
 
     std::unordered_set<uint32_t> children() const;
@@ -42,6 +44,7 @@ public:
     bool addChild(uint32_t id);
     auto addChild(const std::string& name) -> std::shared_ptr<Node>;
     bool addComponent(uint32_t id);
+    auto addComponent(const std::string& type, const std::string& name) -> std::optional<std::shared_ptr<Component>>;
 
     bool removeChild(uint32_t id);
     bool removeComponent(uint32_t id);
@@ -50,6 +53,8 @@ public:
     auto getChild(const std::string& name) const -> std::optional<std::shared_ptr<Node>>;
 
     auto getComponent(uint32_t id) const -> std::optional<std::shared_ptr<Component>>;
+
+    bool hasComponent(const std::string& type) const;
 
     template<typename T>
     std::optional<std::shared_ptr<T>> getComponent() const

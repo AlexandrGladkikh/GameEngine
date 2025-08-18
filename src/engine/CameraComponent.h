@@ -9,6 +9,10 @@ namespace engine {
 
 class CameraComponent final : public Component {
 public:
+    struct Ortho {
+        GLfloat left, right, top, bottom, near, far;
+    };
+
     explicit CameraComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene);
     ~CameraComponent() override = default;
 
@@ -24,6 +28,8 @@ public:
     std::string type() const override;
 
     void setOrtho(GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat near, GLfloat far);
+    void setOrtho(const Ortho& ortho);
+    auto getOrtho() const -> Ortho;
 
     auto getView() const -> glm::mat4;
     auto getProjection() const -> glm::mat4;
@@ -39,6 +45,8 @@ public:
 
 private:
     void updateView();
+
+    Ortho m_ortho;
 
     glm::vec3 m_position;
     glm::vec3 m_front;

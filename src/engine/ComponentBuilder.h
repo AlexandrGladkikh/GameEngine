@@ -1,10 +1,11 @@
 #pragma once
 
+#include <rapidjson/document.h>
+
 #include <memory>
 #include <string>
 #include <optional>
-
-#include <rapidjson/document.h>
+#include <vector>
 
 namespace engine {
 
@@ -17,11 +18,13 @@ class FlipbookAnimationComponent;
 
 class ComponentBuilder {
 public:
-    static std::optional<std::unique_ptr<Component>> buildFromJson(const std::string& type, rapidjson::Value& component);
+    static auto componentTypes() -> const std::vector<std::string>&;
+    static auto buildFromJson(const std::string& type, rapidjson::Value& component) -> std::optional<std::unique_ptr<Component>>;
     static void saveToJson(const std::shared_ptr<Component>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator);
 
     template<typename T>
-    static std::optional<std::unique_ptr<T>> buildEmptyComponent(const std::string& name, uint32_t owner_node, uint32_t owner_scene);
+    static auto buildEmptyComponent(const std::string& name, uint32_t owner_node, uint32_t owner_scene) -> std::optional<std::unique_ptr<T>>;
+    static auto buildEmptyComponent(const std::string& type, const std::string& name, uint32_t owner_node, uint32_t owner_scene) -> std::optional<std::unique_ptr<Component>>;
 };
 
 template<>

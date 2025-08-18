@@ -55,7 +55,24 @@ std::string CameraComponent::type() const
 
 void CameraComponent::setOrtho(GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat near, GLfloat far)
 {
+    m_ortho.left = left;
+    m_ortho.right = right;
+    m_ortho.top = top;
+    m_ortho.bottom = bottom;
+    m_ortho.near = near;
+    m_ortho.far = far;
     m_projection = glm::ortho(left, right, bottom, top, near, far);
+}
+
+void CameraComponent::setOrtho(const Ortho &ortho)
+{
+    m_ortho = ortho;
+    m_projection = glm::ortho(ortho.left, ortho.right, ortho.bottom, ortho.top, ortho.near, ortho.far);
+}
+
+auto CameraComponent::getOrtho() const -> Ortho
+{
+    return m_ortho;
 }
 
 auto CameraComponent::getView() const -> glm::mat4

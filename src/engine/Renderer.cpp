@@ -36,7 +36,12 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
                                                  GetNodes(ComponentType::Material).
                                                  GetNodes(ComponentType::Transform).Unwrap();
 
-    auto camera_node = requester.GetNodes(scene, ComponentType::Camera).GetNodes(ComponentType::Transform).Unwrap().front();
+    auto camera_nodes = requester.GetNodes(scene, ComponentType::Camera).GetNodes(ComponentType::Transform).Unwrap();
+    if (camera_nodes.empty()) {
+        return;
+    }
+
+    auto camera_node = camera_nodes.front();
 
     if (!camera_node) {
         return;
@@ -60,9 +65,9 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
         auto material = SceneRequesterHelper::getComponent<MaterialComponent>(scene, node->components());
         auto transform = SceneRequesterHelper::getComponent<TransformComponent>(scene, node->components());
 
-        if (!mesh.has_value() || !mesh.value()->isActive() ||
-            !material.has_value() || !material.value()->isActive() ||
-            !transform.has_value() || !transform.value()->isActive()) {
+        if (!mesh.has_value() || !mesh.value()->isActive() || !mesh.value()->isValid() ||
+            !material.has_value() || !material.value()->isActive() || !material.value()->isValid() ||
+            !transform.has_value() || !transform.value()->isActive() || !transform.value()->isValid()) {
             continue;
         }
 

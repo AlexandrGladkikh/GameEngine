@@ -37,6 +37,8 @@ public:
     uint32_t ownerNode() const;
     [[nodiscard]]
     uint32_t ownerScene() const;
+    [[nodiscard]]
+    bool isValid() const;
 
     virtual void init() = 0;
 
@@ -50,8 +52,13 @@ public:
     [[nodiscard]]
     virtual std::string type() const = 0;
 
+protected:
+    void setValid(bool valid);
+
 private:
     std::weak_ptr<Context> m_context;
+
+    bool m_is_valid = true;
 
     uint32_t m_id = 0;
     std::string m_name;

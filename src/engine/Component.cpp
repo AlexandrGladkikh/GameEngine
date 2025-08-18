@@ -69,8 +69,19 @@ uint32_t Component::ownerScene() const
     return m_owner_scene;
 }
 
+bool Component::isValid() const
+{
+    return m_is_valid;
+}
+
 void Component::update(uint64_t dt)
 {
 }
+
+void Component::setValid(bool valid)
+{
+    m_is_valid = valid;
+}
+
 
 }

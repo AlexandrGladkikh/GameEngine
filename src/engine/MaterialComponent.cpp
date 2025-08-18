@@ -45,8 +45,15 @@ std::string MaterialComponent::type() const
 
 void MaterialComponent::setShader(uint32_t shader_id)
 {
-    m_shader_id = shader_id;
-    m_dirty = true;
+    auto ctx = context().lock();
+
+    if (!ctx || ctx->shaderStore->contains(shader_id)) {
+        m_shader_id = shader_id;
+        m_dirty = true;
+        setValid(true);
+    } else {
+        setValid(false);
+    }
 }
 
 void MaterialComponent::setShader(const std::string& shader_name)
@@ -55,13 +62,23 @@ void MaterialComponent::setShader(const std::string& shader_name)
     if (shader.has_value()) {
         m_shader_id = shader.value();
         m_dirty = true;
+        setValid(true);
+    } else {
+        setValid(false);
     }
 }
 
 void MaterialComponent::setTexture(uint32_t texture_id)
 {
-    m_texture_id = texture_id;
-    m_dirty = true;
+    auto ctx = context().lock();
+
+    if (!ctx || ctx->textureStore->contains(texture_id)) {
+        m_texture_id = texture_id;
+        m_dirty = true;
+        setValid(true);
+    } else {
+        setValid(false);
+    }
 }
 
 void MaterialComponent::setTexture(const std::string& texture_name)
@@ -70,6 +87,9 @@ void MaterialComponent::setTexture(const std::string& texture_name)
     if (texture.has_value()) {
         m_texture_id = texture.value();
         m_dirty = true;
+        setValid(true);
+    } else {
+        setValid(false);
     }
 }
 

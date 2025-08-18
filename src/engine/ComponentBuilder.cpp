@@ -9,6 +9,7 @@
 #include "FlipbookAnimationComponent.h"
 
 #include <optional>
+#include <functional>
 
 namespace engine {
 
@@ -201,6 +202,12 @@ void saveFlipbookAnimationComponent(const std::shared_ptr<FlipbookAnimationCompo
     component_json.AddMember("update_time", component->updateTime(), allocator);
 }
 
+auto ComponentBuilder::componentTypes() -> const std::vector<std::string>&
+{
+    static const std::vector<std::string> types = {"material", "mesh", "camera", "transform", "flipbook_animation"};
+    return types;
+}
+
 auto ComponentBuilder::buildFromJson(const std::string& type, rapidjson::Value& component) -> std::optional<std::unique_ptr<Component>>
 {
     Logger::info(std::string(__FUNCTION__) + " component type: {}", type);
@@ -233,6 +240,25 @@ void ComponentBuilder::saveToJson(const std::shared_ptr<Component>& component, r
     } else if (component->type() == "flipbook_animation") {
         saveFlipbookAnimationComponent(std::dynamic_pointer_cast<FlipbookAnimationComponent>(component), component_json, allocator);
     }
+}
+
+auto ComponentBuilder::buildEmptyComponent(const std::string& type, const std::string& name, uint32_t owner_node, uint32_t owner_scene) -> std::optional<std::unique_ptr<Component>>
+{
+    Logger::info(std::string(__FUNCTION__) + " component type: {}", type);
+
+    if (type == "material") {
+        return std::make_unique<MaterialComponent>(generateUniqueId(), name, owner_node, owner_scene);
+    } else if (type == "mesh") {
+        return std::make_unique<MeshComponent>(generateUniqueId(), name, owner_node, owner_scene);
+    } else if (type == "camera") {
+        return std::make_unique<CameraComponent>(generateUniqueId(), name, owner_node, owner_scene);
+    } else if (type == "transform") {
+        return std::make_unique<TransformComponent>(generateUniqueId(), name, owner_node, owner_scene);
+    } else if (type == "flipbook_animation") {
+        return std::make_unique<FlipbookAnimationComponent>(generateUniqueId(), name, owner_node, owner_scene);
+    }
+
+    return std::nullopt;
 }
 
 template<>

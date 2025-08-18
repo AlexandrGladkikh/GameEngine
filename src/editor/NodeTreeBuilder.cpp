@@ -1,4 +1,7 @@
-#include "NodeBuilder.h"
+#include "NodeTreeBuilder.h"
+
+#include "ComponentWidget.h"
+#include "NodeWidget.h"
 
 #include "engine/TransformComponent.h"
 #include "engine/MeshComponent.h"
@@ -21,10 +24,10 @@
 
 namespace editor {
 
-QWidget* createLabelLineEditorWidget(const std::string& label, const std::string& value,
+ComponentWidget* createLabelLineEditorWidget(const std::string& label, const std::string& value,
     const std::function<void(const std::string&)>& changeHandler, const std::function<std::string()>& updateHandler)
 {
-    QWidget* widget = new QWidget;
+    ComponentWidget* widget = new ComponentWidget;
 
     QHBoxLayout* layout = new QHBoxLayout;
     layout->setSpacing(1);
@@ -37,9 +40,13 @@ QWidget* createLabelLineEditorWidget(const std::string& label, const std::string
         timer->setInterval(100);
         timer->setTimerType(Qt::PreciseTimer);
         QObject::connect(timer, &QTimer::timeout, [lineEditor, updateHandler]() {
-            auto current_text = lineEditor->text();
-            if (current_text != updateHandler().c_str()) {
-                lineEditor->setText(updateHandler().c_str());
+            if (lineEditor->hasFocus()) {
+                return;
+            }
+            auto new_text = lineEditor->text();
+            auto current_text = updateHandler();
+            if (!current_text.empty() && new_text != current_text) {
+                lineEditor->setText(current_text.c_str());
             }
         });
         timer->start();
@@ -63,9 +70,9 @@ std::string formatFloat(float value)
     return ss.str();
 }
 
-QWidget* buildTransformWidget(const std::shared_ptr<engine::TransformComponent>& transform)
+ComponentWidget* buildTransformWidget(const std::shared_ptr<engine::TransformComponent>& transform)
 {
-    QWidget* transform_widget = new QWidget;
+    ComponentWidget* transform_widget = new ComponentWidget;
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -95,12 +102,21 @@ QWidget* buildTransformWidget(const std::shared_ptr<engine::TransformComponent>&
     };
 
     auto positionXUpdater = [transform]() {
+        if (!transform->isValid()) {
+            return std::string();
+        }
         return formatFloat(transform->getPosition().x);
     };
     auto positionYUpdater = [transform]() {
+        if (!transform->isValid()) {
+            return std::string();
+        }
         return formatFloat(transform->getPosition().y);
     };
     auto positionZUpdater = [transform]() {
+        if (!transform->isValid()) {
+            return std::string();
+        }
         return formatFloat(transform->getPosition().z);
     };
 
@@ -136,12 +152,21 @@ QWidget* buildTransformWidget(const std::shared_ptr<engine::TransformComponent>&
     };
 
     auto rotationXUpdater = [transform]() {
+        if (!transform->isValid()) {
+            return std::string();
+        }
         return formatFloat(transform->getRotation().x);
     };
     auto rotationYUpdater = [transform]() {
+        if (!transform->isValid()) {
+            return std::string();
+        }
         return formatFloat(transform->getRotation().y);
     };
     auto rotationZUpdater = [transform]() {
+        if (!transform->isValid()) {
+            return std::string();
+        }
         return formatFloat(transform->getRotation().z);
     };
 
@@ -177,12 +202,21 @@ QWidget* buildTransformWidget(const std::shared_ptr<engine::TransformComponent>&
     };
 
     auto scaleXUpdater = [transform]() {
+        if (!transform->isValid()) {
+            return std::string();
+        }
         return formatFloat(transform->getScale().x);
     };
     auto scaleYUpdater = [transform]() {
+        if (!transform->isValid()) {
+            return std::string();
+        }
         return formatFloat(transform->getScale().y);
     };
     auto scaleZUpdater = [transform]() {
+        if (!transform->isValid()) {
+            return std::string();
+        }
         return formatFloat(transform->getScale().z);
     };
 
@@ -205,9 +239,9 @@ QWidget* buildTransformWidget(const std::shared_ptr<engine::TransformComponent>&
     return transform_widget;
 }
 
-QWidget* buildMaterialWidget(const std::shared_ptr<engine::MaterialComponent>& material)
+ComponentWidget* buildMaterialWidget(const std::shared_ptr<engine::MaterialComponent>& material)
 {
-    QWidget* material_widget = new QWidget;
+    ComponentWidget* material_widget = new ComponentWidget;
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -225,10 +259,16 @@ QWidget* buildMaterialWidget(const std::shared_ptr<engine::MaterialComponent>& m
     };
 
     auto textureUpdater = [material]() {
+        if (!material->isValid()) {
+            return std::string();
+        }
         return material->textureName();
     };
 
     auto shaderUpdater = [material]() {
+        if (!material->isValid()) {
+            return std::string();
+        }
         return material->shaderName();
     };
 
@@ -259,9 +299,9 @@ QWidget* buildMaterialWidget(const std::shared_ptr<engine::MaterialComponent>& m
     return material_widget;
 }
 
-QWidget* buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& mesh)
+ComponentWidget* buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& mesh)
 {
-    QWidget* mesh_widget = new QWidget;
+    ComponentWidget* mesh_widget = new ComponentWidget;
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -276,6 +316,9 @@ QWidget* buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& mesh)
     };
 
     auto meshUpdater = [mesh]() {
+        if (!mesh->isValid()) {
+            return std::string();
+        }
         return mesh->meshName();
     };
 
@@ -296,9 +339,9 @@ QWidget* buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& mesh)
     return mesh_widget;
 }
 
-QWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camera)
+ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camera)
 {
-    QWidget* camera_widget = new QWidget;
+    ComponentWidget* camera_widget = new ComponentWidget;
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -308,6 +351,88 @@ QWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camer
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(label);
 
+    auto orthoLeftChangeHandler = [camera](const std::string& value) {
+        auto ortho = camera->getOrtho();
+        ortho.left = std::stof(value);
+        camera->setOrtho(ortho);
+    };
+
+    auto orthoRightChangeHandler = [camera](const std::string& value) {
+        auto ortho = camera->getOrtho();
+        ortho.right = std::stof(value);
+        camera->setOrtho(ortho);
+    };
+
+    auto orthoTopChangeHandler = [camera](const std::string& value) {
+        auto ortho = camera->getOrtho();
+        ortho.top = std::stof(value);
+        camera->setOrtho(ortho);
+    };
+
+    auto orthoBottomChangeHandler = [camera](const std::string& value) {
+        auto ortho = camera->getOrtho();
+        ortho.bottom = std::stof(value);
+        camera->setOrtho(ortho);
+    };
+
+    auto orthoNearChangeHandler = [camera](const std::string& value) {
+        auto ortho = camera->getOrtho();
+        ortho.near = std::stof(value);
+        camera->setOrtho(ortho);
+    };
+
+    auto orthoFarChangeHandler = [camera](const std::string& value) {
+        auto ortho = camera->getOrtho();
+        ortho.far = std::stof(value);
+        camera->setOrtho(ortho);
+    };
+
+    auto orthoLeftUpdater = [camera]() {
+        auto ortho = camera->getOrtho();
+        return formatFloat(ortho.left);
+    };
+
+    auto orthoRightUpdater = [camera]() {
+        auto ortho = camera->getOrtho();
+        return formatFloat(ortho.right);
+    };
+
+    auto orthoTopUpdater = [camera]() {
+        auto ortho = camera->getOrtho();
+        return formatFloat(ortho.top);
+    };
+
+    auto orthoBottomUpdater = [camera]() {
+        auto ortho = camera->getOrtho();
+        return formatFloat(ortho.bottom);
+    };
+
+    auto orthoNearUpdater = [camera]() {
+        auto ortho = camera->getOrtho();
+        return formatFloat(ortho.near);
+    };
+
+    auto orthoFarUpdater = [camera]() {
+        auto ortho = camera->getOrtho();
+        return formatFloat(ortho.far);
+    };
+
+    auto ortho = camera->getOrtho();
+    QHBoxLayout* ortho_layout = new QHBoxLayout();
+    ortho_layout->setSpacing(1);
+    ortho_layout->setContentsMargins(0, 0, 0, 0);
+    label = new QLabel("Ortho");
+    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    ortho_layout->addWidget(label);
+    ortho_layout->addWidget(createLabelLineEditorWidget("left", formatFloat(ortho.left), orthoLeftChangeHandler, orthoLeftUpdater));
+    ortho_layout->addWidget(createLabelLineEditorWidget("right", formatFloat(ortho.right), orthoRightChangeHandler, orthoRightUpdater));
+    ortho_layout->addWidget(createLabelLineEditorWidget("top", formatFloat(ortho.top), orthoTopChangeHandler, orthoTopUpdater));
+    ortho_layout->addWidget(createLabelLineEditorWidget("bottom", formatFloat(ortho.bottom), orthoBottomChangeHandler, orthoBottomUpdater));
+    ortho_layout->addWidget(createLabelLineEditorWidget("near", formatFloat(ortho.near), orthoNearChangeHandler, orthoNearUpdater));
+    ortho_layout->addWidget(createLabelLineEditorWidget("far", formatFloat(ortho.far), orthoFarChangeHandler, orthoFarUpdater));
+    ortho_layout->addStretch();
+    layout->addLayout(ortho_layout);
+
     auto yawChangeHandler = [camera](const std::string& value) {
         if (value.empty()) {
             return;
@@ -316,6 +441,9 @@ QWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camer
     };
 
     auto yawUpdater = [camera]() {
+        if (!camera->isValid()) {
+            return std::string();
+        }
         return formatFloat(camera->getYaw());
     };
 
@@ -337,6 +465,9 @@ QWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camer
     };
 
     auto pitchUpdater = [camera]() {
+        if (!camera->isValid()) {
+            return std::string();
+        }
         return formatFloat(camera->getPitch());
     };
 
@@ -357,9 +488,9 @@ QWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camer
     return camera_widget;
 }
 
-QWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation)
+ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation)
 {
-    QWidget* flipbook_widget = new QWidget;
+    ComponentWidget* flipbook_widget = new ComponentWidget;
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -389,6 +520,9 @@ QWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnim
     };
 
     auto updateTimeUpdater = [animation]() {
+        if (!animation->isValid()) {
+            return std::string();
+        }
         return formatFloat(animation->updateTime());
     };
 
@@ -431,7 +565,16 @@ QWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnim
     return flipbook_widget;
 }
 
-QWidget* NodeBuilder::buildComponent(std::shared_ptr<engine::Component> component)
+auto NodeTreeBuilder::buildWidgetForNode(const std::string& node_name) -> std::optional<NodeWidget*>
+{
+    NodeWidget* new_widget = new NodeWidget();
+    auto label = new QLabel(new_widget);
+    label->setText(QString::fromStdString(node_name));
+
+    return new_widget;
+}
+
+auto NodeTreeBuilder::buildWidgetForComponent(std::shared_ptr<engine::Component> component) -> std::optional<ComponentWidget*>
 {
     if (component->type() == "material") {
         return buildMaterialWidget(std::dynamic_pointer_cast<engine::MaterialComponent>(component));
@@ -445,7 +588,7 @@ QWidget* NodeBuilder::buildComponent(std::shared_ptr<engine::Component> componen
         return buildFlipbookAnimationWidget(std::dynamic_pointer_cast<engine::FlipbookAnimationComponent>(component));
     }
 
-    return nullptr;
+    return std::nullopt;
 }
 
 }

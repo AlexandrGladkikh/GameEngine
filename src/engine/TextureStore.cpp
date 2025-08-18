@@ -44,4 +44,9 @@ void TextureStore::remove(uint32_t id)
     m_textures.erase(id);
 }
 
+bool TextureStore::contains(uint32_t id) const
+{
+    return m_textures.contains(id);
+}
+
 }

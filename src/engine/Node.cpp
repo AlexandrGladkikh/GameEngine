@@ -1,6 +1,7 @@
 #include "Node.h"
 #include "Logger.h"
 #include "Utils.h"
+#include "Component.h"
 
 namespace engine {
 
@@ -29,6 +30,16 @@ std::string Node::name() const
 uint32_t Node::getParentId() const
 {
     return m_parent;
+}
+
+auto Node::getScene() const -> std::optional<std::shared_ptr<Scene>>
+{
+    auto context = m_context.lock();
+    if (!context) {
+        return nullptr;
+    }
+
+    return context->sceneStore->get(m_owner_scene);
 }
 
 auto Node::getParentNode() const -> std::optional<std::shared_ptr<Node>>
@@ -84,6 +95,38 @@ auto Node::addChild(const std::string& name) -> std::shared_ptr<Node>
 bool Node::addComponent(uint32_t id)
 {
     return m_components_id.insert(id).second;
+}
+
+auto Node::addComponent(const std::string& type, const std::string& name) -> std::optional<std::shared_ptr<Component>>
+{
+    if (hasComponent(type)) {
+        return std::nullopt;
+    }
+
+    auto component = ComponentBuilder::buildEmptyComponent(type, name, id(), m_owner_scene);
+
+    if (!component.has_value()) {
+        return std::nullopt;
+    }
+
+    component.value()->setContext(m_context);
+
+    auto context = m_context.lock();
+    if (!context) {
+        return std::nullopt;
+    }
+
+    auto scene = context->sceneStore->get(m_owner_scene);
+    if (!scene.has_value()) {
+        return std::nullopt;
+    }
+
+    auto component_id = component.value()->id();
+    scene.value()->addComponent(component_id, std::move(component.value()));
+
+    addComponent(component_id);
+
+    return scene.value()->getComponent(component_id).value();
 }
 
 bool Node::removeChild(uint32_t id)
@@ -151,6 +194,28 @@ auto Node::getComponent(uint32_t id) const -> std::optional<std::shared_ptr<Comp
     }
 
     return scene.value()->getComponent(id);
+}
+
+bool Node::hasComponent(const std::string& type) const
+{
+    auto context = m_context.lock();
+    if (!context) {
+        return false;
+    }
+
+    auto scene = context->sceneStore->get(m_owner_scene);
+    if (!scene.has_value()) {
+        return false;
+    }
+
+    for (auto component_id : components()) {
+        auto component = scene.value()->getComponent(component_id);
+        if (component.has_value() && component.value()->type() == type) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 auto buildNode(rapidjson::Value& node_json) -> std::optional<std::unique_ptr<Node>>

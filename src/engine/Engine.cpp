@@ -140,7 +140,7 @@ void Engine::run()
         auto scene = m_context->sceneStore->get(m_active_scene_id);
         if (scene.has_value()) {
             for (auto& component : scene.value()->getComponents() | std::views::values) {
-                if (component->isActive()) {
+                if (component->isActive() && component->isValid()) {
                     component->update(delta_time);
                 }
             }

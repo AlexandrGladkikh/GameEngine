@@ -45,4 +45,9 @@ void ShaderStore::remove(uint32_t id)
     m_shaders.erase(id);
 }
 
+bool ShaderStore::contains(uint32_t id) const
+{
+    return m_shaders.contains(id);
+}
+
 }

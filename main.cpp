@@ -9,6 +9,7 @@
 #include "engine/Window.h"
 #include "engine/MeshComponent.h"
 #include "engine/FlipbookAnimationComponent.h"
+#include "engine/Utils.h"
 
 #include <GLFW/glfw3.h>
 
@@ -16,24 +17,25 @@
 #include <QApplication>
 
 #include "editor/SceneNodeTree.h"
-#include "editor/UserComponentBuilder.h"
+#include "editor/UserNodeTreeBuilder.h"
+#include "editor/ComponentWidget.h"
 
 #include <QWidget>
 #include <QVBoxLayout>
 #include <QLabel>
-class EditorComponentBuilder : public editor::UserComponentBuilder {
+class EditorComponentBuilder : public editor::UserNodeTreeBuilder {
 public:
     [[nodiscard]]
-    std::optional<QWidget*> buildComponent(const std::shared_ptr<engine::Component>& component) const override;
+    std::optional<editor::ComponentWidget*> buildWidgetForComponent(const std::shared_ptr<engine::Component>& component) const override;
 };
 
 #endif
 
-#include <future>
-
 class EngineComponentBuilder : public engine::UserComponentsBuilder {
 public:
     std::optional<std::unique_ptr<engine::Component>> buildComponent(const std::string& type, rapidjson::Value& component) const override;
+    auto buildEmptyComponent(const std::string& type, const std::string& name, uint32_t owner_node, uint32_t owner_scene) -> std::optional<std::unique_ptr<engine::Component>> override;
+    auto componentTypes() const -> const std::vector<std::string>& override;
 };
 
 int main(int argc, char *argv[])
@@ -53,7 +55,7 @@ int main(int argc, char *argv[])
 
     auto currentScene = context->sceneStore->get(engine.getActiveSceneId());
 
-    editor::SceneNodeTree sceneNodeTree;
+    editor::SceneNodeTree sceneNodeTree(&engine);
     sceneNodeTree.setUserComponentsBuilder(std::make_unique<EditorComponentBuilder>());
     sceneNodeTree.build(currentScene);
     sceneNodeTree.show();
@@ -251,30 +253,30 @@ public:
     {
         static float speed = 200;
         engine::Logger::info("MoveComponent::update");
-        std::optional<std::shared_ptr<engine::TransformComponent>> transform = getNode().value()->getComponent<engine::TransformComponent>();
-
-        if (m_up) {
-            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(0.0f, 1.0f * speed * dt / 1000000, 0.0f));
-        }
-        if (m_down) {
-            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(0.0f, -1.0f * speed * dt / 1000000, 0.0f));
-        }
-        if (m_left) {
-            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(-1.0f * speed * dt / 1000000, 0.0f, 0.0f));
-        }
-        if (m_right) {
-            transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(1.0f * speed * dt / 1000000, 0.0f, 0.0f));
-        }
-
-        if (m_space) {
-            m_currentBirdSpeed = 5.0f;
-        }
-
-        m_currentBirdSpeed = m_currentBirdSpeed + m_gravity * dt / 1000000;
-        engine::Logger::info("m_currentBirdSpeed: {}", m_currentBirdSpeed);
-        auto birdTransform = m_birdNode->getComponent<engine::TransformComponent>();
-        // birdTransform.value()->setPosition(birdTransform.value()->getPosition() + glm::vec3(0.0f, m_currentBirdSpeed, 0.0f));
-        birdTransform.value()->setRotation(glm::vec3(0.0f, 0.0f, m_currentBirdSpeed * 10 > -90.0f ? m_currentBirdSpeed * 10 : -90.0f));
+        // std::optional<std::shared_ptr<engine::TransformComponent>> transform = getNode().value()->getComponent<engine::TransformComponent>();
+        //
+        // if (m_up) {
+        //     transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(0.0f, 1.0f * speed * dt / 1000000, 0.0f));
+        // }
+        // if (m_down) {
+        //     transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(0.0f, -1.0f * speed * dt / 1000000, 0.0f));
+        // }
+        // if (m_left) {
+        //     transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(-1.0f * speed * dt / 1000000, 0.0f, 0.0f));
+        // }
+        // if (m_right) {
+        //     transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(1.0f * speed * dt / 1000000, 0.0f, 0.0f));
+        // }
+        //
+        // if (m_space) {
+        //     m_currentBirdSpeed = 5.0f;
+        // }
+        //
+        // m_currentBirdSpeed = m_currentBirdSpeed + m_gravity * dt / 1000000;
+        // engine::Logger::info("m_currentBirdSpeed: {}", m_currentBirdSpeed);
+        // auto birdTransform = m_birdNode->getComponent<engine::TransformComponent>();
+        // // birdTransform.value()->setPosition(birdTransform.value()->getPosition() + glm::vec3(0.0f, m_currentBirdSpeed, 0.0f));
+        // birdTransform.value()->setRotation(glm::vec3(0.0f, 0.0f, m_currentBirdSpeed * 10 > -90.0f ? m_currentBirdSpeed * 10 : -90.0f));
     }
 
     [[nodiscard]]
@@ -295,11 +297,11 @@ private:
 
 
 #ifdef ENABLE_EDITOR
-std::optional<QWidget*> EditorComponentBuilder::buildComponent(const std::shared_ptr<engine::Component>& component) const
+std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForComponent(const std::shared_ptr<engine::Component>& component) const
 {
-    QWidget* widget = nullptr;
+    editor::ComponentWidget* widget = nullptr;
     if (component->type() == "move") {
-        widget = new QWidget;
+        widget = new editor::ComponentWidget;
 
         QVBoxLayout* layout = new QVBoxLayout;
         layout->setSpacing(1);
@@ -329,6 +331,21 @@ std::optional<std::unique_ptr<engine::Component>> EngineComponentBuilder::buildC
     }
 
     return {};
+}
+
+auto EngineComponentBuilder::buildEmptyComponent(const std::string& type, const std::string& name, uint32_t owner_node, uint32_t owner_scene) -> std::optional<std::unique_ptr<engine::Component>>
+{
+    if (type == "move") {
+        return std::make_unique<MoveComponent>(engine::generateUniqueId(), name, owner_node, owner_scene);
+    }
+
+    return std::nullopt;
+}
+
+auto EngineComponentBuilder::componentTypes() const -> const std::vector<std::string>&
+{
+    static const std::vector<std::string> types = {"move"};
+    return types;
 }
 
 // #include "Shader.h"

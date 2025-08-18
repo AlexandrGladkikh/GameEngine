@@ -24,6 +24,7 @@ public:
     auto getIdByName(const std::string& name) const -> std::optional<uint32_t>;
     void add(uint32_t id, std::unique_ptr<Shader> shader);
     void remove(uint32_t id);
+    bool contains(uint32_t id) const;
 
 private:
     std::unordered_map<uint32_t, std::shared_ptr<Shader>> m_shaders;

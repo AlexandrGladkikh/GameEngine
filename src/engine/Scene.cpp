@@ -6,6 +6,7 @@
 #include "Logger.h"
 #include "Context.h"
 #include "UserComponentsBuilder.h"
+#include "Utils.h"
 
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
@@ -63,6 +64,21 @@ void Scene::setActive(bool active)
 void Scene::setDirty(bool dirty)
 {
     m_dirty = dirty;
+}
+
+auto Scene::createRootNode(const std::string& name) -> std::optional<std::shared_ptr<Node>>
+{
+    if (!m_nodes.empty()) {
+        return std::nullopt;
+    }
+
+    auto id = generateUniqueId();
+    auto root_node = std::make_shared<Node>(id, name, 0, m_id);
+    root_node->setContext(m_context);
+    m_nodes.insert({id, root_node}).second;
+    m_root = id;
+
+    return root_node;
 }
 
 bool Scene::addComponent(uint32_t id, const std::shared_ptr<Component>& component)

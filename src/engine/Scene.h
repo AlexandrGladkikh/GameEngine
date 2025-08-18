@@ -28,6 +28,8 @@ public:
     void setActive(bool active);
     void setDirty(bool dirty);
 
+    auto createRootNode(const std::string& name) -> std::optional<std::shared_ptr<Node>>;
+
     bool addComponent(uint32_t id, const std::shared_ptr<Component>& component);
     bool addNode(uint32_t id, const std::shared_ptr<Node>& node);
 
