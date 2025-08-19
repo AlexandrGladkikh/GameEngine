@@ -163,6 +163,19 @@ public:
     [[nodiscard]]
     std::string type() const override { return "camera_follow"; }
 
+    auto clone(uint32_t owner_node_id) const -> std::unique_ptr<Component> override
+    {
+        auto clone_component = std::make_unique<CameraFollowComponent>(engine::generateUniqueId(), name(), owner_node_id, ownerScene());
+        clone_component->setContext(context());
+        clone_component->setValid(isValid());
+        clone_component->setActive(isActive());
+        clone_component->markDirty();
+
+        clone_component->setCameraId(m_camera_id);
+
+        return clone_component;
+    }
+
 private:
     uint32_t m_camera_id = 0;
 
@@ -263,6 +276,19 @@ public:
 
     [[nodiscard]]
     std::string type() const override { return "move"; }
+
+    auto clone(uint32_t owner_node_id) const -> std::unique_ptr<Component> override
+    {
+        auto clone_component = std::make_unique<MoveComponent>(engine::generateUniqueId(), name(), owner_node_id, ownerScene());
+        clone_component->setContext(context());
+        clone_component->setValid(isValid());
+        clone_component->setActive(isActive());
+        clone_component->markDirty();
+
+        clone_component->setSpeed(m_speed);
+
+        return clone_component;
+    }
 
 private:
     bool m_up = false;

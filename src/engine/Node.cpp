@@ -63,6 +63,55 @@ auto Node::getParentNode() const -> std::optional<std::shared_ptr<Node>>
     return scene.value()->getNode(m_parent);
 }
 
+auto Node::clone(uint32_t owner_node_id) const -> std::optional<std::shared_ptr<Node>>
+{
+    auto scene = getScene();
+    if (!scene.has_value()) {
+        return std::nullopt;
+    }
+
+    const auto& scene_value = scene.value();
+
+    auto clone_node = std::make_shared<Node>(generateUniqueId(), m_name, owner_node_id, m_owner_scene);
+    clone_node->setContext(m_context);
+
+    for (const auto& child_id : m_children_id) {
+        auto child = getChild(child_id);
+        if (!child.has_value()) {
+            return std::nullopt;
+        }
+
+        auto child_clone = child.value()->clone(clone_node->id());
+        if (!child_clone.has_value()) {
+            return std::nullopt;
+        }
+
+        clone_node->addChild(child_clone.value()->id());
+        scene_value->addNode(child_clone.value()->id(), std::move(child_clone.value()));
+    }
+
+    for (const auto& component_id : m_components_id) {
+        auto component = getComponent(component_id);
+        if (!component.has_value()) {
+            return std::nullopt;
+        }
+
+        auto component_clone = component.value()->clone(clone_node->id());
+        clone_node->addComponent(component_clone->id());
+        auto id = component_clone->id();
+        scene_value->addComponent(id, std::move(component_clone));
+    }
+
+    scene_value->addNode(clone_node->id(), clone_node);
+    auto owner_node = scene_value->getNode(owner_node_id);
+    if (!owner_node.has_value()) {
+        return std::nullopt;
+    }
+    owner_node.value()->addChild(clone_node->id());
+
+    return clone_node;
+}
+
 std::unordered_set<uint32_t> Node::children() const
 {
     return m_children_id;
@@ -71,6 +120,11 @@ std::unordered_set<uint32_t> Node::children() const
 std::unordered_set<uint32_t> Node::components() const
 {
     return m_components_id;
+}
+
+void Node::setName(const std::string &name)
+{
+    m_name = name;
 }
 
 bool Node::addChild(uint32_t id)

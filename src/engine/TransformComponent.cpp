@@ -1,4 +1,5 @@
 #include "TransformComponent.h"
+#include "Utils.h"
 
 #include <glm/ext/matrix_transform.hpp>
 
@@ -40,9 +41,24 @@ void TransformComponent::clearDirty()
     m_dirty = false;
 }
 
-std::string TransformComponent::type() const
+auto TransformComponent::type() const -> std::string
 {
     return "transform";
+}
+
+auto TransformComponent::clone(uint32_t owner_node_id) const -> std::unique_ptr<Component>
+{
+    auto clone_component = std::make_unique<TransformComponent>(generateUniqueId(), name(), owner_node_id, ownerScene());
+    clone_component->setContext(context());
+    clone_component->setValid(isValid());
+    clone_component->setActive(isActive());
+    clone_component->markDirty();
+
+    clone_component->setPosition(m_position);
+    clone_component->setRotation(m_rotation);
+    clone_component->setScale(m_scale);
+
+    return clone_component;
 }
 
 glm::mat4 TransformComponent::getModel()

@@ -9,6 +9,8 @@
 namespace engine {
 class Scene;
 class Engine;
+class Component;
+class Node;
 }
 
 class QWidget;
@@ -40,6 +42,9 @@ private slots:
     void onAddComponent();
     void onRemoveComponent();
     void onCopyId();
+    void onCopy();
+    void onPaste();
+    void onRename();
 
     void onSaveScene();
 
@@ -49,9 +54,13 @@ private:
     void initHeaderContextMenu();
     void initContextMenu();
 
+    void createComponentWidget(QTreeWidgetItem* item, const std::shared_ptr<engine::Component>& component);
+    void createNodeWidget(std::optional<std::shared_ptr<engine::Node>> node, QTreeWidgetItem* parent);
+
     QTreeWidget* m_scene_tree;
 
     QTreeWidgetItem* m_selected_item;
+    QTreeWidgetItem* m_to_copy_item;
 
     QMenu* m_header_context_menu;
 
@@ -65,6 +74,9 @@ private:
     std::map<std::string, QAction*> m_add_component_actions;
     QAction* m_remove_component_action;
     QAction* m_copy_id;
+    QAction* m_copy;
+    QAction* m_paste;
+    QAction* m_rename;
 
     std::unique_ptr<UserNodeTreeBuilder> m_user_components_builder;
 

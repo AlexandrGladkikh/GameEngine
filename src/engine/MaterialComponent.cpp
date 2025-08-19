@@ -4,6 +4,7 @@
 #include "Texture.h"
 #include "ShaderStore.h"
 #include "Shader.h"
+#include "Utils.h"
 
 namespace engine {
 
@@ -38,9 +39,23 @@ void MaterialComponent::clearDirty()
     m_dirty = false;
 }
 
-std::string MaterialComponent::type() const
+auto MaterialComponent::type() const -> std::string
 {
     return "material";
+}
+
+auto MaterialComponent::clone(uint32_t owner_node_id) const -> std::unique_ptr<Component>
+{
+    auto clone_component = std::make_unique<MaterialComponent>(generateUniqueId(), name(), owner_node_id, ownerScene());
+    clone_component->setContext(context());
+    clone_component->setValid(isValid());
+    clone_component->setActive(isActive());
+    clone_component->markDirty();
+
+    clone_component->setShader(m_shader_id);
+    clone_component->setTexture(m_texture_id);
+
+    return clone_component;
 }
 
 void MaterialComponent::setShader(uint32_t shader_id)

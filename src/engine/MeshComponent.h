@@ -19,7 +19,9 @@ public:
     void markDirty() override;
     void clearDirty() override;
 
-    std::string type() const override;
+    auto type() const -> std::string override;
+
+    auto clone(uint32_t owner_node_id) const -> std::unique_ptr<Component> override;
 
     void bind() const;
     void unbind() const;

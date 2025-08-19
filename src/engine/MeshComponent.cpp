@@ -1,6 +1,7 @@
 #include "MeshComponent.h"
 #include "Context.h"
 #include "MeshStore.h"
+#include "Utils.h"
 
 namespace engine {
 
@@ -36,9 +37,22 @@ void MeshComponent::clearDirty()
     m_dirty = false;
 }
 
-std::string MeshComponent::type() const
+auto MeshComponent::type() const -> std::string
 {
     return "mesh";
+}
+
+auto MeshComponent::clone(uint32_t owner_node_id) const -> std::unique_ptr<Component>
+{
+    auto clone_component = std::make_unique<MeshComponent>(generateUniqueId(), name(), owner_node_id, ownerScene());
+    clone_component->setContext(context());
+    clone_component->setValid(isValid());
+    clone_component->setActive(isActive());
+    clone_component->markDirty();
+
+    clone_component->setMesh(meshId());
+
+    return clone_component;
 }
 
 void MeshComponent::bind() const

@@ -21,7 +21,9 @@ public:
     void clearDirty() override;
 
     [[nodiscard]]
-    std::string type() const override;
+    auto type() const -> std::string override;
+
+    auto clone(uint32_t owner_node_id) const -> std::unique_ptr<Component> override;
 
     glm::mat4 getModel();
 

@@ -122,6 +122,8 @@ void SceneNodeTree::onCustomContextMenu(const QPoint& pos)
         m_remove_node_action->setEnabled(true);
         m_add_component_menu->setEnabled(true);
         m_remove_component_action->setEnabled(false);
+        m_paste->setEnabled(m_to_copy_item != nullptr);
+        m_rename->setEnabled(true);
     }
 
     if (is_component_widget) {
@@ -129,6 +131,8 @@ void SceneNodeTree::onCustomContextMenu(const QPoint& pos)
         m_remove_node_action->setEnabled(false);
         m_add_component_menu->setEnabled(false);
         m_remove_component_action->setEnabled(true);
+        m_paste->setEnabled(false);
+        m_rename->setEnabled(false);
     }
 
     m_context_menu->popup(m_scene_tree->viewport()->mapToGlobal(pos));
@@ -231,14 +235,99 @@ void SceneNodeTree::onRemoveComponent()
 void SceneNodeTree::onCopyId()
 {
     auto widget = m_scene_tree->itemWidget(m_selected_item, 0);
-    auto* tree_widget = dynamic_cast<ComponentWidget*>(widget);
-    if (tree_widget != nullptr) {
-        auto component = tree_widget->component();
+    auto* component_widget = dynamic_cast<ComponentWidget*>(widget);
+    if (component_widget != nullptr) {
+        auto component = component_widget->component();
+        QClipboard* clipboard = QApplication::clipboard();
+        clipboard->setText(QString::fromStdString(std::to_string(component->id())));
+    }
+
+    auto* node_widget = dynamic_cast<ComponentWidget*>(widget);
+    if (node_widget != nullptr) {
+        auto component = node_widget->component();
         QClipboard* clipboard = QApplication::clipboard();
         clipboard->setText(QString::fromStdString(std::to_string(component->id())));
     }
 
     m_selected_item = nullptr;
+}
+
+void SceneNodeTree::onCopy()
+{
+    m_to_copy_item = m_selected_item;
+
+    m_selected_item = nullptr;
+}
+
+void SceneNodeTree::onPaste()
+{
+    auto widget = m_scene_tree->itemWidget(m_to_copy_item, 0);
+
+    auto* component_widget = dynamic_cast<ComponentWidget*>(widget);
+    auto* selected_widget = m_scene_tree->itemWidget(m_selected_item, 0);
+    auto* selected_component_widget = dynamic_cast<NodeWidget*>(selected_widget);
+    if (component_widget != nullptr && selected_component_widget != nullptr) {
+        auto parent_node = selected_component_widget->node();
+        auto component = component_widget->component();
+        auto node = component->getNode();
+        if (node.has_value()) {
+            std::shared_ptr<engine::Component> clone = component->clone(parent_node->id());
+            parent_node->addComponent(clone->id());
+            auto scene = node.value()->getScene();
+            if (scene.has_value()) {
+                scene.value()->addComponent(clone->id(), clone);
+
+                auto* clone_item = new QTreeWidgetItem(m_selected_item);
+                createComponentWidget(clone_item, clone);
+            }
+        }
+    }
+
+    {
+        auto* node_widget = dynamic_cast<NodeWidget*>(widget);
+        auto* selected_widget = m_scene_tree->itemWidget(m_selected_item, 0);
+        auto* selected_node_widget = dynamic_cast<NodeWidget*>(selected_widget);
+        if (node_widget != nullptr && selected_node_widget != nullptr) {
+            auto parent_node = selected_node_widget->node();
+            auto node = node_widget->node();
+            auto clone = node->clone(parent_node->id());
+            if (clone.has_value()) {
+                std::shared_ptr<engine::Node> clone_value = std::move(clone.value());
+                auto scene = node->getScene();
+                if (scene.has_value()) {
+                    scene.value()->addNode(clone_value->id(), clone_value);
+
+                    createNodeWidget(clone_value, m_selected_item);
+                }
+            }
+        }
+    }
+
+    m_to_copy_item = nullptr;
+    m_selected_item = nullptr;
+}
+
+void SceneNodeTree::onRename()
+{
+    auto* selected_widget = m_scene_tree->itemWidget(m_selected_item, 0);
+    auto node_widget = dynamic_cast<NodeWidget*>(selected_widget);
+    if (node_widget != nullptr) {
+        auto node = node_widget->node();
+        bool ok = false;
+        QString new_node_name = QInputDialog::getText(this, "Rename node",
+            "Node name", QLineEdit::Normal, node->name().c_str(), &ok);
+        if (ok && !new_node_name.isEmpty()) {
+            auto node_widget = NodeTreeBuilder::buildWidgetForNode(new_node_name.toStdString());
+            if (!node_widget.has_value()) {
+                return;
+            }
+
+            node->setName(new_node_name.toStdString());
+
+            node_widget.value()->setNode(node);
+            m_scene_tree->setItemWidget(m_selected_item, 0, node_widget.value());
+        }
+    }
 }
 
 void SceneNodeTree::onSaveScene()
@@ -264,58 +353,7 @@ void SceneNodeTree::build(std::optional<std::shared_ptr<engine::Scene>> scene)
         return;
     }
 
-    std::function<void(std::optional<std::shared_ptr<engine::Node>>, QTreeWidgetItem*)> handle_node = [&](std::optional<std::shared_ptr<engine::Node>> node, QTreeWidgetItem* parent) {
-        if (!node.has_value()) {
-            return;
-        }
-
-        auto& node_value = node.value();
-
-        QTreeWidgetItem* nodeItem = nullptr;
-
-        if (parent == nullptr) {
-            nodeItem = new QTreeWidgetItem(m_scene_tree);
-        } else {
-            nodeItem = new QTreeWidgetItem(parent);
-        }
-
-        auto node_widget = NodeTreeBuilder::buildWidgetForNode(node_value->name());
-        if (!node_widget.has_value()) {
-            return;
-        }
-
-        node_widget.value()->setNode(node_value);
-        m_scene_tree->setItemWidget(nodeItem, 0, node_widget.value());
-
-        auto components = node_value->components();
-
-        for (const auto component_id : components) {
-            auto component = node_value->getComponent(component_id);
-
-            if (!component.has_value()) {
-                return;
-            }
-
-            auto& component_value = component.value();
-
-            auto* componentItem = new QTreeWidgetItem(nodeItem);
-            auto component_widget = NodeTreeBuilder::buildWidgetForComponent(component_value);
-            if (!component_widget.has_value()) {
-                component_widget = m_user_components_builder->buildWidgetForComponent(component_value);
-            }
-            if (component_widget.has_value()) {
-                component_widget.value()->setComponent(component_value);
-                m_scene_tree->setItemWidget(componentItem, 0, component_widget.value());
-            }
-        }
-
-        auto node_children = node_value->children();
-        for (const auto child_id : node_children) {
-            handle_node(scene_value->getNode(child_id), nodeItem);
-        }
-    };
-
-    handle_node(root_node, nullptr);
+    createNodeWidget(root_node, nullptr);
 
     m_scene_tree->expandAll();
 }
@@ -370,7 +408,75 @@ void SceneNodeTree::initContextMenu()
     m_copy_id = m_context_menu->addAction("Copy ID");
     m_copy_id->setIcon(QIcon::fromTheme("edit-copy"));
     connect(m_copy_id, &QAction::triggered, this, &SceneNodeTree::onCopyId);
+
+    m_copy = m_context_menu->addAction("Copy");
+    m_copy->setIcon(QIcon::fromTheme("edit-copy"));
+    connect(m_copy, &QAction::triggered, this, &SceneNodeTree::onCopy);
+
+    m_paste = m_context_menu->addAction("Paste");
+    m_paste->setIcon(QIcon::fromTheme("edit-paste"));
+    connect(m_paste, &QAction::triggered, this, &SceneNodeTree::onPaste);
+
+    m_rename = m_context_menu->addAction("Rename");
+    m_rename->setIcon(QIcon::fromTheme("edit-rename"));
+    connect(m_rename, &QAction::triggered, this, &SceneNodeTree::onRename);
 }
 
+void SceneNodeTree::createComponentWidget(QTreeWidgetItem* item, const std::shared_ptr<engine::Component>& component)
+{
+    auto component_widget = NodeTreeBuilder::buildWidgetForComponent(component);
+    if (!component_widget.has_value()) {
+        component_widget = m_user_components_builder->buildWidgetForComponent(component);
+    }
+    if (component_widget.has_value()) {
+        component_widget.value()->setComponent(component);
+        m_scene_tree->setItemWidget(item, 0, component_widget.value());
+    }
+}
+
+void SceneNodeTree::createNodeWidget(std::optional<std::shared_ptr<engine::Node>> node, QTreeWidgetItem* parent)
+{
+    if (!node.has_value()) {
+        return;
+    }
+
+    auto& node_value = node.value();
+
+    QTreeWidgetItem* nodeItem = nullptr;
+
+    if (parent == nullptr) {
+        nodeItem = new QTreeWidgetItem(m_scene_tree);
+    } else {
+        nodeItem = new QTreeWidgetItem(parent);
+    }
+
+    auto node_widget = NodeTreeBuilder::buildWidgetForNode(node_value->name());
+    if (!node_widget.has_value()) {
+        return;
+    }
+
+    node_widget.value()->setNode(node_value);
+    m_scene_tree->setItemWidget(nodeItem, 0, node_widget.value());
+
+    auto components = node_value->components();
+
+    for (const auto component_id : components) {
+        auto component = node_value->getComponent(component_id);
+
+        if (!component.has_value()) {
+            return;
+        }
+
+        auto& component_value = component.value();
+
+        auto* componentItem = new QTreeWidgetItem(nodeItem);
+        createComponentWidget(componentItem, component_value);
+    }
+
+    auto node_children = node_value->children();
+    for (const auto child_id : node_children) {
+        createNodeWidget(node_value->getChild(child_id), nodeItem);
+    }
+}
 
 }

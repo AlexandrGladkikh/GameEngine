@@ -52,6 +52,8 @@ public:
     [[nodiscard]]
     virtual std::string type() const = 0;
 
+    virtual auto clone(uint32_t owner_node_id) const -> std::unique_ptr<Component> = 0;
+
 protected:
     void setValid(bool valid);
 

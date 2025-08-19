@@ -1,4 +1,5 @@
 #include "CameraComponent.h"
+#include "Utils.h"
 
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
@@ -48,9 +49,25 @@ void CameraComponent::clearDirty()
     m_dirty = false;
 }
 
-std::string CameraComponent::type() const
+auto CameraComponent::type() const -> std::string
 {
     return "camera";
+}
+
+auto CameraComponent::clone(uint32_t owner_node_id) const -> std::unique_ptr<Component>
+{
+    auto clone_component = std::make_unique<CameraComponent>(generateUniqueId(), name(), owner_node_id, ownerScene());
+    clone_component->setContext(context());
+    clone_component->setValid(isValid());
+    clone_component->setActive(isActive());
+    clone_component->markDirty();
+
+    clone_component->setPosition(m_position);
+    clone_component->setYaw(m_yaw);
+    clone_component->setPitch(m_pitch);
+    clone_component->setOrtho(m_ortho);
+
+    return clone_component;
 }
 
 void CameraComponent::setOrtho(GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat near, GLfloat far)

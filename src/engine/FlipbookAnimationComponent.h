@@ -22,7 +22,9 @@ public:
     bool isDirty() const override;
     void markDirty() override;
     void clearDirty() override;
-    std::string type() const override;
+    auto type() const -> std::string override;
+
+    auto clone(uint32_t owner_node_id) const -> std::unique_ptr<Component> override;
 
     void start();
     void stop();

@@ -25,7 +25,9 @@ public:
     void markDirty() override;
     void clearDirty() override;
 
-    std::string type() const override;
+    auto type() const -> std::string override;
+
+    auto clone(uint32_t owner_node_id) const -> std::unique_ptr<Component> override;
 
     void setOrtho(GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat near, GLfloat far);
     void setOrtho(const Ortho& ortho);

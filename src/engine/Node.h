@@ -40,8 +40,12 @@ public:
 
     auto getParentNode() const -> std::optional<std::shared_ptr<Node>>;
 
+    auto clone(uint32_t owner_node_id) const -> std::optional<std::shared_ptr<Node>>;
+
     std::unordered_set<uint32_t> children() const;
     std::unordered_set<uint32_t> components() const;
+
+    void setName(const std::string& name);
 
     bool addChild(uint32_t id);
     auto addChild(const std::string& name) -> std::shared_ptr<Node>;
