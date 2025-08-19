@@ -21,7 +21,7 @@ void InputManager::update(uint64_t dt)
             if (m_key[i] != key) {
                 continue;
             }
-            val->handler(m_key[i], m_action[i]);
+            val->handler(m_action[i]);
         }
     }
 
@@ -29,7 +29,7 @@ void InputManager::update(uint64_t dt)
     m_action.clear();
 }
 
-void InputManager::registerHandler(int key, const std::function<void(int, int)>& handler)
+void InputManager::registerHandler(int key, const std::function<void(int)>& handler)
 {
     m_handlers[key] = std::make_unique<InputHandler>(key, handler);
 }

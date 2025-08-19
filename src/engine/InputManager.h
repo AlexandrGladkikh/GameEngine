@@ -13,7 +13,7 @@ class InputManager final {
 public:
     struct InputHandler final {
         int key;
-        std::function<void(int, int)> handler;
+        std::function<void(int)> handler;
     };
 
     explicit InputManager(const std::unique_ptr<Window>& window);
@@ -25,7 +25,7 @@ public:
 
     void update(uint64_t dt);
 
-    void registerHandler(int key, const std::function<void(int, int)>& handler);
+    void registerHandler(int key, const std::function<void(int)>& handler);
     void unregisterHandler(int key);
 
 private:
