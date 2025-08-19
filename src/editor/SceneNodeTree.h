@@ -39,6 +39,7 @@ private slots:
     void onRemoveNode();
     void onAddComponent();
     void onRemoveComponent();
+    void onCopyId();
 
     void onSaveScene();
 
@@ -63,6 +64,7 @@ private:
     QMenu* m_add_component_menu;
     std::map<std::string, QAction*> m_add_component_actions;
     QAction* m_remove_component_action;
+    QAction* m_copy_id;
 
     std::unique_ptr<UserNodeTreeBuilder> m_user_components_builder;
 

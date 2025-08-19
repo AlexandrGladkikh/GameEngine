@@ -18,6 +18,8 @@
 #include <QInputDialog>
 #include <QHeaderView>
 #include <QMenuBar>
+#include <QClipboard>
+#include <QApplication>
 
 #include <functional>
 
@@ -226,6 +228,19 @@ void SceneNodeTree::onRemoveComponent()
     m_selected_item = nullptr;
 }
 
+void SceneNodeTree::onCopyId()
+{
+    auto widget = m_scene_tree->itemWidget(m_selected_item, 0);
+    auto* tree_widget = dynamic_cast<ComponentWidget*>(widget);
+    if (tree_widget != nullptr) {
+        auto component = tree_widget->component();
+        QClipboard* clipboard = QApplication::clipboard();
+        clipboard->setText(QString::fromStdString(std::to_string(component->id())));
+    }
+
+    m_selected_item = nullptr;
+}
+
 void SceneNodeTree::onSaveScene()
 {
     m_engine->saveScene(m_engine->getActiveSceneId());
@@ -351,6 +366,10 @@ void SceneNodeTree::initContextMenu()
     m_remove_component_action = m_context_menu->addAction("Remove component");
     m_remove_component_action->setIcon(QIcon::fromTheme("list-remove"));
     connect(m_remove_component_action, &QAction::triggered, this, &SceneNodeTree::onRemoveComponent);
+
+    m_copy_id = m_context_menu->addAction("Copy ID");
+    m_copy_id->setIcon(QIcon::fromTheme("edit-copy"));
+    connect(m_copy_id, &QAction::triggered, this, &SceneNodeTree::onCopyId);
 }
 
 
