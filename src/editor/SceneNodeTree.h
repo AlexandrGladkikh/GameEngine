@@ -42,6 +42,7 @@ private slots:
     void onAddComponent();
     void onRemoveComponent();
     void onCopyId();
+    void onCopyName();
     void onCopy();
     void onPaste();
     void onRename();
@@ -74,6 +75,7 @@ private:
     std::map<std::string, QAction*> m_add_component_actions;
     QAction* m_remove_component_action;
     QAction* m_copy_id;
+    QAction* m_copy_name;
     QAction* m_copy;
     QAction* m_paste;
     QAction* m_rename;

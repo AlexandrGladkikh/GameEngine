@@ -55,4 +55,15 @@ std::string formatFloat(float value)
     return ss.str();
 }
 
+bool parseFloat(const std::string& value, float& out)
+{
+    try {
+        out = std::stof(value);
+    } catch (std::exception&) {
+        return false;
+    }
+
+    return true;
+}
+
 }

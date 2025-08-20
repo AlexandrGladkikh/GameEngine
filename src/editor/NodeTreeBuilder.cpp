@@ -32,27 +32,28 @@ ComponentWidget* buildTransformWidget(const std::shared_ptr<engine::TransformCom
     layout->setSpacing(1);
     layout->setContentsMargins(0, 0, 0, 0);
 
-    auto* label = new QLabel("Transform");
+    std::string name = "Transform name \"" + transform->name() + "\"";
+    auto* label = new QLabel(QString::fromStdString(name));
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(label);
 
     auto positionXChangeHandler = [transform](const std::string& value) {
-        if (value.empty()) {
-            return;
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            transform->setPosition({ param, transform->getPosition().y, transform->getPosition().z });
         }
-        transform->setPosition({ std::stof(value), transform->getPosition().y, transform->getPosition().z });
     };
     auto positionYChangeHandler = [transform](const std::string& value) {
-        if (value.empty()) {
-            return;
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            transform->setPosition({ transform->getPosition().x, param, transform->getPosition().z });
         }
-        transform->setPosition({ transform->getPosition().x, std::stof(value), transform->getPosition().z });
     };
     auto positionZChangeHandler = [transform](const std::string& value) {
-        if (value.empty()) {
-            return;
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            transform->setPosition({ transform->getPosition().x, transform->getPosition().y, param });
         }
-        transform->setPosition({ transform->getPosition().x, transform->getPosition().y, std::stof(value) });
     };
 
     auto positionXUpdater = [transform]() {
@@ -87,22 +88,22 @@ ComponentWidget* buildTransformWidget(const std::shared_ptr<engine::TransformCom
     layout->addLayout(position_layout);
 
     auto rotationXChangeHandler = [transform](const std::string& value) {
-        if (value.empty()) {
-            return;
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            transform->setRotation({ param, transform->getRotation().y, transform->getRotation().z });
         }
-        transform->setRotation({ std::stof(value), transform->getRotation().y, transform->getRotation().z });
     };
     auto rotationYChangeHandler = [transform](const std::string& value) {
-        if (value.empty()) {
-            return;
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            transform->setRotation({ transform->getRotation().x, param, transform->getRotation().z });
         }
-        transform->setRotation({ transform->getRotation().x, std::stof(value), transform->getRotation().z });
     };
     auto rotationZChangeHandler = [transform](const std::string& value) {
-        if (value.empty()) {
-            return;
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            transform->setRotation({ transform->getRotation().x, transform->getRotation().y, param });
         }
-        transform->setRotation({ transform->getRotation().x, transform->getRotation().y, std::stof(value) });
     };
 
     auto rotationXUpdater = [transform]() {
@@ -137,22 +138,22 @@ ComponentWidget* buildTransformWidget(const std::shared_ptr<engine::TransformCom
     layout->addLayout(rotation_layout);
 
     auto scaleXChangeHandler = [transform](const std::string& value) {
-        if (value.empty()) {
-            return;
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            transform->setScale({ param, transform->getScale().y, transform->getScale().z });
         }
-        transform->setScale({ std::stof(value), transform->getScale().y, transform->getScale().z });
     };
     auto scaleYChangeHandler = [transform](const std::string& value) {
-        if (value.empty()) {
-            return;
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            transform->setScale({ transform->getScale().x, param, transform->getScale().z });
         }
-        transform->setScale({ transform->getScale().x, std::stof(value), transform->getScale().z });
     };
     auto scaleZChangeHandler = [transform](const std::string& value) {
-        if (value.empty()) {
-            return;
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            transform->setScale({ transform->getScale().x, transform->getScale().y, param});
         }
-        transform->setScale({ transform->getScale().x, transform->getScale().y, std::stof(value) });
     };
 
     auto scaleXUpdater = [transform]() {
@@ -201,7 +202,8 @@ ComponentWidget* buildMaterialWidget(const std::shared_ptr<engine::MaterialCompo
     layout->setSpacing(1);
     layout->setContentsMargins(0, 0, 0, 0);
 
-    auto* label = new QLabel("Material");
+    std::string name = "Material name \"" + material->name() + "\"";
+    auto* label = new QLabel(QString::fromStdString(name));
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(label);
 
@@ -230,9 +232,6 @@ ComponentWidget* buildMaterialWidget(const std::shared_ptr<engine::MaterialCompo
     QHBoxLayout* texture_layout = new QHBoxLayout();
     texture_layout->setSpacing(1);
     texture_layout->setContentsMargins(0, 0, 0, 0);
-    label = new QLabel("Texture");
-    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    texture_layout->addWidget(label);
     texture_layout->addWidget(createLabelLineEditorWidget("texture", material->textureName(), textureChangeHandler, textureUpdater));
     texture_layout->addStretch();
     layout->addLayout(texture_layout);
@@ -240,9 +239,6 @@ ComponentWidget* buildMaterialWidget(const std::shared_ptr<engine::MaterialCompo
     QHBoxLayout* shader_layout = new QHBoxLayout();
     shader_layout->setSpacing(1);
     shader_layout->setContentsMargins(0, 0, 0, 0);
-    label = new QLabel("Shader");
-    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    shader_layout->addWidget(label);
     shader_layout->addWidget(createLabelLineEditorWidget("shader", material->shaderName(), shaderChangeHandler, shaderUpdater));
     shader_layout->addStretch();
     layout->addLayout(shader_layout);
@@ -262,7 +258,8 @@ ComponentWidget* buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& m
     layout->setSpacing(1);
     layout->setContentsMargins(0, 0, 0, 0);
 
-    auto* label = new QLabel("Mesh");
+    std::string name = "Mesh name \"" + mesh->name() + "\"";
+    auto* label = new QLabel(QString::fromStdString(name));
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(label);
 
@@ -280,9 +277,6 @@ ComponentWidget* buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& m
     QHBoxLayout* mesh_layout = new QHBoxLayout();
     mesh_layout->setSpacing(1);
     mesh_layout->setContentsMargins(0, 0, 0, 0);
-    label = new QLabel("Mesh");
-    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    mesh_layout->addWidget(label);
     mesh_layout->addWidget(createLabelLineEditorWidget("mesh", mesh->meshName(), meshChangeHandler, meshUpdater));
     mesh_layout->addStretch();
     layout->addLayout(mesh_layout);
@@ -302,44 +296,63 @@ ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent
     layout->setSpacing(1);
     layout->setContentsMargins(0, 0, 0, 0);
 
-    auto* label = new QLabel("Camera");
+    std::string name = "Camera name \"" + camera->name() + "\"";
+    auto* label = new QLabel(QString::fromStdString(name));
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(label);
 
     auto orthoLeftChangeHandler = [camera](const std::string& value) {
-        auto ortho = camera->getOrtho();
-        ortho.left = std::stof(value);
-        camera->setOrtho(ortho);
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            auto ortho = camera->getOrtho();
+            ortho.left = param;
+            camera->setOrtho(ortho);
+        }
     };
 
     auto orthoRightChangeHandler = [camera](const std::string& value) {
-        auto ortho = camera->getOrtho();
-        ortho.right = std::stof(value);
-        camera->setOrtho(ortho);
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            auto ortho = camera->getOrtho();
+            ortho.right = param;
+            camera->setOrtho(ortho);
+        }
     };
 
     auto orthoTopChangeHandler = [camera](const std::string& value) {
-        auto ortho = camera->getOrtho();
-        ortho.top = std::stof(value);
-        camera->setOrtho(ortho);
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            auto ortho = camera->getOrtho();
+            ortho.top = param;
+            camera->setOrtho(ortho);
+        }
     };
 
     auto orthoBottomChangeHandler = [camera](const std::string& value) {
-        auto ortho = camera->getOrtho();
-        ortho.bottom = std::stof(value);
-        camera->setOrtho(ortho);
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            auto ortho = camera->getOrtho();
+            ortho.bottom = param;
+            camera->setOrtho(ortho);
+        }
     };
 
     auto orthoNearChangeHandler = [camera](const std::string& value) {
-        auto ortho = camera->getOrtho();
-        ortho.near = std::stof(value);
-        camera->setOrtho(ortho);
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            auto ortho = camera->getOrtho();
+            ortho.near = param;
+            camera->setOrtho(ortho);
+        }
     };
 
     auto orthoFarChangeHandler = [camera](const std::string& value) {
-        auto ortho = camera->getOrtho();
-        ortho.far = std::stof(value);
-        camera->setOrtho(ortho);
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            auto ortho = camera->getOrtho();
+            ortho.far = param;
+            camera->setOrtho(ortho);
+        }
     };
 
     auto orthoLeftUpdater = [camera]() {
@@ -389,10 +402,10 @@ ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent
     layout->addLayout(ortho_layout);
 
     auto yawChangeHandler = [camera](const std::string& value) {
-        if (value.empty()) {
-            return;
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            camera->setYaw(param);
         }
-        camera->setYaw(std::stof(value));
     };
 
     auto yawUpdater = [camera]() {
@@ -405,18 +418,15 @@ ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent
     QHBoxLayout* yaw_layout = new QHBoxLayout();
     yaw_layout->setSpacing(1);
     yaw_layout->setContentsMargins(0, 0, 0, 0);
-    label = new QLabel("Yaw");
-    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    yaw_layout->addWidget(label);
     yaw_layout->addWidget(createLabelLineEditorWidget("Yaw", formatFloat(camera->getYaw()), yawChangeHandler, yawUpdater));
     yaw_layout->addStretch();
     layout->addLayout(yaw_layout);
 
     auto pitchChangeHandler = [camera](const std::string& value) {
-        if (value.empty()) {
-            return;
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            camera->setPitch(param);
         }
-        camera->setPitch(std::stof(value));
     };
 
     auto pitchUpdater = [camera]() {
@@ -429,9 +439,6 @@ ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent
     QHBoxLayout* pitch_layout = new QHBoxLayout();
     pitch_layout->setSpacing(1);
     pitch_layout->setContentsMargins(0, 0, 0, 0);
-    label = new QLabel("Pitch");
-    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    pitch_layout->addWidget(label);
     pitch_layout->addWidget(createLabelLineEditorWidget("Pitch", formatFloat(camera->getPitch()), pitchChangeHandler, pitchUpdater));
     pitch_layout->addStretch();
     layout->addLayout(pitch_layout);
@@ -451,7 +458,8 @@ ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::Flip
     layout->setSpacing(1);
     layout->setContentsMargins(0, 0, 0, 0);
 
-    auto* label = new QLabel("Flipbook Animation");
+    std::string name = "Flipbook Animation name \"" + animation->name() + "\"";
+    auto* label = new QLabel(QString::fromStdString(name));
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(label);
 
@@ -468,10 +476,10 @@ ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::Flip
     }
 
     auto updateTimeChangeHandler = [animation](const std::string& value) {
-        if (value.empty()) {
-            return;
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            animation->setUpdateTime(param);
         }
-        animation->setUpdateTime(std::stof(value));
     };
 
     auto updateTimeUpdater = [animation]() {
@@ -484,14 +492,12 @@ ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::Flip
     QHBoxLayout* update_time_layout = new QHBoxLayout();
     update_time_layout->setSpacing(1);
     update_time_layout->setContentsMargins(0, 0, 0, 0);
-    label = new QLabel("update time");
-    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    update_time_layout->addWidget(label);
     update_time_layout->addWidget(createLabelLineEditorWidget("update time", formatFloat(animation->updateTime()), updateTimeChangeHandler, updateTimeUpdater));
     update_time_layout->addStretch();
     layout->addLayout(update_time_layout);
 
-    for (auto material_id : materials_ids) {
+    for (size_t i = 0; i < materials_ids.size(); i++) {
+        auto material_id = materials_ids[i];
         auto material = scene.value()->getComponent(material_id);
         if (!material) {
             continue;
@@ -502,13 +508,64 @@ ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::Flip
             continue;
         }
 
+        auto materialChangeHandler = [animation, i](const std::string& value) {
+            auto node = animation->getNode();
+            if (!node.has_value()) {
+                return;
+            }
+
+            auto scene = node.value()->getScene();
+            if (!scene.has_value()) {
+                return;
+            }
+
+            auto material = scene.value()->getComponent(value);
+            if (!material) {
+                return;
+            }
+
+            auto new_material_value = std::dynamic_pointer_cast<engine::MaterialComponent>(material.value());
+            if (!new_material_value) {
+                return;
+            }
+
+            auto materials_ids = animation->materialIds();
+            animation->replaceMaterial(materials_ids[i], new_material_value->id());
+        };
+
+        auto materialUpdater = [i, animation]() {
+            auto node = animation->getNode();
+            if (!node.has_value()) {
+                return std::string();
+            }
+
+            auto scene = node.value()->getScene();
+            if (!scene.has_value()) {
+                return std::string();
+            }
+
+            auto materials_ids = animation->materialIds();
+            auto material = scene.value()->getComponent(materials_ids[i]);
+            if (!material) {
+                return std::string();
+            }
+
+            auto material_value = std::dynamic_pointer_cast<engine::MaterialComponent>(material.value());
+            if (!material_value) {
+                return std::string();
+            }
+
+            if (!material_value->isValid()) {
+                return std::string();
+            }
+
+            return material_value->name();
+        };
+
         QHBoxLayout* animation_layout = new QHBoxLayout();
         animation_layout->setSpacing(1);
         animation_layout->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel("Animation");
-        label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-        animation_layout->addWidget(label);
-        animation_layout->addWidget(createLabelLineEditorWidget("Animation", material_value->name(), nullptr, nullptr));
+        animation_layout->addWidget(createLabelLineEditorWidget("animation", material_value->name(), materialChangeHandler, materialUpdater));
         animation_layout->addStretch();
         layout->addLayout(animation_layout);
     }

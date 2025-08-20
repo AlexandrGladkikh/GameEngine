@@ -23,6 +23,8 @@ public:
     [[nodiscard]]
     auto context() const -> std::weak_ptr<Context>;
 
+    void setName(const std::string& name);
+
     [[nodiscard]]
     bool isActive() const;
     void setActive(bool active);

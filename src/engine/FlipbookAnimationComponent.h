@@ -36,6 +36,7 @@ public:
 
     auto materialIds() const -> const std::vector<uint32_t>&;
     void removeMaterial(uint32_t material_id);
+    void replaceMaterial(uint32_t material_id, uint32_t new_material_id);
 
     void setUpdateTime(uint64_t update_time);
     auto updateTime() const -> uint64_t;

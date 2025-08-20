@@ -208,6 +208,7 @@ void SceneNodeTree::onAddComponent()
     if (!component_widget.has_value()) {
         return;
     }
+    component_widget.value()->setComponent(component_value);
 
     auto* componentItem = new QTreeWidgetItem(m_selected_item);
 
@@ -240,11 +241,31 @@ void SceneNodeTree::onCopyId()
         clipboard->setText(QString::fromStdString(std::to_string(component->id())));
     }
 
-    auto* node_widget = dynamic_cast<ComponentWidget*>(widget);
+    auto* node_widget = dynamic_cast<NodeWidget*>(widget);
     if (node_widget != nullptr) {
-        auto component = node_widget->component();
+        auto node = node_widget->node();
         QClipboard* clipboard = QApplication::clipboard();
-        clipboard->setText(QString::fromStdString(std::to_string(component->id())));
+        clipboard->setText(QString::fromStdString(std::to_string(node->id())));
+    }
+
+    m_selected_item = nullptr;
+}
+
+void SceneNodeTree::onCopyName()
+{
+    auto widget = m_scene_tree->itemWidget(m_selected_item, 0);
+    auto* component_widget = dynamic_cast<ComponentWidget*>(widget);
+    if (component_widget != nullptr) {
+        auto component = component_widget->component();
+        QClipboard* clipboard = QApplication::clipboard();
+        clipboard->setText(QString::fromStdString(component->name()));
+    }
+
+    auto* node_widget = dynamic_cast<NodeWidget*>(widget);
+    if (node_widget != nullptr) {
+        auto node = node_widget->node();
+        QClipboard* clipboard = QApplication::clipboard();
+        clipboard->setText(QString::fromStdString(node->name()));
     }
 
     m_selected_item = nullptr;
@@ -406,6 +427,10 @@ void SceneNodeTree::initContextMenu()
     m_copy_id = m_context_menu->addAction("Copy ID");
     m_copy_id->setIcon(QIcon::fromTheme("edit-copy"));
     connect(m_copy_id, &QAction::triggered, this, &SceneNodeTree::onCopyId);
+
+    m_copy_name = m_context_menu->addAction("Copy name");
+    m_copy_name->setIcon(QIcon::fromTheme("edit-copy"));
+    connect(m_copy_name, &QAction::triggered, this, &SceneNodeTree::onCopyName);
 
     m_copy = m_context_menu->addAction("Copy");
     m_copy->setIcon(QIcon::fromTheme("edit-copy"));

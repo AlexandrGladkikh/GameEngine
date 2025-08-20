@@ -24,6 +24,11 @@ auto Component::context() const -> std::weak_ptr<Context>
     return m_context;
 }
 
+void Component::setName(const std::string &name)
+{
+    m_name = name;
+}
+
 bool Component::isActive() const
 {
     return m_is_active;

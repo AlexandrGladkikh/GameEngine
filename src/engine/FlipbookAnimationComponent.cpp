@@ -157,6 +157,14 @@ void FlipbookAnimationComponent::removeMaterial(uint32_t material_id)
     }
 }
 
+void FlipbookAnimationComponent::replaceMaterial(uint32_t material_id, uint32_t new_material_id)
+{
+    auto it = std::find(m_material_ids.begin(), m_material_ids.end(), material_id);
+    if (it != m_material_ids.end()) {
+        *it = new_material_id;
+    }
+}
+
 void FlipbookAnimationComponent::setUpdateTime(uint64_t update_time)
 {
     m_update_time = update_time;

@@ -11,5 +11,6 @@ ComponentWidget* createLabelLineEditorWidget(const std::string& label, const std
     const std::function<void(const std::string&)>& changeHandler, const std::function<std::string()>& updateHandler);
 
 std::string formatFloat(float value);
+bool parseFloat(const std::string& value, float& out);
 
 }
