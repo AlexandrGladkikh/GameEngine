@@ -21,8 +21,6 @@
 #include <QClipboard>
 #include <QApplication>
 
-#include <functional>
-
 namespace editor {
 
 SceneNodeTree::SceneNodeTree(engine::Engine* engine, QWidget* parent) :

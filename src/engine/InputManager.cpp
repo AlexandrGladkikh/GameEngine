@@ -16,12 +16,14 @@ InputManager::InputManager(const std::unique_ptr<Window>& window)
 
 void InputManager::update(uint64_t dt)
 {
-    for (const auto& [key, val] : m_handlers) {
+    for (const auto& [key, handlers] : m_handlers) {
         for (size_t i = 0; i < m_key.size(); ++i) {
             if (m_key[i] != key) {
                 continue;
             }
-            val->handler(m_action[i]);
+            for (auto& handler : handlers) {
+                handler(m_action[i]);
+            }
         }
     }
 
@@ -31,7 +33,8 @@ void InputManager::update(uint64_t dt)
 
 void InputManager::registerHandler(int key, const std::function<void(int)>& handler)
 {
-    m_handlers[key] = std::make_unique<InputHandler>(key, handler);
+    auto& handlers = m_handlers[key];
+    handlers.push_back(handler);
 }
 
 void InputManager::unregisterHandler(int key)

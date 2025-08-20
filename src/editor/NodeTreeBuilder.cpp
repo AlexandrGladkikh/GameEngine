@@ -20,7 +20,6 @@
 #include <QTimer>
 
 #include <string>
-#include <sstream>
 #include <functional>
 
 namespace editor {

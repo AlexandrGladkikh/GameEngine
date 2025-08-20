@@ -11,11 +11,6 @@ class Window;
 
 class InputManager final {
 public:
-    struct InputHandler final {
-        int key;
-        std::function<void(int)> handler;
-    };
-
     explicit InputManager(const std::unique_ptr<Window>& window);
     ~InputManager() = default;
     InputManager(const InputManager&) = delete;
@@ -29,7 +24,7 @@ public:
     void unregisterHandler(int key);
 
 private:
-    std::unordered_map<uint32_t, std::unique_ptr<InputHandler>> m_handlers;
+    std::unordered_map<uint32_t, std::vector<std::function<void(int)>>> m_handlers;
 
     std::vector<int> m_key;
     std::vector<int> m_action;
