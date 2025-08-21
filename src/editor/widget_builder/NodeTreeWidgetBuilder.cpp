@@ -1,8 +1,8 @@
-#include "NodeTreeBuilder.h"
+#include "NodeTreeWidgetBuilder.h"
 
-#include "ComponentWidget.h"
-#include "NodeWidget.h"
-#include "Utils.h"
+#include "editor/ComponentWidget.h"
+#include "editor/NodeWidget.h"
+#include "editor/Utils.h"
 
 #include "engine/TransformComponent.h"
 #include "engine/MeshComponent.h"
@@ -11,6 +11,8 @@
 #include "engine/FlipbookAnimationComponent.h"
 #include "engine/Context.h"
 #include "engine/Node.h"
+#include "engine/Helpers.h"
+#include "engine/Utils.h"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -18,6 +20,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QTimer>
+#include <QTreeWidget>
 
 #include <string>
 #include <functional>
@@ -75,16 +78,12 @@ ComponentWidget* buildTransformWidget(const std::shared_ptr<engine::TransformCom
         return formatFloat(transform->getPosition().z);
     };
 
-    QHBoxLayout* position_layout = new QHBoxLayout();
-    position_layout->setSpacing(1);
-    position_layout->setContentsMargins(0, 0, 0, 0);
-    label = new QLabel("Position");
-    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    position_layout->addWidget(label);
-    position_layout->addWidget(createLabelLineEditorWidget("X", formatFloat(transform->getPosition().x), positionXChangeHandler, positionXUpdater));
-    position_layout->addWidget(createLabelLineEditorWidget("Y", formatFloat(transform->getPosition().y), positionYChangeHandler, positionYUpdater));
-    position_layout->addWidget(createLabelLineEditorWidget("Z", formatFloat(transform->getPosition().z), positionZChangeHandler, positionZUpdater));
-    position_layout->addStretch();
+    std::vector<EditorBlockLayoutData> position_data = {
+        { "X", formatFloat(transform->getPosition().x), positionXChangeHandler, positionXUpdater },
+        { "Y", formatFloat(transform->getPosition().y), positionYChangeHandler, positionYUpdater },
+        { "Z", formatFloat(transform->getPosition().z), positionZChangeHandler, positionZUpdater },
+    };
+    auto position_layout = createEditorBlockLayout("Position", position_data);
     layout->addLayout(position_layout);
 
     auto rotationXChangeHandler = [transform](const std::string& value) {
@@ -125,16 +124,12 @@ ComponentWidget* buildTransformWidget(const std::shared_ptr<engine::TransformCom
         return formatFloat(transform->getRotation().z);
     };
 
-    QHBoxLayout* rotation_layout = new QHBoxLayout();
-    rotation_layout->setSpacing(1);
-    rotation_layout->setContentsMargins(0, 0, 0, 0);
-    label = new QLabel("Rotation");
-    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    rotation_layout->addWidget(label);
-    rotation_layout->addWidget(createLabelLineEditorWidget("X", formatFloat(transform->getRotation().x), rotationXChangeHandler, rotationXUpdater));
-    rotation_layout->addWidget(createLabelLineEditorWidget("Y", formatFloat(transform->getRotation().y), rotationYChangeHandler, rotationYUpdater));
-    rotation_layout->addWidget(createLabelLineEditorWidget("Z", formatFloat(transform->getRotation().z), rotationZChangeHandler, rotationZUpdater));
-    rotation_layout->addStretch();
+    std::vector<EditorBlockLayoutData> rotation_data = {
+        { "X", formatFloat(transform->getRotation().x), rotationXChangeHandler, rotationXUpdater },
+        { "Y", formatFloat(transform->getRotation().y), rotationYChangeHandler, rotationYUpdater },
+        { "Z", formatFloat(transform->getRotation().z), rotationZChangeHandler, rotationZUpdater },
+    };
+    auto rotation_layout = createEditorBlockLayout("Rotation", rotation_data);
     layout->addLayout(rotation_layout);
 
     auto scaleXChangeHandler = [transform](const std::string& value) {
@@ -175,16 +170,12 @@ ComponentWidget* buildTransformWidget(const std::shared_ptr<engine::TransformCom
         return formatFloat(transform->getScale().z);
     };
 
-    QHBoxLayout* scale_layout = new QHBoxLayout();
-    scale_layout->setSpacing(1);
-    scale_layout->setContentsMargins(0, 0, 0, 0);
-    label = new QLabel("Scale");
-    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    scale_layout->addWidget(label);
-    scale_layout->addWidget(createLabelLineEditorWidget("X", formatFloat(transform->getScale().x), scaleXChangeHandler, scaleXUpdater));
-    scale_layout->addWidget(createLabelLineEditorWidget("Y", formatFloat(transform->getScale().y), scaleYChangeHandler, scaleYUpdater));
-    scale_layout->addWidget(createLabelLineEditorWidget("Z", formatFloat(transform->getScale().z), scaleZChangeHandler, scaleZUpdater));
-    scale_layout->addStretch();
+    std::vector<EditorBlockLayoutData> scale_data = {
+        { "X", formatFloat(transform->getScale().x), scaleXChangeHandler, scaleXUpdater },
+        { "Y", formatFloat(transform->getScale().y), scaleYChangeHandler, scaleYUpdater },
+        { "Z", formatFloat(transform->getScale().z), scaleZChangeHandler, scaleZUpdater },
+    };
+    auto scale_layout = createEditorBlockLayout("Scale", scale_data);
     layout->addLayout(scale_layout);
 
     layout->addStretch();
@@ -229,18 +220,16 @@ ComponentWidget* buildMaterialWidget(const std::shared_ptr<engine::MaterialCompo
         return material->shaderName();
     };
 
-    QHBoxLayout* texture_layout = new QHBoxLayout();
-    texture_layout->setSpacing(1);
-    texture_layout->setContentsMargins(0, 0, 0, 0);
-    texture_layout->addWidget(createLabelLineEditorWidget("texture", material->textureName(), textureChangeHandler, textureUpdater));
-    texture_layout->addStretch();
+    std::vector<EditorBlockLayoutData> texture_data = {
+        { "texture", material->textureName(), textureChangeHandler, textureUpdater },
+    };
+    auto texture_layout = createEditorBlockLayout("Texture", texture_data);
     layout->addLayout(texture_layout);
 
-    QHBoxLayout* shader_layout = new QHBoxLayout();
-    shader_layout->setSpacing(1);
-    shader_layout->setContentsMargins(0, 0, 0, 0);
-    shader_layout->addWidget(createLabelLineEditorWidget("shader", material->shaderName(), shaderChangeHandler, shaderUpdater));
-    shader_layout->addStretch();
+    std::vector<EditorBlockLayoutData> shader_data = {
+        { "shader", material->shaderName(), shaderChangeHandler, shaderUpdater },
+    };
+    auto shader_layout = createEditorBlockLayout("Shader", shader_data);
     layout->addLayout(shader_layout);
 
     layout->addStretch();
@@ -274,11 +263,10 @@ ComponentWidget* buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& m
         return mesh->meshName();
     };
 
-    QHBoxLayout* mesh_layout = new QHBoxLayout();
-    mesh_layout->setSpacing(1);
-    mesh_layout->setContentsMargins(0, 0, 0, 0);
-    mesh_layout->addWidget(createLabelLineEditorWidget("mesh", mesh->meshName(), meshChangeHandler, meshUpdater));
-    mesh_layout->addStretch();
+    std::vector<EditorBlockLayoutData> mesh_data = {
+        { "mesh", mesh->meshName(), meshChangeHandler, meshUpdater },
+    };
+    auto mesh_layout = createEditorBlockLayout("Mesh", mesh_data);
     layout->addLayout(mesh_layout);
 
     layout->addStretch();
@@ -386,19 +374,16 @@ ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent
     };
 
     auto ortho = camera->getOrtho();
-    QHBoxLayout* ortho_layout = new QHBoxLayout();
-    ortho_layout->setSpacing(1);
-    ortho_layout->setContentsMargins(0, 0, 0, 0);
-    label = new QLabel("Ortho");
-    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    ortho_layout->addWidget(label);
-    ortho_layout->addWidget(createLabelLineEditorWidget("left", formatFloat(ortho.left), orthoLeftChangeHandler, orthoLeftUpdater));
-    ortho_layout->addWidget(createLabelLineEditorWidget("right", formatFloat(ortho.right), orthoRightChangeHandler, orthoRightUpdater));
-    ortho_layout->addWidget(createLabelLineEditorWidget("top", formatFloat(ortho.top), orthoTopChangeHandler, orthoTopUpdater));
-    ortho_layout->addWidget(createLabelLineEditorWidget("bottom", formatFloat(ortho.bottom), orthoBottomChangeHandler, orthoBottomUpdater));
-    ortho_layout->addWidget(createLabelLineEditorWidget("near", formatFloat(ortho.near), orthoNearChangeHandler, orthoNearUpdater));
-    ortho_layout->addWidget(createLabelLineEditorWidget("far", formatFloat(ortho.far), orthoFarChangeHandler, orthoFarUpdater));
-    ortho_layout->addStretch();
+
+    std::vector<EditorBlockLayoutData> ortho_data = {};
+    ortho_data.push_back({ "left", formatFloat(ortho.left), orthoLeftChangeHandler, orthoLeftUpdater });
+    ortho_data.push_back({ "right", formatFloat(ortho.right), orthoRightChangeHandler, orthoRightUpdater });
+    ortho_data.push_back({ "top", formatFloat(ortho.top), orthoTopChangeHandler, orthoTopUpdater });
+    ortho_data.push_back({ "bottom", formatFloat(ortho.bottom), orthoBottomChangeHandler, orthoBottomUpdater });
+    ortho_data.push_back({ "near", formatFloat(ortho.near), orthoNearChangeHandler, orthoNearUpdater });
+    ortho_data.push_back({ "far", formatFloat(ortho.far), orthoFarChangeHandler, orthoFarUpdater });
+
+    QHBoxLayout* ortho_layout = createEditorBlockLayout("Ortho", ortho_data);
     layout->addLayout(ortho_layout);
 
     auto yawChangeHandler = [camera](const std::string& value) {
@@ -415,11 +400,11 @@ ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent
         return formatFloat(camera->getYaw());
     };
 
-    QHBoxLayout* yaw_layout = new QHBoxLayout();
-    yaw_layout->setSpacing(1);
-    yaw_layout->setContentsMargins(0, 0, 0, 0);
-    yaw_layout->addWidget(createLabelLineEditorWidget("Yaw", formatFloat(camera->getYaw()), yawChangeHandler, yawUpdater));
-    yaw_layout->addStretch();
+    std::vector<EditorBlockLayoutData> yaw_data = {
+        { "yaw", formatFloat(camera->getYaw()), yawChangeHandler, yawUpdater }
+    };
+
+    QHBoxLayout* yaw_layout = createEditorBlockLayout("Yaw", yaw_data);
     layout->addLayout(yaw_layout);
 
     auto pitchChangeHandler = [camera](const std::string& value) {
@@ -436,11 +421,11 @@ ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent
         return formatFloat(camera->getPitch());
     };
 
-    QHBoxLayout* pitch_layout = new QHBoxLayout();
-    pitch_layout->setSpacing(1);
-    pitch_layout->setContentsMargins(0, 0, 0, 0);
-    pitch_layout->addWidget(createLabelLineEditorWidget("Pitch", formatFloat(camera->getPitch()), pitchChangeHandler, pitchUpdater));
-    pitch_layout->addStretch();
+    std::vector<EditorBlockLayoutData> pitch_data = {
+        { "pitch", formatFloat(camera->getPitch()), pitchChangeHandler, pitchUpdater }
+    };
+
+    QHBoxLayout* pitch_layout = createEditorBlockLayout("Pitch", pitch_data);
     layout->addLayout(pitch_layout);
 
     layout->addStretch();
@@ -450,7 +435,7 @@ ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent
     return camera_widget;
 }
 
-ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation)
+ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidget* tree, QTreeWidgetItem* item)
 {
     ComponentWidget* flipbook_widget = new ComponentWidget;
 
@@ -489,14 +474,85 @@ ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::Flip
         return formatFloat(animation->updateTime());
     };
 
-    QHBoxLayout* update_time_layout = new QHBoxLayout();
-    update_time_layout->setSpacing(1);
-    update_time_layout->setContentsMargins(0, 0, 0, 0);
-    update_time_layout->addWidget(createLabelLineEditorWidget("update time", formatFloat(animation->updateTime()), updateTimeChangeHandler, updateTimeUpdater));
-    update_time_layout->addStretch();
+    std::vector<EditorBlockLayoutData> update_time_data = {
+        { "update time", formatFloat(animation->updateTime()), updateTimeChangeHandler, updateTimeUpdater }
+    };
+    QHBoxLayout* update_time_layout = createEditorBlockLayout("Update time", update_time_data);
     layout->addLayout(update_time_layout);
 
-    for (size_t i = 0; i < materials_ids.size(); i++) {
+    std::shared_ptr<std::vector<QHBoxLayout*>> material_layouts(new std::vector<QHBoxLayout*>);
+    for (size_t i = 0; i < materials_ids.size(); ++i) {
+        material_layouts->push_back(new QHBoxLayout);
+    }
+
+    std::vector<std::string> buttons_names = {"Add", "Delete"};
+
+    auto add_handler = [animation, layout, material_layouts, flipbook_widget, tree, item]() {
+        animation->addMaterial(engine::generateUniqueId());
+        auto materials_ids = animation->materialIds();
+
+        size_t i = materials_ids.size() - 1;
+        auto materialChangeHandler = [animation, i](const std::string& value) {
+            auto material = engine::getComponentByName<engine::MaterialComponent>(animation, value);
+            if (!material) {
+                return;
+            }
+
+            auto materials_ids = animation->materialIds();
+            animation->replaceMaterial(materials_ids[i], material->id());
+        };
+
+        auto materialUpdater = [i, animation]() {
+            auto materials_ids = animation->materialIds();
+            auto material = engine::getComponentById<engine::MaterialComponent>(animation, materials_ids[i]);
+            if (!material) {
+                return std::string();
+            }
+
+            if (!material->isValid()) {
+                return std::string();
+            }
+
+            return material->name();
+        };
+
+        std::vector<EditorBlockLayoutData> animation_data = {
+            { "animation", "", materialChangeHandler, materialUpdater }
+        };
+        QHBoxLayout* animation_layout = createEditorBlockLayout("", animation_data);
+        layout->addLayout(animation_layout);
+
+        material_layouts.get()->push_back(animation_layout);
+
+        QTreeWidgetItem* temp = new QTreeWidgetItem(item);
+        temp->setText(0, "temp");
+        tree->setItemWidget(temp, 0, nullptr);
+        delete temp;
+    };
+
+    auto delete_handler = [animation, material_layouts, tree, item]() {
+        auto materials_ids = animation->materialIds();
+
+        if (materials_ids.empty()) {
+            return;
+        }
+
+        animation->removeMaterial(materials_ids.back());
+
+        material_layouts->back()->itemAt(0)->widget()->deleteLater();
+
+        delete material_layouts->back();
+        material_layouts->pop_back();
+
+        QTreeWidgetItem* temp = new QTreeWidgetItem(item);
+        temp->setText(0, "temp");
+        tree->setItemWidget(temp, 0, nullptr);
+        delete temp;
+    };
+
+    layout->addWidget(createButtonLineWidget(buttons_names, { add_handler, delete_handler }));
+
+    for (size_t i = 0; i < materials_ids.size(); ++i) {
         auto material_id = materials_ids[i];
         auto material = scene.value()->getComponent(material_id);
         if (!material) {
@@ -509,65 +565,30 @@ ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::Flip
         }
 
         auto materialChangeHandler = [animation, i](const std::string& value) {
-            auto node = animation->getNode();
-            if (!node.has_value()) {
-                return;
-            }
-
-            auto scene = node.value()->getScene();
-            if (!scene.has_value()) {
-                return;
-            }
-
-            auto material = scene.value()->getComponent(value);
+            auto material = engine::getComponentByName<engine::MaterialComponent>(animation, value);
             if (!material) {
                 return;
             }
 
-            auto new_material_value = std::dynamic_pointer_cast<engine::MaterialComponent>(material.value());
-            if (!new_material_value) {
-                return;
-            }
-
             auto materials_ids = animation->materialIds();
-            animation->replaceMaterial(materials_ids[i], new_material_value->id());
+            animation->replaceMaterial(materials_ids[i], material->id());
         };
 
         auto materialUpdater = [i, animation]() {
-            auto node = animation->getNode();
-            if (!node.has_value()) {
-                return std::string();
-            }
-
-            auto scene = node.value()->getScene();
-            if (!scene.has_value()) {
-                return std::string();
-            }
-
             auto materials_ids = animation->materialIds();
-            auto material = scene.value()->getComponent(materials_ids[i]);
+            auto material = engine::getComponentById<engine::MaterialComponent>(animation, materials_ids[i]);
             if (!material) {
                 return std::string();
             }
 
-            auto material_value = std::dynamic_pointer_cast<engine::MaterialComponent>(material.value());
-            if (!material_value) {
-                return std::string();
-            }
-
-            if (!material_value->isValid()) {
-                return std::string();
-            }
-
-            return material_value->name();
+            return material->name();
         };
 
-        QHBoxLayout* animation_layout = new QHBoxLayout();
-        animation_layout->setSpacing(1);
-        animation_layout->setContentsMargins(0, 0, 0, 0);
-        animation_layout->addWidget(createLabelLineEditorWidget("animation", material_value->name(), materialChangeHandler, materialUpdater));
-        animation_layout->addStretch();
-        layout->addLayout(animation_layout);
+        std::vector<EditorBlockLayoutData> animation_data = {
+            { "animation", material_value->name(), materialChangeHandler, materialUpdater }
+        };
+        setupEditorBlockLayout(material_layouts->at(i), "", animation_data);
+        layout->addLayout(material_layouts->at(i));
     }
 
     layout->addStretch();
@@ -577,7 +598,7 @@ ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::Flip
     return flipbook_widget;
 }
 
-auto NodeTreeBuilder::buildWidgetForNode(const std::string& node_name) -> std::optional<NodeWidget*>
+auto NodeTreeWidgetBuilder::buildWidgetForNode(const std::string& node_name) -> std::optional<NodeWidget*>
 {
     NodeWidget* new_widget = new NodeWidget();
     auto label = new QLabel(new_widget);
@@ -586,7 +607,7 @@ auto NodeTreeBuilder::buildWidgetForNode(const std::string& node_name) -> std::o
     return new_widget;
 }
 
-auto NodeTreeBuilder::buildWidgetForComponent(std::shared_ptr<engine::Component> component) -> std::optional<ComponentWidget*>
+auto NodeTreeWidgetBuilder::buildWidgetForComponent(std::shared_ptr<engine::Component> component, QTreeWidget* tree, QTreeWidgetItem* item) -> std::optional<ComponentWidget*>
 {
     if (component->type() == "material") {
         return buildMaterialWidget(std::dynamic_pointer_cast<engine::MaterialComponent>(component));
@@ -597,7 +618,7 @@ auto NodeTreeBuilder::buildWidgetForComponent(std::shared_ptr<engine::Component>
     } else if (component->type() == "transform") {
         return buildTransformWidget(std::dynamic_pointer_cast<engine::TransformComponent>(component));
     } else if (component->type() == "flipbook_animation") {
-        return buildFlipbookAnimationWidget(std::dynamic_pointer_cast<engine::FlipbookAnimationComponent>(component));
+        return buildFlipbookAnimationWidget(std::dynamic_pointer_cast<engine::FlipbookAnimationComponent>(component), tree, item);
     }
 
     return std::nullopt;

@@ -63,6 +63,7 @@ add_library(engine glad.c
         Utils.cpp
         FlipbookAnimationComponent.h
         FlipbookAnimationComponent.cpp
+        Helpers.h
 )
 
 target_include_directories(engine PUBLIC ${CMAKE_SOURCE_DIR}/../3rdparts/include/)

@@ -4,6 +4,7 @@
 #include "SceneStore.h"
 #include "Scene.h"
 #include "Utils.h"
+#include "Helpers.h"
 
 #include <algorithm>
 
@@ -21,7 +22,7 @@ void FlipbookAnimationComponent::init()
 
 void FlipbookAnimationComponent::update(uint64_t dt)
 {
-    if (!m_run) {
+    if (!m_run || m_material_ids.empty()) {
         return;
     }
 
@@ -33,22 +34,22 @@ void FlipbookAnimationComponent::update(uint64_t dt)
         for (size_t i = 0; i < m_material_ids.size(); ++i) {
             auto ctx = context().lock();
             if (!ctx) {
-                return;
+                break;
             }
 
             auto scene = ctx->sceneStore->get(ownerScene());
             if (!scene.has_value()) {
-                return;
+                break;
             }
 
             auto component = scene.value()->getComponent(m_material_ids[i]);
             if (!component.has_value()) {
-                return;
+                break;
             }
 
             auto material = std::dynamic_pointer_cast<MaterialComponent>(component.value());
             if (!material) {
-                return;
+                break;
             }
 
             material->setActive(m_current_material == i);
@@ -116,32 +117,28 @@ bool FlipbookAnimationComponent::isRunning() const
 
 void FlipbookAnimationComponent::addMaterial(uint32_t material_id)
 {
+    if (hasMaterial(material_id)) {
+        return;
+    }
     m_material_ids.push_back(material_id);
 }
 
 void FlipbookAnimationComponent::addMaterial(const std::string& material_name)
 {
-    auto ctx = context().lock();
-    if (!ctx) {
-        return;
-    }
-
-    auto scene = ctx->sceneStore->get(ownerScene());
-    if (!scene.has_value()) {
-        return;
-    }
-
-    auto component = scene.value()->getComponent(material_name);
-    if (!component.has_value()) {
-        return;
-    }
-
-    auto material = std::dynamic_pointer_cast<MaterialComponent>(component.value());
+    auto material = engine::getComponentByName<MaterialComponent>(this, material_name);
     if (!material) {
         return;
     }
 
+    if (hasMaterial(material->id())) {
+        return;
+    }
     m_material_ids.push_back(material->id());
+}
+
+bool FlipbookAnimationComponent::hasMaterial(uint32_t material_id) const
+{
+    return std::find(m_material_ids.begin(), m_material_ids.end(), material_id) != m_material_ids.end();
 }
 
 auto FlipbookAnimationComponent::materialIds() const -> const std::vector<uint32_t>&
@@ -159,6 +156,9 @@ void FlipbookAnimationComponent::removeMaterial(uint32_t material_id)
 
 void FlipbookAnimationComponent::replaceMaterial(uint32_t material_id, uint32_t new_material_id)
 {
+    if (hasMaterial(new_material_id)) {
+        return;
+    }
     auto it = std::find(m_material_ids.begin(), m_material_ids.end(), material_id);
     if (it != m_material_ids.end()) {
         *it = new_material_id;

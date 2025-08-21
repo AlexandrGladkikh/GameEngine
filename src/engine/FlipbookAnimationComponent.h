@@ -34,6 +34,8 @@ public:
     void addMaterial(uint32_t material_id);
     void addMaterial(const std::string& material_name);
 
+    bool hasMaterial(uint32_t material_id) const;
+
     auto materialIds() const -> const std::vector<uint32_t>&;
     void removeMaterial(uint32_t material_id);
     void replaceMaterial(uint32_t material_id, uint32_t new_material_id);
