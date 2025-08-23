@@ -46,7 +46,7 @@ public:
 
     void build(std::optional<std::shared_ptr<engine::Scene>> scene);
 
-    void rebuildWidget(QTreeWidgetItem* item);
+    void rebuildComponentWidget(QTreeWidgetItem* item);
 
 private slots:
     void onHeaderContextMenu(const QPoint& pos);

@@ -1,5 +1,5 @@
 #include "SceneNodeTree.h"
-#include "widget_builder/NodeTreeWidgetBuilder.h"
+#include "NodeTreeWidgetBuilder.h"
 #include "UserNodeTreeBuilder.h"
 #include "ComponentWidget.h"
 #include "NodeWidget.h"
@@ -232,7 +232,7 @@ void SceneNodeTree::onAddComponent()
 
     auto* componentItem = new QTreeWidgetItem(m_selected_item);
 
-    auto component_widget = m_scene_node_tree_builder->buildWidgetForComponent(component_value, m_scene_tree, componentItem);
+    auto component_widget = m_scene_node_tree_builder->buildWidgetForComponent(component_value, componentItem);
     if (!component_widget.has_value()) {
         component_widget = m_user_components_builder->buildWidgetForComponent(component_value);
     }
@@ -414,6 +414,16 @@ void SceneNodeTree::build(std::optional<std::shared_ptr<engine::Scene>> scene)
     m_scene_tree->expandAll();
 }
 
+void SceneNodeTree::rebuildComponentWidget(QTreeWidgetItem* item)
+{
+    auto widget = m_scene_tree->itemWidget(item, 0);
+    auto* component_widget = dynamic_cast<ComponentWidget*>(widget);
+    if (component_widget != nullptr) {
+        auto component = component_widget->component();
+        createComponentWidget(item, component);
+    }
+}
+
 void SceneNodeTree::initMenuBar()
 {
     QMenu* fileMenu = menuBar()->addMenu("&File");
@@ -488,7 +498,7 @@ void SceneNodeTree::initContextMenu()
 
 void SceneNodeTree::createComponentWidget(QTreeWidgetItem* item, const std::shared_ptr<engine::Component>& component)
 {
-    auto component_widget = m_scene_node_tree_builder->buildWidgetForComponent(component, m_scene_tree, item);
+    auto component_widget = m_scene_node_tree_builder->buildWidgetForComponent(component, item);
     if (!component_widget.has_value()) {
         component_widget = m_user_components_builder->buildWidgetForComponent(component);
     }

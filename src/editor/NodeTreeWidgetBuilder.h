@@ -27,14 +27,14 @@ public:
     explicit NodeTreeWidgetBuilder(SceneNodeTree* scene_node_tree);
 
     auto buildWidgetForNode(const std::string& node_name) -> std::optional<NodeWidget*>;
-    auto buildWidgetForComponent(std::shared_ptr<engine::Component> component, QTreeWidget* tree, QTreeWidgetItem* item) -> std::optional<ComponentWidget*>;
+    auto buildWidgetForComponent(std::shared_ptr<engine::Component> component, QTreeWidgetItem* item) -> std::optional<ComponentWidget*>;
 
 private:
     ComponentWidget* buildTransformWidget(const std::shared_ptr<engine::TransformComponent>& transform);
     ComponentWidget* buildMaterialWidget(const std::shared_ptr<engine::MaterialComponent>& material);
     ComponentWidget* buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& mesh);
     ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camera);
-    ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidget* tree, QTreeWidgetItem* item);
+    ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidgetItem* item);
 
     SceneNodeTree* m_scene_node_tree;
 };

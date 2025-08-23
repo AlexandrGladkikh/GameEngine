@@ -2,6 +2,7 @@
 
 #include "editor/ComponentWidget.h"
 #include "editor/NodeWidget.h"
+#include "editor/SceneNodeTree.h"
 #include "editor/Utils.h"
 
 #include "engine/TransformComponent.h"
@@ -19,8 +20,6 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
-#include <QTimer>
-#include <QTreeWidget>
 
 #include <string>
 #include <functional>
@@ -435,7 +434,7 @@ ComponentWidget* NodeTreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<
     return camera_widget;
 }
 
-ComponentWidget* NodeTreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidget* tree, QTreeWidgetItem* item)
+ComponentWidget* NodeTreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidgetItem* item)
 {
     ComponentWidget* flipbook_widget = new ComponentWidget;
 
@@ -487,50 +486,12 @@ ComponentWidget* NodeTreeWidgetBuilder::buildFlipbookAnimationWidget(const std::
 
     std::vector<std::string> buttons_names = {"Add", "Delete"};
 
-    auto add_handler = [animation, layout, material_layouts, tree, item]() {
+    auto add_handler = [this, animation, item]() {
         animation->addMaterial(engine::generateUniqueId());
-        auto materials_ids = animation->materialIds();
-
-        size_t i = materials_ids.size() - 1;
-        auto materialChangeHandler = [animation, i](const std::string& value) {
-            auto material = engine::getComponentByName<engine::MaterialComponent>(animation, value);
-            if (!material) {
-                return;
-            }
-
-            auto materials_ids = animation->materialIds();
-            animation->replaceMaterial(materials_ids[i], material->id());
-        };
-
-        auto materialUpdater = [i, animation]() {
-            auto materials_ids = animation->materialIds();
-            auto material = engine::getComponentById<engine::MaterialComponent>(animation, materials_ids[i]);
-            if (!material) {
-                return std::string();
-            }
-
-            if (!material->isValid()) {
-                return std::string();
-            }
-
-            return material->name();
-        };
-
-        std::vector<EditorBlockLayoutData> animation_data = {
-            { "animation", "", materialChangeHandler, materialUpdater }
-        };
-        QHBoxLayout* animation_layout = createEditorBlockLayout("", animation_data);
-        layout->addLayout(animation_layout);
-
-        material_layouts.get()->push_back(animation_layout);
-
-        QTreeWidgetItem* temp = new QTreeWidgetItem(item);
-        temp->setText(0, "temp");
-        tree->setItemWidget(temp, 0, nullptr);
-        delete temp;
+        m_scene_node_tree->rebuildComponentWidget(item);
     };
 
-    auto delete_handler = [animation, material_layouts, tree, item]() {
+    auto delete_handler = [this, animation, item]() {
         auto materials_ids = animation->materialIds();
 
         if (materials_ids.empty()) {
@@ -539,15 +500,7 @@ ComponentWidget* NodeTreeWidgetBuilder::buildFlipbookAnimationWidget(const std::
 
         animation->removeMaterial(materials_ids.back());
 
-        material_layouts->back()->itemAt(0)->widget()->deleteLater();
-
-        delete material_layouts->back();
-        material_layouts->pop_back();
-
-        QTreeWidgetItem* temp = new QTreeWidgetItem(item);
-        temp->setText(0, "temp");
-        tree->setItemWidget(temp, 0, nullptr);
-        delete temp;
+        m_scene_node_tree->rebuildComponentWidget(item);
     };
 
     layout->addWidget(createButtonLineWidget(buttons_names, { add_handler, delete_handler }));
@@ -555,14 +508,11 @@ ComponentWidget* NodeTreeWidgetBuilder::buildFlipbookAnimationWidget(const std::
     for (size_t i = 0; i < materials_ids.size(); ++i) {
         auto material_id = materials_ids[i];
         auto material = scene.value()->getComponent(material_id);
-        if (!material) {
-            animation->removeMaterial(material_id);
-            continue;
-        }
 
-        auto material_value = std::dynamic_pointer_cast<engine::MaterialComponent>(material.value());
-        if (!material_value) {
-            continue;
+        std::string init_value;
+        if (material.has_value()) {
+            auto material_value = std::dynamic_pointer_cast<engine::MaterialComponent>(material.value());
+            init_value = material_value->name();
         }
 
         auto materialChangeHandler = [animation, i](const std::string& value) {
@@ -586,7 +536,7 @@ ComponentWidget* NodeTreeWidgetBuilder::buildFlipbookAnimationWidget(const std::
         };
 
         std::vector<EditorBlockLayoutData> animation_data = {
-            { "animation", material_value->name(), materialChangeHandler, materialUpdater }
+            { "animation", init_value, materialChangeHandler, materialUpdater }
         };
         setupEditorBlockLayout(material_layouts->at(i), "", animation_data);
         layout->addLayout(material_layouts->at(i));
@@ -614,7 +564,7 @@ auto NodeTreeWidgetBuilder::buildWidgetForNode(const std::string& node_name) -> 
     return new_widget;
 }
 
-auto NodeTreeWidgetBuilder::buildWidgetForComponent(std::shared_ptr<engine::Component> component, QTreeWidget* tree, QTreeWidgetItem* item) -> std::optional<ComponentWidget*>
+auto NodeTreeWidgetBuilder::buildWidgetForComponent(std::shared_ptr<engine::Component> component, QTreeWidgetItem* item) -> std::optional<ComponentWidget*>
 {
     if (component->type() == "material") {
         return buildMaterialWidget(std::dynamic_pointer_cast<engine::MaterialComponent>(component));
@@ -625,7 +575,7 @@ auto NodeTreeWidgetBuilder::buildWidgetForComponent(std::shared_ptr<engine::Comp
     } else if (component->type() == "transform") {
         return buildTransformWidget(std::dynamic_pointer_cast<engine::TransformComponent>(component));
     } else if (component->type() == "flipbook_animation") {
-        return buildFlipbookAnimationWidget(std::dynamic_pointer_cast<engine::FlipbookAnimationComponent>(component), tree, item);
+        return buildFlipbookAnimationWidget(std::dynamic_pointer_cast<engine::FlipbookAnimationComponent>(component), item);
     }
 
     return std::nullopt;
