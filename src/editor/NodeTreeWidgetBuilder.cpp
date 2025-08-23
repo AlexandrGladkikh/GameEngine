@@ -82,7 +82,7 @@ ComponentWidget* NodeTreeWidgetBuilder::buildTransformWidget(const std::shared_p
         { "Y", formatFloat(transform->getPosition().y), positionYChangeHandler, positionYUpdater },
         { "Z", formatFloat(transform->getPosition().z), positionZChangeHandler, positionZUpdater },
     };
-    auto position_layout = createEditorBlockLayout("Position", position_data);
+    auto position_layout = createEditorBlockLayout("Position", position_data, m_engine_observer);
     layout->addLayout(position_layout);
 
     auto rotationXChangeHandler = [transform](const std::string& value) {
@@ -128,7 +128,7 @@ ComponentWidget* NodeTreeWidgetBuilder::buildTransformWidget(const std::shared_p
         { "Y", formatFloat(transform->getRotation().y), rotationYChangeHandler, rotationYUpdater },
         { "Z", formatFloat(transform->getRotation().z), rotationZChangeHandler, rotationZUpdater },
     };
-    auto rotation_layout = createEditorBlockLayout("Rotation", rotation_data);
+    auto rotation_layout = createEditorBlockLayout("Rotation", rotation_data, m_engine_observer);
     layout->addLayout(rotation_layout);
 
     auto scaleXChangeHandler = [transform](const std::string& value) {
@@ -174,7 +174,7 @@ ComponentWidget* NodeTreeWidgetBuilder::buildTransformWidget(const std::shared_p
         { "Y", formatFloat(transform->getScale().y), scaleYChangeHandler, scaleYUpdater },
         { "Z", formatFloat(transform->getScale().z), scaleZChangeHandler, scaleZUpdater },
     };
-    auto scale_layout = createEditorBlockLayout("Scale", scale_data);
+    auto scale_layout = createEditorBlockLayout("Scale", scale_data, m_engine_observer);
     layout->addLayout(scale_layout);
 
     layout->addStretch();
@@ -222,13 +222,13 @@ ComponentWidget* NodeTreeWidgetBuilder::buildMaterialWidget(const std::shared_pt
     std::vector<EditorBlockLayoutData> texture_data = {
         { "texture", material->textureName(), textureChangeHandler, textureUpdater },
     };
-    auto texture_layout = createEditorBlockLayout("Texture", texture_data);
+    auto texture_layout = createEditorBlockLayout("Texture", texture_data, m_engine_observer);
     layout->addLayout(texture_layout);
 
     std::vector<EditorBlockLayoutData> shader_data = {
         { "shader", material->shaderName(), shaderChangeHandler, shaderUpdater },
     };
-    auto shader_layout = createEditorBlockLayout("Shader", shader_data);
+    auto shader_layout = createEditorBlockLayout("Shader", shader_data, m_engine_observer);
     layout->addLayout(shader_layout);
 
     layout->addStretch();
@@ -265,7 +265,7 @@ ComponentWidget* NodeTreeWidgetBuilder::buildMeshWidget(const std::shared_ptr<en
     std::vector<EditorBlockLayoutData> mesh_data = {
         { "mesh", mesh->meshName(), meshChangeHandler, meshUpdater },
     };
-    auto mesh_layout = createEditorBlockLayout("Mesh", mesh_data);
+    auto mesh_layout = createEditorBlockLayout("Mesh", mesh_data, m_engine_observer);
     layout->addLayout(mesh_layout);
 
     layout->addStretch();
@@ -382,7 +382,7 @@ ComponentWidget* NodeTreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<
     ortho_data.push_back({ "near", formatFloat(ortho.near), orthoNearChangeHandler, orthoNearUpdater });
     ortho_data.push_back({ "far", formatFloat(ortho.far), orthoFarChangeHandler, orthoFarUpdater });
 
-    QHBoxLayout* ortho_layout = createEditorBlockLayout("Ortho", ortho_data);
+    QHBoxLayout* ortho_layout = createEditorBlockLayout("Ortho", ortho_data, m_engine_observer);
     layout->addLayout(ortho_layout);
 
     auto yawChangeHandler = [camera](const std::string& value) {
@@ -403,7 +403,7 @@ ComponentWidget* NodeTreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<
         { "yaw", formatFloat(camera->getYaw()), yawChangeHandler, yawUpdater }
     };
 
-    QHBoxLayout* yaw_layout = createEditorBlockLayout("Yaw", yaw_data);
+    QHBoxLayout* yaw_layout = createEditorBlockLayout("Yaw", yaw_data, m_engine_observer);
     layout->addLayout(yaw_layout);
 
     auto pitchChangeHandler = [camera](const std::string& value) {
@@ -424,7 +424,7 @@ ComponentWidget* NodeTreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<
         { "pitch", formatFloat(camera->getPitch()), pitchChangeHandler, pitchUpdater }
     };
 
-    QHBoxLayout* pitch_layout = createEditorBlockLayout("Pitch", pitch_data);
+    QHBoxLayout* pitch_layout = createEditorBlockLayout("Pitch", pitch_data, m_engine_observer);
     layout->addLayout(pitch_layout);
 
     layout->addStretch();
@@ -476,7 +476,7 @@ ComponentWidget* NodeTreeWidgetBuilder::buildFlipbookAnimationWidget(const std::
     std::vector<EditorBlockLayoutData> update_time_data = {
         { "update time", formatFloat(animation->updateTime()), updateTimeChangeHandler, updateTimeUpdater }
     };
-    QHBoxLayout* update_time_layout = createEditorBlockLayout("Update time", update_time_data);
+    QHBoxLayout* update_time_layout = createEditorBlockLayout("Update time", update_time_data, m_engine_observer);
     layout->addLayout(update_time_layout);
 
     std::shared_ptr<std::vector<QHBoxLayout*>> material_layouts(new std::vector<QHBoxLayout*>);
@@ -538,7 +538,7 @@ ComponentWidget* NodeTreeWidgetBuilder::buildFlipbookAnimationWidget(const std::
         std::vector<EditorBlockLayoutData> animation_data = {
             { "animation", init_value, materialChangeHandler, materialUpdater }
         };
-        setupEditorBlockLayout(material_layouts->at(i), "", animation_data);
+        setupEditorBlockLayout(material_layouts->at(i), "", animation_data, m_engine_observer);
         layout->addLayout(material_layouts->at(i));
     }
 
@@ -549,8 +549,9 @@ ComponentWidget* NodeTreeWidgetBuilder::buildFlipbookAnimationWidget(const std::
     return flipbook_widget;
 }
 
-NodeTreeWidgetBuilder::NodeTreeWidgetBuilder(SceneNodeTree* scene_node_tree) :
-    m_scene_node_tree(scene_node_tree)
+NodeTreeWidgetBuilder::NodeTreeWidgetBuilder(SceneNodeTree* scene_node_tree, const std::shared_ptr<EngineObserver>& engine_observer) :
+    m_scene_node_tree(scene_node_tree),
+    m_engine_observer(engine_observer)
 {
 
 }

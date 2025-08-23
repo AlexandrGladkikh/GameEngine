@@ -22,9 +22,11 @@ class NodeWidget;
 class ComponentWidget;
 class SceneNodeTree;
 
+class EngineObserver;
+
 class NodeTreeWidgetBuilder final {
 public:
-    explicit NodeTreeWidgetBuilder(SceneNodeTree* scene_node_tree);
+    explicit NodeTreeWidgetBuilder(SceneNodeTree* scene_node_tree, const std::shared_ptr<EngineObserver>& engine_observer);
 
     auto buildWidgetForNode(const std::string& node_name) -> std::optional<NodeWidget*>;
     auto buildWidgetForComponent(std::shared_ptr<engine::Component> component, QTreeWidgetItem* item) -> std::optional<ComponentWidget*>;
@@ -37,6 +39,8 @@ private:
     ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidgetItem* item);
 
     SceneNodeTree* m_scene_node_tree;
+
+    std::shared_ptr<EngineObserver> m_engine_observer;
 };
 
 }

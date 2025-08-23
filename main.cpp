@@ -14,11 +14,13 @@
 
 #include <GLFW/glfw3.h>
 
+#include <thread>
+
 #ifdef ENABLE_EDITOR
 #include <QApplication>
 
 #include "editor/SceneNodeTree.h"
-#include "editor/UserNodeTreeBuilder.h"
+#include "editor/UserTreeWidgetBuilder.h"
 #include "editor/ComponentWidget.h"
 #include "editor/Utils.h"
 
@@ -26,7 +28,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 
-class EditorComponentBuilder : public editor::UserNodeTreeBuilder {
+class EditorComponentBuilder : public editor::UserTreeWidgetBuilder {
 public:
     [[nodiscard]]
     std::optional<editor::ComponentWidget*> buildWidgetForComponent(const std::shared_ptr<engine::Component>& component) const override;
@@ -48,31 +50,44 @@ int main(int argc, char *argv[])
 {
     int appResult = 0;
 
-    engine::Engine engine;
-    engine.setUserComponentsBuilder(std::make_unique<EngineComponentBuilder>());
-    if (!engine.initialize("../configs/engine.json")) {
-        return 1;
-    }
+    std::atomic_bool running = false;
+
+    engine::Engine* ran_engine = nullptr;
+
+    std::thread engineThread([&running, &ran_engine]() {
+        engine::Engine engine;
+        engine.setUserComponentsBuilder(std::make_unique<EngineComponentBuilder>());
+        if (!engine.initialize("../configs/engine.json")) {
+            return 1;
+        }
+
+        ran_engine = &engine;
+
+        running.store(true);
+        running.notify_all();
+        engine.run();
+
+        return 0;
+    });
+
+    running.wait(false);
 
 #ifdef ENABLE_EDITOR
     QApplication a(argc, argv);
 
-    auto context = engine.context();
+    auto context = ran_engine->context();
 
-    auto currentScene = context->sceneStore->get(engine.getActiveSceneId());
+    auto currentScene = context->sceneStore->get(ran_engine->getActiveSceneId());
 
-    editor::SceneNodeTree sceneNodeTree(&engine);
-    sceneNodeTree.setUserComponentsBuilder(std::make_unique<EditorComponentBuilder>());
-    sceneNodeTree.build(currentScene);
-    sceneNodeTree.show();
+    editor::SceneNodeTree* sceneNodeTree = new editor::SceneNodeTree(ran_engine);
+    sceneNodeTree->setUserTreeWidgetBuilder(std::make_unique<EditorComponentBuilder>());
+    sceneNodeTree->build(currentScene);
+    sceneNodeTree->show();
 
-#endif
-
-    engine.run();
-
-#ifdef ENABLE_EDITOR
     appResult = a.exec();
 #endif
+
+    engineThread.join();
 
     return appResult;
 }
@@ -337,7 +352,7 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
         std::vector<editor::EditorBlockLayoutData> speed_data = {
             { "speed", editor::formatFloat(move->getSpeed()), speedChangeHandler, speedUpdater }
         };
-        QHBoxLayout* speed_layout = editor::createEditorBlockLayout("", speed_data);
+        QHBoxLayout* speed_layout = editor::createEditorBlockLayout("", speed_data, engineObserver());
         layout->addLayout(speed_layout);
 
         auto moveNodeChangeHandler = [move](const std::string& value) {
@@ -354,7 +369,7 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
         std::vector<editor::EditorBlockLayoutData> move_node_id_data = {
             { "move node id", editor::formatFloat(move->getMoveNodeId()), moveNodeChangeHandler, moveNodeUpdater }
         };
-        QHBoxLayout* move_node_id_layout = editor::createEditorBlockLayout("", move_node_id_data);
+        QHBoxLayout* move_node_id_layout = editor::createEditorBlockLayout("", move_node_id_data, engineObserver());
         layout->addLayout(move_node_id_layout);
 
         auto restNodeChangeHandler = [move](const std::string& value) {
@@ -371,7 +386,7 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
         std::vector<editor::EditorBlockLayoutData> rest_node_id_data = {
             { "rest node id", editor::formatFloat(move->getRestNodeId()), restNodeChangeHandler, restNodeUpdater }
         };
-        QHBoxLayout* rest_node_id_layout = editor::createEditorBlockLayout("", rest_node_id_data);
+        QHBoxLayout* rest_node_id_layout = editor::createEditorBlockLayout("", rest_node_id_data, engineObserver());
         layout->addLayout(rest_node_id_layout);
 
         layout->addStretch();
@@ -404,7 +419,7 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
         std::vector<editor::EditorBlockLayoutData> camera_id_data = {
             { "camera id", editor::formatFloat(camera_follow->getCameraId()), cameraIdChangeHandler, cameraIdUpdater }
         };
-        QHBoxLayout* camera_id_layout = editor::createEditorBlockLayout("", camera_id_data);
+        QHBoxLayout* camera_id_layout = editor::createEditorBlockLayout("", camera_id_data, engineObserver());
         layout->addLayout(camera_id_layout);
 
         layout->addStretch();

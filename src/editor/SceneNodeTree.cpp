@@ -1,8 +1,9 @@
 #include "SceneNodeTree.h"
 #include "NodeTreeWidgetBuilder.h"
-#include "UserNodeTreeBuilder.h"
+#include "UserTreeWidgetBuilder.h"
 #include "ComponentWidget.h"
 #include "NodeWidget.h"
+#include "EngineObserver.h"
 
 #include "engine/Engine.h"
 #include "engine/Scene.h"
@@ -24,41 +25,19 @@
 
 namespace editor {
 
-SceneNodeTree::EngineObserver::EngineObserver(engine::Engine* engine, QWidget* parent)
-{
-    m_timer = new QTimer(parent);
-    m_timer->setInterval(100);
-    m_timer->setTimerType(Qt::PreciseTimer);
-    QObject::connect(m_timer, &QTimer::timeout, [engine]() {
-        engine->pause();
-
-        engine->resume();
-    });
-}
-
-SceneNodeTree::EngineObserver::~EngineObserver()
-{
-    stop();
-}
-
-void SceneNodeTree::EngineObserver::start()
-{
-    m_timer->start();
-}
-
-void SceneNodeTree::EngineObserver::stop()
-{
-    m_timer->stop();
-}
-
 SceneNodeTree::SceneNodeTree(engine::Engine* engine, QWidget* parent) :
     QMainWindow(parent),
     m_engine(engine),
-    m_scene_node_tree_builder(std::make_unique<NodeTreeWidgetBuilder>(this)),
     m_scene_tree(new QTreeWidget(parent))
 {
+    setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle("Scene node tree");
     resize(500, 800);
+
+    m_engine_observer.reset(new EngineObserver(m_engine, this));
+    m_engine_observer->start();
+
+    m_scene_node_tree_builder = std::make_unique<NodeTreeWidgetBuilder>(this, m_engine_observer);
 
     initMenuBar();
 
@@ -75,13 +54,19 @@ SceneNodeTree::SceneNodeTree(engine::Engine* engine, QWidget* parent) :
     initHeaderContextMenu();
 }
 
-SceneNodeTree::~SceneNodeTree() = default;
-
-void SceneNodeTree::setUserComponentsBuilder(std::unique_ptr<UserNodeTreeBuilder> builder)
+SceneNodeTree::~SceneNodeTree()
 {
-    m_user_components_builder = std::move(builder);
+    m_engine_observer->stop();
+    auto ctx = m_engine->context();
+    ctx->engineAccessor->stop();
 }
 
+void SceneNodeTree::setUserTreeWidgetBuilder(std::unique_ptr<UserTreeWidgetBuilder> builder)
+{
+    m_user_components_builder = std::move(builder);
+    m_user_components_builder->setSceneNodeTree(this);
+    m_user_components_builder->setEngineObserver(m_engine_observer);
+}
 
 void SceneNodeTree::onHeaderContextMenu(const QPoint& pos)
 {

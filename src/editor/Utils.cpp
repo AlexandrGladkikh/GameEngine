@@ -1,6 +1,7 @@
 #include "Utils.h"
 
 #include "ComponentWidget.h"
+#include "EngineObserver.h"
 
 #include <QHBoxLayout>
 #include <QLabel>
@@ -11,7 +12,7 @@
 namespace editor {
 
 ComponentWidget* createLabelLineEditorWidget(const std::string& label, const std::string& value,
-    const std::function<void(const std::string&)>& changeHandler, const std::function<std::string()>& updateHandler)
+    const std::function<void(const std::string&)>& changeHandler, const std::function<std::string()>& updateHandler, const std::shared_ptr<EngineObserver>& observer)
 {
     ComponentWidget* widget = new ComponentWidget;
 
@@ -22,10 +23,8 @@ ComponentWidget* createLabelLineEditorWidget(const std::string& label, const std
     auto* lineEditor = new QLineEdit(value.c_str());
 
     if (updateHandler) {
-        auto timer = new QTimer(lineEditor);
-        timer->setInterval(100);
-        timer->setTimerType(Qt::PreciseTimer);
-        QObject::connect(timer, &QTimer::timeout, [lineEditor, updateHandler]() {
+        std::uintptr_t id = reinterpret_cast<std::uintptr_t>(lineEditor);
+        observer->addHandler(id, [lineEditor, updateHandler]() {
             if (lineEditor->hasFocus()) {
                 return;
             }
@@ -35,7 +34,26 @@ ComponentWidget* createLabelLineEditorWidget(const std::string& label, const std
                 lineEditor->setText(current_text.c_str());
             }
         });
-        timer->start();
+
+        QObject::connect(lineEditor, &QObject::destroyed, [observer, id]() {
+            observer->removeHandler(id);
+        });
+
+        // auto timer = new QTimer(lineEditor);
+        // timer->setInterval(100);
+        // timer->setTimerType(Qt::PreciseTimer);
+        //
+        // QObject::connect(timer, &QTimer::timeout, [lineEditor, updateHandler]() {
+        //     if (lineEditor->hasFocus()) {
+        //         return;
+        //     }
+        //     auto new_text = lineEditor->text();
+        //     auto current_text = updateHandler();
+        //     if (!current_text.empty() && new_text != current_text) {
+        //         lineEditor->setText(current_text.c_str());
+        //     }
+        // });
+        // timer->start();
     }
     if (changeHandler) {
         QObject::connect(lineEditor, &QLineEdit::textChanged, [changeHandler](const QString& value) {
@@ -67,15 +85,15 @@ ComponentWidget *createButtonLineWidget(const std::vector<std::string>& names, c
     return widget;
 }
 
-QHBoxLayout* createEditorBlockLayout(const std::string& title, const std::vector<EditorBlockLayoutData>& data)
+QHBoxLayout* createEditorBlockLayout(const std::string& title, const std::vector<EditorBlockLayoutData>& data, const std::shared_ptr<EngineObserver>& observer)
 {
     QHBoxLayout* layout = new QHBoxLayout();
-    setupEditorBlockLayout(layout, title, data);
+    setupEditorBlockLayout(layout, title, data, observer);
 
     return layout;
 }
 
-void setupEditorBlockLayout(QHBoxLayout* layout, const std::string& title, const std::vector<EditorBlockLayoutData>& data)
+void setupEditorBlockLayout(QHBoxLayout* layout, const std::string& title, const std::vector<EditorBlockLayoutData>& data, const std::shared_ptr<EngineObserver>& observer)
 {
     layout->setSpacing(1);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -86,16 +104,16 @@ void setupEditorBlockLayout(QHBoxLayout* layout, const std::string& title, const
     }
 
     for (const auto& item : data) {
-        layout->addWidget(createLabelLineEditorWidget(item.name, item.value, item.changeHandler, item.updateHandler));
+        layout->addWidget(createLabelLineEditorWidget(item.name, item.value, item.changeHandler, item.updateHandler, observer));
     }
 
     layout->addStretch();
 }
 
-std::string formatFloat(float value)
+std::string formatFloat(float value, uint32_t precision)
 {
     std::ostringstream ss;
-    ss << std::fixed << std::setprecision(2) << value;
+    ss << std::fixed << std::setprecision(precision) << value;
     return ss.str();
 }
 
@@ -114,7 +132,7 @@ bool parseFloat(const std::string& value, float& out)
 std::string formatUInt32(uint32_t value)
 {
     std::ostringstream ss;
-    ss << std::fixed << std::setprecision(2) << value;
+    ss << std::fixed << value;
     return ss.str();
 }
 

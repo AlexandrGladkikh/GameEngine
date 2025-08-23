@@ -4,7 +4,6 @@
 
 #include <memory>
 #include <optional>
-#include <set>
 
 namespace engine {
 class Scene;
@@ -23,26 +22,16 @@ class QTimer;
 namespace editor {
 
 class NodeTreeWidgetBuilder;
-class UserNodeTreeBuilder;
+class UserTreeWidgetBuilder;
+
+class EngineObserver;
 
 class SceneNodeTree final : public QMainWindow {
 public:
-    class EngineObserver final {
-    public:
-        explicit EngineObserver(engine::Engine* engine, QWidget* parent = nullptr);
-        ~EngineObserver();
-
-        void start();
-        void stop();
-
-    private:
-        QTimer* m_timer = nullptr;
-    };
-
     explicit SceneNodeTree(engine::Engine* engine, QWidget* parent = nullptr);
     ~SceneNodeTree() override;
 
-    void setUserComponentsBuilder(std::unique_ptr<UserNodeTreeBuilder> builder);
+    void setUserTreeWidgetBuilder(std::unique_ptr<UserTreeWidgetBuilder> builder);
 
     void build(std::optional<std::shared_ptr<engine::Scene>> scene);
 
@@ -77,8 +66,10 @@ private:
 
     engine::Engine* m_engine;
 
+    std::shared_ptr<EngineObserver> m_engine_observer;
+
     std::shared_ptr<NodeTreeWidgetBuilder> m_scene_node_tree_builder;
-    std::unique_ptr<UserNodeTreeBuilder> m_user_components_builder;
+    std::unique_ptr<UserTreeWidgetBuilder> m_user_components_builder;
 
     QTreeWidget* m_scene_tree;
 
