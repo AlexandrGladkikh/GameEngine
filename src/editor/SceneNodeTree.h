@@ -18,19 +18,35 @@ class QTreeWidget;
 class QMenu;
 class QTreeWidgetItem;
 class QAction;
+class QTimer;
 
 namespace editor {
 
+class NodeTreeWidgetBuilder;
 class UserNodeTreeBuilder;
 
 class SceneNodeTree final : public QMainWindow {
 public:
+    class EngineObserver final {
+    public:
+        explicit EngineObserver(engine::Engine* engine, QWidget* parent = nullptr);
+        ~EngineObserver();
+
+        void start();
+        void stop();
+
+    private:
+        QTimer* m_timer = nullptr;
+    };
+
     explicit SceneNodeTree(engine::Engine* engine, QWidget* parent = nullptr);
     ~SceneNodeTree() override;
 
     void setUserComponentsBuilder(std::unique_ptr<UserNodeTreeBuilder> builder);
 
     void build(std::optional<std::shared_ptr<engine::Scene>> scene);
+
+    void rebuildWidget(QTreeWidgetItem* item);
 
 private slots:
     void onHeaderContextMenu(const QPoint& pos);
@@ -46,6 +62,7 @@ private slots:
     void onCopy();
     void onPaste();
     void onRename();
+    void onDuplicate();
 
     void onSaveScene();
 
@@ -57,6 +74,11 @@ private:
 
     void createComponentWidget(QTreeWidgetItem* item, const std::shared_ptr<engine::Component>& component);
     void createNodeWidget(std::optional<std::shared_ptr<engine::Node>> node, QTreeWidgetItem* parent);
+
+    engine::Engine* m_engine;
+
+    std::shared_ptr<NodeTreeWidgetBuilder> m_scene_node_tree_builder;
+    std::unique_ptr<UserNodeTreeBuilder> m_user_components_builder;
 
     QTreeWidget* m_scene_tree;
 
@@ -79,10 +101,7 @@ private:
     QAction* m_copy;
     QAction* m_paste;
     QAction* m_rename;
-
-    std::unique_ptr<UserNodeTreeBuilder> m_user_components_builder;
-
-    engine::Engine* m_engine;
+    QAction* m_duplicate;
 };
 
 }

@@ -197,42 +197,25 @@ public:
     void setSpeed(float speed) { m_speed = speed; }
     float getSpeed() const { return m_speed; }
 
-    std::shared_ptr<engine::Node> m_birdNode;
+    void setMoveNodeId(uint32_t node_id) { m_move_node_id = node_id; }
+    uint32_t getMoveNodeId() const { return m_move_node_id; }
 
-    const float m_gravity = -9.81f;
-    float m_currentBirdSpeed = 0.0f;
-
-    float m_speed = 200.0f;
+    void setRestNodeId(uint32_t node_id) { m_rest_node_id = node_id; }
+    uint32_t getRestNodeId() const { return m_rest_node_id; }
 
     void init() override
     {
         context().lock()->inputManager->registerHandler(GLFW_KEY_W, [this](int action) {
-            if (action == GLFW_PRESS) {
-                m_up = true;
-            } else if (action == GLFW_RELEASE) {
-                m_up = false;
-            }
+            m_up = (action == GLFW_PRESS || action == GLFW_REPEAT);
         });
         context().lock()->inputManager->registerHandler(GLFW_KEY_S, [this](int action) {
-            if (action == GLFW_PRESS) {
-                m_down = true;
-            } else if (action == GLFW_RELEASE) {
-                m_down = false;
-            }
+            m_down = (action == GLFW_PRESS || action == GLFW_REPEAT);
         });
         context().lock()->inputManager->registerHandler(GLFW_KEY_A, [this](int action) {
-            if (action == GLFW_PRESS) {
-                m_left = true;
-            } else if (action == GLFW_RELEASE) {
-                m_left = false;
-            }
+            m_left = (action == GLFW_PRESS || action == GLFW_REPEAT);
         });
         context().lock()->inputManager->registerHandler(GLFW_KEY_D, [this](int action) {
-            if (action == GLFW_PRESS) {
-                m_right = true;
-            } else if (action == GLFW_RELEASE) {
-                m_right = false;
-            }
+            m_right = (action == GLFW_PRESS || action == GLFW_REPEAT);
         });
 
         context().lock()->inputManager->registerHandler(GLFW_KEY_ESCAPE, [this](int action) {
@@ -242,11 +225,7 @@ public:
         });
 
         context().lock()->inputManager->registerHandler(GLFW_KEY_SPACE, [this](int action) {
-            if (action == GLFW_PRESS) {
-                m_space = true;
-            } else {
-                m_space = false;
-            }
+            m_space = action == GLFW_PRESS;
         });
     }
 
@@ -263,9 +242,30 @@ public:
         }
         if (m_left) {
             transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(-1.0f * m_speed * dt / 1000000, 0.0f, 0.0f));
+            auto scale = transform.value()->getScale();
+            transform.value()->setScale(transform.value()->getScale() * glm::vec3((scale.x < 0.0f ? 1.0f : -1.0f), 1.0f, 1.0f));
         }
         if (m_right) {
             transform.value()->setPosition(transform.value()->getPosition() + glm::vec3(1.0f * m_speed * dt / 1000000, 0.0f, 0.0f));
+            auto scale = transform.value()->getScale();
+            transform.value()->setScale(transform.value()->getScale() * glm::vec3((scale.x < 0.0f ? -1.0f : 1.0f), 1.0f, 1.0f));
+        }
+
+        auto node = getNode().value();
+        auto scene = node->getScene().value();
+
+        auto move_node = scene->getNode(m_move_node_id);
+        auto rest_node = scene->getNode(m_rest_node_id);
+        if (!move_node.has_value() || !rest_node.has_value()) {
+            return;
+        }
+
+        if (m_up || m_down || m_left || m_right) {
+            move_node.value()->setActive(true);
+            rest_node.value()->setActive(false);
+        } else {
+            move_node.value()->setActive(false);
+            rest_node.value()->setActive(true);
         }
     }
 
@@ -291,6 +291,13 @@ public:
     }
 
 private:
+    const float m_gravity = -9.81f;
+
+    float m_speed = 200.0f;
+
+    uint32_t m_move_node_id = 0;
+    uint32_t m_rest_node_id = 0;
+
     bool m_up = false;
     bool m_down = false;
     bool m_left = false;
@@ -327,15 +334,45 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
             return editor::formatFloat(move->getSpeed());
         };
 
-        QHBoxLayout* speed_layout = new QHBoxLayout();
-        speed_layout->setSpacing(1);
-        speed_layout->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel("Speed");
-        label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-        speed_layout->addWidget(label);
-        speed_layout->addWidget(editor::createLabelLineEditorWidget("speed", editor::formatFloat(move->getSpeed()), speedChangeHandler, speedUpdater));
-        speed_layout->addStretch();
+        std::vector<editor::EditorBlockLayoutData> speed_data = {
+            { "speed", editor::formatFloat(move->getSpeed()), speedChangeHandler, speedUpdater }
+        };
+        QHBoxLayout* speed_layout = editor::createEditorBlockLayout("", speed_data);
         layout->addLayout(speed_layout);
+
+        auto moveNodeChangeHandler = [move](const std::string& value) {
+            move->setMoveNodeId(std::stoul(value));
+        };
+
+        auto moveNodeUpdater = [move]() {
+            if (!move->isValid()) {
+                return std::string();
+            }
+            return std::to_string(move->getMoveNodeId());
+        };
+
+        std::vector<editor::EditorBlockLayoutData> move_node_id_data = {
+            { "move node id", editor::formatFloat(move->getMoveNodeId()), moveNodeChangeHandler, moveNodeUpdater }
+        };
+        QHBoxLayout* move_node_id_layout = editor::createEditorBlockLayout("", move_node_id_data);
+        layout->addLayout(move_node_id_layout);
+
+        auto restNodeChangeHandler = [move](const std::string& value) {
+            move->setRestNodeId(std::stoul(value));
+        };
+
+        auto restNodeUpdater = [move]() {
+            if (!move->isValid()) {
+                return std::string();
+            }
+            return std::to_string(move->getRestNodeId());
+        };
+
+        std::vector<editor::EditorBlockLayoutData> rest_node_id_data = {
+            { "rest node id", editor::formatFloat(move->getRestNodeId()), restNodeChangeHandler, restNodeUpdater }
+        };
+        QHBoxLayout* rest_node_id_layout = editor::createEditorBlockLayout("", rest_node_id_data);
+        layout->addLayout(rest_node_id_layout);
 
         layout->addStretch();
 
@@ -364,15 +401,11 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
             return editor::formatFloat(camera_follow->getCameraId());
         };
 
-        QHBoxLayout* position_layout = new QHBoxLayout();
-        position_layout->setSpacing(1);
-        position_layout->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel("Camera Id");
-        label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-        position_layout->addWidget(label);
-        position_layout->addWidget(editor::createLabelLineEditorWidget("camera id", editor::formatFloat(camera_follow->getCameraId()), cameraIdChangeHandler, cameraIdUpdater));
-        position_layout->addStretch();
-        layout->addLayout(position_layout);
+        std::vector<editor::EditorBlockLayoutData> camera_id_data = {
+            { "camera id", editor::formatFloat(camera_follow->getCameraId()), cameraIdChangeHandler, cameraIdUpdater }
+        };
+        QHBoxLayout* camera_id_layout = editor::createEditorBlockLayout("", camera_id_data);
+        layout->addLayout(camera_id_layout);
 
         layout->addStretch();
 
@@ -393,8 +426,13 @@ std::optional<std::unique_ptr<engine::Component>> EngineComponentBuilder::buildC
 
         auto move = component["move"].GetFloat();
 
+        auto move_node_id = component["move_node_id"].GetUint();
+        auto rest_node_id = component["rest_node_id"].GetUint();
+
         auto new_component = std::make_unique<MoveComponent>(id, name, owner_node, owner_scene);
         new_component->setSpeed(move);
+        new_component->setMoveNodeId(move_node_id);
+        new_component->setRestNodeId(rest_node_id);
 
         return new_component;
     } else if (type == "camera_follow") {
@@ -438,6 +476,8 @@ void EngineComponentBuilder::saveToJson(const std::shared_ptr<engine::Component>
         component_json.AddMember("owner_node", move->ownerNode(), allocator);
         component_json.AddMember("owner_scene", move->ownerScene(), allocator);
         component_json.AddMember("move", move->getSpeed(), allocator);
+        component_json.AddMember("move_node_id", move->getMoveNodeId(), allocator);
+        component_json.AddMember("rest_node_id", move->getRestNodeId(), allocator);
     } else if (component->type() == "camera_follow") {
         auto camera_follow = std::dynamic_pointer_cast<CameraFollowComponent>(component);
 

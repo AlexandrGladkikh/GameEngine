@@ -4,81 +4,27 @@
     "root": 1,
     "nodes": [
         {
-            "id": 1,
-            "name": "root",
-            "parent": 0,
-            "owner_scene": 1,
-            "children": [
-                20,
-                2,
-                3,
-                375963027,
-                3455764843,
-                1650004208,
-                3511507983
-            ],
-            "components": [
-                50,
-                146959948
-            ]
-        },
-        {
-            "id": 2,
-            "name": "quad_object1",
-            "parent": 1,
+            "id": 3246736764,
+            "name": "bird top",
+            "parent": 1152390228,
             "owner_scene": 1,
             "children": [],
             "components": [
-                1,
-                2,
-                3
+                719967631,
+                536393195,
+                3079091011
             ]
         },
         {
-            "id": 20,
-            "name": "quad_object2",
-            "parent": 1,
-            "owner_scene": 1,
-            "children": [],
-            "components": [
-                10,
-                20,
-                30
-            ]
-        },
-        {
-            "id": 3,
-            "name": "camera_object",
-            "parent": 1,
-            "owner_scene": 1,
-            "children": [],
-            "components": [
-                4,
-                5
-            ]
-        },
-        {
-            "id": 1066144742,
-            "name": "bird mid",
-            "parent": 1650004208,
-            "owner_scene": 1,
-            "children": [],
-            "components": [
-                2520220124,
-                547320211,
-                2767965807
-            ]
-        },
-        {
-            "id": 2433652949,
+            "id": 251259838,
             "name": "bird bottom",
-            "parent": 1650004208,
+            "parent": 1152390228,
             "owner_scene": 1,
             "children": [],
             "components": [
-                3026702652,
-                468943495,
-                3027612481
+                598914133,
+                1385438523,
+                430744328
             ]
         },
         {
@@ -106,178 +52,140 @@
             ]
         },
         {
+            "id": 1,
+            "name": "root",
+            "parent": 0,
+            "owner_scene": 1,
+            "children": [
+                20,
+                2,
+                3,
+                2098094438,
+                375963027,
+                3455764843,
+                1650004208
+            ],
+            "components": [
+                50
+            ]
+        },
+        {
+            "id": 2521140142,
+            "name": "rest animation",
+            "parent": 1650004208,
+            "owner_scene": 1,
+            "children": [
+                1838273463
+            ],
+            "components": []
+        },
+        {
+            "id": 20,
+            "name": "quad_object2",
+            "parent": 1,
+            "owner_scene": 1,
+            "children": [],
+            "components": [
+                10,
+                20,
+                30
+            ]
+        },
+        {
+            "id": 1838273463,
+            "name": "bird mid",
+            "parent": 2521140142,
+            "owner_scene": 1,
+            "children": [],
+            "components": [
+                3953182482,
+                3483650534,
+                307159798
+            ]
+        },
+        {
+            "id": 3,
+            "name": "camera_object",
+            "parent": 1,
+            "owner_scene": 1,
+            "children": [],
+            "components": [
+                4,
+                5
+            ]
+        },
+        {
+            "id": 3872576516,
+            "name": "bird mid",
+            "parent": 1152390228,
+            "owner_scene": 1,
+            "children": [],
+            "components": [
+                843625604,
+                33998081,
+                2962626382
+            ]
+        },
+        {
+            "id": 2098094438,
+            "name": "topPipe",
+            "parent": 1,
+            "owner_scene": 1,
+            "children": [],
+            "components": [
+                1716383410,
+                2119949214,
+                2752000323
+            ]
+        },
+        {
+            "id": 1152390228,
+            "name": "move animation",
+            "parent": 1650004208,
+            "owner_scene": 1,
+            "children": [
+                3872576516,
+                251259838,
+                3246736764
+            ],
+            "components": [
+                159148876
+            ]
+        },
+        {
+            "id": 2,
+            "name": "quad_object1",
+            "parent": 1,
+            "owner_scene": 1,
+            "children": [],
+            "components": [
+                1,
+                2,
+                3
+            ]
+        },
+        {
             "id": 1650004208,
             "name": "bird",
             "parent": 1,
             "owner_scene": 1,
             "children": [
-                1066144742,
-                2433652949,
-                717184337
+                2521140142,
+                1152390228
             ],
             "components": [
                 2963876422,
                 2251360881,
                 2888022357
             ]
-        },
-        {
-            "id": 717184337,
-            "name": "bird top",
-            "parent": 1650004208,
-            "owner_scene": 1,
-            "children": [],
-            "components": [
-                4047464119,
-                2185337059,
-                81927824
-            ]
-        },
-        {
-            "id": 3511507983,
-            "name": "topPipe",
-            "parent": 1,
-            "owner_scene": 1,
-            "children": [],
-            "components": [
-                2847766180,
-                3091208822,
-                1398629603
-            ]
         }
     ],
     "components": [
         {
             "type": "transform",
-            "id": 2847766180,
-            "name": "bottom pipe transform",
-            "owner_node": 3511507983,
-            "owner_scene": 1,
-            "position": [
-                180.0,
-                580.0,
-                -100.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        {
-            "type": "material",
-            "id": 2185337059,
-            "name": "bird top material",
-            "owner_node": 717184337,
-            "owner_scene": 1,
-            "shader": 1,
-            "texture": 7
-        },
-        {
-            "type": "transform",
-            "id": 10,
-            "name": "quad_transform",
-            "owner_node": 20,
-            "owner_scene": 1,
-            "position": [
-                1400.0,
-                800.0,
-                -1.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        {
-            "type": "mesh",
-            "id": 2,
-            "name": "quad_mesh",
-            "owner_node": 2,
-            "owner_scene": 1,
-            "mesh": 1
-        },
-        {
-            "type": "material",
-            "id": 263190604,
-            "name": "bottom pipe texture",
-            "owner_node": 375963027,
-            "owner_scene": 1,
-            "shader": 1,
-            "texture": 4
-        },
-        {
-            "type": "mesh",
-            "id": 2767965807,
-            "name": "bird mid mesh",
-            "owner_node": 1066144742,
-            "owner_scene": 1,
-            "mesh": 1
-        },
-        {
-            "type": "transform",
-            "id": 4047464119,
-            "name": "bird top transform",
-            "owner_node": 717184337,
-            "owner_scene": 1,
-            "position": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "scale": [
-                1.0,
-                -1.0,
-                1.0
-            ]
-        },
-        {
-            "type": "material",
-            "id": 2430690413,
-            "name": "background texture",
-            "owner_node": 3455764843,
-            "owner_scene": 1,
-            "shader": 1,
-            "texture": 2
-        },
-        {
-            "type": "move",
-            "id": 2963876422,
-            "name": "move",
-            "owner_node": 1650004208,
-            "owner_scene": 1,
-            "move": 200.0
-        },
-        {
-            "type": "material",
-            "id": 3,
-            "name": "quad_material",
-            "owner_node": 2,
-            "owner_scene": 1,
-            "shader": 1,
-            "texture": 1
-        },
-        {
-            "type": "transform",
-            "id": 2520220124,
+            "id": 3953182482,
             "name": "bird mid transform",
-            "owner_node": 1066144742,
+            "owner_node": 1838273463,
             "owner_scene": 1,
             "position": [
                 0.0,
@@ -296,32 +204,10 @@
             ]
         },
         {
-            "type": "transform",
-            "id": 50,
-            "name": "root_transform",
-            "owner_node": 1,
-            "owner_scene": 1,
-            "position": [
-                100.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        {
             "type": "material",
-            "id": 547320211,
+            "id": 3483650534,
             "name": "bird mid material",
-            "owner_node": 1066144742,
+            "owner_node": 1838273463,
             "owner_scene": 1,
             "shader": 1,
             "texture": 6
@@ -349,6 +235,149 @@
             ]
         },
         {
+            "type": "material",
+            "id": 33998081,
+            "name": "bird mid material",
+            "owner_node": 3872576516,
+            "owner_scene": 1,
+            "shader": 1,
+            "texture": 6
+        },
+        {
+            "type": "mesh",
+            "id": 2,
+            "name": "quad_mesh",
+            "owner_node": 2,
+            "owner_scene": 1,
+            "mesh": 1
+        },
+        {
+            "type": "material",
+            "id": 263190604,
+            "name": "bottom pipe texture",
+            "owner_node": 375963027,
+            "owner_scene": 1,
+            "shader": 1,
+            "texture": 4
+        },
+        {
+            "type": "mesh",
+            "id": 843625604,
+            "name": "bird mid mesh",
+            "owner_node": 3872576516,
+            "owner_scene": 1,
+            "mesh": 1
+        },
+        {
+            "type": "material",
+            "id": 3,
+            "name": "quad_material",
+            "owner_node": 2,
+            "owner_scene": 1,
+            "shader": 1,
+            "texture": 1
+        },
+        {
+            "type": "transform",
+            "id": 50,
+            "name": "root_transform",
+            "owner_node": 1,
+            "owner_scene": 1,
+            "position": [
+                100.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        {
+            "type": "mesh",
+            "id": 307159798,
+            "name": "bird mid mesh",
+            "owner_node": 1838273463,
+            "owner_scene": 1,
+            "mesh": 1
+        },
+        {
+            "type": "transform",
+            "id": 2752000323,
+            "name": "bottom pipe transform",
+            "owner_node": 2098094438,
+            "owner_scene": 1,
+            "position": [
+                180.0,
+                560.0,
+                -100.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        {
+            "type": "transform",
+            "id": 1,
+            "name": "quad_transform",
+            "owner_node": 2,
+            "owner_scene": 1,
+            "position": [
+                2400.0,
+                300.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        {
+            "type": "material",
+            "id": 2119949214,
+            "name": "bottom pipe texture",
+            "owner_node": 2098094438,
+            "owner_scene": 1,
+            "shader": 1,
+            "texture": 4
+        },
+        {
+            "type": "mesh",
+            "id": 719967631,
+            "name": "bird top mesh",
+            "owner_node": 3246736764,
+            "owner_scene": 1,
+            "mesh": 1
+        },
+        {
+            "type": "material",
+            "id": 30,
+            "name": "quad_material",
+            "owner_node": 20,
+            "owner_scene": 1,
+            "shader": 1,
+            "texture": 1
+        },
+        {
             "type": "mesh",
             "id": 3094589958,
             "name": "top pipe mesh",
@@ -357,21 +386,234 @@
             "mesh": 1
         },
         {
+            "type": "camera",
+            "id": 4,
+            "name": "main_camera",
+            "owner_node": 3,
+            "owner_scene": 1,
+            "projection": {
+                "left": 0.0,
+                "right": 360.0,
+                "top": 640.0,
+                "bottom": 0.0,
+                "near": 0.10000000149011612,
+                "far": 1000.0
+            }
+        },
+        {
+            "type": "material",
+            "id": 2430690413,
+            "name": "background texture",
+            "owner_node": 3455764843,
+            "owner_scene": 1,
+            "shader": 1,
+            "texture": 2
+        },
+        {
+            "type": "move",
+            "id": 2963876422,
+            "name": "move",
+            "owner_node": 1650004208,
+            "owner_scene": 1,
+            "move": 200.0,
+            "move_node_id": 1152390228,
+            "rest_node_id": 1838273463
+        },
+        {
+            "type": "material",
+            "id": 536393195,
+            "name": "bird top material",
+            "owner_node": 3246736764,
+            "owner_scene": 1,
+            "shader": 1,
+            "texture": 7
+        },
+        {
+            "type": "transform",
+            "id": 5,
+            "name": "camera_transform",
+            "owner_node": 3,
+            "owner_scene": 1,
+            "position": [
+                13.290008544921875,
+                -6.970001220703125,
+                3.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        {
+            "type": "material",
+            "id": 1385438523,
+            "name": "bird bottom material",
+            "owner_node": 251259838,
+            "owner_scene": 1,
+            "shader": 1,
+            "texture": 5
+        },
+        {
+            "type": "transform",
+            "id": 430744328,
+            "name": "bird bottom transform",
+            "owner_node": 251259838,
+            "owner_scene": 1,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                -1.0,
+                1.0
+            ]
+        },
+        {
+            "type": "transform",
+            "id": 3079091011,
+            "name": "bird top transform",
+            "owner_node": 3246736764,
+            "owner_scene": 1,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                -1.0,
+                1.0
+            ]
+        },
+        {
             "type": "mesh",
-            "id": 3091208822,
+            "id": 1716383410,
             "name": "top pipe mesh",
-            "owner_node": 3511507983,
+            "owner_node": 2098094438,
             "owner_scene": 1,
             "mesh": 1
         },
         {
-            "type": "material",
-            "id": 1398629603,
-            "name": "bottom pipe texture",
-            "owner_node": 3511507983,
+            "type": "camera_follow",
+            "id": 2888022357,
+            "name": "camera_follow",
+            "owner_node": 1650004208,
             "owner_scene": 1,
-            "shader": 1,
-            "texture": 4
+            "camera_id": 4
+        },
+        {
+            "type": "transform",
+            "id": 2962626382,
+            "name": "bird mid transform",
+            "owner_node": 3872576516,
+            "owner_scene": 1,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                -1.0,
+                1.0
+            ]
+        },
+        {
+            "type": "flipbook_animation",
+            "id": 159148876,
+            "name": "flipbook animation",
+            "owner_node": 1152390228,
+            "owner_scene": 1,
+            "running": true,
+            "materials": [
+                536393195,
+                1385438523,
+                33998081
+            ],
+            "update_time": 100000
+        },
+        {
+            "type": "transform",
+            "id": 2251360881,
+            "name": "bird transform",
+            "owner_node": 1650004208,
+            "owner_scene": 1,
+            "position": [
+                154.02000427246094,
+                356.69000244140625,
+                -100.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                -1.0,
+                1.0,
+                1.0
+            ]
+        },
+        {
+            "type": "mesh",
+            "id": 598914133,
+            "name": "bird bottom mesh",
+            "owner_node": 251259838,
+            "owner_scene": 1,
+            "mesh": 1
+        },
+        {
+            "type": "mesh",
+            "id": 2797741519,
+            "name": "background mesh",
+            "owner_node": 3455764843,
+            "owner_scene": 1,
+            "mesh": 1
+        },
+        {
+            "type": "transform",
+            "id": 10,
+            "name": "quad_transform",
+            "owner_node": 20,
+            "owner_scene": 1,
+            "position": [
+                1400.0,
+                800.0,
+                -1.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
         },
         {
             "type": "mesh",
@@ -402,173 +644,6 @@
                 -1.25,
                 1.0
             ]
-        },
-        {
-            "type": "camera",
-            "id": 4,
-            "name": "main_camera",
-            "owner_node": 3,
-            "owner_scene": 1,
-            "projection": {
-                "left": 0.0,
-                "right": 360.0,
-                "top": 640.0,
-                "bottom": 0.0,
-                "near": 0.10000000149011612,
-                "far": 1000.0
-            }
-        },
-        {
-            "type": "transform",
-            "id": 1,
-            "name": "quad_transform",
-            "owner_node": 2,
-            "owner_scene": 1,
-            "position": [
-                2400.0,
-                300.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        {
-            "type": "material",
-            "id": 30,
-            "name": "quad_material",
-            "owner_node": 20,
-            "owner_scene": 1,
-            "shader": 1,
-            "texture": 1
-        },
-        {
-            "type": "mesh",
-            "id": 81927824,
-            "name": "bird top mesh",
-            "owner_node": 717184337,
-            "owner_scene": 1,
-            "mesh": 1
-        },
-        {
-            "type": "mesh",
-            "id": 3027612481,
-            "name": "bird bottom mesh",
-            "owner_node": 2433652949,
-            "owner_scene": 1,
-            "mesh": 1
-        },
-        {
-            "type": "mesh",
-            "id": 2797741519,
-            "name": "background mesh",
-            "owner_node": 3455764843,
-            "owner_scene": 1,
-            "mesh": 1
-        },
-        {
-            "type": "transform",
-            "id": 5,
-            "name": "camera_transform",
-            "owner_node": 3,
-            "owner_scene": 1,
-            "position": [
-                123.20999145507813,
-                9.709991455078125,
-                3.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        {
-            "type": "camera_follow",
-            "id": 2888022357,
-            "name": "camera_follow",
-            "owner_node": 1650004208,
-            "owner_scene": 1,
-            "camera_id": 4
-        },
-        {
-            "type": "transform",
-            "id": 2251360881,
-            "name": "bird transform",
-            "owner_node": 1650004208,
-            "owner_scene": 1,
-            "position": [
-                263.94000244140625,
-                373.3699951171875,
-                -100.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        {
-            "type": "transform",
-            "id": 3026702652,
-            "name": "bird bottom transform",
-            "owner_node": 2433652949,
-            "owner_scene": 1,
-            "position": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "scale": [
-                1.0,
-                -1.0,
-                1.0
-            ]
-        },
-        {
-            "type": "flipbook_animation",
-            "id": 146959948,
-            "name": "flipbook animation",
-            "owner_node": 1,
-            "owner_scene": 1,
-            "running": true,
-            "materials": [
-                547320211,
-                2185337059,
-                468943495
-            ],
-            "update_time": 100000
-        },
-        {
-            "type": "material",
-            "id": 468943495,
-            "name": "bird bottom material",
-            "owner_node": 2433652949,
-            "owner_scene": 1,
-            "shader": 1,
-            "texture": 5
         }
     ],
     "resources": [

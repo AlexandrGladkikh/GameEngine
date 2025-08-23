@@ -34,22 +34,22 @@ void FlipbookAnimationComponent::update(uint64_t dt)
         for (size_t i = 0; i < m_material_ids.size(); ++i) {
             auto ctx = context().lock();
             if (!ctx) {
-                break;
+                continue;
             }
 
             auto scene = ctx->sceneStore->get(ownerScene());
             if (!scene.has_value()) {
-                break;
+                continue;
             }
 
             auto component = scene.value()->getComponent(m_material_ids[i]);
             if (!component.has_value()) {
-                break;
+                continue;
             }
 
             auto material = std::dynamic_pointer_cast<MaterialComponent>(component.value());
             if (!material) {
-                break;
+                continue;
             }
 
             material->setActive(m_current_material == i);

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <functional>
 #include <string>
 #include <vector>
@@ -27,5 +28,8 @@ void setupEditorBlockLayout(QHBoxLayout* layout, const std::string& title, const
 
 std::string formatFloat(float value);
 bool parseFloat(const std::string& value, float& out);
+
+std::string formatUint32(uint32_t value);
+bool parseUint32(const std::string& value, uint32_t& out);
 
 }

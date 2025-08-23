@@ -27,7 +27,7 @@
 
 namespace editor {
 
-ComponentWidget* buildTransformWidget(const std::shared_ptr<engine::TransformComponent>& transform)
+ComponentWidget* NodeTreeWidgetBuilder::buildTransformWidget(const std::shared_ptr<engine::TransformComponent>& transform)
 {
     ComponentWidget* transform_widget = new ComponentWidget;
 
@@ -185,7 +185,7 @@ ComponentWidget* buildTransformWidget(const std::shared_ptr<engine::TransformCom
     return transform_widget;
 }
 
-ComponentWidget* buildMaterialWidget(const std::shared_ptr<engine::MaterialComponent>& material)
+ComponentWidget* NodeTreeWidgetBuilder::buildMaterialWidget(const std::shared_ptr<engine::MaterialComponent>& material)
 {
     ComponentWidget* material_widget = new ComponentWidget;
 
@@ -239,7 +239,7 @@ ComponentWidget* buildMaterialWidget(const std::shared_ptr<engine::MaterialCompo
     return material_widget;
 }
 
-ComponentWidget* buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& mesh)
+ComponentWidget* NodeTreeWidgetBuilder::buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& mesh)
 {
     ComponentWidget* mesh_widget = new ComponentWidget;
 
@@ -276,7 +276,7 @@ ComponentWidget* buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& m
     return mesh_widget;
 }
 
-ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camera)
+ComponentWidget* NodeTreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camera)
 {
     ComponentWidget* camera_widget = new ComponentWidget;
 
@@ -435,7 +435,7 @@ ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent
     return camera_widget;
 }
 
-ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidget* tree, QTreeWidgetItem* item)
+ComponentWidget* NodeTreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidget* tree, QTreeWidgetItem* item)
 {
     ComponentWidget* flipbook_widget = new ComponentWidget;
 
@@ -487,7 +487,7 @@ ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::Flip
 
     std::vector<std::string> buttons_names = {"Add", "Delete"};
 
-    auto add_handler = [animation, layout, material_layouts, flipbook_widget, tree, item]() {
+    auto add_handler = [animation, layout, material_layouts, tree, item]() {
         animation->addMaterial(engine::generateUniqueId());
         auto materials_ids = animation->materialIds();
 
@@ -556,6 +556,7 @@ ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::Flip
         auto material_id = materials_ids[i];
         auto material = scene.value()->getComponent(material_id);
         if (!material) {
+            animation->removeMaterial(material_id);
             continue;
         }
 
@@ -596,6 +597,12 @@ ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::Flip
     flipbook_widget->setLayout(layout);
 
     return flipbook_widget;
+}
+
+NodeTreeWidgetBuilder::NodeTreeWidgetBuilder(SceneNodeTree* scene_node_tree) :
+    m_scene_node_tree(scene_node_tree)
+{
+
 }
 
 auto NodeTreeWidgetBuilder::buildWidgetForNode(const std::string& node_name) -> std::optional<NodeWidget*>

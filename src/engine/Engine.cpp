@@ -15,6 +15,7 @@
 #include "Scene.h"
 #include "Component.h"
 #include "UserComponentsBuilder.h"
+#include "Node.h"
 
 #include <rapidjson/document.h>
 
@@ -132,6 +133,17 @@ void Engine::run()
     while (m_run) {
         delta_time = (glfwGetTime() - update_time) * 1000000;
         update_time = glfwGetTime();
+
+        while (m_pause.load() != 0) {
+            int expected = m_pause.load();
+            m_on_pause.store(true);
+            m_on_pause.notify_all();
+            m_pause.wait(expected);
+        }
+
+        m_on_pause.store(false);
+        m_on_pause.notify_all();
+
         Logger::info("delta time: {}", delta_time);
 
         m_context->window->update(delta_time);
@@ -140,7 +152,7 @@ void Engine::run()
         auto scene = m_context->sceneStore->get(m_active_scene_id);
         if (scene.has_value()) {
             for (auto& component : scene.value()->getComponents() | std::views::values) {
-                if (component->isActive() && component->isValid()) {
+                if (component->getNode().value()->isActive() && component->isActive() && component->isValid()) {
                     component->update(delta_time);
                 }
             }
@@ -150,6 +162,22 @@ void Engine::run()
 
         m_context->window->swapBuffer();
     }
+}
+
+void Engine::pause()
+{
+    m_pause.fetch_add(1);
+    m_pause.notify_all();
+
+    m_on_pause.wait(false);
+}
+
+void Engine::resume()
+{
+    m_pause.fetch_sub(1);
+    m_pause.notify_all();
+
+    m_on_pause.wait(true);
 }
 
 auto Engine::context() const -> std::shared_ptr<Context>

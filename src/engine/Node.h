@@ -28,6 +28,10 @@ public:
     Node& operator=(const Node&) = delete;
     Node& operator=(Node&&) = delete;
 
+    [[nodiscard]]
+    bool isActive() const;
+    void setActive(bool active);
+
     void setContext(const std::weak_ptr<Context>& context);
 
     std::uint32_t id() const;
@@ -128,6 +132,8 @@ public:
     }
 
 private:
+    bool m_is_active = true;
+
     std::weak_ptr<Context> m_context;
 
     std::uint32_t m_id;

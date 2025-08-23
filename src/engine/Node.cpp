@@ -13,6 +13,23 @@ Node::Node(std::uint32_t id, const std::string& name, uint32_t parent, uint32_t 
     m_owner_scene(owner_scene)
 {}
 
+bool Node::isActive() const
+{
+    return m_is_active;
+}
+
+void Node::setActive(bool active)
+{
+    m_is_active = active;
+
+    for (auto child_id : m_children_id) {
+        auto child = getChild(child_id);
+        if (child.has_value()) {
+            child.value()->setActive(active);
+        }
+    }
+}
+
 void Node::setContext(const std::weak_ptr<Context>& context)
 {
     m_context = context;

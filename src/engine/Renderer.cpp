@@ -43,7 +43,7 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
 
     auto camera_node = camera_nodes.front();
 
-    if (!camera_node) {
+    if (!camera_node || !camera_node->isActive()) {
         return;
     }
 
@@ -61,6 +61,10 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
     camera->setPosition(camera_node_transform.value()->getPosition());
 
     for (const auto& node : nodes) {
+        if (!node->isActive()) {
+            continue;
+        }
+
         auto mesh = SceneRequesterHelper::getComponent<MeshComponent>(scene, node->components());
         auto material = SceneRequesterHelper::getComponent<MaterialComponent>(scene, node->components());
         auto transform = SceneRequesterHelper::getComponent<TransformComponent>(scene, node->components());

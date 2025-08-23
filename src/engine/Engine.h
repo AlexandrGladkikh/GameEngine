@@ -3,6 +3,7 @@
 #include <memory>
 #include <filesystem>
 #include <unordered_map>
+#include <atomic>
 
 namespace engine {
 
@@ -42,6 +43,9 @@ public:
 
     void run();
 
+    void pause();
+    void resume();
+
     auto context() const -> std::shared_ptr<Context>;
 
     auto getActiveSceneId() const -> uint32_t;
@@ -50,6 +54,8 @@ public:
 
 private:
     bool m_run = false;
+    std::atomic_int m_pause = 0;
+    std::atomic_bool m_on_pause = false;
 
     std::shared_ptr<Context> m_context;
 
