@@ -23,6 +23,7 @@
 #include "editor/UserTreeWidgetBuilder.h"
 #include "editor/ComponentWidget.h"
 #include "editor/Utils.h"
+#include "editor/EngineObserver.h"
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -232,16 +233,6 @@ public:
         context().lock()->inputManager->registerHandler(GLFW_KEY_D, [this](int action) {
             m_right = (action == GLFW_PRESS || action == GLFW_REPEAT);
         });
-
-        context().lock()->inputManager->registerHandler(GLFW_KEY_ESCAPE, [this](int action) {
-            if (action == GLFW_PRESS) {
-                context().lock()->engineAccessor->stop();
-            }
-        });
-
-        context().lock()->inputManager->registerHandler(GLFW_KEY_SPACE, [this](int action) {
-            m_space = action == GLFW_PRESS;
-        });
     }
 
     void update(uint64_t dt) override
@@ -317,7 +308,6 @@ private:
     bool m_down = false;
     bool m_left = false;
     bool m_right = false;
-    bool m_space = false;
 };
 
 
@@ -329,6 +319,14 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
         auto move = std::dynamic_pointer_cast<MoveComponent>(component);
 
         widget = new editor::ComponentWidget;
+        std::uintptr_t id = reinterpret_cast<std::uintptr_t>(widget);
+        auto observer = engineObserver();
+        observer->addHandler(id, [widget, move]() {
+            widget->setDisabled(!move->isActive());
+        });
+        QObject::connect(widget, &QObject::destroyed, [observer, id]() {
+            observer->removeHandler(id);
+        });
 
         QVBoxLayout* layout = new QVBoxLayout;
         layout->setSpacing(1);
@@ -396,6 +394,14 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
         auto camera_follow = std::dynamic_pointer_cast<CameraFollowComponent>(component);
 
         widget = new editor::ComponentWidget;
+        std::uintptr_t id = reinterpret_cast<std::uintptr_t>(widget);
+        auto observer = engineObserver();
+        observer->addHandler(id, [widget, camera_follow]() {
+            widget->setDisabled(!camera_follow->isActive());
+        });
+        QObject::connect(widget, &QObject::destroyed, [observer, id]() {
+            observer->removeHandler(id);
+        });
 
         QVBoxLayout* layout = new QVBoxLayout;
         layout->setSpacing(1);

@@ -57,8 +57,9 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
         return;
     }
 
+    auto camera_position = camera_node_transform.value()->getPosition();
     auto camera = camera_component.value();
-    camera->setPosition(camera_node_transform.value()->getPosition());
+    camera->setPosition(camera_position);
 
     for (const auto& node : nodes) {
         if (!node->isActive()) {
@@ -89,6 +90,8 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
 
         auto model_mtx = transform.value()->getModel();
 
+        glm::vec3 absolute_node_position = transform.value()->getPosition();
+
         auto parent = node->getParentNode();
         while (parent.has_value()) {
             if (!parent.value()->hasComponent<TransformComponent>()) {
@@ -102,7 +105,23 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
             }
 
             model_mtx = transform_parent.value()->getModel() * model_mtx;
+            absolute_node_position += transform_parent.value()->getPosition();
             parent = parent.value()->getParentNode();
+        }
+
+        auto node_scale = transform.value()->getScale();
+        auto texture_size = material.value()->textureSize();
+        texture_size.first *= std::fabs(node_scale.x) / 2.0f;
+        texture_size.second *= std::fabs(node_scale.y) / 2.0f;
+        auto ortho = camera->getOrtho();
+
+        float absoluteNodePositionX = absolute_node_position.x - camera_position.x;
+        float absoluteNodePositionY = absolute_node_position.y - camera_position.y;
+
+        if ((absoluteNodePositionX + texture_size.first < 0 || absoluteNodePositionX - texture_size.first > (ortho.right)) ||
+            (absoluteNodePositionY + texture_size.second < 0 || absoluteNodePositionY - texture_size.second > (ortho.top))) {
+            Logger::info("skip render node: {}", node->name());
+            continue;
         }
 
         auto transform_mtx = transformTune(model_mtx, texture.value()->width(), texture.value()->height());

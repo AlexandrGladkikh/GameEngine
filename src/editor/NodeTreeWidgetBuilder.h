@@ -14,6 +14,7 @@ class MaterialComponent;
 class MeshComponent;
 class CameraComponent;
 class FlipbookAnimationComponent;
+class Node;
 }
 
 namespace editor {
@@ -28,7 +29,7 @@ class NodeTreeWidgetBuilder final {
 public:
     explicit NodeTreeWidgetBuilder(SceneNodeTree* scene_node_tree, const std::shared_ptr<EngineObserver>& engine_observer);
 
-    auto buildWidgetForNode(const std::string& node_name) -> std::optional<NodeWidget*>;
+    auto buildWidgetForNode(const std::shared_ptr<engine::Node>& node) -> std::optional<NodeWidget*>;
     auto buildWidgetForComponent(std::shared_ptr<engine::Component> component, QTreeWidgetItem* item) -> std::optional<ComponentWidget*>;
 
 private:

@@ -52,6 +52,8 @@ private slots:
     void onPaste();
     void onRename();
     void onDuplicate();
+    void onEnable();
+    void onDisable();
 
     void onSaveScene();
 
@@ -63,6 +65,8 @@ private:
 
     void createComponentWidget(QTreeWidgetItem* item, const std::shared_ptr<engine::Component>& component);
     void createNodeWidget(std::optional<std::shared_ptr<engine::Node>> node, QTreeWidgetItem* parent);
+
+    void changeActiveWidget(bool active);
 
     engine::Engine* m_engine;
 
@@ -93,6 +97,8 @@ private:
     QAction* m_paste;
     QAction* m_rename;
     QAction* m_duplicate;
+    QAction* m_enable;
+    QAction* m_disable;
 };
 
 }

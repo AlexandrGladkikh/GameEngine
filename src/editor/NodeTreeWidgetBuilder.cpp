@@ -4,6 +4,7 @@
 #include "editor/NodeWidget.h"
 #include "editor/SceneNodeTree.h"
 #include "editor/Utils.h"
+#include "editor/EngineObserver.h"
 
 #include "engine/TransformComponent.h"
 #include "engine/MeshComponent.h"
@@ -20,6 +21,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QGraphicsOpacityEffect>
 
 #include <string>
 #include <functional>
@@ -29,6 +31,13 @@ namespace editor {
 ComponentWidget* NodeTreeWidgetBuilder::buildTransformWidget(const std::shared_ptr<engine::TransformComponent>& transform)
 {
     ComponentWidget* transform_widget = new ComponentWidget;
+    std::uintptr_t id = reinterpret_cast<std::uintptr_t>(transform_widget);
+    m_engine_observer->addHandler(id, [transform_widget, transform]() {
+        transform_widget->setDisabled(!transform->isActive());
+    });
+    QObject::connect(transform_widget, &QObject::destroyed, [this, id]() {
+        m_engine_observer->removeHandler(id);
+    });
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -187,6 +196,13 @@ ComponentWidget* NodeTreeWidgetBuilder::buildTransformWidget(const std::shared_p
 ComponentWidget* NodeTreeWidgetBuilder::buildMaterialWidget(const std::shared_ptr<engine::MaterialComponent>& material)
 {
     ComponentWidget* material_widget = new ComponentWidget;
+    std::uintptr_t id = reinterpret_cast<std::uintptr_t>(material_widget);
+    m_engine_observer->addHandler(id, [material_widget, material]() {
+        material_widget->setDisabled(!material->isActive());
+    });
+    QObject::connect(material_widget, &QObject::destroyed, [this, id]() {
+        m_engine_observer->removeHandler(id);
+    });
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -241,6 +257,13 @@ ComponentWidget* NodeTreeWidgetBuilder::buildMaterialWidget(const std::shared_pt
 ComponentWidget* NodeTreeWidgetBuilder::buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& mesh)
 {
     ComponentWidget* mesh_widget = new ComponentWidget;
+    std::uintptr_t id = reinterpret_cast<std::uintptr_t>(mesh_widget);
+    m_engine_observer->addHandler(id, [mesh_widget, mesh]() {
+        mesh_widget->setDisabled(!mesh->isActive());
+    });
+    QObject::connect(mesh_widget, &QObject::destroyed, [this, id]() {
+        m_engine_observer->removeHandler(id);
+    });
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -278,6 +301,13 @@ ComponentWidget* NodeTreeWidgetBuilder::buildMeshWidget(const std::shared_ptr<en
 ComponentWidget* NodeTreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camera)
 {
     ComponentWidget* camera_widget = new ComponentWidget;
+    std::uintptr_t id = reinterpret_cast<std::uintptr_t>(camera_widget);
+    m_engine_observer->addHandler(id, [camera_widget, camera]() {
+        camera_widget->setDisabled(!camera->isActive());
+    });
+    QObject::connect(camera_widget, &QObject::destroyed, [this, id]() {
+        m_engine_observer->removeHandler(id);
+    });
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -437,6 +467,13 @@ ComponentWidget* NodeTreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<
 ComponentWidget* NodeTreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidgetItem* item)
 {
     ComponentWidget* flipbook_widget = new ComponentWidget;
+    std::uintptr_t id = reinterpret_cast<std::uintptr_t>(flipbook_widget);
+    m_engine_observer->addHandler(id, [flipbook_widget, animation]() {
+        flipbook_widget->setDisabled(!animation->isActive());
+    });
+    QObject::connect(flipbook_widget, &QObject::destroyed, [this, id]() {
+        m_engine_observer->removeHandler(id);
+    });
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -556,11 +593,21 @@ NodeTreeWidgetBuilder::NodeTreeWidgetBuilder(SceneNodeTree* scene_node_tree, con
 
 }
 
-auto NodeTreeWidgetBuilder::buildWidgetForNode(const std::string& node_name) -> std::optional<NodeWidget*>
+auto NodeTreeWidgetBuilder::buildWidgetForNode(const std::shared_ptr<engine::Node>& node) -> std::optional<NodeWidget*>
 {
     NodeWidget* new_widget = new NodeWidget();
     auto label = new QLabel(new_widget);
-    label->setText(QString::fromStdString(node_name));
+    label->setText(QString::fromStdString(node->name()));
+
+    std::uintptr_t id = reinterpret_cast<std::uintptr_t>(new_widget);
+    QGraphicsOpacityEffect* opacity_effect = new QGraphicsOpacityEffect(new_widget);
+    new_widget->setGraphicsEffect(opacity_effect);
+    m_engine_observer->addHandler(id, [new_widget, node, opacity_effect]() {
+        opacity_effect->setOpacity(node->isActive() ? 1.0f : 0.5f);
+    });
+    QObject::connect(new_widget, &QObject::destroyed, [this, id]() {
+        m_engine_observer->removeHandler(id);
+    });
 
     return new_widget;
 }

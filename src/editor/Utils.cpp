@@ -38,22 +38,6 @@ ComponentWidget* createLabelLineEditorWidget(const std::string& label, const std
         QObject::connect(lineEditor, &QObject::destroyed, [observer, id]() {
             observer->removeHandler(id);
         });
-
-        // auto timer = new QTimer(lineEditor);
-        // timer->setInterval(100);
-        // timer->setTimerType(Qt::PreciseTimer);
-        //
-        // QObject::connect(timer, &QTimer::timeout, [lineEditor, updateHandler]() {
-        //     if (lineEditor->hasFocus()) {
-        //         return;
-        //     }
-        //     auto new_text = lineEditor->text();
-        //     auto current_text = updateHandler();
-        //     if (!current_text.empty() && new_text != current_text) {
-        //         lineEditor->setText(current_text.c_str());
-        //     }
-        // });
-        // timer->start();
     }
     if (changeHandler) {
         QObject::connect(lineEditor, &QLineEdit::textChanged, [changeHandler](const QString& value) {

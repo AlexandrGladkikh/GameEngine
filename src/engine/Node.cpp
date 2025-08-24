@@ -22,6 +22,13 @@ void Node::setActive(bool active)
 {
     m_is_active = active;
 
+    for (auto component_id : m_components_id) {
+        auto component = getComponent(component_id);
+        if (component.has_value()) {
+            component.value()->setActive(m_is_active);
+        }
+    }
+
     for (auto child_id : m_children_id) {
         auto child = getChild(child_id);
         if (child.has_value()) {
