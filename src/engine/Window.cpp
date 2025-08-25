@@ -11,6 +11,7 @@ Window::Window(const std::string& title, GLint width, GLint height)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+    glfwWindowHint(GLFW_DECORATED, GL_FALSE);
 
     m_window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 
@@ -41,6 +42,11 @@ Window::~Window()
 {
     glfwDestroyWindow(m_window);
     glfwTerminate();
+}
+
+void Window::setWindowPosition(int x, int y)
+{
+    glfwSetWindowPos(m_window, x, y);
 }
 
 void Window::setKeyInputHandler(const std::function<void(int, int)>& handler)

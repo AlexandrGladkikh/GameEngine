@@ -24,6 +24,7 @@
 #include "editor/ComponentWidget.h"
 #include "editor/Utils.h"
 #include "editor/EngineObserver.h"
+#include "editor/treewidgetbuilderhelper.h"
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -267,11 +268,15 @@ public:
         }
 
         if (m_up || m_down || m_left || m_right) {
-            move_node.value()->setActive(true);
-            rest_node.value()->setActive(false);
+            if (!move_node.value()->isActive() || rest_node.value()->isActive()) {
+                move_node.value()->setActive(true);
+                rest_node.value()->setActive(false);
+            }
         } else {
-            move_node.value()->setActive(false);
-            rest_node.value()->setActive(true);
+            if (move_node.value()->isActive() || !rest_node.value()->isActive()) {
+                move_node.value()->setActive(false);
+                rest_node.value()->setActive(true);
+            }
         }
     }
 
@@ -319,14 +324,7 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
         auto move = std::dynamic_pointer_cast<MoveComponent>(component);
 
         widget = new editor::ComponentWidget;
-        std::uintptr_t id = reinterpret_cast<std::uintptr_t>(widget);
-        auto observer = engineObserver();
-        observer->addHandler(id, [widget, move]() {
-            widget->setDisabled(!move->isActive());
-        });
-        QObject::connect(widget, &QObject::destroyed, [observer, id]() {
-            observer->removeHandler(id);
-        });
+        treeWidgetBuilderHelper()->subscribeOnActiveComponent(widget, component);
 
         QVBoxLayout* layout = new QVBoxLayout;
         layout->setSpacing(1);
@@ -395,13 +393,7 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
 
         widget = new editor::ComponentWidget;
         std::uintptr_t id = reinterpret_cast<std::uintptr_t>(widget);
-        auto observer = engineObserver();
-        observer->addHandler(id, [widget, camera_follow]() {
-            widget->setDisabled(!camera_follow->isActive());
-        });
-        QObject::connect(widget, &QObject::destroyed, [observer, id]() {
-            observer->removeHandler(id);
-        });
+        treeWidgetBuilderHelper()->subscribeOnActiveComponent(widget, component);
 
         QVBoxLayout* layout = new QVBoxLayout;
         layout->setSpacing(1);

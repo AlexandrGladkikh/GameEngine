@@ -19,6 +19,8 @@ public:
     Window& operator=(const Window&) = delete;
     Window& operator=(Window&&) = delete;
 
+    void setWindowPosition(int x, int y);
+
     void setKeyInputHandler(const std::function<void(int, int)>& handler);
 
     void update(uint64_t dt);

@@ -24,10 +24,11 @@ class ComponentWidget;
 class SceneNodeTree;
 
 class EngineObserver;
+class TreeWidgetBuilderHelper;
 
-class NodeTreeWidgetBuilder final {
+class TreeWidgetBuilder final {
 public:
-    explicit NodeTreeWidgetBuilder(SceneNodeTree* scene_node_tree, const std::shared_ptr<EngineObserver>& engine_observer);
+    explicit TreeWidgetBuilder(SceneNodeTree* scene_node_tree, const std::shared_ptr<EngineObserver>& engine_observer);
 
     auto buildWidgetForNode(const std::shared_ptr<engine::Node>& node) -> std::optional<NodeWidget*>;
     auto buildWidgetForComponent(std::shared_ptr<engine::Component> component, QTreeWidgetItem* item) -> std::optional<ComponentWidget*>;
@@ -42,6 +43,8 @@ private:
     SceneNodeTree* m_scene_node_tree;
 
     std::shared_ptr<EngineObserver> m_engine_observer;
+
+    std::unique_ptr<TreeWidgetBuilderHelper> m_tree_widget_builder_helper;
 };
 
 }

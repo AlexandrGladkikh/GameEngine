@@ -4,6 +4,7 @@
 #include "ComponentWidget.h"
 #include "NodeWidget.h"
 #include "EngineObserver.h"
+#include "treewidgetbuilderhelper.h"
 
 #include "engine/Engine.h"
 #include "engine/Scene.h"
@@ -12,6 +13,8 @@
 #include "engine/Context.h"
 #include "engine/ComponentBuilder.h"
 #include "engine/UserComponentsBuilder.h"
+#include "engine/Window.h"
+#include "engine/Logger.h"
 
 #include <QTreeWidget>
 #include <QMenu>
@@ -22,6 +25,7 @@
 #include <QClipboard>
 #include <QApplication>
 #include <QTimer>
+#include <QWindow>
 
 namespace editor {
 
@@ -37,7 +41,7 @@ SceneNodeTree::SceneNodeTree(engine::Engine* engine, QWidget* parent) :
     m_engine_observer.reset(new EngineObserver(m_engine, this));
     m_engine_observer->start();
 
-    m_scene_node_tree_builder = std::make_unique<NodeTreeWidgetBuilder>(this, m_engine_observer);
+    m_scene_tree_widget_builder = std::make_unique<TreeWidgetBuilder>(this, m_engine_observer);
 
     initMenuBar();
 
@@ -63,9 +67,10 @@ SceneNodeTree::~SceneNodeTree()
 
 void SceneNodeTree::setUserTreeWidgetBuilder(std::unique_ptr<UserTreeWidgetBuilder> builder)
 {
-    m_user_components_builder = std::move(builder);
-    m_user_components_builder->setSceneNodeTree(this);
-    m_user_components_builder->setEngineObserver(m_engine_observer);
+    m_user_tree_widget_builder = std::move(builder);
+    m_user_tree_widget_builder->setSceneNodeTree(this);
+    m_user_tree_widget_builder->setEngineObserver(m_engine_observer);
+    m_user_tree_widget_builder->setTreeWidgetBuilderHelper(std::make_shared<TreeWidgetBuilderHelper>(m_engine_observer));
 }
 
 void SceneNodeTree::onHeaderContextMenu(const QPoint& pos)
@@ -106,7 +111,7 @@ void SceneNodeTree::onAddRootNode()
 
     QTreeWidgetItem* nodeItem = new QTreeWidgetItem(m_scene_tree);
 
-    auto new_node_widget = m_scene_node_tree_builder->buildWidgetForNode(new_root_node_value);
+    auto new_node_widget = m_scene_tree_widget_builder->buildWidgetForNode(new_root_node_value);
     if (!new_node_widget.has_value()) {
         return;
     }
@@ -166,7 +171,7 @@ void SceneNodeTree::onAddChildNode()
 
     QTreeWidgetItem* nodeItem = new QTreeWidgetItem(m_selected_item);
 
-    auto new_node_widget = m_scene_node_tree_builder->buildWidgetForNode(new_node);
+    auto new_node_widget = m_scene_tree_widget_builder->buildWidgetForNode(new_node);
     if (!new_node_widget.has_value()) {
         return;
     }
@@ -217,9 +222,9 @@ void SceneNodeTree::onAddComponent()
 
     auto* componentItem = new QTreeWidgetItem(m_selected_item);
 
-    auto component_widget = m_scene_node_tree_builder->buildWidgetForComponent(component_value, componentItem);
+    auto component_widget = m_scene_tree_widget_builder->buildWidgetForComponent(component_value, componentItem);
     if (!component_widget.has_value()) {
-        component_widget = m_user_components_builder->buildWidgetForComponent(component_value);
+        component_widget = m_user_tree_widget_builder->buildWidgetForComponent(component_value);
     }
     if (!component_widget.has_value()) {
         return;
@@ -352,7 +357,7 @@ void SceneNodeTree::onRename()
         if (ok && !new_node_name.isEmpty()) {
             node->setName(new_node_name.toStdString());
 
-            auto node_widget = m_scene_node_tree_builder->buildWidgetForNode(node);
+            auto node_widget = m_scene_tree_widget_builder->buildWidgetForNode(node);
             if (!node_widget.has_value()) {
                 return;
             }
@@ -384,6 +389,20 @@ void SceneNodeTree::onDisable()
 void SceneNodeTree::onSaveScene()
 {
     m_engine->saveScene(m_engine->getActiveSceneId());
+}
+
+void SceneNodeTree::moveEvent(QMoveEvent* event)
+{
+    QMainWindow::moveEvent(event);
+
+    positioningEngineWindow();
+}
+
+void SceneNodeTree::resizeEvent(QResizeEvent* event)
+{
+    QMainWindow::resizeEvent(event);
+
+    positioningEngineWindow();
 }
 
 void SceneNodeTree::build(std::optional<std::shared_ptr<engine::Scene>> scene)
@@ -501,9 +520,9 @@ void SceneNodeTree::initContextMenu()
 
 void SceneNodeTree::createComponentWidget(QTreeWidgetItem* item, const std::shared_ptr<engine::Component>& component)
 {
-    auto component_widget = m_scene_node_tree_builder->buildWidgetForComponent(component, item);
+    auto component_widget = m_scene_tree_widget_builder->buildWidgetForComponent(component, item);
     if (!component_widget.has_value()) {
-        component_widget = m_user_components_builder->buildWidgetForComponent(component);
+        component_widget = m_user_tree_widget_builder->buildWidgetForComponent(component);
     }
     if (component_widget.has_value()) {
         component_widget.value()->setComponent(component);
@@ -527,7 +546,7 @@ void SceneNodeTree::createNodeWidget(std::optional<std::shared_ptr<engine::Node>
         nodeItem = new QTreeWidgetItem(parent);
     }
 
-    auto node_widget = m_scene_node_tree_builder->buildWidgetForNode(node_value);
+    auto node_widget = m_scene_tree_widget_builder->buildWidgetForNode(node_value);
     if (!node_widget.has_value()) {
         return;
     }
@@ -572,6 +591,16 @@ void SceneNodeTree::changeActiveWidget(bool active)
     }
 
     m_selected_item = nullptr;
+}
+
+void SceneNodeTree::positioningEngineWindow()
+{
+    auto ctx = m_engine->context();
+    qreal dpr = windowHandle()->devicePixelRatio();
+    QRect frame = frameGeometry();
+    int x = (frame.x() + frame.width() + 10) * dpr;
+    int y = frame.y() * dpr;
+    ctx->window->setWindowPosition(x, y);
 }
 
 }

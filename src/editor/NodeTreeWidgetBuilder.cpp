@@ -5,6 +5,7 @@
 #include "editor/SceneNodeTree.h"
 #include "editor/Utils.h"
 #include "editor/EngineObserver.h"
+#include "editor/treewidgetbuilderhelper.h"
 
 #include "engine/TransformComponent.h"
 #include "engine/MeshComponent.h"
@@ -28,16 +29,10 @@
 
 namespace editor {
 
-ComponentWidget* NodeTreeWidgetBuilder::buildTransformWidget(const std::shared_ptr<engine::TransformComponent>& transform)
+ComponentWidget* TreeWidgetBuilder::buildTransformWidget(const std::shared_ptr<engine::TransformComponent>& transform)
 {
     ComponentWidget* transform_widget = new ComponentWidget;
-    std::uintptr_t id = reinterpret_cast<std::uintptr_t>(transform_widget);
-    m_engine_observer->addHandler(id, [transform_widget, transform]() {
-        transform_widget->setDisabled(!transform->isActive());
-    });
-    QObject::connect(transform_widget, &QObject::destroyed, [this, id]() {
-        m_engine_observer->removeHandler(id);
-    });
+    m_tree_widget_builder_helper->subscribeOnActiveComponent(transform_widget, transform);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -193,16 +188,10 @@ ComponentWidget* NodeTreeWidgetBuilder::buildTransformWidget(const std::shared_p
     return transform_widget;
 }
 
-ComponentWidget* NodeTreeWidgetBuilder::buildMaterialWidget(const std::shared_ptr<engine::MaterialComponent>& material)
+ComponentWidget* TreeWidgetBuilder::buildMaterialWidget(const std::shared_ptr<engine::MaterialComponent>& material)
 {
     ComponentWidget* material_widget = new ComponentWidget;
-    std::uintptr_t id = reinterpret_cast<std::uintptr_t>(material_widget);
-    m_engine_observer->addHandler(id, [material_widget, material]() {
-        material_widget->setDisabled(!material->isActive());
-    });
-    QObject::connect(material_widget, &QObject::destroyed, [this, id]() {
-        m_engine_observer->removeHandler(id);
-    });
+    m_tree_widget_builder_helper->subscribeOnActiveComponent(material_widget, material);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -254,16 +243,10 @@ ComponentWidget* NodeTreeWidgetBuilder::buildMaterialWidget(const std::shared_pt
     return material_widget;
 }
 
-ComponentWidget* NodeTreeWidgetBuilder::buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& mesh)
+ComponentWidget* TreeWidgetBuilder::buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& mesh)
 {
     ComponentWidget* mesh_widget = new ComponentWidget;
-    std::uintptr_t id = reinterpret_cast<std::uintptr_t>(mesh_widget);
-    m_engine_observer->addHandler(id, [mesh_widget, mesh]() {
-        mesh_widget->setDisabled(!mesh->isActive());
-    });
-    QObject::connect(mesh_widget, &QObject::destroyed, [this, id]() {
-        m_engine_observer->removeHandler(id);
-    });
+    m_tree_widget_builder_helper->subscribeOnActiveComponent(mesh_widget, mesh);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -298,16 +281,10 @@ ComponentWidget* NodeTreeWidgetBuilder::buildMeshWidget(const std::shared_ptr<en
     return mesh_widget;
 }
 
-ComponentWidget* NodeTreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camera)
+ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camera)
 {
     ComponentWidget* camera_widget = new ComponentWidget;
-    std::uintptr_t id = reinterpret_cast<std::uintptr_t>(camera_widget);
-    m_engine_observer->addHandler(id, [camera_widget, camera]() {
-        camera_widget->setDisabled(!camera->isActive());
-    });
-    QObject::connect(camera_widget, &QObject::destroyed, [this, id]() {
-        m_engine_observer->removeHandler(id);
-    });
+    m_tree_widget_builder_helper->subscribeOnActiveComponent(camera_widget, camera);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -464,16 +441,10 @@ ComponentWidget* NodeTreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<
     return camera_widget;
 }
 
-ComponentWidget* NodeTreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidgetItem* item)
+ComponentWidget* TreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidgetItem* item)
 {
     ComponentWidget* flipbook_widget = new ComponentWidget;
-    std::uintptr_t id = reinterpret_cast<std::uintptr_t>(flipbook_widget);
-    m_engine_observer->addHandler(id, [flipbook_widget, animation]() {
-        flipbook_widget->setDisabled(!animation->isActive());
-    });
-    QObject::connect(flipbook_widget, &QObject::destroyed, [this, id]() {
-        m_engine_observer->removeHandler(id);
-    });
+    m_tree_widget_builder_helper->subscribeOnActiveComponent(flipbook_widget, animation);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
@@ -586,33 +557,26 @@ ComponentWidget* NodeTreeWidgetBuilder::buildFlipbookAnimationWidget(const std::
     return flipbook_widget;
 }
 
-NodeTreeWidgetBuilder::NodeTreeWidgetBuilder(SceneNodeTree* scene_node_tree, const std::shared_ptr<EngineObserver>& engine_observer) :
+TreeWidgetBuilder::TreeWidgetBuilder(SceneNodeTree* scene_node_tree, const std::shared_ptr<EngineObserver>& engine_observer) :
     m_scene_node_tree(scene_node_tree),
-    m_engine_observer(engine_observer)
+    m_engine_observer(engine_observer),
+    m_tree_widget_builder_helper(std::make_unique<TreeWidgetBuilderHelper>(engine_observer))
 {
 
 }
 
-auto NodeTreeWidgetBuilder::buildWidgetForNode(const std::shared_ptr<engine::Node>& node) -> std::optional<NodeWidget*>
+auto TreeWidgetBuilder::buildWidgetForNode(const std::shared_ptr<engine::Node>& node) -> std::optional<NodeWidget*>
 {
     NodeWidget* new_widget = new NodeWidget();
     auto label = new QLabel(new_widget);
     label->setText(QString::fromStdString(node->name()));
 
-    std::uintptr_t id = reinterpret_cast<std::uintptr_t>(new_widget);
-    QGraphicsOpacityEffect* opacity_effect = new QGraphicsOpacityEffect(new_widget);
-    new_widget->setGraphicsEffect(opacity_effect);
-    m_engine_observer->addHandler(id, [new_widget, node, opacity_effect]() {
-        opacity_effect->setOpacity(node->isActive() ? 1.0f : 0.5f);
-    });
-    QObject::connect(new_widget, &QObject::destroyed, [this, id]() {
-        m_engine_observer->removeHandler(id);
-    });
+    m_tree_widget_builder_helper->subscribeOnActiveNode(new_widget, node);
 
     return new_widget;
 }
 
-auto NodeTreeWidgetBuilder::buildWidgetForComponent(std::shared_ptr<engine::Component> component, QTreeWidgetItem* item) -> std::optional<ComponentWidget*>
+auto TreeWidgetBuilder::buildWidgetForComponent(std::shared_ptr<engine::Component> component, QTreeWidgetItem* item) -> std::optional<ComponentWidget*>
 {
     if (component->type() == "material") {
         return buildMaterialWidget(std::dynamic_pointer_cast<engine::MaterialComponent>(component));

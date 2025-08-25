@@ -21,7 +21,7 @@ class QTimer;
 
 namespace editor {
 
-class NodeTreeWidgetBuilder;
+class TreeWidgetBuilder;
 class UserTreeWidgetBuilder;
 
 class EngineObserver;
@@ -57,6 +57,10 @@ private slots:
 
     void onSaveScene();
 
+protected:
+    void moveEvent(QMoveEvent* event) override;
+    void resizeEvent(QResizeEvent* event) override;
+
 private:
     void initMenuBar();
 
@@ -68,12 +72,14 @@ private:
 
     void changeActiveWidget(bool active);
 
+    void positioningEngineWindow();
+
     engine::Engine* m_engine;
 
     std::shared_ptr<EngineObserver> m_engine_observer;
 
-    std::shared_ptr<NodeTreeWidgetBuilder> m_scene_node_tree_builder;
-    std::unique_ptr<UserTreeWidgetBuilder> m_user_components_builder;
+    std::shared_ptr<TreeWidgetBuilder> m_scene_tree_widget_builder;
+    std::unique_ptr<UserTreeWidgetBuilder> m_user_tree_widget_builder;
 
     QTreeWidget* m_scene_tree;
 
