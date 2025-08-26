@@ -88,5 +88,4 @@ void Component::setValid(bool valid)
     m_is_valid = valid;
 }
 
-
 }

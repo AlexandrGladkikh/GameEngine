@@ -113,14 +113,14 @@ bool parseFloat(const std::string& value, float& out)
 }
 
 
-std::string formatUInt32(uint32_t value)
+std::string formatUint32(uint32_t value)
 {
     std::ostringstream ss;
     ss << std::fixed << value;
     return ss.str();
 }
 
-bool parseUInt32(const std::string& value, uint32_t& out)
+bool parseUint32(const std::string& value, uint32_t& out)
 {
     try {
         out = std::stoul(value);

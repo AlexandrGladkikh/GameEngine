@@ -524,7 +524,12 @@ ComponentWidget* TreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shar
         }
 
         auto materialChangeHandler = [animation, i](const std::string& value) {
-            auto material = engine::getComponentByName<engine::MaterialComponent>(animation, value);
+            uint32_t id = 0;
+            if (!parseUint32(value, id)) {
+                return;
+            }
+
+            auto material = engine::getComponentById<engine::MaterialComponent>(animation, id);
             if (!material) {
                 return;
             }
@@ -540,7 +545,7 @@ ComponentWidget* TreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shar
                 return std::string();
             }
 
-            return material->name();
+            return formatUint32(material->id());
         };
 
         std::vector<EditorBlockLayoutData> animation_data = {
