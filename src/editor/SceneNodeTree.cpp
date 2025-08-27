@@ -4,7 +4,7 @@
 #include "ComponentWidget.h"
 #include "NodeWidget.h"
 #include "EngineObserver.h"
-#include "treewidgetbuilderhelper.h"
+#include "TreeWidgetBuilderHelper.h"
 
 #include "engine/Engine.h"
 #include "engine/Scene.h"

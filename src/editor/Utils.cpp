@@ -8,11 +8,35 @@
 #include <QLineEdit>
 #include <QTimer>
 #include <QPushButton>
+#include <QMimeData>
 
 namespace editor {
 
+DropFilter::DropFilter(QObject* parent) :
+    QObject(parent)
+{
+
+}
+
+bool DropFilter::eventFilter(QObject* obj, QEvent* event)
+{
+    if (event->type() == QEvent::Drop) {
+        auto dropEvent = static_cast<QDropEvent*>(event);
+        if (dropEvent->mimeData()->hasText()) {
+            auto line = qobject_cast<QLineEdit*>(obj);
+            if (line) {
+                line->setText(dropEvent->mimeData()->text());
+                dropEvent->acceptProposedAction();
+                return true;
+            }
+        }
+    }
+
+    return QObject::eventFilter(obj, event);
+}
+
 ComponentWidget* createLabelLineEditorWidget(const std::string& label, const std::string& value,
-    const std::function<void(const std::string&)>& changeHandler, const std::function<std::string()>& updateHandler, const std::shared_ptr<EngineObserver>& observer)
+    const std::function<void(const std::string&)>& changeHandler, const std::function<std::string()>& updateHandler, const std::shared_ptr<EngineObserver>& observer, bool acceptDrag)
 {
     ComponentWidget* widget = new ComponentWidget;
 
@@ -21,6 +45,13 @@ ComponentWidget* createLabelLineEditorWidget(const std::string& label, const std
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(new QLabel(label.c_str()));
     auto* lineEditor = new QLineEdit(value.c_str());
+    if (acceptDrag) {
+        lineEditor->setAcceptDrops(true);
+        DropFilter* filter = new DropFilter(lineEditor);
+        lineEditor->installEventFilter(filter);
+    } else {
+        lineEditor->setAcceptDrops(false);
+    }
 
     if (updateHandler) {
         std::uintptr_t id = reinterpret_cast<std::uintptr_t>(lineEditor);
@@ -88,7 +119,7 @@ void setupEditorBlockLayout(QHBoxLayout* layout, const std::string& title, const
     }
 
     for (const auto& item : data) {
-        layout->addWidget(createLabelLineEditorWidget(item.name, item.value, item.changeHandler, item.updateHandler, observer));
+        layout->addWidget(createLabelLineEditorWidget(item.name, item.value, item.changeHandler, item.updateHandler, observer, item.acceptDrag));
     }
 
     layout->addStretch();

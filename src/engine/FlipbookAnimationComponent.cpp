@@ -28,32 +28,15 @@ void FlipbookAnimationComponent::update(uint64_t dt)
 
     m_from_last_update += dt;
 
+    if (m_need_refresh_material_vision) {
+        updateMaterialsActivity();
+        m_need_refresh_material_vision = false;
+    }
+
     if (m_from_last_update >= m_update_time) {
         m_from_last_update = 0;
 
-        for (size_t i = 0; i < m_material_ids.size(); ++i) {
-            auto ctx = context().lock();
-            if (!ctx) {
-                continue;
-            }
-
-            auto scene = ctx->sceneStore->get(ownerScene());
-            if (!scene.has_value()) {
-                continue;
-            }
-
-            auto component = scene.value()->getComponent(m_material_ids[i]);
-            if (!component.has_value()) {
-                continue;
-            }
-
-            auto material = std::dynamic_pointer_cast<MaterialComponent>(component.value());
-            if (!material) {
-                continue;
-            }
-
-            material->setActive(m_current_material == i);
-        }
+        updateMaterialsActivity();
 
         m_current_material = (m_current_material + 1) % m_material_ids.size();
     }
@@ -103,11 +86,17 @@ auto FlipbookAnimationComponent::clone(uint32_t owner_node_id) const -> std::uni
 void FlipbookAnimationComponent::start()
 {
     m_run = true;
+    m_from_last_update = 0;
+    m_current_material = 0;
+    m_need_refresh_material_vision = false;
 }
 
 void FlipbookAnimationComponent::stop()
 {
     m_run = false;
+    m_from_last_update = 0;
+    m_current_material = 0;
+    m_need_refresh_material_vision = false;
 }
 
 bool FlipbookAnimationComponent::isRunning() const
@@ -173,6 +162,42 @@ void FlipbookAnimationComponent::setUpdateTime(uint64_t update_time)
 auto FlipbookAnimationComponent::updateTime() const -> uint64_t
 {
     return m_update_time;
+}
+
+void FlipbookAnimationComponent::onActiveChange(bool active)
+{
+    if (active) {
+        m_from_last_update = 0;
+        m_current_material = 0;
+        m_need_refresh_material_vision = true;
+    }
+}
+
+void FlipbookAnimationComponent::updateMaterialsActivity()
+{
+    for (size_t i = 0; i < m_material_ids.size(); ++i) {
+        auto ctx = context().lock();
+        if (!ctx) {
+            continue;
+        }
+
+        auto scene = ctx->sceneStore->get(ownerScene());
+        if (!scene.has_value()) {
+            continue;
+        }
+
+        auto component = scene.value()->getComponent(m_material_ids[i]);
+        if (!component.has_value()) {
+            continue;
+        }
+
+        auto material = std::dynamic_pointer_cast<MaterialComponent>(component.value());
+        if (!material) {
+            continue;
+        }
+
+        material->setActive(m_current_material == i);
+    }
 }
 
 }

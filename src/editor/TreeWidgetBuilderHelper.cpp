@@ -1,4 +1,4 @@
-#include "treewidgetbuilderhelper.h"
+#include "TreeWidgetBuilderHelper.h"
 
 #include "EngineObserver.h"
 

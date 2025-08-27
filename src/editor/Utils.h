@@ -1,5 +1,8 @@
 #pragma once
 
+#include <QObject>
+#include <QDropEvent>
+
 #include <cstdint>
 #include <functional>
 #include <string>
@@ -18,10 +21,20 @@ struct EditorBlockLayoutData {
     std::string value;
     std::function<void(const std::string&)> changeHandler;
     std::function<std::string()> updateHandler;
+    bool acceptDrag = false;
+};
+
+class DropFilter : public QObject
+{
+public:
+    explicit DropFilter(QObject* parent = nullptr);
+
+protected:
+    bool eventFilter(QObject* obj, QEvent* event) override;
 };
 
 ComponentWidget* createLabelLineEditorWidget(const std::string& label, const std::string& value,
-    const std::function<void(const std::string&)>& changeHandler, const std::function<std::string()>& updateHandler, const std::shared_ptr<EngineObserver>& observer);
+    const std::function<void(const std::string&)>& changeHandler, const std::function<std::string()>& updateHandler, const std::shared_ptr<EngineObserver>& observer, bool acceptDrag);
 
 ComponentWidget* createButtonLineWidget(const std::vector<std::string>& names, const std::vector<std::function<void()>>& handlers);
 

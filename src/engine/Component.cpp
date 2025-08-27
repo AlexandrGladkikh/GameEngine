@@ -37,6 +37,7 @@ bool Component::isActive() const
 void Component::setActive(bool active)
 {
     m_is_active = active;
+    onActiveChange(m_is_active);
 }
 
 std::optional<std::shared_ptr<Node>> Component::getNode() const
@@ -86,6 +87,11 @@ void Component::update(uint64_t dt)
 void Component::setValid(bool valid)
 {
     m_is_valid = valid;
+}
+
+void Component::onActiveChange(bool active)
+{
+
 }
 
 }

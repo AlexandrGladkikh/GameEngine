@@ -5,10 +5,6 @@
 #include "engine/TransformComponent.h"
 #include "engine/Node.h"
 #include "engine/Logger.h"
-#include "engine/MaterialComponent.h"
-#include "engine/Window.h"
-#include "engine/MeshComponent.h"
-#include "engine/FlipbookAnimationComponent.h"
 #include "engine/Utils.h"
 #include "engine/CameraComponent.h"
 
@@ -24,7 +20,7 @@
 #include "editor/ComponentWidget.h"
 #include "editor/Utils.h"
 #include "editor/EngineObserver.h"
-#include "editor/treewidgetbuilderhelper.h"
+#include "editor/TreeWidgetBuilderHelper.h"
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -352,35 +348,45 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
         layout->addLayout(speed_layout);
 
         auto moveNodeChangeHandler = [move](const std::string& value) {
-            move->setMoveNodeId(std::stoul(value));
+            uint32_t id;
+            if (!editor::parseUint32(value, id)) {
+                return;
+            }
+
+            move->setMoveNodeId(id);
         };
 
         auto moveNodeUpdater = [move]() {
             if (!move->isValid()) {
                 return std::string();
             }
-            return std::to_string(move->getMoveNodeId());
+            return editor::formatUint32(move->getMoveNodeId());
         };
 
         std::vector<editor::EditorBlockLayoutData> move_node_id_data = {
-            { "move node id", editor::formatFloat(move->getMoveNodeId()), moveNodeChangeHandler, moveNodeUpdater }
+            { "move node id", editor::formatFloat(move->getMoveNodeId()), moveNodeChangeHandler, moveNodeUpdater, true }
         };
         QHBoxLayout* move_node_id_layout = editor::createEditorBlockLayout("", move_node_id_data, engineObserver());
         layout->addLayout(move_node_id_layout);
 
         auto restNodeChangeHandler = [move](const std::string& value) {
-            move->setRestNodeId(std::stoul(value));
+            uint32_t id;
+            if (!editor::parseUint32(value, id)) {
+                return;
+            }
+
+            move->setRestNodeId(id);
         };
 
         auto restNodeUpdater = [move]() {
             if (!move->isValid()) {
                 return std::string();
             }
-            return std::to_string(move->getRestNodeId());
+            return editor::formatUint32(move->getRestNodeId());
         };
 
         std::vector<editor::EditorBlockLayoutData> rest_node_id_data = {
-            { "rest node id", editor::formatFloat(move->getRestNodeId()), restNodeChangeHandler, restNodeUpdater }
+            { "rest node id", editor::formatFloat(move->getRestNodeId()), restNodeChangeHandler, restNodeUpdater, true }
         };
         QHBoxLayout* rest_node_id_layout = editor::createEditorBlockLayout("", rest_node_id_data, engineObserver());
         layout->addLayout(rest_node_id_layout);

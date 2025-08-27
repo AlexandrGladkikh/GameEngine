@@ -59,6 +59,8 @@ public:
 protected:
     void setValid(bool valid);
 
+    virtual void onActiveChange(bool active);
+
 private:
     std::weak_ptr<Context> m_context;
 

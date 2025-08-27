@@ -5,7 +5,7 @@
 #include "editor/SceneNodeTree.h"
 #include "editor/Utils.h"
 #include "editor/EngineObserver.h"
-#include "editor/treewidgetbuilderhelper.h"
+#include "editor/TreeWidgetBuilderHelper.h"
 
 #include "engine/TransformComponent.h"
 #include "engine/MeshComponent.h"
@@ -549,7 +549,7 @@ ComponentWidget* TreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shar
         };
 
         std::vector<EditorBlockLayoutData> animation_data = {
-            { "animation", init_value, materialChangeHandler, materialUpdater }
+            { "animation", init_value, materialChangeHandler, materialUpdater, true }
         };
         setupEditorBlockLayout(material_layouts->at(i), "", animation_data, m_engine_observer);
         layout->addLayout(material_layouts->at(i));

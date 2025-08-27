@@ -43,7 +43,12 @@ public:
     void setUpdateTime(uint64_t update_time);
     auto updateTime() const -> uint64_t;
 
+protected:
+    void onActiveChange(bool active) override;
+
 private:
+    void updateMaterialsActivity();
+
     std::vector<uint32_t> m_material_ids;
 
     uint64_t m_update_time = 0;
@@ -52,6 +57,8 @@ private:
     uint64_t m_from_last_update = 0;
 
     size_t m_current_material = 0;
+
+    bool m_need_refresh_material_vision = false;
 };
 
 }
