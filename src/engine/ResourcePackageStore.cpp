@@ -8,12 +8,21 @@ namespace engine {
 
 auto ResourcePackageStore::get(uint32_t id) const -> std::optional<std::shared_ptr<ResourcePackage>>
 {
+    if (!m_resourcePackages.contains(id)) {
+        return std::nullopt;
+    }
+
     return m_resourcePackages.at(id);
 }
 
-void ResourcePackageStore::add(uint32_t id, const std::shared_ptr<ResourcePackage> &resourcePackage)
+void ResourcePackageStore::add(uint32_t id, const std::shared_ptr<ResourcePackage>& resourcePackage)
 {
     m_resourcePackages[id] = resourcePackage;
+}
+
+bool ResourcePackageStore::contains(uint32_t id)
+{
+    return m_resourcePackages.contains(id);
 }
 
 void ResourcePackageStore::remove(uint32_t id)

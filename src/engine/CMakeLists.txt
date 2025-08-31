@@ -1,9 +1,12 @@
 cmake_minimum_required(VERSION 3.31)
 
+project(Engine LANGUAGES CXX C)
+
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-add_library(engine glad.c
+add_library(engine
+        glad.c
         Component.h
         MeshComponent.cpp
         MeshComponent.h

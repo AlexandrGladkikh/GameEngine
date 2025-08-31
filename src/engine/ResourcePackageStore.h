@@ -1,10 +1,10 @@
 #pragma once
 
+#include <cstdint>
 #include <unordered_map>
 #include <optional>
 #include <memory>
 #include <filesystem>
-#include <string>
 
 namespace engine {
 
@@ -21,6 +21,7 @@ public:
 
     auto get(uint32_t id) const -> std::optional<std::shared_ptr<ResourcePackage>>;
     void add(uint32_t id, const std::shared_ptr<ResourcePackage>& resourcePackage);
+    bool contains(uint32_t id);
     void remove(uint32_t id);
 
     auto getResourcePackagesInformation() const -> const std::unordered_map<uint32_t, std::filesystem::path>&;

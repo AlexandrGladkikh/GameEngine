@@ -13,21 +13,23 @@
 
 namespace engine {
 
-std::optional<ResourcePackage> buildResourcePackage(const std::filesystem::path& path)
+std::optional<std::shared_ptr<ResourcePackage>> buildResourcePackage(const std::filesystem::path& path)
 {
     Logger::info(__FUNCTION__);
 
-    if (!exists(path) || (path.extension() != ".pkg" && path.extension() != ".json")) {
+    if (!FileSystem::exists(path) || !FileSystem::isFile(path) || (path.extension() != ".pkg" && path.extension() != ".json")) {
         return {};
     }
 
-    ResourcePackage package;
+    std::shared_ptr<ResourcePackage> package = std::make_shared<ResourcePackage>();
 
     auto file = FileSystem::file(path, std::ios::in);
     auto text = file.readText();
 
     rapidjson::Document document;
     document.Parse(text.c_str());
+
+    package->name = document["name"].GetString();
 
     auto loadResourceInfo = [&document](const std::string& name, std::list<ResourceInfo>& resources) {
         if (document.HasMember(name.c_str())) {
@@ -41,9 +43,9 @@ std::optional<ResourcePackage> buildResourcePackage(const std::filesystem::path&
         }
     };
 
-    loadResourceInfo("meshes", package.meshes);
-    loadResourceInfo("shaders", package.shaders);
-    loadResourceInfo("textures", package.textures);
+    loadResourceInfo("meshes", package->meshes);
+    loadResourceInfo("shaders", package->shaders);
+    loadResourceInfo("textures", package->textures);
 
     return package;
 }
@@ -79,11 +81,11 @@ void saveResourcePackage(const std::filesystem::path& path, const ResourcePackag
     file.writeText(document.GetString());
 }
 
-void loadResourcePackage(const std::shared_ptr<Context>& context, const ResourcePackage& package)
+void loadResourcePackage(const std::shared_ptr<Context>& context, const std::shared_ptr<ResourcePackage>& package)
 {
     Logger::info(__FUNCTION__);
 
-    for (auto& shaderInfo : package.shaders) {
+    for (auto& shaderInfo : package->shaders) {
         auto shader_exist = context->shaderStore->get(shaderInfo.id);
         if (shader_exist.has_value()) {
             continue;
@@ -97,7 +99,7 @@ void loadResourcePackage(const std::shared_ptr<Context>& context, const Resource
         context->shaderStore->add(shaderInfo.id, std::move(new_shader.value()));
     }
 
-    for (auto& textureInfo : package.textures) {
+    for (auto& textureInfo : package->textures) {
         auto texture_exist = context->textureStore->get(textureInfo.id);
         if (texture_exist.has_value()) {
             continue;
@@ -111,7 +113,7 @@ void loadResourcePackage(const std::shared_ptr<Context>& context, const Resource
         context->textureStore->add(textureInfo.id, std::move(new_texture.value()));
     }
 
-    for (auto& meshInfo : package.meshes) {
+    for (auto& meshInfo : package->meshes) {
         auto mesh_exist = context->meshStore->get(meshInfo.id);
         if (mesh_exist.has_value()) {
             continue;

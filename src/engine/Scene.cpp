@@ -331,5 +331,4 @@ auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::
     return scene;
 }
 
-
 }

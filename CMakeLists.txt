@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.31)
-project(GameEngine)
+project(GameEngine LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -17,15 +17,9 @@ endif()
 add_executable(gameEngine ${CMAKE_SOURCE_DIR}/main.cpp)
 
 if (ENABLE_EDITOR)
-    message(STATUS "AUTOMOC for MyApp: ${CMAKE_AUTOMOC}")
-    get_target_property(AUTOMOC_PROP gameEngine AUTOMOC)
-    message(STATUS "MyApp AUTOMOC property: ${AUTOMOC_PROP}")
+    file(GLOB_RECURSE EDITOR_SOURCES ${CMAKE_SOURCE_DIR}/src/editor/*.cpp)
 
-    file(GLOB_RECURSE EDITOR_SOURCES ${CMAKE_SOURCE_DIR}/src/editor/*.cpp
-                                     ${CMAKE_SOURCE_DIR}/src/editor/*.h)
-
-    file(GLOB_RECURSE EDITOR_HEADERS ${CMAKE_SOURCE_DIR}/src/editor/*.h
-                                     ${CMAKE_SOURCE_DIR}/src/editor/*.h)
+    file(GLOB_RECURSE EDITOR_HEADERS ${CMAKE_SOURCE_DIR}/src/editor/*.h)
 
     target_sources(gameEngine PRIVATE ${EDITOR_SOURCES} ${EDITOR_HEADERS})
 

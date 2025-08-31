@@ -20,20 +20,27 @@ auto SceneLoader::loadScene(const std::shared_ptr<Context>& context, const std::
 
     auto& scene_value = scene.value();
 
-    auto resources = scene_value->getResources();
+    auto resources_id = scene_value->getResources();
 
-    for (auto resource : resources) {
-        auto path = context->resourcePackageStore->getResourcePackageInformation(resource);
-        if (!path.has_value()) {
-            continue;
-        }
-
-        auto resource_package = buildResourcePackage(path.value());
+    for (auto resource_id : resources_id) {
+        auto resource_package = context->resourcePackageStore->get(resource_id);
         if (!resource_package.has_value()) {
-            continue;
+            auto path = context->resourcePackageStore->getResourcePackageInformation(resource_id);
+            if (!path.has_value()) {
+                continue;
+            }
+
+            resource_package = buildResourcePackage(path.value());
+            if (!resource_package.has_value()) {
+                continue;
+            }
+
+            context->resourcePackageStore->add(resource_id, resource_package.value());
         }
 
-        loadResourcePackage(context, resource_package.value());
+        if (resource_package.has_value()) {
+            loadResourcePackage(context, resource_package.value());
+        }
     }
 
     return scene;

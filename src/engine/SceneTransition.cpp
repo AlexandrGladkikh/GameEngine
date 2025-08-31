@@ -9,6 +9,7 @@
 #include "TextureStore.h"
 #include "Logger.h"
 #include "Component.h"
+#include "ResourcePackage.h"
 
 #include <algorithm>
 #include <ranges>
@@ -57,9 +58,15 @@ bool SceneTransition::transition(const std::unordered_map<uint32_t, std::filesys
                 continue;
             }
 
-            m_context->meshStore->remove(resource_from);
-            m_context->shaderStore->remove(resource_from);
-            m_context->textureStore->remove(resource_from);
+            for (auto& resource_info: resource_package.value()->meshes) {
+                m_context->meshStore->remove(resource_info.id);
+            }
+            for (auto& resource_info: resource_package.value()->shaders) {
+                m_context->shaderStore->remove(resource_info.id);
+            }
+            for (auto& resource_info: resource_package.value()->textures) {
+                m_context->textureStore->remove(resource_info.id);
+            }
         }
     }
 
