@@ -1,6 +1,8 @@
 #include "ShaderStore.h"
 #include "Shader.h"
 
+#include <algorithm>
+
 namespace engine {
 
 auto ShaderStore::get(uint32_t id) const -> std::optional<std::shared_ptr<Shader>>

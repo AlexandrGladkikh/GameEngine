@@ -1,6 +1,8 @@
 #include "SceneStore.h"
 #include "Scene.h"
 
+#include <algorithm>
+
 namespace engine {
 
 auto SceneStore::get(uint32_t id) const -> std::optional<std::shared_ptr<Scene>>

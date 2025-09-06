@@ -1,5 +1,6 @@
 {
   "id": 1,
+  "name": "default",
   "meshes": [
     {
       "id": 1,

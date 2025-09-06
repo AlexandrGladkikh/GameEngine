@@ -23,6 +23,7 @@ namespace editor {
 
 class TreeWidgetBuilder;
 class UserTreeWidgetBuilder;
+class ResourcePackagesEditor;
 
 class EngineObserver;
 
@@ -80,6 +81,8 @@ private:
 
     std::shared_ptr<TreeWidgetBuilder> m_scene_tree_widget_builder;
     std::unique_ptr<UserTreeWidgetBuilder> m_user_tree_widget_builder;
+
+    ResourcePackagesEditor* m_resource_package_editor;
 
     QTreeWidget* m_scene_tree;
 

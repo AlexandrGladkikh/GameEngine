@@ -10,6 +10,8 @@
 #include <QPushButton>
 #include <QMimeData>
 
+#include <iomanip>
+
 namespace editor {
 
 DropFilter::DropFilter(QObject* parent) :

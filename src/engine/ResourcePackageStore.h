@@ -24,6 +24,8 @@ public:
     bool contains(uint32_t id);
     void remove(uint32_t id);
 
+    auto getResourcePackages() const -> const std::unordered_map<uint32_t, std::shared_ptr<ResourcePackage>>&;
+
     auto getResourcePackagesInformation() const -> const std::unordered_map<uint32_t, std::filesystem::path>&;
     auto getResourcePackageInformation(uint32_t id) const -> std::optional<std::filesystem::path>;
 

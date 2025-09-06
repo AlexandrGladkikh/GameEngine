@@ -5,16 +5,15 @@
 #include "NodeWidget.h"
 #include "EngineObserver.h"
 #include "TreeWidgetBuilderHelper.h"
+#include "ResourcePackagesEditor.h"
 
 #include "engine/Engine.h"
 #include "engine/Scene.h"
 #include "engine/Node.h"
 #include "engine/Component.h"
-#include "engine/Context.h"
 #include "engine/ComponentBuilder.h"
 #include "engine/UserComponentsBuilder.h"
 #include "engine/Window.h"
-#include "engine/Logger.h"
 
 #include <QTreeWidget>
 #include <QMenu>
@@ -32,11 +31,13 @@ namespace editor {
 SceneNodeTree::SceneNodeTree(engine::Engine* engine, QWidget* parent) :
     QMainWindow(parent),
     m_engine(engine),
-    m_scene_tree(new QTreeWidget(parent))
+    m_scene_tree(new QTreeWidget(this))
 {
     setAttribute(Qt::WA_DeleteOnClose);
     setWindowTitle("Scene node tree");
     resize(500, 800);
+
+    m_resource_package_editor = new ResourcePackagesEditor(m_engine, this);
 
     m_engine_observer.reset(new EngineObserver(m_engine, this));
     m_engine_observer->start();
@@ -56,6 +57,8 @@ SceneNodeTree::SceneNodeTree(engine::Engine* engine, QWidget* parent) :
 
     initContextMenu();
     initHeaderContextMenu();
+
+    m_resource_package_editor->show();
 }
 
 SceneNodeTree::~SceneNodeTree()

@@ -30,6 +30,11 @@ void ResourcePackageStore::remove(uint32_t id)
     m_resourcePackages.erase(id);
 }
 
+auto ResourcePackageStore::getResourcePackages() const -> const std::unordered_map<uint32_t, std::shared_ptr<ResourcePackage>>&
+{
+    return m_resourcePackages;
+}
+
 auto ResourcePackageStore::getResourcePackagesInformation() const -> const std::unordered_map<uint32_t, std::filesystem::path>&
 {
     return m_resourcePackagesInformation;

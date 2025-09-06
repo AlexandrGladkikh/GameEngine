@@ -80,7 +80,7 @@ auto Scene::createRootNode(const std::string& name) -> std::optional<std::shared
     auto id = generateUniqueId();
     auto root_node = std::make_shared<Node>(id, name, 0, m_id);
     root_node->setContext(m_context);
-    m_nodes.insert({id, root_node}).second;
+    m_nodes.insert({id, root_node});
     m_root = id;
 
     return root_node;

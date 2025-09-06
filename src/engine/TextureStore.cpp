@@ -1,6 +1,8 @@
 #include "TextureStore.h"
 #include "Texture.h"
 
+#include <algorithm>
+
 namespace engine {
 
 auto TextureStore::get(uint32_t id) const -> std::optional<std::shared_ptr<Texture>>
