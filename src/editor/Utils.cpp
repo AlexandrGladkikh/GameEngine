@@ -22,6 +22,14 @@ DropFilter::DropFilter(QObject* parent) :
 
 bool DropFilter::eventFilter(QObject* obj, QEvent* event)
 {
+    if (event->type() == QEvent::DragEnter) {
+        auto dragEnterEvent = static_cast<QDragEnterEvent*>(event);
+        if (dragEnterEvent->mimeData()->hasText()) {
+            dragEnterEvent->acceptProposedAction();
+            return true;
+        }
+    }
+
     if (event->type() == QEvent::Drop) {
         auto dropEvent = static_cast<QDropEvent*>(event);
         if (dropEvent->mimeData()->hasText()) {

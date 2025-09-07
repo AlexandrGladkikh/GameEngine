@@ -225,7 +225,7 @@ ComponentWidget* TreeWidgetBuilder::buildMaterialWidget(const std::shared_ptr<en
     };
 
     std::vector<EditorBlockLayoutData> texture_data = {
-        { "texture", material->textureName(), textureChangeHandler, textureUpdater },
+        { "texture", material->textureName(), textureChangeHandler, textureUpdater, true },
     };
     auto texture_layout = createEditorBlockLayout("Texture", texture_data, m_engine_observer);
     layout->addLayout(texture_layout);

@@ -1,5 +1,7 @@
 #include "ResourcePackagesEditor.h"
 
+#include "ResourcePackagesItemModel.h"
+
 #include <engine/Engine.h>
 #include <engine/Context.h>
 #include <engine/ResourcePackageStore.h>
@@ -16,7 +18,7 @@ namespace editor {
 
 ResourcePackagesEditor::ResourcePackagesEditor(engine::Engine* engine, QWidget* parent) :
     QMainWindow(parent),
-    m_item_model(new QStandardItemModel(this)),
+    m_item_model(new ResourcePackagesItemModel(this)),
     m_engine(engine)
 {
     setWindowFlags(Qt::Window | Qt::CustomizeWindowHint | Qt::WindowTitleHint);
@@ -73,7 +75,11 @@ ResourcePackagesEditor::ResourcePackagesEditor(engine::Engine* engine, QWidget* 
     m_package_content->setSelectionMode(QAbstractItemView::ExtendedSelection);
     m_package_content->setWordWrap(true);
     m_package_content->setTextElideMode(Qt::ElideMiddle);
+    m_package_content->setSelectionMode(QAbstractItemView::SingleSelection);
 
+    m_package_content->setDragEnabled(true);
+    m_package_content->setDefaultDropAction(Qt::CopyAction);
+    m_package_content->setDragDropMode(QAbstractItemView::DragOnly);
 
     m_package_content->setStyleSheet(R"(
         QListView {
@@ -127,10 +133,14 @@ void ResourcePackagesEditor::loadContent()
     const auto& first_package = resource_packages.begin()->second;
 
     for (auto& texture_info: first_package->textures) {
-        auto texture_name = texture_info.path.stem();
+        auto texture_name = QString(texture_info.path.stem().c_str());
         QIcon texture_icon(QString(texture_info.path.c_str()));
-        QStandardItem* item = new QStandardItem(QString(texture_name.c_str()));
+        QStandardItem* item = new QStandardItem(texture_name);
         item->setIcon(texture_icon);
+        item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt:: ItemIsDragEnabled);
+        item->setData(texture_name, Qt::DisplayRole);
+        item->setData(texture_name, Qt::UserRole);
+
         m_item_model->appendRow(item);
     }
 }
