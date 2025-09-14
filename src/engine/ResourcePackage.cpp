@@ -10,6 +10,8 @@
 #include "Logger.h"
 
 #include <rapidjson/document.h>
+#include <rapidjson/stringbuffer.h>
+#include <rapidjson/prettywriter.h>
 
 namespace engine {
 
@@ -50,7 +52,7 @@ std::optional<std::shared_ptr<ResourcePackage>> buildResourcePackage(const std::
     return package;
 }
 
-void saveResourcePackage(const std::filesystem::path& path, const ResourcePackage& package)
+void saveResourcePackage(const std::shared_ptr<ResourcePackage>& package, uint32_t id, const std::filesystem::path& path)
 {
     rapidjson::Document document;
     document.SetObject();
@@ -73,12 +75,21 @@ void saveResourcePackage(const std::filesystem::path& path, const ResourcePackag
         document.AddMember(key, resources_json, document.GetAllocator());
     };
 
-    writeResourceInfo("meshes", package.meshes);
-    writeResourceInfo("shaders", package.shaders);
-    writeResourceInfo("textures", package.textures);
+    rapidjson::Value value;
+    value.SetString(package->name.c_str(), document.GetAllocator());
+    document.AddMember("id", id, document.GetAllocator());
+    document.AddMember("name", value, document.GetAllocator());
+
+    writeResourceInfo("meshes", package->meshes);
+    writeResourceInfo("shaders", package->shaders);
+    writeResourceInfo("textures", package->textures);
+
+    rapidjson::StringBuffer buffer;
+    rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
+    document.Accept(writer);
 
     auto file = FileSystem::file(path, std::ios::out);
-    file.writeText(document.GetString());
+    file.writeText(buffer.GetString());
 }
 
 void loadResourcePackage(const std::shared_ptr<Context>& context, const std::shared_ptr<ResourcePackage>& package)

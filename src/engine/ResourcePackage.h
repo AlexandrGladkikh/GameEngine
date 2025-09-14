@@ -25,7 +25,7 @@ struct ResourcePackage {
 };
 
 auto buildResourcePackage(const std::filesystem::path& path) -> std::optional<std::shared_ptr<ResourcePackage>>;
-void saveResourcePackage(const ResourcePackage& package, const std::filesystem::path& path);
+void saveResourcePackage(const std::shared_ptr<ResourcePackage>& package, uint32_t id, const std::filesystem::path& path);
 
 void loadResourcePackage(const std::shared_ptr<Context>& context, const std::shared_ptr<ResourcePackage>& package);
 

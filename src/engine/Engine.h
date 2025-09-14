@@ -52,6 +52,8 @@ public:
 
     bool saveScene(uint32_t id);
 
+    void needReloadResourcePackage(uint32_t id);
+
 private:
     bool m_run = false;
     std::atomic_int m_pause = 0;
@@ -64,6 +66,9 @@ private:
     std::unordered_map<uint32_t, std::filesystem::path> m_scenes_info;
 
     uint32_t m_active_scene_id = 0;
+
+    bool m_need_reload_resource_package = false;
+    uint32_t m_reload_resource_package_id = -1;
 
     friend class EngineAccessor;
 };

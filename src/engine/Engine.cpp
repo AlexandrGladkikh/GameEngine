@@ -16,6 +16,7 @@
 #include "Component.h"
 #include "UserComponentsBuilder.h"
 #include "Node.h"
+#include "ResourcePackage.h"
 
 #include <rapidjson/document.h>
 
@@ -131,6 +132,16 @@ void Engine::run()
     uint64_t delta_time = 0;
 
     while (m_run) {
+        if (m_need_reload_resource_package) {
+            m_need_reload_resource_package = false;
+
+            auto resource_package = m_context->resourcePackageStore->get(m_reload_resource_package_id);
+
+            if (resource_package.has_value()) {
+                loadResourcePackage(m_context, resource_package.value());
+            }
+        }
+
         delta_time = (glfwGetTime() - update_time) * 1000000;
         update_time = glfwGetTime();
 
@@ -203,6 +214,12 @@ bool Engine::saveScene(uint32_t id)
     }
 
     return saveSceneToFile(scene.value(), scene_info->second);
+}
+
+void Engine::needReloadResourcePackage(uint32_t id)
+{
+    m_need_reload_resource_package = true;
+    m_reload_resource_package_id = id;
 }
 
 }

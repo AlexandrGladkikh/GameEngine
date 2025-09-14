@@ -1,11 +1,13 @@
 #include "ResourcePackagesEditor.h"
 
 #include "ResourcePackagesItemModel.h"
+#include "PackageContentView.h"
 
 #include <engine/Engine.h>
 #include <engine/Context.h>
 #include <engine/ResourcePackageStore.h>
 #include <engine/ResourcePackage.h>
+#include <engine/Utils.h>
 
 #include <QListView>
 #include <QVBoxLayout>
@@ -25,10 +27,10 @@ ResourcePackagesEditor::ResourcePackagesEditor(engine::Engine* engine, QWidget* 
     setWindowTitle("Resource explorer");
     resize(1000, 400);
 
-    QWidget* central_widget = new QWidget(this);
-    setCentralWidget(central_widget);
+    QWidget* centralWidget = new QWidget(this);
+    setCentralWidget(centralWidget);
 
-    QVBoxLayout* main_layout = new QVBoxLayout(central_widget);
+    QVBoxLayout* main_layout = new QVBoxLayout(centralWidget);
 
     m_content_splitter = new QSplitter(Qt::Horizontal, this);
 
@@ -64,7 +66,7 @@ ResourcePackagesEditor::ResourcePackagesEditor(engine::Engine* engine, QWidget* 
     QVBoxLayout* right_layout = new QVBoxLayout(right_panel);
     right_layout->setContentsMargins(5, 5, 5, 5);
 
-    m_package_content = new QListView;
+    m_package_content = new PackageContentView;
     m_package_content->setModel(m_item_model);
     m_package_content->setViewMode(QListView::IconMode);
     m_package_content->setIconSize(QSize(64, 64));
@@ -76,10 +78,6 @@ ResourcePackagesEditor::ResourcePackagesEditor(engine::Engine* engine, QWidget* 
     m_package_content->setWordWrap(true);
     m_package_content->setTextElideMode(Qt::ElideMiddle);
     m_package_content->setSelectionMode(QAbstractItemView::SingleSelection);
-
-    m_package_content->setDragEnabled(true);
-    m_package_content->setDefaultDropAction(Qt::CopyAction);
-    m_package_content->setDragDropMode(QAbstractItemView::DragOnly);
 
     m_package_content->setStyleSheet(R"(
         QListView {
@@ -100,6 +98,15 @@ ResourcePackagesEditor::ResourcePackagesEditor(engine::Engine* engine, QWidget* 
         }
     )");
 
+    m_package_content->setAcceptDrops(true);
+    m_package_content->viewport()->setAcceptDrops(true);
+
+    m_package_content->setDragEnabled(true);
+    m_package_content->setDefaultDropAction(Qt::CopyAction);
+    m_package_content->setDragDropMode(QAbstractItemView::DragDrop);
+
+    connect(m_package_content, &PackageContentView::filesDropped, this, &ResourcePackagesEditor::onDropNewPackageItems);
+
     right_layout->addWidget(m_package_content);
 
     m_content_splitter->addWidget(left_panel);
@@ -113,15 +120,61 @@ ResourcePackagesEditor::ResourcePackagesEditor(engine::Engine* engine, QWidget* 
     loadContent();
 }
 
+void ResourcePackagesEditor::onDropNewPackageItems(const QStringList& files)
+{
+    m_engine->pause();
+
+    auto context = m_engine->context();
+    auto resource_package = context->resourcePackageStore->get(m_selected_package_id);
+
+    if (!resource_package.has_value()) {
+        m_engine->resume();
+        return;
+    }
+
+    for (const auto& file: files) {
+        std::filesystem::path texture_path(file.toStdString());
+
+        engine::ResourceInfo resource_info;
+        resource_info.id = engine::generateUniqueId();
+        resource_info.path = texture_path;
+        resource_package.value()->textures.push_back(resource_info);
+
+        auto texture_name = QString(texture_path.stem().c_str());
+        QIcon texture_icon(QString(texture_path.c_str()));
+        QStandardItem* item = new QStandardItem(texture_name);
+        item->setIcon(texture_icon);
+        item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt:: ItemIsDragEnabled);
+        item->setData(texture_name, Qt::DisplayRole);
+        item->setData(texture_name, Qt::UserRole);
+
+        m_item_model->appendRow(item);
+    }
+
+    m_engine->needReloadResourcePackage(m_selected_package_id);
+
+    auto path = context->resourcePackageStore->getResourcePackageInformation(m_selected_package_id);
+    if (path.has_value()) {
+        engine::saveResourcePackage(resource_package.value(), m_selected_package_id, path.value());
+    }
+
+    m_selected_package_id = -1;
+
+    m_engine->resume();
+}
+
 void ResourcePackagesEditor::loadContent()
 {
     m_item_model->clear();
+
+    m_engine->pause();
 
     auto context = m_engine->context();
 
     auto& resource_packages = context->resourcePackageStore->getResourcePackages();
 
     if (resource_packages.empty()) {
+        m_engine->resume();
         return;
     }
 
@@ -131,6 +184,7 @@ void ResourcePackagesEditor::loadContent()
     }
 
     const auto& first_package = resource_packages.begin()->second;
+    m_selected_package_id = resource_packages.begin()->first;
 
     for (auto& texture_info: first_package->textures) {
         auto texture_name = QString(texture_info.path.stem().c_str());
@@ -143,6 +197,8 @@ void ResourcePackagesEditor::loadContent()
 
         m_item_model->appendRow(item);
     }
+
+    m_engine->resume();
 }
 
 }
