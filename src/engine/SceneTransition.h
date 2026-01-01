@@ -6,7 +6,7 @@
 
 namespace engine {
 
-class Context;
+struct Context;
 
 class SceneTransition final {
 public:

@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "Logger.h"
 
 #include <cstring>
 
@@ -34,7 +35,17 @@ Window::Window(const std::string& title, GLint width, GLint height)
     glfwSetKeyCallback(m_window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
         auto window_ptr = static_cast<Window*>(glfwGetWindowUserPointer(window));
         window_ptr->m_key.push_back(key);
-        window_ptr->m_action.push_back(action);
+        window_ptr->m_key_action.push_back(action);
+    });
+    glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, int key, int action, int mods) {
+        Logger::info("glfwSetMouseButtonCallback");
+        auto window_ptr = static_cast<Window*>(glfwGetWindowUserPointer(window));
+        window_ptr->m_mouse_key.push_back(key);
+        window_ptr->m_mouse_key_action.push_back(action);
+        double x_pos;
+        double y_pos;
+        glfwGetCursorPos(window, &x_pos, &y_pos);
+        window_ptr->m_mouse_pos.push_back({x_pos, window_ptr->size().second - y_pos});
     });
 }
 
@@ -54,16 +65,32 @@ void Window::setKeyInputHandler(const std::function<void(int, int)>& handler)
     m_keyInputHandler = handler;
 }
 
+void Window::setMouseInputHandler(const std::function<void(int, int, int, int)>& handler)
+{
+    m_mouseInputHandler = handler;
+}
+
 void Window::update(uint64_t dt)
 {
     glfwPollEvents();
 
     if (m_keyInputHandler) {
         for (size_t i = 0; i < m_key.size(); ++i) {
-            m_keyInputHandler(m_key[i], m_action[i]);
+            m_keyInputHandler(m_key[i], m_key_action[i]);
         }
         m_key.clear();
-        m_action.clear();
+        m_key_action.clear();
+    }
+
+    if (m_mouseInputHandler) {
+        for (size_t i = 0; i < m_mouse_key.size(); ++i) {
+            Logger::info("for (size_t i = 0; i < m_mouse_key.size(); ++i)");
+            const auto mouse_pos = m_mouse_pos[i];
+            m_mouseInputHandler(m_mouse_key[i], m_mouse_key_action[i], mouse_pos.first, mouse_pos.second);
+        }
+        m_mouse_key.clear();
+        m_mouse_key_action.clear();
+        m_mouse_pos.clear();
     }
 }
 

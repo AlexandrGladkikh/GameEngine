@@ -15,6 +15,7 @@ class MeshComponent;
 class MaterialComponent;
 class TransformComponent;
 class FlipbookAnimationComponent;
+class MouseEventFilterComponent;
 
 class ComponentBuilder {
 public:
@@ -41,5 +42,8 @@ std::optional<std::unique_ptr<TransformComponent>> ComponentBuilder::buildEmptyC
 
 template<>
 std::optional<std::unique_ptr<FlipbookAnimationComponent>> ComponentBuilder::buildEmptyComponent<FlipbookAnimationComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene);
+
+template <>
+std::optional<std::unique_ptr<MouseEventFilterComponent>> ComponentBuilder::buildEmptyComponent<MouseEventFilterComponent>(const std::string &name, uint32_t owner_node, uint32_t owner_scene);
 
 }

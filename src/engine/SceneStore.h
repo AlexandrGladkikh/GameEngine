@@ -3,6 +3,7 @@
 #include <memory>
 #include <optional>
 #include <unordered_map>
+#include <string>
 
 namespace engine {
 

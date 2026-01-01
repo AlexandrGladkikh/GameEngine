@@ -7,6 +7,8 @@
 #include "MeshComponent.h"
 #include "MaterialComponent.h"
 #include "CameraComponent.h"
+#include "MouseEventFilterComponent.h"
+#include "FlipbookAnimationComponent.h"
 #include "Node.h"
 
 namespace engine {
@@ -51,6 +53,21 @@ auto SceneRequester::SceneSlice::GetNodes(ComponentType type) const -> SceneSlic
                     scene_slice.addNode(node);
                 }
             }
+            break;
+        case ComponentType::MouseEventFilter:
+            for (const auto& node : m_nodes) {
+                if (SceneRequesterHelper::hasComponent<MouseEventFilterComponent>(m_scene, node->components())) {
+                    scene_slice.addNode(node);
+                }
+            }
+            break;
+        case ComponentType::FlipbookAnimation:
+            for (const auto& node : m_nodes) {
+                if (SceneRequesterHelper::hasComponent<FlipbookAnimationComponent>(m_scene, node->components())) {
+                    scene_slice.addNode(node);
+                }
+            }
+            break;
     }
 
     return scene_slice;

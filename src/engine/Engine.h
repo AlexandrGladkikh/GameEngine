@@ -7,7 +7,7 @@
 
 namespace engine {
 
-class Context;
+struct Context;
 class SceneTransition;
 class UserComponentsBuilder;
 class Engine;

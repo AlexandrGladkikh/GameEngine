@@ -14,6 +14,7 @@ class MaterialComponent;
 class MeshComponent;
 class CameraComponent;
 class FlipbookAnimationComponent;
+class MouseEventFilterComponent;
 class Node;
 }
 
@@ -39,6 +40,7 @@ private:
     ComponentWidget* buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& mesh);
     ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camera);
     ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidgetItem* item);
+    ComponentWidget* buildMouseEventFilterWidget(const std::shared_ptr<engine::MouseEventFilterComponent>& mouse_event_filter);
 
     SceneNodeTree* m_scene_node_tree;
 

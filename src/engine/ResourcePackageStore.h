@@ -8,7 +8,7 @@
 
 namespace engine {
 
-class ResourcePackage;
+struct ResourcePackage;
 
 class ResourcePackageStore final {
 public:

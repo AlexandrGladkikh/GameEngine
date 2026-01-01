@@ -7,6 +7,7 @@
 #include "Logger.h"
 #include "Utils.h"
 #include "FlipbookAnimationComponent.h"
+#include "MouseEventFilterComponent.h"
 
 #include <optional>
 #include <functional>
@@ -223,9 +224,40 @@ void saveFlipbookAnimationComponent(const std::shared_ptr<FlipbookAnimationCompo
     component_json.AddMember("update_time", component->updateTime(), allocator);
 }
 
+auto buildMouseEventFilterComponent(rapidjson::Value& componentData) -> std::optional<std::unique_ptr<Component>>
+{
+    Logger::info(__FUNCTION__);
+
+    auto id = componentData["id"].GetUint();
+    auto name = componentData["name"].GetString();
+    auto owner_node = componentData["owner_node"].GetUint();
+    auto owner_scene = componentData["owner_scene"].GetUint();
+    auto key = componentData["key"].GetInt();
+    auto action = componentData["action"].GetInt();
+
+    auto component = std::make_unique<MouseEventFilterComponent>(id, name, owner_node, owner_scene);
+    component->setKey(key);
+    component->setAction(action);
+
+    return component;
+}
+
+void saveMouseEventFilterComponent(const std::shared_ptr<MouseEventFilterComponent>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value value;
+    value.SetString(component->name().c_str(), allocator);
+    component_json.AddMember("type", "mouse_event_filter", allocator);
+    component_json.AddMember("id", component->id(), allocator);
+    component_json.AddMember("name", value, allocator);
+    component_json.AddMember("owner_node", component->ownerNode(), allocator);
+    component_json.AddMember("owner_scene", component->ownerScene(), allocator);
+    component_json.AddMember("key", component->key(), allocator);
+    component_json.AddMember("action", component->action(), allocator);
+}
+
 auto ComponentBuilder::componentTypes() -> const std::vector<std::string>&
 {
-    static const std::vector<std::string> types = {"material", "mesh", "camera", "transform", "flipbook_animation"};
+    static const std::vector<std::string> types = {"material", "mesh", "camera", "transform", "flipbook_animation", "mouse_event_filter"};
     return types;
 }
 
@@ -243,6 +275,8 @@ auto ComponentBuilder::buildFromJson(const std::string& type, rapidjson::Value& 
         return buildTransformComponent(component);
     } else if (type == "flipbook_animation") {
         return buildFlipbookAnimationComponent(component);
+    } else if (type == "mouse_event_filter") {
+        return buildMouseEventFilterComponent(component);
     }
 
     return std::nullopt;
@@ -260,6 +294,8 @@ void ComponentBuilder::saveToJson(const std::shared_ptr<Component>& component, r
         saveTransformComponent(std::dynamic_pointer_cast<TransformComponent>(component), component_json, allocator);
     } else if (component->type() == "flipbook_animation") {
         saveFlipbookAnimationComponent(std::dynamic_pointer_cast<FlipbookAnimationComponent>(component), component_json, allocator);
+    } else if (component->type() == "mouse_event_filter") {
+        saveMouseEventFilterComponent(std::dynamic_pointer_cast<MouseEventFilterComponent>(component), component_json, allocator);
     }
 }
 
@@ -277,6 +313,8 @@ auto ComponentBuilder::buildEmptyComponent(const std::string& type, const std::s
         return std::make_unique<TransformComponent>(generateUniqueId(), name, owner_node, owner_scene);
     } else if (type == "flipbook_animation") {
         return std::make_unique<FlipbookAnimationComponent>(generateUniqueId(), name, owner_node, owner_scene);
+    } else if (type == "mouse_event_filter") {
+        return std::make_unique<MouseEventFilterComponent>(generateUniqueId(), name, owner_node, owner_scene);
     }
 
     return std::nullopt;
@@ -310,6 +348,12 @@ template<>
 std::optional<std::unique_ptr<FlipbookAnimationComponent>> ComponentBuilder::buildEmptyComponent<FlipbookAnimationComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
 {
     return std::make_unique<FlipbookAnimationComponent>(generateUniqueId(), name, owner_node, owner_scene);
+}
+
+template <>
+std::optional<std::unique_ptr<MouseEventFilterComponent>> ComponentBuilder::buildEmptyComponent<MouseEventFilterComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
+{
+    return std::make_unique<MouseEventFilterComponent>(generateUniqueId(), name, owner_node, owner_scene);
 }
 
 }

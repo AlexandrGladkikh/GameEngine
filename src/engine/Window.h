@@ -22,6 +22,7 @@ public:
     void setWindowPosition(int x, int y);
 
     void setKeyInputHandler(const std::function<void(int, int)>& handler);
+    void setMouseInputHandler(const std::function<void(int, int, int, int)>& handler);
 
     void update(uint64_t dt);
 
@@ -35,9 +36,13 @@ private:
     GLFWwindow* m_window;
 
     std::function<void(int, int)> m_keyInputHandler;
+    std::function<void(int, int, int, int)> m_mouseInputHandler;
 
     std::vector<int> m_key;
-    std::vector<int> m_action;
+    std::vector<int> m_key_action;
+    std::vector<int> m_mouse_key;
+    std::vector<int> m_mouse_key_action;
+    std::vector<std::pair<int, int>> m_mouse_pos;
 };
 
 }

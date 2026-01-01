@@ -67,10 +67,15 @@ add_library(engine
         FlipbookAnimationComponent.h
         FlipbookAnimationComponent.cpp
         Helpers.h
+        MouseEventFilterComponent.h
+        MouseEventFilterComponent.cpp
+        NodePositioningHelper.cpp
+        NodePositioningHelper.h
 )
 
-target_include_directories(engine PUBLIC ${CMAKE_SOURCE_DIR}/../3rdparts/include/)
-target_link_directories(engine PUBLIC ${CMAKE_SOURCE_DIR}/../3rdparts/libs/)
+get_filename_component(THIRD_PARTIES_DIR ${CMAKE_CURRENT_LIST_DIR}/../../../3rdparts/ ABSOLUTE)
+target_include_directories(engine PUBLIC ${THIRD_PARTIES_DIR}/include/)
+target_link_directories(engine PUBLIC ${THIRD_PARTIES_DIR}/libs/)
 target_link_libraries(engine PUBLIC glfw3 opengl32)
 
 target_include_directories(engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})

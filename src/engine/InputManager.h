@@ -20,14 +20,21 @@ public:
 
     void update(uint64_t dt);
 
-    void registerHandler(int key, const std::function<void(int)>& handler);
-    void unregisterHandler(int key);
+    void registerKeyHandler(int key, const std::function<void(int)>& handler);
+    void unregisterKeyHandler(int key);
+
+    void registerMouseHandler(int key, const std::function<void(int, int, int)>& handler);
+    void unregisterMouseHandler(int key);
 
 private:
-    std::unordered_map<uint32_t, std::vector<std::function<void(int)>>> m_handlers;
+    std::unordered_map<uint32_t, std::vector<std::function<void(int)>>> m_key_handlers;
+    std::unordered_map<uint32_t, std::vector<std::function<void(int, int, int)>>> m_mouse_handlers;
 
     std::vector<int> m_key;
-    std::vector<int> m_action;
+    std::vector<int> m_key_action;
+    std::vector<int> m_mouse_key;
+    std::vector<int> m_mouse_key_action;
+    std::vector<std::pair<int, int>> m_mouse_pos;
 };
 
 }

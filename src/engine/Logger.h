@@ -10,21 +10,21 @@ public:
     template<typename... Args>
     static void info(const std::string& fmt_str, Args&&... args)
     {
-        std::string message = std::vformat(fmt_str, std::make_format_args(std::forward<Args>(args)...));
+        std::string message = std::vformat(fmt_str, std::make_format_args(args...));
         logImpl(Level::INFO, message);
     }
 
     template<typename... Args>
     static void warning(const std::string& fmt_str, Args&&... args)
     {
-        std::string message = std::vformat(fmt_str, std::make_format_args(std::forward<Args>(args)...));
+        std::string message = std::vformat(fmt_str, std::make_format_args(args...));
         logImpl(Level::WARNING, message);
     }
 
     template<typename... Args>
     static void error(const std::string& fmt_str, Args&&... args)
     {
-        std::string message = std::vformat(fmt_str, std::make_format_args(std::forward<Args>(args)...));
+        std::string message = std::vformat(fmt_str, std::make_format_args(args...));
         logImpl(Level::ERROR, message);
     }
 

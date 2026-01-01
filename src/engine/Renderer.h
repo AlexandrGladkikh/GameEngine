@@ -4,7 +4,7 @@
 
 namespace engine {
 
-class Context;
+struct Context;
 class Scene;
 
 class Renderer final {

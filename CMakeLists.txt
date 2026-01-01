@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(src/engine)
 
-option(ENABLE_EDITOR "Build Qt application" ON)
+option(ENABLE_EDITOR "Build Qt editor" ON)
 
 if (ENABLE_EDITOR)
     set(CMAKE_AUTOMOC ON)

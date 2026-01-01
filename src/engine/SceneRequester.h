@@ -8,13 +8,15 @@ namespace engine {
 
 class Node;
 class Scene;
-class Context;
+struct Context;
 
 enum class ComponentType {
     Transform,
     Mesh,
     Material,
-    Camera
+    Camera,
+    MouseEventFilter,
+    FlipbookAnimation
 };
 
 class SceneRequester final {

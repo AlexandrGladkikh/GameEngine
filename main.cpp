@@ -224,16 +224,16 @@ public:
 
     void init() override
     {
-        context().lock()->inputManager->registerHandler(GLFW_KEY_W, [this](int action) {
+        context().lock()->inputManager->registerKeyHandler(GLFW_KEY_W, [this](int action) {
             m_up = (action == GLFW_PRESS || action == GLFW_REPEAT);
         });
-        context().lock()->inputManager->registerHandler(GLFW_KEY_S, [this](int action) {
+        context().lock()->inputManager->registerKeyHandler(GLFW_KEY_S, [this](int action) {
             m_down = (action == GLFW_PRESS || action == GLFW_REPEAT);
         });
-        context().lock()->inputManager->registerHandler(GLFW_KEY_A, [this](int action) {
+        context().lock()->inputManager->registerKeyHandler(GLFW_KEY_A, [this](int action) {
             m_left = (action == GLFW_PRESS || action == GLFW_REPEAT);
         });
-        context().lock()->inputManager->registerHandler(GLFW_KEY_D, [this](int action) {
+        context().lock()->inputManager->registerKeyHandler(GLFW_KEY_D, [this](int action) {
             m_right = (action == GLFW_PRESS || action == GLFW_REPEAT);
         });
     }

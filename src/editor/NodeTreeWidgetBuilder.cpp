@@ -12,6 +12,7 @@
 #include "engine/MaterialComponent.h"
 #include "engine/CameraComponent.h"
 #include "engine/FlipbookAnimationComponent.h"
+#include "engine/MouseEventFilterComponent.h"
 #include "engine/Context.h"
 #include "engine/Node.h"
 #include "engine/Helpers.h"
@@ -562,6 +563,71 @@ ComponentWidget* TreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shar
     return flipbook_widget;
 }
 
+ComponentWidget* TreeWidgetBuilder::buildMouseEventFilterWidget(const std::shared_ptr<engine::MouseEventFilterComponent>& mouse_event_filter)
+{
+    ComponentWidget* mouse_event_filter_widget = new ComponentWidget;
+    m_tree_widget_builder_helper->subscribeOnActiveComponent(mouse_event_filter_widget, mouse_event_filter);
+
+    QVBoxLayout* layout = new QVBoxLayout;
+    layout->setSpacing(1);
+    layout->setContentsMargins(0, 0, 0, 0);
+
+    std::string name = "Mouse Event Filter name \"" + mouse_event_filter->name() + "\"";
+    auto* label = new QLabel(QString::fromStdString(name));
+    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    layout->addWidget(label);
+
+    auto keyChangeHandler = [mouse_event_filter](const std::string& value) {
+        uint32_t new_key = 0;
+        if (!parseUint32(value, new_key)) {
+            return;
+        }
+
+        mouse_event_filter->setKey(new_key);
+    };
+
+    auto actionChangeHandler = [mouse_event_filter](const std::string& value) {
+        uint32_t new_action = 0;
+        if (!parseUint32(value, new_action)) {
+            return;
+        }
+
+        mouse_event_filter->setAction(new_action);
+    };
+
+    auto keyUpdater = [mouse_event_filter]() {
+        if (!mouse_event_filter->isValid()) {
+            return std::string();
+        }
+        return formatUint32(mouse_event_filter->key());
+    };
+
+    auto actionUpdater = [mouse_event_filter]() {
+        if (!mouse_event_filter->isValid()) {
+            return std::string();
+        }
+        return formatUint32(mouse_event_filter->action());
+    };
+
+    std::vector<EditorBlockLayoutData> key_data = {
+        { "key", formatUint32(mouse_event_filter->key()), keyChangeHandler, keyUpdater }
+    };
+    auto key_layout = createEditorBlockLayout("Key", key_data, m_engine_observer);
+    layout->addLayout(key_layout);
+
+    std::vector<EditorBlockLayoutData> action_data = {
+        { "action", formatUint32(mouse_event_filter->action()), actionChangeHandler, actionUpdater }
+    };
+    auto action_layout = createEditorBlockLayout("Action", action_data, m_engine_observer);
+    layout->addLayout(action_layout);
+
+    layout->addStretch();
+
+    mouse_event_filter_widget->setLayout(layout);
+
+    return mouse_event_filter_widget;
+}
+
 TreeWidgetBuilder::TreeWidgetBuilder(SceneNodeTree* scene_node_tree, const std::shared_ptr<EngineObserver>& engine_observer) :
     m_scene_node_tree(scene_node_tree),
     m_engine_observer(engine_observer),
@@ -593,6 +659,8 @@ auto TreeWidgetBuilder::buildWidgetForComponent(std::shared_ptr<engine::Componen
         return buildTransformWidget(std::dynamic_pointer_cast<engine::TransformComponent>(component));
     } else if (component->type() == "flipbook_animation") {
         return buildFlipbookAnimationWidget(std::dynamic_pointer_cast<engine::FlipbookAnimationComponent>(component), item);
+    } else if (component->type() == "mouse_event_filter") {
+        return buildMouseEventFilterWidget(std::dynamic_pointer_cast<engine::MouseEventFilterComponent>(component));
     }
 
     return std::nullopt;

@@ -113,10 +113,11 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
         auto texture_size = material.value()->textureSize();
         texture_size.first *= std::fabs(node_scale.x) / 2.0f;
         texture_size.second *= std::fabs(node_scale.y) / 2.0f;
-        auto ortho = camera->getOrtho();
 
         float absoluteNodePositionX = absolute_node_position.x - camera_position.x;
         float absoluteNodePositionY = absolute_node_position.y - camera_position.y;
+
+        auto ortho = camera->getOrtho();
 
         if ((absoluteNodePositionX + texture_size.first < 0 || absoluteNodePositionX - texture_size.first > (ortho.right)) ||
             (absoluteNodePositionY + texture_size.second < 0 || absoluteNodePositionY - texture_size.second > (ortho.top))) {

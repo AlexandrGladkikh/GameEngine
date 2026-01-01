@@ -7,7 +7,7 @@
 namespace engine {
 
 class Scene;
-class Context;
+struct Context;
 
 class SceneLoader final {
 public:
