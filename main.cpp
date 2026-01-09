@@ -7,6 +7,7 @@
 #include "engine/Logger.h"
 #include "engine/Utils.h"
 #include "engine/CameraComponent.h"
+#include "engine/MouseEventFilterComponent.h"
 
 #include <GLFW/glfw3.h>
 
@@ -36,7 +37,7 @@ public:
 
 class EngineComponentBuilder : public engine::UserComponentsBuilder {
 public:
-    std::optional<std::unique_ptr<engine::Component>> buildComponent(const std::string& type, rapidjson::Value& component) const override;
+    std::optional<std::unique_ptr<engine::Component>> buildComponent(const std::string& type, const rapidjson::Value& component) const override;
     auto buildEmptyComponent(const std::string& type, const std::string& name, uint32_t owner_node, uint32_t owner_scene) -> std::optional<std::unique_ptr<engine::Component>> override;
 
     void saveToJson(const std::shared_ptr<engine::Component>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator) const override;
@@ -317,6 +318,78 @@ private:
     bool m_right = false;
 };
 
+class RotateComponent : public engine::Component {
+public:
+    enum Axis {
+        X,
+        Y,
+        Z
+    };
+
+    explicit RotateComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene) : Component(id, name, owner_node, owner_scene)
+    {
+    }
+
+    void update(uint64_t dt) override
+    {
+        engine::Logger::info("RotateComponent::update");
+        if (m_rotate) {
+            auto transform = getNode().value()->getComponent<engine::TransformComponent>();
+            if (transform.has_value()) {
+                transform.value()->setRotation(transform.value()->getRotation() +
+                                               glm::vec3(m_axis == Axis::X ? m_degrees : 0.0f, m_axis == Axis::Y ? m_degrees : 0.0f, m_axis == Axis::Z ? m_degrees : 0.0f));
+            }
+            m_rotate = false;
+        }
+    }
+
+    void init() override
+    {
+        auto mouse_event_filter = getNode().value()->getComponent<engine::MouseEventFilterComponent>();
+        if (!mouse_event_filter.has_value()) {
+            return;
+        }
+
+        mouse_event_filter.value()->setMouseClickCallback([this](int x, int y) {
+            m_rotate = true;
+        });
+    }
+
+    [[nodiscard]]
+    bool isDirty() const override { return true; }
+    void markDirty() override {}
+    void clearDirty() override {}
+
+    [[nodiscard]]
+    std::string type() const override { return "rotate"; }
+
+    auto clone(uint32_t owner_node_id) const -> std::unique_ptr<Component> override
+    {
+        auto clone_component = std::make_unique<RotateComponent>(engine::generateUniqueId(), name(), owner_node_id, ownerScene());
+        clone_component->setContext(context());
+        clone_component->setValid(isValid());
+        clone_component->setActive(isActive());
+        clone_component->markDirty();
+
+        clone_component->setAxis(m_axis);
+        clone_component->setDegrees(m_degrees);
+
+        return clone_component;
+    }
+
+    void setDegrees(float degrees) { m_degrees = degrees; }
+    float getDegrees() const { return m_degrees; }
+
+    void setAxis(Axis axis) { m_axis = axis; }
+    Axis getAxis() const { return m_axis; }
+
+private:
+    Axis m_axis = Axis::Z;
+
+    bool m_rotate = false;
+    float m_degrees = 0.0f;
+
+};
 
 #ifdef ENABLE_EDITOR
 std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForComponent(const std::shared_ptr<engine::Component>& component) const
@@ -435,13 +508,58 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
         layout->addStretch();
 
         widget->setLayout(layout);
-    }
+    } else if (component->type() == "rotate") {
+        auto rotate = std::dynamic_pointer_cast<RotateComponent>(component);
 
+        widget = new editor::ComponentWidget;
+        treeWidgetBuilderHelper()->subscribeOnActiveComponent(widget, component);
+
+        QVBoxLayout* layout = new QVBoxLayout;
+        layout->setSpacing(1);
+        layout->setContentsMargins(0, 0, 0, 0);
+
+        auto* label = new QLabel("Rotate");
+        label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        layout->addWidget(label);
+
+        auto degreesChangeHandler = [rotate](const std::string& value) {
+            rotate->setDegrees(std::stof(value));
+        };
+
+        auto degreesUpdater = [rotate]() {
+            if (!rotate->isValid()) {
+                return std::string();
+            }
+            return editor::formatFloat(rotate->getDegrees());
+        };
+
+        std::vector<editor::EditorBlockLayoutData> degrees_data = {
+            { "degrees", editor::formatFloat(rotate->getDegrees()), degreesChangeHandler, degreesUpdater }
+        };
+        QHBoxLayout* degrees_layout = editor::createEditorBlockLayout("", degrees_data, engineObserver());
+        layout->addLayout(degrees_layout);
+
+        std::vector<std::string> axes = { "X", "Y", "Z" };
+        std::map<std::string, RotateComponent::Axis> axes_map = { {"X", RotateComponent::Axis::X},
+                                                {"Y", RotateComponent::Axis::Y},
+                                                {"Z", RotateComponent::Axis::Z}
+                                              };
+        std::function<void(const std::string&)> axis_handler = [rotate, axes_map](const std::string& value) {
+            engine::Logger::info("RotateComponent::axisChangeHandler: " + value);
+            rotate->setAxis(axes_map.at(value));
+        };
+        auto axis_widget = editor::createComboBoxWidget("Axis", axes, axis_handler);
+        layout->addWidget(axis_widget);
+
+        layout->addStretch();
+
+        widget->setLayout(layout);
+    }   
     return widget;
 }
 #endif
 
-std::optional<std::unique_ptr<engine::Component>> EngineComponentBuilder::buildComponent(const std::string& type, rapidjson::Value& component) const
+std::optional<std::unique_ptr<engine::Component>> EngineComponentBuilder::buildComponent(const std::string& type, const rapidjson::Value& component) const
 {
     if (type == "move") {
         auto id = component["id"].GetUint();
@@ -472,6 +590,27 @@ std::optional<std::unique_ptr<engine::Component>> EngineComponentBuilder::buildC
         new_component->setCameraId(camera_id);
 
         return new_component;
+    } else if (type == "rotate") {
+        engine::Logger::info("EngineComponentBuilder::buildComponent: rotate");
+        auto id = component["id"].GetUint();
+        auto name = component["name"].GetString();
+        auto owner_node = component["owner_node"].GetUint();
+        auto owner_scene = component["owner_scene"].GetUint();
+
+        auto new_component = std::make_unique<RotateComponent>(id, name, owner_node, owner_scene);
+        auto axis = component["axis"].GetString();
+        if (axis == "x") {
+            new_component->setAxis(RotateComponent::Axis::X);
+        } else if (axis == "y") {
+            new_component->setAxis(RotateComponent::Axis::Y);
+        } else if (axis == "z") {
+            new_component->setAxis(RotateComponent::Axis::Z);
+        }
+
+        auto degrees = component["degrees"].GetFloat();
+        new_component->setDegrees(degrees);
+
+        return new_component;
     }
 
     return {};
@@ -483,6 +622,8 @@ auto EngineComponentBuilder::buildEmptyComponent(const std::string& type, const 
         return std::make_unique<MoveComponent>(engine::generateUniqueId(), name, owner_node, owner_scene);
     } else if (type == "camera_follow") {
         return std::make_unique<CameraFollowComponent>(engine::generateUniqueId(), name, owner_node, owner_scene);
+    } else if (type == "rotate") {
+        return std::make_unique<RotateComponent>(engine::generateUniqueId(), name, owner_node, owner_scene);
     }
 
     return std::nullopt;
@@ -512,11 +653,21 @@ void EngineComponentBuilder::saveToJson(const std::shared_ptr<engine::Component>
         component_json.AddMember("owner_node", camera_follow->ownerNode(), allocator);
         component_json.AddMember("owner_scene", camera_follow->ownerScene(), allocator);
         component_json.AddMember("camera_id", camera_follow->getCameraId(), allocator);
+    } else if (component->type() == "rotate") {
+        auto rotate = std::dynamic_pointer_cast<RotateComponent>(component);
+
+        component_json.AddMember("type", "rotate", allocator);
+        component_json.AddMember("id", rotate->id(), allocator);
+        component_json.AddMember("name", value_name, allocator);
+        component_json.AddMember("owner_node", rotate->ownerNode(), allocator);
+        component_json.AddMember("owner_scene", rotate->ownerScene(), allocator);
+        component_json.AddMember("degrees", rotate->getDegrees(), allocator);
+        component_json.AddMember("axis", rotate->getAxis() == RotateComponent::Axis::X ? "x" : rotate->getAxis() == RotateComponent::Axis::Y ? "y" : "z", allocator);
     }
 }
 
 auto EngineComponentBuilder::componentTypes() const -> const std::vector<std::string>&
 {
-    static const std::vector<std::string> types = {"move", "camera_follow"};
+    static const std::vector<std::string> types = {"move", "camera_follow", "rotate"};
     return types;
 }

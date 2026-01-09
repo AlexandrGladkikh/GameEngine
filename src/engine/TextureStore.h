@@ -24,6 +24,7 @@ public:
     void add(uint32_t id, std::unique_ptr<Texture> texture);
     void remove(uint32_t id);
     bool contains(uint32_t id) const;
+    auto names() const -> std::vector<std::string>;
 
 private:
     std::unordered_map<uint32_t, std::shared_ptr<Texture>> m_textures;

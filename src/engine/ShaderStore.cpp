@@ -52,4 +52,13 @@ bool ShaderStore::contains(uint32_t id) const
     return m_shaders.contains(id);
 }
 
+auto ShaderStore::names() const -> std::vector<std::string>
+{
+    std::vector<std::string> names;
+    for (const auto& [id, shader] : m_shaders) {
+        names.push_back(shader->name());
+    }
+    return names;
+}
+
 }

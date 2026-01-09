@@ -57,6 +57,8 @@ private slots:
     void onDisable();
 
     void onSaveScene();
+    void onSelectScene();
+    void onAddScene();
 
 protected:
     void moveEvent(QMoveEvent* event) override;

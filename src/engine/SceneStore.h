@@ -20,8 +20,9 @@ public:
 
     auto get(uint32_t id) const -> std::optional<std::shared_ptr<Scene>>;
     auto get(const std::string& name) const -> std::optional<std::shared_ptr<Scene>>;
-    void add(uint32_t id, std::unique_ptr<Scene> scene);
+    void add(uint32_t id, std::shared_ptr<Scene> scene);
     void remove(uint32_t id);
+    auto getAll() const -> std::unordered_map<uint32_t, std::shared_ptr<Scene>>;
 
 private:
     std::unordered_map<uint32_t, std::shared_ptr<Scene>> m_scenes;

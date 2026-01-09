@@ -19,19 +19,7 @@ MouseEventFilterComponent::MouseEventFilterComponent(uint32_t id, const std::str
 
 void MouseEventFilterComponent::init()
 {
-    auto ctx = context().lock();
-
-    if (ctx != nullptr) {
-        ctx->inputManager->registerMouseHandler(m_key, [this](int action, int x, int y) {
-            Logger::info("{}: mouse click cb", __FUNCTION__);
-            if (action == m_action) {
-                mouse_cursor_x_pos = x;
-                mouse_cursor_y_pos = y;
-
-                m_update_mouse_position = true;
-            }
-        });
-    }
+    registerMouseHandler();
 
     auto node = getNode();
 
@@ -57,26 +45,7 @@ void MouseEventFilterComponent::init()
 
 void MouseEventFilterComponent::update(uint64_t dt)
 {
-    if (!m_update_mouse_position) {
-        return;
-    }
-    m_update_mouse_position = false;
-
-    auto node_scale = m_transform->getScale();
-    auto texture_size = m_material->textureSize();
-    texture_size.first *= std::fabs(node_scale.x) / 2.0f;
-    texture_size.second *= std::fabs(node_scale.y) / 2.0f;
-
-    auto absolute_node_position = m_node_positioning_helper->getAbsoluteNodePosition();
-    if (!absolute_node_position.has_value()) {
-        return;
-    }
-    auto absolute_node_position_value = absolute_node_position.value();
-
-    if ((absolute_node_position_value.first - texture_size.first < mouse_cursor_x_pos && mouse_cursor_x_pos < absolute_node_position_value.first + texture_size.first) &&
-       (absolute_node_position_value.second - texture_size.second < mouse_cursor_y_pos && mouse_cursor_y_pos < absolute_node_position_value.second + texture_size.second)) {
-        Logger::info("{}: mouse click on {}", __FUNCTION__, id());
-    }
+    
 }
 
 [[nodiscard]]
@@ -127,12 +96,78 @@ int MouseEventFilterComponent::action() const
 
 void MouseEventFilterComponent::setKey(int key)
 {
+    auto ctx = context().lock();
+    if (ctx != nullptr) {
+        ctx->inputManager->unregisterMouseHandler(m_key);
+    }
     m_key = key;
+    registerMouseHandler();
 }
 
 void MouseEventFilterComponent::setAction(int action)
 {
     m_action = action;
+}
+
+void MouseEventFilterComponent::setMouseClickCallback(const std::function<void(int, int)>& callback)
+{
+    m_mouse_click_callback = callback;
+}
+
+void MouseEventFilterComponent::clearMouseClickCallback()
+{
+    m_mouse_click_callback = nullptr;
+}
+
+void MouseEventFilterComponent::registerMouseHandler()
+{
+    auto ctx = context().lock();
+
+    if (ctx != nullptr) {
+        ctx->inputManager->registerMouseHandler(m_key, [this](int action, int x, int y) {
+                Logger::info("{}: mouse click cb", __FUNCTION__);
+                if (action == m_action) {
+                    auto node_scale = m_transform->getScale();
+                    auto texture_size = m_material->textureSize();
+                    texture_size.first *= std::fabs(node_scale.x) / 2.0f;
+                    texture_size.second *= std::fabs(node_scale.y) / 2.0f;
+
+                    auto absolute_node_position = m_node_positioning_helper->getAbsoluteNodePosition();
+                    if (!absolute_node_position.has_value()) {
+                        return;
+                    }
+                    auto absolute_node_position_value = absolute_node_position.value();
+
+                    float rotation_z_degrees = m_transform->getRotation().z;
+                    if (auto node = getNode(); node.has_value()) {
+                        auto parent_node = node.value()->getParentNode();
+                        while (parent_node.has_value()) {
+                            if (auto parent_node_transform = parent_node.value()->getComponent<TransformComponent>(); parent_node_transform.has_value()) {
+                                rotation_z_degrees += parent_node_transform.value()->getRotation().z;
+                            }
+                            parent_node = parent_node.value()->getParentNode();
+                        }
+                    }
+
+                    const float theta = glm::radians(rotation_z_degrees);
+                    const float c = std::cos(theta);
+                    const float s = std::sin(theta);
+
+                    const float dx = static_cast<float>(x) - absolute_node_position_value.first;
+                    const float dy = static_cast<float>(y) - absolute_node_position_value.second;
+
+                    const float lx = dx * c + dy * s;
+                    const float ly = -dx * s + dy * c;
+
+                    if (std::fabs(lx) <= texture_size.first && std::fabs(ly) <= texture_size.second) {
+                        Logger::info("{}: mouse click on {}", __FUNCTION__, id());
+                        if (m_mouse_click_callback) {
+                            m_mouse_click_callback(x, y);
+                        }
+                    }
+                }
+            });
+    }
 }
 
 }

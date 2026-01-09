@@ -12,6 +12,7 @@ namespace engine {
 struct Context;
 class Component;
 class Node;
+class SceneConfig;
 
 class Scene {
 public:
@@ -72,6 +73,6 @@ private:
 
 auto saveSceneToFile(const std::shared_ptr<Scene>& scene, const std::filesystem::path& path) -> bool;
 
-auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::path& path) -> std::optional<std::unique_ptr<Scene>>;
+auto buildScene(const std::shared_ptr<Context>& context, const std::shared_ptr<SceneConfig>& scene_config) -> std::optional<std::unique_ptr<Scene>>;
 
 }

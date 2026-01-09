@@ -20,7 +20,7 @@ class MouseEventFilterComponent;
 class ComponentBuilder {
 public:
     static auto componentTypes() -> const std::vector<std::string>&;
-    static auto buildFromJson(const std::string& type, rapidjson::Value& component) -> std::optional<std::unique_ptr<Component>>;
+    static auto buildFromJson(const std::string& type, const rapidjson::Value& component) -> std::optional<std::unique_ptr<Component>>;
     static void saveToJson(const std::shared_ptr<Component>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator);
 
     template<typename T>

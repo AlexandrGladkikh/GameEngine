@@ -311,7 +311,7 @@ bool Node::hasComponent(const std::string& type) const
     return false;
 }
 
-auto buildNode(rapidjson::Value& node_json) -> std::optional<std::unique_ptr<Node>>
+auto buildNode(const rapidjson::Value& node_json) -> std::optional<std::unique_ptr<Node>>
 {
     Logger::info(__FUNCTION__);
 

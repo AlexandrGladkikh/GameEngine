@@ -7,6 +7,7 @@
 namespace engine {
 
 struct Context;
+class SceneConfig;
 
 class SceneTransition final {
 public:
@@ -17,7 +18,7 @@ public:
     SceneTransition& operator=(const SceneTransition&) = delete;
     SceneTransition& operator=(SceneTransition&&) = delete;
 
-    bool transition(const std::unordered_map<uint32_t, std::filesystem::path>& scene_infos, uint32_t scene_id_from, uint32_t scene_id_to);
+    bool transition(const std::unordered_map<uint32_t, std::shared_ptr<SceneConfig>>& scene_infos, uint32_t scene_id_from, uint32_t scene_id_to);
 
 private:
     std::shared_ptr<Context> m_context;

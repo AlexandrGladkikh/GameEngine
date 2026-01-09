@@ -51,4 +51,13 @@ bool TextureStore::contains(uint32_t id) const
     return m_textures.contains(id);
 }
 
+auto TextureStore::names() const -> std::vector<std::string>
+{
+    std::vector<std::string> names;
+    for (const auto& [id, texture] : m_textures) {
+        names.push_back(texture->name());
+    }
+    return names;
+}
+
 }

@@ -8,11 +8,11 @@
 
 namespace engine {
 
-auto SceneLoader::loadScene(const std::shared_ptr<Context>& context, const std::filesystem::path& path) -> std::optional<std::unique_ptr<Scene>>
+auto SceneLoader::loadScene(const std::shared_ptr<Context>& context, const std::shared_ptr<SceneConfig>& scene_config) -> std::optional<std::unique_ptr<Scene>>
 {
     Logger::info(__FUNCTION__);
 
-    auto scene = buildScene(context, path);
+    auto scene = buildScene(context, scene_config);
 
     if (!scene.has_value()) {
         return std::nullopt;

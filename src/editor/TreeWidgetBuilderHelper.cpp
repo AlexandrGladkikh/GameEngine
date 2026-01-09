@@ -37,8 +37,11 @@ void TreeWidgetBuilderHelper::subscribeOnActiveSceneItem(QWidget* widget, const 
     m_engine_observer->addHandler(id, [updater, opacity_effect]() {
         opacity_effect->setOpacity(updater() ? 1.0f : 0.5f);
     });
-    QObject::connect(widget, &QObject::destroyed, [this, id]() {
-        m_engine_observer->removeHandler(id);
+    std::weak_ptr<EngineObserver> observer_weak = m_engine_observer;
+    QObject::connect(widget, &QObject::destroyed, [observer_weak, id]() {
+        if (auto observer = observer_weak.lock(); observer) {
+            observer->removeHandler(id);
+        }
     });
 }
 

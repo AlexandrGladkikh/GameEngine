@@ -14,7 +14,7 @@
 
 namespace engine {
 
-auto buildMaterialComponent(rapidjson::Value& componentData) -> std::optional<std::unique_ptr<MaterialComponent>>
+auto buildMaterialComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<MaterialComponent>>
 {
     auto id = componentData["id"].GetUint();
     auto name = componentData["name"].GetString();
@@ -45,7 +45,7 @@ auto saveMaterialComponent(const std::shared_ptr<MaterialComponent>& component, 
     component_json.AddMember("texture", component->textureId(), allocator);
 }
 
-auto buildMeshComponent(rapidjson::Value& componentData) -> std::optional<std::unique_ptr<MeshComponent>>
+auto buildMeshComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<MeshComponent>>
 {
     auto id = componentData["id"].GetUint();
     auto name = componentData["name"].GetString();
@@ -73,7 +73,7 @@ auto saveMeshComponent(const std::shared_ptr<MeshComponent>& component, rapidjso
     component_json.AddMember("mesh", component->meshId(), allocator);
 }
 
-auto buildCameraComponent(rapidjson::Value& componentData) -> std::optional<std::unique_ptr<CameraComponent>>
+auto buildCameraComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<CameraComponent>>
 {
     auto id = componentData["id"].GetUint();
     auto name = componentData["name"].GetString();
@@ -118,7 +118,7 @@ void saveCameraComponent(const std::shared_ptr<CameraComponent>& component, rapi
     component_json.AddMember("projection", projection, allocator);
 }
 
-auto buildTransformComponent(rapidjson::Value& componentData) -> std::optional<std::unique_ptr<TransformComponent>>
+auto buildTransformComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<TransformComponent>>
 {
     Logger::info(__FUNCTION__);
 
@@ -173,7 +173,7 @@ void saveTransformComponent(const std::shared_ptr<TransformComponent>& component
     component_json.AddMember("scale", scale, allocator);
 }
 
-auto buildFlipbookAnimationComponent(rapidjson::Value& componentData) -> std::optional<std::unique_ptr<FlipbookAnimationComponent>>
+auto buildFlipbookAnimationComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<FlipbookAnimationComponent>>
 {
     Logger::info(__FUNCTION__);
 
@@ -224,7 +224,7 @@ void saveFlipbookAnimationComponent(const std::shared_ptr<FlipbookAnimationCompo
     component_json.AddMember("update_time", component->updateTime(), allocator);
 }
 
-auto buildMouseEventFilterComponent(rapidjson::Value& componentData) -> std::optional<std::unique_ptr<Component>>
+auto buildMouseEventFilterComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<Component>>
 {
     Logger::info(__FUNCTION__);
 
@@ -261,7 +261,7 @@ auto ComponentBuilder::componentTypes() -> const std::vector<std::string>&
     return types;
 }
 
-auto ComponentBuilder::buildFromJson(const std::string& type, rapidjson::Value& component) -> std::optional<std::unique_ptr<Component>>
+auto ComponentBuilder::buildFromJson(const std::string& type, const rapidjson::Value& component) -> std::optional<std::unique_ptr<Component>>
 {
     Logger::info(std::string(__FUNCTION__) + " component type: {}", type);
 

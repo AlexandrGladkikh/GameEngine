@@ -25,7 +25,7 @@ auto SceneStore::get(const std::string& name) const -> std::optional<std::shared
     return it->second;
 }
 
-void SceneStore::add(uint32_t id, std::unique_ptr<Scene> scene)
+void SceneStore::add(uint32_t id, std::shared_ptr<Scene> scene)
 {
     m_scenes.insert({id, std::move(scene)});
 }
@@ -33,6 +33,11 @@ void SceneStore::add(uint32_t id, std::unique_ptr<Scene> scene)
 void SceneStore::remove(uint32_t id)
 {
     m_scenes.erase(id);
+}
+
+auto SceneStore::getAll() const -> std::unordered_map<uint32_t, std::shared_ptr<Scene>>
+{
+    return m_scenes;
 }
 
 }

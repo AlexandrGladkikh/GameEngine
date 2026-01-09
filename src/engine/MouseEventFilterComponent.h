@@ -4,6 +4,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <functional>
 
 namespace engine {
 
@@ -36,18 +37,20 @@ public:
     void setKey(int key);
     void setAction(int action);
 
+    void setMouseClickCallback(const std::function<void(int, int)>& callback);
+    void clearMouseClickCallback();
+
 private:
+    void registerMouseHandler();
+
     std::shared_ptr<TransformComponent> m_transform;
     std::shared_ptr<MaterialComponent> m_material;
     std::shared_ptr<NodePositioningHelper> m_node_positioning_helper;
 
-    int32_t mouse_cursor_x_pos = 0;
-    int32_t mouse_cursor_y_pos = 0;
-
-    bool m_update_mouse_position = false;
-
     int m_key = 0;
     int m_action = 0;
+
+    std::function<void(int, int)> m_mouse_click_callback;
 };
 
 }

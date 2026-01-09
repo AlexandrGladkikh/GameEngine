@@ -14,6 +14,7 @@
 #include "engine/ComponentBuilder.h"
 #include "engine/UserComponentsBuilder.h"
 #include "engine/Window.h"
+#include "engine/SceneConfig.h"
 
 #include <QTreeWidget>
 #include <QMenu>
@@ -394,6 +395,70 @@ void SceneNodeTree::onSaveScene()
     m_engine->saveScene(m_engine->getActiveSceneId());
 }
 
+void SceneNodeTree::onSelectScene()
+{
+    auto scenes_info = m_engine->getScenesInfo();
+    QStringList scene_names;
+
+    uint32_t index = 0;
+    for (const auto& scene : scenes_info) {
+        scene_names.append(QString::fromStdString(scene.second->name()));
+        if (scene.second->id() == m_engine->getActiveSceneId()) {
+            index = scene_names.size() - 1;
+        }
+    }
+
+    bool ok = false;
+    QString selected_scene = QInputDialog::getItem(this, "Select scene",
+        "Scene:", scene_names, index, false, &ok);
+
+    if (!ok || selected_scene.isEmpty()) {
+        return;
+    }
+
+    uint32_t selected_scene_id = -1;
+    for (const auto& scene : scenes_info) {
+        if (scene.second->name() == selected_scene.toStdString()) {
+            selected_scene_id = scene.second->id();
+            break;
+        }
+    }
+
+    if (selected_scene_id == -1 || selected_scene_id == m_engine->getActiveSceneId()) {
+        return;
+    }
+
+    m_engine->changeActiveScene(selected_scene_id);
+    auto ctx = m_engine->context();
+    auto selected = ctx->sceneStore->get(selected_scene_id);
+    if (!selected.has_value()) {
+        return;
+    }
+    build(selected);
+}
+
+void SceneNodeTree::onAddScene()
+{
+    bool ok = false;
+    QString scene_name = QInputDialog::getText(this, "Add scene",
+        "Scene name", QLineEdit::Normal, "New scene", &ok);
+
+    if (!ok || scene_name.isEmpty()) {
+        return;
+    }
+
+    uint32_t id = m_engine->addEmptyScene(scene_name.toStdString(), "../configs/scenes/" + scene_name.toStdString() + ".json");
+
+    m_engine->changeActiveScene(id);
+
+    auto ctx = m_engine->context();
+    auto new_scene = ctx->sceneStore->get(scene_name.toStdString());
+    if (!new_scene.has_value()) {
+        return;
+    }
+    build(new_scene.value());
+}
+
 void SceneNodeTree::moveEvent(QMoveEvent* event)
 {
     QMainWindow::moveEvent(event);
@@ -445,6 +510,10 @@ void SceneNodeTree::initMenuBar()
 {
     QMenu* fileMenu = menuBar()->addMenu("&File");
     fileMenu->addAction("&Save Scene", this, &SceneNodeTree::onSaveScene);
+    fileMenu->addAction("&Select Scene", this, &SceneNodeTree::onSelectScene);
+    fileMenu->addAction("&Add Scene", this, &SceneNodeTree::onAddScene);
+    fileMenu->addSeparator();
+    fileMenu->addAction("&Exit", this, &SceneNodeTree::close);
 }
 
 void SceneNodeTree::initHeaderContextMenu()

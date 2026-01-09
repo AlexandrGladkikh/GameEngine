@@ -10,6 +10,7 @@
 #include "Logger.h"
 #include "Component.h"
 #include "ResourcePackage.h"
+#include "SceneConfig.h"
 
 #include <algorithm>
 #include <ranges>
@@ -22,7 +23,7 @@ SceneTransition::SceneTransition(const std::shared_ptr<Context>& context) :
     
 }
 
-bool SceneTransition::transition(const std::unordered_map<uint32_t, std::filesystem::path>& scene_infos, uint32_t scene_id_from, uint32_t scene_id_to)
+bool SceneTransition::transition(const std::unordered_map<uint32_t, std::shared_ptr<SceneConfig>>& scene_infos, uint32_t scene_id_from, uint32_t scene_id_to)
 {
     Logger::info(__FUNCTION__);
 

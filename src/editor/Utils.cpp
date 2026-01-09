@@ -9,6 +9,7 @@
 #include <QTimer>
 #include <QPushButton>
 #include <QMimeData>
+#include <QComboBox>
 
 #include <iomanip>
 
@@ -45,47 +46,80 @@ bool DropFilter::eventFilter(QObject* obj, QEvent* event)
     return QObject::eventFilter(obj, event);
 }
 
-ComponentWidget* createLabelLineEditorWidget(const std::string& label, const std::string& value,
-    const std::function<void(const std::string&)>& changeHandler, const std::function<std::string()>& updateHandler, const std::shared_ptr<EngineObserver>& observer, bool acceptDrag)
+ComponentWidget* createLabelLineEditorWidget(const EditorBlockLayoutData& data, const std::shared_ptr<EngineObserver>& observer)
 {
     ComponentWidget* widget = new ComponentWidget;
 
     QHBoxLayout* layout = new QHBoxLayout;
     layout->setSpacing(1);
     layout->setContentsMargins(0, 0, 0, 0);
-    layout->addWidget(new QLabel(label.c_str()));
-    auto* lineEditor = new QLineEdit(value.c_str());
-    if (acceptDrag) {
-        lineEditor->setAcceptDrops(true);
-        DropFilter* filter = new DropFilter(lineEditor);
-        lineEditor->installEventFilter(filter);
-    } else {
-        lineEditor->setAcceptDrops(false);
-    }
+    layout->addWidget(new QLabel(data.name.c_str()));
 
-    if (updateHandler) {
-        std::uintptr_t id = reinterpret_cast<std::uintptr_t>(lineEditor);
-        observer->addHandler(id, [lineEditor, updateHandler]() {
-            if (lineEditor->hasFocus()) {
-                return;
+    if (data.showComboBox) {
+        QComboBox* combo = new QComboBox;
+        combo->setEditable(true);
+        combo->setInsertPolicy(QComboBox::NoInsert);
+
+        for (const auto& value : data.comboBoxValues) {
+            combo->addItem(value.c_str());
+        }
+
+        combo->setCurrentText(data.value.c_str());
+        if (data.acceptDrag) {
+            if (auto* lineEditor = combo->lineEdit()) {
+                lineEditor->setAcceptDrops(true);
+                DropFilter* filter = new DropFilter(lineEditor);
+                lineEditor->installEventFilter(filter);
             }
-            auto new_text = lineEditor->text();
-            auto current_text = updateHandler();
-            if (!current_text.empty() && new_text != current_text) {
-                lineEditor->setText(current_text.c_str());
-            }
+        }
+
+        QObject::connect(combo, &QComboBox::currentTextChanged, [data](const QString& value) {
+            if (data.changeHandler) data.changeHandler(value.toStdString());
         });
-
-        QObject::connect(lineEditor, &QObject::destroyed, [observer, id]() {
+        QObject::connect(combo->lineEdit(), &QLineEdit::textChanged, [data](const QString& value) {
+            if (data.changeHandler) data.changeHandler(value.toStdString());
+        });
+        std::uintptr_t id = reinterpret_cast<uintptr_t>(combo);
+        QObject::connect(combo, &QObject::destroyed, [observer, id]() {
             observer->removeHandler(id);
         });
+
+        layout->addWidget(combo);
+    } else {
+        auto* lineEditor = new QLineEdit(data.value.c_str());
+        if (data.acceptDrag) {
+            lineEditor->setAcceptDrops(true);
+            DropFilter* filter = new DropFilter(lineEditor);
+            lineEditor->installEventFilter(filter);
+        } else {
+            lineEditor->setAcceptDrops(false);
+        }
+
+        if (data.updateHandler) {
+            std::uintptr_t id = reinterpret_cast<std::uintptr_t>(lineEditor);
+            observer->addHandler(id, [lineEditor, data]() {
+                if (lineEditor->hasFocus()) {
+                    return;
+                }
+                auto new_text = lineEditor->text();
+                auto current_text = data.updateHandler();
+                if (!current_text.empty() && new_text != current_text) {
+                    lineEditor->setText(current_text.c_str());
+                }
+            });
+
+            QObject::connect(lineEditor, &QObject::destroyed, [observer, id]() {
+                observer->removeHandler(id);
+            });
+        }
+        if (data.changeHandler) {
+            QObject::connect(lineEditor, &QLineEdit::textChanged, [data](const QString& value) {
+                data.changeHandler(value.toStdString());
+            });
+        }
+
+        layout->addWidget(lineEditor);
     }
-    if (changeHandler) {
-        QObject::connect(lineEditor, &QLineEdit::textChanged, [changeHandler](const QString& value) {
-            changeHandler(value.toStdString());
-        });
-    }
-    layout->addWidget(lineEditor);
 
     widget->setLayout(layout);
 
@@ -129,10 +163,37 @@ void setupEditorBlockLayout(QHBoxLayout* layout, const std::string& title, const
     }
 
     for (const auto& item : data) {
-        layout->addWidget(createLabelLineEditorWidget(item.name, item.value, item.changeHandler, item.updateHandler, observer, item.acceptDrag));
+        layout->addWidget(createLabelLineEditorWidget(item, observer));
     }
 
     layout->addStretch();
+}
+
+ComponentWidget* createComboBoxWidget(const std::string& title, const std::vector<std::string>& names, const std::function<void(const std::string&)>& handler)
+{
+    ComponentWidget* widget = new ComponentWidget;
+    QHBoxLayout* layout = new QHBoxLayout;
+    layout->setSpacing(1);
+    layout->setContentsMargins(0, 0, 0, 0);
+
+    auto label = new QLabel(title.c_str());
+    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    layout->addWidget(label);
+
+    QComboBox* combo = new QComboBox;
+    layout->addWidget(combo);
+
+    for (const auto& name : names) {
+        combo->addItem(name.c_str());
+    }
+
+    QObject::connect(combo, &QComboBox::currentIndexChanged, [combo, handler](int index) {
+        handler(combo->currentText().toStdString());
+    });
+
+    widget->setLayout(layout);
+
+    return widget;
 }
 
 std::string formatFloat(float value, uint32_t precision)

@@ -17,6 +17,8 @@
 #include "engine/Node.h"
 #include "engine/Helpers.h"
 #include "engine/Utils.h"
+#include "engine/TextureStore.h"
+#include "engine/ShaderStore.h"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -226,13 +228,13 @@ ComponentWidget* TreeWidgetBuilder::buildMaterialWidget(const std::shared_ptr<en
     };
 
     std::vector<EditorBlockLayoutData> texture_data = {
-        { "texture", material->textureName(), textureChangeHandler, textureUpdater, true },
+        { "texture", material->textureName(), textureChangeHandler, textureUpdater, true, true, material->context().lock()->textureStore->names() },
     };
     auto texture_layout = createEditorBlockLayout("Texture", texture_data, m_engine_observer);
     layout->addLayout(texture_layout);
 
     std::vector<EditorBlockLayoutData> shader_data = {
-        { "shader", material->shaderName(), shaderChangeHandler, shaderUpdater },
+        { "shader", material->shaderName(), shaderChangeHandler, shaderUpdater, true, true, material->context().lock()->shaderStore->names() },
     };
     auto shader_layout = createEditorBlockLayout("Shader", shader_data, m_engine_observer);
     layout->addLayout(shader_layout);
@@ -577,49 +579,26 @@ ComponentWidget* TreeWidgetBuilder::buildMouseEventFilterWidget(const std::share
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(label);
 
-    auto keyChangeHandler = [mouse_event_filter](const std::string& value) {
-        uint32_t new_key = 0;
-        if (!parseUint32(value, new_key)) {
-            return;
-        }
-
-        mouse_event_filter->setKey(new_key);
+    std::vector<std::string> keys = { "MouseButtonLeft", "MouseButtonRight", "MouseButtonMiddle" };
+    std::map<std::string, int> keys_map = { {"MouseButtonLeft", 0},
+                                            {"MouseButtonRight", 1},
+                                            {"MouseButtonMiddle", 2}
+                                          };
+    std::function<void(const std::string&)> key_handler = [mouse_event_filter, keys_map](const std::string& value) {
+        mouse_event_filter->setKey(keys_map.at(value));
     };
+    auto key_widget = createComboBoxWidget("Key", keys, key_handler);
+    layout->addWidget(key_widget);
 
-    auto actionChangeHandler = [mouse_event_filter](const std::string& value) {
-        uint32_t new_action = 0;
-        if (!parseUint32(value, new_action)) {
-            return;
-        }
-
-        mouse_event_filter->setAction(new_action);
+    std::vector<std::string> actions = { "Press", "Release", "Repeat" };
+    std::map<std::string, int> actions_map = { {"Press", 1},
+                                               {"Release", 0},
+                                               {"Repeat", 2} };
+    std::function<void(const std::string&)> action_handler = [mouse_event_filter, actions_map](const std::string& value) {
+        mouse_event_filter->setAction(actions_map.at(value));
     };
-
-    auto keyUpdater = [mouse_event_filter]() {
-        if (!mouse_event_filter->isValid()) {
-            return std::string();
-        }
-        return formatUint32(mouse_event_filter->key());
-    };
-
-    auto actionUpdater = [mouse_event_filter]() {
-        if (!mouse_event_filter->isValid()) {
-            return std::string();
-        }
-        return formatUint32(mouse_event_filter->action());
-    };
-
-    std::vector<EditorBlockLayoutData> key_data = {
-        { "key", formatUint32(mouse_event_filter->key()), keyChangeHandler, keyUpdater }
-    };
-    auto key_layout = createEditorBlockLayout("Key", key_data, m_engine_observer);
-    layout->addLayout(key_layout);
-
-    std::vector<EditorBlockLayoutData> action_data = {
-        { "action", formatUint32(mouse_event_filter->action()), actionChangeHandler, actionUpdater }
-    };
-    auto action_layout = createEditorBlockLayout("Action", action_data, m_engine_observer);
-    layout->addLayout(action_layout);
+    auto action_widget = createComboBoxWidget("Action", actions, action_handler);
+    layout->addWidget(action_widget);
 
     layout->addStretch();
 

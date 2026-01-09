@@ -7,6 +7,7 @@
 #include "Context.h"
 #include "UserComponentsBuilder.h"
 #include "Utils.h"
+#include "SceneConfig.h"
 
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
@@ -208,10 +209,6 @@ void Scene::addResource(uint32_t id)
 
 auto saveSceneToFile(const std::shared_ptr<Scene>& scene, const std::filesystem::path& path) -> bool
 {
-    if (!FileSystem::isFile(path)) {
-        return false;
-    }
-
     if (FileSystem::exists(path)) {
         FileSystem::removeFile(path);
     }
@@ -226,7 +223,13 @@ auto saveSceneToFile(const std::shared_ptr<Scene>& scene, const std::filesystem:
     document.AddMember("id", scene->id(), document.GetAllocator());
     document.AddMember("name", value, document.GetAllocator());
 
-    document.AddMember("root", scene->getRoot().value()->id(), document.GetAllocator());
+    auto root_node = scene->getRoot();
+    uint32_t root_id = -1;
+    if (root_node.has_value()) {
+        root_id = root_node.value()->id();
+    }
+
+    document.AddMember("root", root_id, document.GetAllocator());
 
     rapidjson::Value nodes(rapidjson::kArrayType);
     for (const auto& node : scene->getNodes()) {
@@ -266,23 +269,13 @@ auto saveSceneToFile(const std::shared_ptr<Scene>& scene, const std::filesystem:
     return file.writeText(buffer.GetString());
 }
 
-auto buildScene(const std::shared_ptr<Context>& context, const std::filesystem::path &path) -> std::optional<std::unique_ptr<Scene>>
+auto buildScene(const std::shared_ptr<Context>& context, const std::shared_ptr<SceneConfig>& scene_config) -> std::optional<std::unique_ptr<Scene>>
 {
     Logger::info(__FUNCTION__);
 
-    if (!FileSystem::exists(path) || !FileSystem::isFile(path)) {
-        Logger::error("buildScene() File not found: {}", path.string());
-        return std::nullopt;
-    }
-
-    auto file = FileSystem::file(path, std::ios::in | std::ios::binary);
-    auto text = file.readText();
-
-    rapidjson::Document document;
-    document.Parse(text.c_str());
-
-    auto id = document["id"].GetUint();
-    auto name = document["name"].GetString();
+    const auto& document = scene_config->document();
+    auto id = scene_config->id();
+    auto name = scene_config->name();
 
     auto scene = std::make_unique<Scene>(context, id, name);
 

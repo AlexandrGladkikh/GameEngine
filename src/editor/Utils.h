@@ -22,6 +22,9 @@ struct EditorBlockLayoutData {
     std::function<void(const std::string&)> changeHandler;
     std::function<std::string()> updateHandler;
     bool acceptDrag = false;
+
+    bool showComboBox = false;
+    std::vector<std::string> comboBoxValues;
 };
 
 class DropFilter : public QObject
@@ -33,13 +36,14 @@ protected:
     bool eventFilter(QObject* obj, QEvent* event) override;
 };
 
-ComponentWidget* createLabelLineEditorWidget(const std::string& label, const std::string& value,
-    const std::function<void(const std::string&)>& changeHandler, const std::function<std::string()>& updateHandler, const std::shared_ptr<EngineObserver>& observer, bool acceptDrag);
+ComponentWidget* createLabelLineEditorWidget(const EditorBlockLayoutData& data, const std::shared_ptr<EngineObserver>& observer);
 
 ComponentWidget* createButtonLineWidget(const std::vector<std::string>& names, const std::vector<std::function<void()>>& handlers);
 
 QHBoxLayout* createEditorBlockLayout(const std::string& title, const std::vector<EditorBlockLayoutData>& data, const std::shared_ptr<EngineObserver>& observer);
 void setupEditorBlockLayout(QHBoxLayout* layout, const std::string& title, const std::vector<EditorBlockLayoutData>& data, const std::shared_ptr<EngineObserver>& observer);
+
+ComponentWidget* createComboBoxWidget(const std::string& title, const std::vector<std::string>& names, const std::function<void(const std::string&)>& handler);
 
 std::string formatFloat(float value, uint32_t precision = 2);
 bool parseFloat(const std::string& value, float& out);

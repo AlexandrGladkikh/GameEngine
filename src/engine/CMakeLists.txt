@@ -71,6 +71,8 @@ add_library(engine
         MouseEventFilterComponent.cpp
         NodePositioningHelper.cpp
         NodePositioningHelper.h
+        SceneConfig.cpp
+        SceneConfig.h
 )
 
 get_filename_component(THIRD_PARTIES_DIR ${CMAKE_CURRENT_LIST_DIR}/../../../3rdparts/ ABSOLUTE)

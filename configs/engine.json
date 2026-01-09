@@ -8,8 +8,12 @@
     {
       "id": 1,
       "path": "../configs/main_scene.json"
+    },
+    {
+      "id": 2,
+      "path": "../configs/scenes/New scene.json"
     }
   ],
-  "main_scene_id": 1,
+  "main_scene_id": 2,
   "resource_packages": "../configs/packages_info.json"
 }

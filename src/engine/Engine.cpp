@@ -1,22 +1,24 @@
 #include "Engine.h"
 
+#include "Component.h"
 #include "Context.h"
-#include "Window.h"
-#include "MeshStore.h"
-#include "ShaderStore.h"
-#include "TextureStore.h"
-#include "ResourcePackageStore.h"
-#include "SceneStore.h"
 #include "FileSystem.h"
-#include "SceneTransition.h"
-#include "Renderer.h"
 #include "InputManager.h"
 #include "Logger.h"
-#include "Scene.h"
-#include "Component.h"
-#include "UserComponentsBuilder.h"
+#include "MeshStore.h"
 #include "Node.h"
+#include "Renderer.h"
 #include "ResourcePackage.h"
+#include "ResourcePackageStore.h"
+#include "Scene.h"
+#include "SceneStore.h"
+#include "SceneTransition.h"
+#include "ShaderStore.h"
+#include "TextureStore.h"
+#include "UserComponentsBuilder.h"
+#include "Utils.h"
+#include "Window.h"
+#include "SceneConfig.h"
 
 #include <rapidjson/document.h>
 
@@ -37,7 +39,7 @@ std::optional<std::unique_ptr<Window>> configWindow(const rapidjson::Value& valu
     return window;
 }
 
-bool configScenesInfo(const rapidjson::Value& value, std::unordered_map<uint32_t, std::filesystem::path>& infos)
+bool configScenesInfo(const rapidjson::Value& value, std::unordered_map<uint32_t, std::shared_ptr<SceneConfig>>& infos, std::unordered_map<uint32_t, uint32_t>& engine_config_scene_id_to_scene_id)
 {
     Logger::info(__FUNCTION__);
 
@@ -46,8 +48,10 @@ bool configScenesInfo(const rapidjson::Value& value, std::unordered_map<uint32_t
         return false;
     }
 
-    for (const auto& scene : value.GetArray()) {
-        infos[scene["id"].GetUint()] = scene["path"].GetString();
+    for (const auto& scene_info : value.GetArray()) {
+        auto scene_config = std::make_shared<SceneConfig>(scene_info["path"].GetString());
+        engine_config_scene_id_to_scene_id[scene_info["id"].GetUint()] = scene_config->id();
+        infos[scene_config->id()] = scene_config;
     }
 
     return true;
@@ -110,11 +114,11 @@ bool Engine::initialize(const std::filesystem::path& config_path)
 
     m_context->resourcePackageStore->initResourcePackagesInformation(document["resource_packages"].GetString());
 
-    if (!configScenesInfo(document["scenes"], m_scenes_info)) {
+    if (!configScenesInfo(document["scenes"], m_scenes_info, m_engine_config_scene_id_to_scene_id)) {
         return false;
     }
 
-    m_active_scene_id = document["main_scene_id"].GetUint();
+    m_active_scene_id = m_engine_config_scene_id_to_scene_id[document["main_scene_id"].GetUint()];
 
     return m_sceneTransition->transition(m_scenes_info, -1, m_active_scene_id);
 }
@@ -139,6 +143,19 @@ void Engine::run()
 
             if (resource_package.has_value()) {
                 loadResourcePackage(m_context, resource_package.value());
+            }
+        }
+
+        {
+            std::unique_lock<std::mutex> lock(m_scene_changed_mutex);
+            if (m_need_change_scene) {
+                uint32_t old_active_scene = m_active_scene_id;
+                m_active_scene_id = m_new_active_scene_id;
+                m_sceneTransition->transition(m_scenes_info, old_active_scene, m_active_scene_id);
+
+                m_need_change_scene = false;
+
+                m_scene_change_cv.notify_all();
             }
         }
 
@@ -201,6 +218,11 @@ auto Engine::getActiveSceneId() const -> uint32_t
     return m_active_scene_id;
 }
 
+auto Engine::getScenesInfo() const -> std::unordered_map<uint32_t, std::shared_ptr<SceneConfig>>
+{
+    return m_scenes_info;
+}
+
 bool Engine::saveScene(uint32_t id)
 {
     auto scene_info = m_scenes_info.find(id);
@@ -213,7 +235,33 @@ bool Engine::saveScene(uint32_t id)
         return false;
     }
 
-    return saveSceneToFile(scene.value(), scene_info->second);
+    return saveSceneToFile(scene.value(), scene_info->second->path());
+}
+
+uint32_t Engine::addEmptyScene(const std::string& name, const std::filesystem::path& path)
+{
+    auto scene = std::make_shared<Scene>(m_context, generateUniqueId(), name);
+    uint32_t id = scene->id();
+    saveSceneToFile(scene, path);
+    auto scene_config = std::make_shared<SceneConfig>(path);
+    m_context->sceneStore->add(id, std::move(scene));
+    m_scenes_info[scene_config->id()] = scene_config;
+    return id;
+}
+
+bool Engine::changeActiveScene(uint32_t id)
+{
+    std::unique_lock<std::mutex> lock(m_scene_changed_mutex);
+    if (m_active_scene_id == id) {
+        return true;
+    }
+
+    m_new_active_scene_id = id;
+
+    m_need_change_scene = true;
+    m_scene_change_cv.wait(lock, [this] { return !m_need_change_scene; });
+
+    return true;
 }
 
 void Engine::needReloadResourcePackage(uint32_t id)

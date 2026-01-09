@@ -34,6 +34,10 @@ void ComponentWidget::mousePressEvent(QMouseEvent* event)
 
 void ComponentWidget::mouseMoveEvent(QMouseEvent* event)
 {
+    if (!m_component) {
+        return;
+    }
+
     if (!(event->buttons() & Qt::LeftButton)) {
         return;
     }

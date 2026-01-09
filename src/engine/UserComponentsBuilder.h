@@ -14,7 +14,7 @@ class Component;
 class UserComponentsBuilder {
 public:
     virtual ~UserComponentsBuilder() = default;
-    virtual auto buildComponent(const std::string& type, rapidjson::Value& component) const -> std::optional<std::unique_ptr<Component>> = 0;
+    virtual auto buildComponent(const std::string& type, const rapidjson::Value& component) const -> std::optional<std::unique_ptr<Component>> = 0;
     virtual auto buildEmptyComponent(const std::string& type, const std::string& name, uint32_t owner_node, uint32_t owner_scene) -> std::optional<std::unique_ptr<Component>> = 0;
 
     virtual void saveToJson(const std::shared_ptr<Component>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator) const = 0;
