@@ -25,7 +25,7 @@ class TreeWidgetBuilder;
 class UserTreeWidgetBuilder;
 class ResourcePackagesEditor;
 
-class EngineObserver;
+class EngineController;
 
 class SceneNodeTree final : public QMainWindow {
 public:
@@ -59,6 +59,7 @@ private slots:
     void onSaveScene();
     void onSelectScene();
     void onAddScene();
+    void onEngineSettings();
 
 protected:
     void moveEvent(QMoveEvent* event) override;
@@ -79,7 +80,7 @@ private:
 
     engine::Engine* m_engine;
 
-    std::shared_ptr<EngineObserver> m_engine_observer;
+    std::shared_ptr<EngineController> m_engine_controller;
 
     std::shared_ptr<TreeWidgetBuilder> m_scene_tree_widget_builder;
     std::unique_ptr<UserTreeWidgetBuilder> m_user_tree_widget_builder;

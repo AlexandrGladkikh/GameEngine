@@ -1,11 +1,11 @@
 #include "NodeTreeWidgetBuilder.h"
 
 #include "editor/ComponentWidget.h"
+#include "editor/EngineController.h"
 #include "editor/NodeWidget.h"
 #include "editor/SceneNodeTree.h"
-#include "editor/Utils.h"
-#include "editor/EngineObserver.h"
 #include "editor/TreeWidgetBuilderHelper.h"
+#include "editor/Utils.h"
 
 #include "engine/TransformComponent.h"
 #include "engine/MeshComponent.h"
@@ -85,11 +85,11 @@ ComponentWidget* TreeWidgetBuilder::buildTransformWidget(const std::shared_ptr<e
     };
 
     std::vector<EditorBlockLayoutData> position_data = {
-        { "X", formatFloat(transform->getPosition().x), positionXChangeHandler, positionXUpdater },
-        { "Y", formatFloat(transform->getPosition().y), positionYChangeHandler, positionYUpdater },
-        { "Z", formatFloat(transform->getPosition().z), positionZChangeHandler, positionZUpdater },
+        { "X", formatFloat(transform->getPosition().x), positionXChangeHandler, positionXUpdater, false, false, {}, true, -1000.0f, 1000.0f },
+        { "Y", formatFloat(transform->getPosition().y), positionYChangeHandler, positionYUpdater, false, false, {}, true, -1000.0f, 1000.0f },
+        { "Z", formatFloat(transform->getPosition().z), positionZChangeHandler, positionZUpdater, false, false, {}, true, -1000.0f, 1000.0f },
     };
-    auto position_layout = createEditorBlockLayout("Position", position_data, m_engine_observer);
+    auto position_layout = createEditorBlockLayout("Position", position_data, m_engine_controller);
     layout->addLayout(position_layout);
 
     auto rotationXChangeHandler = [transform](const std::string& value) {
@@ -135,7 +135,7 @@ ComponentWidget* TreeWidgetBuilder::buildTransformWidget(const std::shared_ptr<e
         { "Y", formatFloat(transform->getRotation().y), rotationYChangeHandler, rotationYUpdater },
         { "Z", formatFloat(transform->getRotation().z), rotationZChangeHandler, rotationZUpdater },
     };
-    auto rotation_layout = createEditorBlockLayout("Rotation", rotation_data, m_engine_observer);
+    auto rotation_layout = createEditorBlockLayout("Rotation", rotation_data, m_engine_controller);
     layout->addLayout(rotation_layout);
 
     auto scaleXChangeHandler = [transform](const std::string& value) {
@@ -181,7 +181,7 @@ ComponentWidget* TreeWidgetBuilder::buildTransformWidget(const std::shared_ptr<e
         { "Y", formatFloat(transform->getScale().y), scaleYChangeHandler, scaleYUpdater },
         { "Z", formatFloat(transform->getScale().z), scaleZChangeHandler, scaleZUpdater },
     };
-    auto scale_layout = createEditorBlockLayout("Scale", scale_data, m_engine_observer);
+    auto scale_layout = createEditorBlockLayout("Scale", scale_data, m_engine_controller);
     layout->addLayout(scale_layout);
 
     layout->addStretch();
@@ -230,13 +230,13 @@ ComponentWidget* TreeWidgetBuilder::buildMaterialWidget(const std::shared_ptr<en
     std::vector<EditorBlockLayoutData> texture_data = {
         { "texture", material->textureName(), textureChangeHandler, textureUpdater, true, true, material->context().lock()->textureStore->names() },
     };
-    auto texture_layout = createEditorBlockLayout("Texture", texture_data, m_engine_observer);
+    auto texture_layout = createEditorBlockLayout("Texture", texture_data, m_engine_controller);
     layout->addLayout(texture_layout);
 
     std::vector<EditorBlockLayoutData> shader_data = {
         { "shader", material->shaderName(), shaderChangeHandler, shaderUpdater, true, true, material->context().lock()->shaderStore->names() },
     };
-    auto shader_layout = createEditorBlockLayout("Shader", shader_data, m_engine_observer);
+    auto shader_layout = createEditorBlockLayout("Shader", shader_data, m_engine_controller);
     layout->addLayout(shader_layout);
 
     layout->addStretch();
@@ -274,7 +274,7 @@ ComponentWidget* TreeWidgetBuilder::buildMeshWidget(const std::shared_ptr<engine
     std::vector<EditorBlockLayoutData> mesh_data = {
         { "mesh", mesh->meshName(), meshChangeHandler, meshUpdater },
     };
-    auto mesh_layout = createEditorBlockLayout("Mesh", mesh_data, m_engine_observer);
+    auto mesh_layout = createEditorBlockLayout("Mesh", mesh_data, m_engine_controller);
     layout->addLayout(mesh_layout);
 
     layout->addStretch();
@@ -392,7 +392,7 @@ ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engi
     ortho_data.push_back({ "near", formatFloat(ortho.near), orthoNearChangeHandler, orthoNearUpdater });
     ortho_data.push_back({ "far", formatFloat(ortho.far), orthoFarChangeHandler, orthoFarUpdater });
 
-    QHBoxLayout* ortho_layout = createEditorBlockLayout("Ortho", ortho_data, m_engine_observer);
+    QHBoxLayout* ortho_layout = createEditorBlockLayout("Ortho", ortho_data, m_engine_controller);
     layout->addLayout(ortho_layout);
 
     auto yawChangeHandler = [camera](const std::string& value) {
@@ -413,7 +413,7 @@ ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engi
         { "yaw", formatFloat(camera->getYaw()), yawChangeHandler, yawUpdater }
     };
 
-    QHBoxLayout* yaw_layout = createEditorBlockLayout("Yaw", yaw_data, m_engine_observer);
+    QHBoxLayout* yaw_layout = createEditorBlockLayout("Yaw", yaw_data, m_engine_controller);
     layout->addLayout(yaw_layout);
 
     auto pitchChangeHandler = [camera](const std::string& value) {
@@ -434,7 +434,7 @@ ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engi
         { "pitch", formatFloat(camera->getPitch()), pitchChangeHandler, pitchUpdater }
     };
 
-    QHBoxLayout* pitch_layout = createEditorBlockLayout("Pitch", pitch_data, m_engine_observer);
+    QHBoxLayout* pitch_layout = createEditorBlockLayout("Pitch", pitch_data, m_engine_controller);
     layout->addLayout(pitch_layout);
 
     layout->addStretch();
@@ -487,7 +487,7 @@ ComponentWidget* TreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shar
     std::vector<EditorBlockLayoutData> update_time_data = {
         { "update time", formatFloat(animation->updateTime()), updateTimeChangeHandler, updateTimeUpdater }
     };
-    QHBoxLayout* update_time_layout = createEditorBlockLayout("Update time", update_time_data, m_engine_observer);
+    QHBoxLayout* update_time_layout = createEditorBlockLayout("Update time", update_time_data, m_engine_controller);
     layout->addLayout(update_time_layout);
 
     std::shared_ptr<std::vector<QHBoxLayout*>> material_layouts(new std::vector<QHBoxLayout*>);
@@ -554,7 +554,7 @@ ComponentWidget* TreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shar
         std::vector<EditorBlockLayoutData> animation_data = {
             { "animation", init_value, materialChangeHandler, materialUpdater, true }
         };
-        setupEditorBlockLayout(material_layouts->at(i), "", animation_data, m_engine_observer);
+        setupEditorBlockLayout(material_layouts->at(i), "", animation_data, m_engine_controller);
         layout->addLayout(material_layouts->at(i));
     }
 
@@ -607,10 +607,10 @@ ComponentWidget* TreeWidgetBuilder::buildMouseEventFilterWidget(const std::share
     return mouse_event_filter_widget;
 }
 
-TreeWidgetBuilder::TreeWidgetBuilder(SceneNodeTree* scene_node_tree, const std::shared_ptr<EngineObserver>& engine_observer) :
+TreeWidgetBuilder::TreeWidgetBuilder(SceneNodeTree* scene_node_tree, const std::shared_ptr<EngineController>& engine_controller) :
     m_scene_node_tree(scene_node_tree),
-    m_engine_observer(engine_observer),
-    m_tree_widget_builder_helper(std::make_unique<TreeWidgetBuilderHelper>(engine_observer))
+    m_engine_controller(engine_controller),
+    m_tree_widget_builder_helper(std::make_unique<TreeWidgetBuilderHelper>(engine_controller))
 {
 
 }

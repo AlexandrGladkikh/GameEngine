@@ -122,13 +122,10 @@ ResourcePackagesEditor::ResourcePackagesEditor(engine::Engine* engine, QWidget* 
 
 void ResourcePackagesEditor::onDropNewPackageItems(const QStringList& files)
 {
-    m_engine->pause();
-
     auto context = m_engine->context();
     auto resource_package = context->resourcePackageStore->get(m_selected_package_id);
 
     if (!resource_package.has_value()) {
-        m_engine->resume();
         return;
     }
 
@@ -159,22 +156,17 @@ void ResourcePackagesEditor::onDropNewPackageItems(const QStringList& files)
     }
 
     m_selected_package_id = -1;
-
-    m_engine->resume();
 }
 
 void ResourcePackagesEditor::loadContent()
 {
     m_item_model->clear();
 
-    m_engine->pause();
-
     auto context = m_engine->context();
 
     auto& resource_packages = context->resourcePackageStore->getResourcePackages();
 
     if (resource_packages.empty()) {
-        m_engine->resume();
         return;
     }
 
@@ -197,8 +189,6 @@ void ResourcePackagesEditor::loadContent()
 
         m_item_model->appendRow(item);
     }
-
-    m_engine->resume();
 }
 
 }

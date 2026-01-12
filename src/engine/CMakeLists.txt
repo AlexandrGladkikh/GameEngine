@@ -73,11 +73,24 @@ add_library(engine
         NodePositioningHelper.h
         SceneConfig.cpp
         SceneConfig.h
+        EngineSettings.cpp
+        EngineSettings.h
 )
 
-get_filename_component(THIRD_PARTIES_DIR ${CMAKE_CURRENT_LIST_DIR}/../../../3rdparts/ ABSOLUTE)
-target_include_directories(engine PUBLIC ${THIRD_PARTIES_DIR}/include/)
-target_link_directories(engine PUBLIC ${THIRD_PARTIES_DIR}/libs/)
-target_link_libraries(engine PUBLIC glfw3 opengl32)
+if (APPLE)
+    find_package(glfw3 3.3 REQUIRED)   # обычно работает с brew-версией glfw
+    find_package(OpenGL REQUIRED)
+
+    target_link_libraries(engine PRIVATE glfw OpenGL::GL)
+    target_include_directories(engine PRIVATE ${OPENGL_INCLUDE_DIRS})
+
+    target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/3rdparts)
+elseif(WIN32)
+    get_filename_component(THIRD_PARTIES_DIR ${CMAKE_CURRENT_LIST_DIR}/../../../3rdparts/ ABSOLUTE)
+    target_include_directories(engine PUBLIC ${THIRD_PARTIES_DIR}/include/)
+
+    target_link_directories(engine PUBLIC ${THIRD_PARTIES_DIR}/libs/)
+    target_link_libraries(engine PUBLIC glfw3 opengl32)
+endif ()
 
 target_include_directories(engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})

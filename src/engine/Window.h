@@ -11,7 +11,7 @@ namespace engine {
 
 class Window final {
 public:
-    explicit Window(const std::string& title, GLint width, GLint height);
+    explicit Window(const std::string& title, GLint width, GLint height, GLint gl_version_major, GLint gl_version_minor);
     ~Window();
 
     Window(const Window&) = delete;

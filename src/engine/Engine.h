@@ -3,8 +3,6 @@
 #include <memory>
 #include <filesystem>
 #include <unordered_map>
-#include <atomic>
-#include <condition_variable>
 
 namespace engine {
 
@@ -13,6 +11,7 @@ class SceneTransition;
 class UserComponentsBuilder;
 class Engine;
 class SceneConfig;
+class EngineSettings;
 
 class EngineAccessor final {
 public:
@@ -45,14 +44,15 @@ public:
 
     void run();
 
-    void pause();
-    void resume();
+    void performTick(uint64_t dt);
 
     auto context() const -> std::shared_ptr<Context>;
 
     auto getActiveSceneId() const -> uint32_t;
 
     auto getScenesInfo() const -> std::unordered_map<uint32_t, std::shared_ptr<SceneConfig>>;
+
+    auto getEngineSettings() const -> std::shared_ptr<EngineSettings>;
 
     bool saveScene(uint32_t id);
 
@@ -63,9 +63,10 @@ public:
     void needReloadResourcePackage(uint32_t id);
 
 private:
+    void prepareTick();
+    void tick(uint64_t dt);
+
     bool m_run = false;
-    std::atomic_int m_pause = 0;
-    std::atomic_bool m_on_pause = false;
 
     std::shared_ptr<Context> m_context;
 
@@ -75,15 +76,12 @@ private:
 
     std::unordered_map<uint32_t, std::shared_ptr<SceneConfig>> m_scenes_info;
 
+    std::shared_ptr<EngineSettings> m_engine_settings;
+
     uint32_t m_active_scene_id = 0;
 
     bool m_need_reload_resource_package = false;
     uint32_t m_reload_resource_package_id = -1;
-
-    uint32_t m_new_active_scene_id = -1;
-    bool m_need_change_scene = false;
-    std::condition_variable m_scene_change_cv;
-    std::mutex m_scene_changed_mutex;
 
     friend class EngineAccessor;
 };

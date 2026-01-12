@@ -16,12 +16,12 @@
 #ifdef ENABLE_EDITOR
 #include <QApplication>
 
-#include "editor/SceneNodeTree.h"
-#include "editor/UserTreeWidgetBuilder.h"
 #include "editor/ComponentWidget.h"
-#include "editor/Utils.h"
-#include "editor/EngineObserver.h"
+#include "editor/EngineController.h"
+#include "editor/SceneNodeTree.h"
 #include "editor/TreeWidgetBuilderHelper.h"
+#include "editor/UserTreeWidgetBuilder.h"
+#include "editor/Utils.h"
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -49,50 +49,34 @@ int main(int argc, char *argv[])
 {
     int appResult = 0;
 
-    std::atomic<int> running = 0;
-
-    engine::Engine* ran_engine = nullptr;
-
-    std::thread engineThread([&running, &ran_engine]() {
-        engine::Engine engine;
-        engine.setUserComponentsBuilder(std::make_unique<EngineComponentBuilder>());
-        if (!engine.initialize("../configs/engine.json")) {
-            running.store(-1);
-            return 1;
-        }
-
-        ran_engine = &engine;
-
-        running.store(1);
-        running.notify_all();
-        engine.run();
-
-        return 0;
-    });
-
-    running.wait(0);
-
-    if (running.load() < 0) {
-        engineThread.join();
-        return -1;
+#ifdef ENABLE_EDITOR
+    engine::Engine engine;
+    engine.setUserComponentsBuilder(std::make_unique<EngineComponentBuilder>());
+    if (!engine.initialize("../configs/engine.json")) {
+        return 1;
     }
 
-#ifdef ENABLE_EDITOR
     QApplication a(argc, argv);
 
-    auto context = ran_engine->context();
+    auto context = engine.context();
 
-    auto currentScene = context->sceneStore->get(ran_engine->getActiveSceneId());
+    auto currentScene = context->sceneStore->get(engine.getActiveSceneId());
 
-    editor::SceneNodeTree* sceneNodeTree = new editor::SceneNodeTree(ran_engine);
+    editor::SceneNodeTree* sceneNodeTree = new editor::SceneNodeTree(&engine);
     sceneNodeTree->setUserTreeWidgetBuilder(std::make_unique<EditorComponentBuilder>());
     sceneNodeTree->build(currentScene);
     sceneNodeTree->show();
 
     appResult = a.exec();
-#endif
+#else
+    engine::Engine engine;
+    engine.setUserComponentsBuilder(std::make_unique<EngineComponentBuilder>());
+    if (!engine.initialize("../configs/engine.json")) {
+        return -1;
+    }
 
-    engineThread.join();
+    engine.run();
+#endif
 
     return appResult;
 }

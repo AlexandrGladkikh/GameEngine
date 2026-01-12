@@ -1,19 +1,128 @@
 #include "Utils.h"
 
 #include "ComponentWidget.h"
-#include "EngineObserver.h"
+#include "EngineController.h"
 
+#include <QComboBox>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
-#include <QTimer>
-#include <QPushButton>
 #include <QMimeData>
-#include <QComboBox>
+#include <QPushButton>
+#include <QTimer>
+#include <QMouseEvent>
+#include <QtGlobal>
 
+#include <algorithm>
 #include <iomanip>
 
 namespace editor {
+
+namespace {
+
+class LineEditDragValueFilter final : public QObject
+{
+public:
+    LineEditDragValueFilter(QLineEdit* lineEdit, float minValue, float maxValue)
+        : QObject(lineEdit)
+        , m_lineEdit(lineEdit)
+        , m_minValue(minValue)
+        , m_maxValue(maxValue)
+    {
+    }
+
+protected:
+    bool eventFilter(QObject* obj, QEvent* event) override
+    {
+        if (obj != m_lineEdit) {
+            return QObject::eventFilter(obj, event);
+        }
+
+        switch (event->type()) {
+        case QEvent::MouseButtonPress: {
+            auto* mouseEvent = static_cast<QMouseEvent*>(event);
+            if (mouseEvent->button() != Qt::LeftButton) {
+                return QObject::eventFilter(obj, event);
+            }
+
+            float parsedValue = 0.0f;
+            if (!parseFloat(m_lineEdit->text().toStdString(), parsedValue)) {
+                parsedValue = 0.0f;
+            }
+
+            m_startGlobalX = mouseEvent->globalPosition().x();
+            m_startValue = std::clamp(parsedValue, m_minValue, m_maxValue);
+            m_dragging = true;
+
+            m_lineEdit->setFocus();
+            m_lineEdit->selectAll();
+            m_lineEdit->grabMouse();
+            m_lineEdit->setCursor(Qt::SizeHorCursor);
+
+            return true;
+        }
+        case QEvent::MouseMove: {
+            if (!m_dragging) {
+                return QObject::eventFilter(obj, event);
+            }
+            auto* mouseEvent = static_cast<QMouseEvent*>(event);
+
+            const float currentGlobalX = mouseEvent->globalPosition().x();
+            const float dx = currentGlobalX - m_startGlobalX;
+
+            float range = m_maxValue - m_minValue;
+            if (range <= 0.000001f) {
+                range = 1.0f;
+            }
+
+            float stepPerPixel = range / 300.0f;
+            const auto mods = mouseEvent->modifiers();
+            if (mods.testFlag(Qt::ShiftModifier)) {
+                stepPerPixel *= 0.1f;
+            }
+            if (mods.testFlag(Qt::ControlModifier)) {
+                stepPerPixel *= 0.01f;
+            }
+            if (mods.testFlag(Qt::AltModifier)) {
+                stepPerPixel *= 10.0f;
+            }
+
+            const float newValue = std::clamp(m_startValue + dx * stepPerPixel, m_minValue, m_maxValue);
+            m_lineEdit->setText(QString::fromStdString(formatFloat(newValue)));
+            return true;
+        }
+        case QEvent::MouseButtonRelease: {
+            auto* mouseEvent = static_cast<QMouseEvent*>(event);
+            if (mouseEvent->button() != Qt::LeftButton) {
+                return QObject::eventFilter(obj, event);
+            }
+            if (!m_dragging) {
+                return QObject::eventFilter(obj, event);
+            }
+
+            m_dragging = false;
+            m_lineEdit->releaseMouse();
+            m_lineEdit->unsetCursor();
+            return true;
+        }
+        default:
+            break;
+        }
+
+        return QObject::eventFilter(obj, event);
+    }
+
+private:
+    QLineEdit* m_lineEdit = nullptr;
+    float m_minValue = -1000.0f;
+    float m_maxValue = 1000.0f;
+
+    bool m_dragging = false;
+    float m_startGlobalX = 0.0f;
+    float m_startValue = 0.0f;
+};
+
+}
 
 DropFilter::DropFilter(QObject* parent) :
     QObject(parent)
@@ -46,7 +155,7 @@ bool DropFilter::eventFilter(QObject* obj, QEvent* event)
     return QObject::eventFilter(obj, event);
 }
 
-ComponentWidget* createLabelLineEditorWidget(const EditorBlockLayoutData& data, const std::shared_ptr<EngineObserver>& observer)
+ComponentWidget* createLabelLineEditorWidget(const EditorBlockLayoutData& data, const std::shared_ptr<EngineController>& observer)
 {
     ComponentWidget* widget = new ComponentWidget;
 
@@ -93,6 +202,11 @@ ComponentWidget* createLabelLineEditorWidget(const EditorBlockLayoutData& data, 
             lineEditor->installEventFilter(filter);
         } else {
             lineEditor->setAcceptDrops(false);
+        }
+
+        if (data.enableSlider) {
+            auto* filter = new LineEditDragValueFilter(lineEditor, data.sliderMin, data.sliderMax);
+            lineEditor->installEventFilter(filter);
         }
 
         if (data.updateHandler) {
@@ -144,7 +258,7 @@ ComponentWidget *createButtonLineWidget(const std::vector<std::string>& names, c
     return widget;
 }
 
-QHBoxLayout* createEditorBlockLayout(const std::string& title, const std::vector<EditorBlockLayoutData>& data, const std::shared_ptr<EngineObserver>& observer)
+QHBoxLayout* createEditorBlockLayout(const std::string& title, const std::vector<EditorBlockLayoutData>& data, const std::shared_ptr<EngineController>& observer)
 {
     QHBoxLayout* layout = new QHBoxLayout();
     setupEditorBlockLayout(layout, title, data, observer);
@@ -152,7 +266,7 @@ QHBoxLayout* createEditorBlockLayout(const std::string& title, const std::vector
     return layout;
 }
 
-void setupEditorBlockLayout(QHBoxLayout* layout, const std::string& title, const std::vector<EditorBlockLayoutData>& data, const std::shared_ptr<EngineObserver>& observer)
+void setupEditorBlockLayout(QHBoxLayout* layout, const std::string& title, const std::vector<EditorBlockLayoutData>& data, const std::shared_ptr<EngineController>& observer)
 {
     layout->setSpacing(1);
     layout->setContentsMargins(0, 0, 0, 0);

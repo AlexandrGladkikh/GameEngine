@@ -14,7 +14,7 @@ class QHBoxLayout;
 namespace editor {
 
 class ComponentWidget;
-class EngineObserver;
+class EngineController;
 
 struct EditorBlockLayoutData {
     std::string name;
@@ -25,6 +25,10 @@ struct EditorBlockLayoutData {
 
     bool showComboBox = false;
     std::vector<std::string> comboBoxValues;
+
+    bool enableSlider = false;
+    float sliderMin = -1000.0f;
+    float sliderMax = 1000.0f;
 };
 
 class DropFilter : public QObject
@@ -36,12 +40,12 @@ protected:
     bool eventFilter(QObject* obj, QEvent* event) override;
 };
 
-ComponentWidget* createLabelLineEditorWidget(const EditorBlockLayoutData& data, const std::shared_ptr<EngineObserver>& observer);
+ComponentWidget* createLabelLineEditorWidget(const EditorBlockLayoutData& data, const std::shared_ptr<EngineController>& observer);
 
 ComponentWidget* createButtonLineWidget(const std::vector<std::string>& names, const std::vector<std::function<void()>>& handlers);
 
-QHBoxLayout* createEditorBlockLayout(const std::string& title, const std::vector<EditorBlockLayoutData>& data, const std::shared_ptr<EngineObserver>& observer);
-void setupEditorBlockLayout(QHBoxLayout* layout, const std::string& title, const std::vector<EditorBlockLayoutData>& data, const std::shared_ptr<EngineObserver>& observer);
+QHBoxLayout* createEditorBlockLayout(const std::string& title, const std::vector<EditorBlockLayoutData>& data, const std::shared_ptr<EngineController>& observer);
+void setupEditorBlockLayout(QHBoxLayout* layout, const std::string& title, const std::vector<EditorBlockLayoutData>& data, const std::shared_ptr<EngineController>& observer);
 
 ComponentWidget* createComboBoxWidget(const std::string& title, const std::vector<std::string>& names, const std::function<void(const std::string&)>& handler);
 

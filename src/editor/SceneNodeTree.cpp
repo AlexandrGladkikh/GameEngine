@@ -1,11 +1,11 @@
 #include "SceneNodeTree.h"
-#include "NodeTreeWidgetBuilder.h"
-#include "UserTreeWidgetBuilder.h"
 #include "ComponentWidget.h"
+#include "EngineController.h"
+#include "NodeTreeWidgetBuilder.h"
 #include "NodeWidget.h"
-#include "EngineObserver.h"
-#include "TreeWidgetBuilderHelper.h"
 #include "ResourcePackagesEditor.h"
+#include "TreeWidgetBuilderHelper.h"
+#include "UserTreeWidgetBuilder.h"
 
 #include "engine/Engine.h"
 #include "engine/Scene.h"
@@ -15,17 +15,31 @@
 #include "engine/UserComponentsBuilder.h"
 #include "engine/Window.h"
 #include "engine/SceneConfig.h"
+#include "engine/EngineSettings.h"
 
 #include <QTreeWidget>
-#include <QMenu>
 #include <QAction>
 #include <QInputDialog>
 #include <QHeaderView>
 #include <QMenuBar>
 #include <QClipboard>
 #include <QApplication>
-#include <QTimer>
 #include <QWindow>
+
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QFormLayout>
+#include <QGroupBox>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QMessageBox>
+#include <QPushButton>
+#include <QSpinBox>
+#include <QTableWidget>
+#include <QVBoxLayout>
+
+#include <limits>
 
 namespace editor {
 
@@ -40,10 +54,10 @@ SceneNodeTree::SceneNodeTree(engine::Engine* engine, QWidget* parent) :
 
     m_resource_package_editor = new ResourcePackagesEditor(m_engine, this);
 
-    m_engine_observer.reset(new EngineObserver(m_engine, this));
-    m_engine_observer->start();
+    m_engine_controller.reset(new EngineController(m_engine, this));
+    m_engine_controller->start();
 
-    m_scene_tree_widget_builder = std::make_unique<TreeWidgetBuilder>(this, m_engine_observer);
+    m_scene_tree_widget_builder = std::make_unique<TreeWidgetBuilder>(this, m_engine_controller);
 
     initMenuBar();
 
@@ -64,7 +78,7 @@ SceneNodeTree::SceneNodeTree(engine::Engine* engine, QWidget* parent) :
 
 SceneNodeTree::~SceneNodeTree()
 {
-    m_engine_observer->stop();
+    m_engine_controller->stop();
     auto ctx = m_engine->context();
     ctx->engineAccessor->stop();
 }
@@ -73,8 +87,8 @@ void SceneNodeTree::setUserTreeWidgetBuilder(std::unique_ptr<UserTreeWidgetBuild
 {
     m_user_tree_widget_builder = std::move(builder);
     m_user_tree_widget_builder->setSceneNodeTree(this);
-    m_user_tree_widget_builder->setEngineObserver(m_engine_observer);
-    m_user_tree_widget_builder->setTreeWidgetBuilderHelper(std::make_shared<TreeWidgetBuilderHelper>(m_engine_observer));
+    m_user_tree_widget_builder->setEngineObserver(m_engine_controller);
+    m_user_tree_widget_builder->setTreeWidgetBuilderHelper(std::make_shared<TreeWidgetBuilderHelper>(m_engine_controller));
 }
 
 void SceneNodeTree::onHeaderContextMenu(const QPoint& pos)
@@ -459,6 +473,310 @@ void SceneNodeTree::onAddScene()
     build(new_scene.value());
 }
 
+void SceneNodeTree::onEngineSettings()
+{
+    auto engine_settings = m_engine->getEngineSettings();
+    if (!engine_settings) {
+        QMessageBox::warning(this, "Engine settings", "EngineSettings is not initialized.");
+        return;
+    }
+
+    if (!engine_settings->load()) {
+        QMessageBox::warning(this, "Engine settings", "Failed to load engine config (see logs).");
+        return;
+    }
+
+    auto& doc = const_cast<rapidjson::Document&>(engine_settings->settings());
+    if (!doc.IsObject()) {
+        QMessageBox::warning(this, "Engine settings", "Engine config root must be an object.");
+        return;
+    }
+
+    int window_width = 800;
+    int window_height = 600;
+    QString window_title = "Game Engine";
+    int gl_major = 4;
+    int gl_minor = 1;
+    int main_scene_id = 1;
+    QString resource_packages = "../configs/packages_info.json";
+
+    struct SceneRow {
+        int id = 0;
+        QString path;
+    };
+    std::vector<SceneRow> scenes;
+
+    auto readInt = [&](const rapidjson::Value& obj, const char* key, int def) -> int {
+        if (!obj.IsObject()) return def;
+        auto it = obj.FindMember(key);
+        if (it == obj.MemberEnd()) return def;
+        if (it->value.IsInt()) return it->value.GetInt();
+        if (it->value.IsUint()) return static_cast<int>(it->value.GetUint());
+        if (it->value.IsInt64()) return static_cast<int>(it->value.GetInt64());
+        if (it->value.IsUint64()) return static_cast<int>(it->value.GetUint64());
+        return def;
+    };
+
+    auto readString = [&](const rapidjson::Value& obj, const char* key, const QString& def) -> QString {
+        if (!obj.IsObject()) return def;
+        auto it = obj.FindMember(key);
+        if (it == obj.MemberEnd() || !it->value.IsString()) return def;
+        return QString::fromUtf8(it->value.GetString());
+    };
+
+    if (auto win_it = doc.FindMember("window"); win_it != doc.MemberEnd() && win_it->value.IsObject()) {
+        const rapidjson::Value& win = win_it->value;
+        window_width = readInt(win, "width", window_width);
+        window_height = readInt(win, "height", window_height);
+        window_title = readString(win, "title", window_title);
+
+        if (auto gl_it = win.FindMember("gl_version"); gl_it != win.MemberEnd() && gl_it->value.IsObject()) {
+            const rapidjson::Value& gl = gl_it->value;
+            gl_major = readInt(gl, "major", gl_major);
+            gl_minor = readInt(gl, "minor", gl_minor);
+        }
+    }
+
+    main_scene_id = readInt(doc, "main_scene_id", main_scene_id);
+    resource_packages = readString(doc, "resource_packages", resource_packages);
+
+    if (auto scenes_it = doc.FindMember("scenes"); scenes_it != doc.MemberEnd() && scenes_it->value.IsArray()) {
+        for (const auto& v : scenes_it->value.GetArray()) {
+            if (!v.IsObject()) {
+                continue;
+            }
+            SceneRow r;
+            r.id = readInt(v, "id", 0);
+            r.path = readString(v, "path", "");
+            scenes.push_back(r);
+        }
+    }
+
+    QDialog dialog(this);
+    dialog.setWindowTitle("Engine settings");
+    dialog.setModal(true);
+    dialog.resize(700, 500);
+
+    auto* root_layout = new QVBoxLayout(&dialog);
+
+    auto* window_group = new QGroupBox("Window", &dialog);
+    auto* window_form = new QFormLayout(window_group);
+    auto* width_spin = new QSpinBox(window_group);
+    width_spin->setRange(1, 16384);
+    width_spin->setValue(window_width);
+    auto* height_spin = new QSpinBox(window_group);
+    height_spin->setRange(1, 16384);
+    height_spin->setValue(window_height);
+    auto* title_edit = new QLineEdit(window_title, window_group);
+
+    auto* gl_major_spin = new QSpinBox(window_group);
+    gl_major_spin->setRange(1, 10);
+    gl_major_spin->setValue(gl_major);
+    auto* gl_minor_spin = new QSpinBox(window_group);
+    gl_minor_spin->setRange(0, 10);
+    gl_minor_spin->setValue(gl_minor);
+
+    window_form->addRow("Width", width_spin);
+    window_form->addRow("Height", height_spin);
+    window_form->addRow("Title", title_edit);
+    window_form->addRow("GL major", gl_major_spin);
+    window_form->addRow("GL minor", gl_minor_spin);
+    root_layout->addWidget(window_group);
+
+    auto* engine_group = new QGroupBox("Engine", &dialog);
+    auto* engine_form = new QFormLayout(engine_group);
+    auto* main_scene_spin = new QSpinBox(engine_group);
+    main_scene_spin->setRange(0, std::numeric_limits<int>::max());
+    main_scene_spin->setValue(main_scene_id);
+    auto* packages_edit = new QLineEdit(resource_packages, engine_group);
+    engine_form->addRow("Main scene id", main_scene_spin);
+    engine_form->addRow("Resource packages", packages_edit);
+    root_layout->addWidget(engine_group);
+
+    auto* scenes_group = new QGroupBox("Scenes", &dialog);
+    auto* scenes_layout = new QVBoxLayout(scenes_group);
+
+    auto* scenes_table = new QTableWidget(scenes_group);
+    scenes_table->setColumnCount(2);
+    scenes_table->setHorizontalHeaderLabels(QStringList() << "id" << "path");
+    scenes_table->horizontalHeader()->setStretchLastSection(true);
+    scenes_table->setSelectionBehavior(QAbstractItemView::SelectRows);
+    scenes_table->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed | QAbstractItemView::SelectedClicked);
+
+    bool suppress_table_changes = true;
+    scenes_table->setRowCount(static_cast<int>(scenes.size()));
+    for (int row = 0; row < scenes_table->rowCount(); ++row) {
+        auto* id_item = new QTableWidgetItem(QString::number(scenes[static_cast<size_t>(row)].id));
+        auto* path_item = new QTableWidgetItem(scenes[static_cast<size_t>(row)].path);
+        scenes_table->setItem(row, 0, id_item);
+        scenes_table->setItem(row, 1, path_item);
+    }
+    suppress_table_changes = false;
+
+    auto* buttons_row = new QHBoxLayout();
+    auto* add_scene_btn = new QPushButton("Add", scenes_group);
+    auto* remove_scene_btn = new QPushButton("Remove", scenes_group);
+    buttons_row->addWidget(add_scene_btn);
+    buttons_row->addWidget(remove_scene_btn);
+    buttons_row->addStretch();
+
+    scenes_layout->addWidget(scenes_table);
+    scenes_layout->addLayout(buttons_row);
+    root_layout->addWidget(scenes_group, 1);
+
+    auto* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dialog);
+    root_layout->addWidget(button_box);
+
+    // Signals -> update конкретных значений (переменных конфига).
+    QObject::connect(width_spin, QOverload<int>::of(&QSpinBox::valueChanged), [&window_width](int v) { window_width = v; });
+    QObject::connect(height_spin, QOverload<int>::of(&QSpinBox::valueChanged), [&window_height](int v) { window_height = v; });
+    QObject::connect(title_edit, &QLineEdit::textChanged, [&window_title](const QString& v) { window_title = v; });
+    QObject::connect(gl_major_spin, QOverload<int>::of(&QSpinBox::valueChanged), [&gl_major](int v) { gl_major = v; });
+    QObject::connect(gl_minor_spin, QOverload<int>::of(&QSpinBox::valueChanged), [&gl_minor](int v) { gl_minor = v; });
+    QObject::connect(main_scene_spin, QOverload<int>::of(&QSpinBox::valueChanged), [&main_scene_id](int v) { main_scene_id = v; });
+    QObject::connect(packages_edit, &QLineEdit::textChanged, [&resource_packages](const QString& v) { resource_packages = v; });
+
+    QObject::connect(add_scene_btn, &QPushButton::clicked, [&]() {
+        SceneRow r;
+        int max_id = 0;
+        for (const auto& s : scenes) {
+            max_id = std::max(max_id, s.id);
+        }
+        r.id = max_id + 1;
+        r.path = "../configs/main_scene.json";
+        scenes.push_back(r);
+
+        suppress_table_changes = true;
+        const int row = scenes_table->rowCount();
+        scenes_table->insertRow(row);
+        scenes_table->setItem(row, 0, new QTableWidgetItem(QString::number(r.id)));
+        scenes_table->setItem(row, 1, new QTableWidgetItem(r.path));
+        suppress_table_changes = false;
+    });
+
+    QObject::connect(remove_scene_btn, &QPushButton::clicked, [&]() {
+        const auto ranges = scenes_table->selectedRanges();
+        if (ranges.isEmpty()) {
+            return;
+        }
+        const int row = ranges.first().topRow();
+        if (row < 0 || row >= scenes_table->rowCount()) {
+            return;
+        }
+        suppress_table_changes = true;
+        scenes_table->removeRow(row);
+        suppress_table_changes = false;
+        if (row >= 0 && row < static_cast<int>(scenes.size())) {
+            scenes.erase(scenes.begin() + row);
+        }
+    });
+
+    QObject::connect(scenes_table, &QTableWidget::itemChanged, [&](QTableWidgetItem* item) {
+        if (suppress_table_changes) {
+            return;
+        }
+        if (!item) {
+            return;
+        }
+        const int row = item->row();
+        const int col = item->column();
+        if (row < 0 || row >= static_cast<int>(scenes.size())) {
+            return;
+        }
+        if (col == 0) {
+            bool ok = false;
+            int v = item->text().toInt(&ok);
+            if (ok) {
+                scenes[static_cast<size_t>(row)].id = v;
+            }
+        } else if (col == 1) {
+            scenes[static_cast<size_t>(row)].path = item->text();
+        }
+    });
+
+    QObject::connect(button_box, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    QObject::connect(button_box, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    if (dialog.exec() != QDialog::Accepted) {
+        return;
+    }
+
+    auto& alloc = doc.GetAllocator();
+
+    auto ensureObject = [&](rapidjson::Value& parent, const char* key) -> rapidjson::Value& {
+        auto it = parent.FindMember(key);
+        if (it == parent.MemberEnd() || !it->value.IsObject()) {
+            if (it != parent.MemberEnd()) {
+                parent.RemoveMember(it);
+            }
+            rapidjson::Value k;
+            k.SetString(key, alloc);
+            rapidjson::Value obj(rapidjson::kObjectType);
+            parent.AddMember(k, obj, alloc);
+            it = parent.FindMember(key);
+        }
+        return it->value;
+    };
+
+    auto setInt = [&](rapidjson::Value& parent, const char* key, int v) {
+        auto it = parent.FindMember(key);
+        if (it == parent.MemberEnd()) {
+            rapidjson::Value k;
+            k.SetString(key, alloc);
+            parent.AddMember(k, v, alloc);
+        } else {
+            it->value.SetInt(v);
+        }
+    };
+
+    auto setString = [&](rapidjson::Value& parent, const char* key, const QString& v) {
+        const std::string s = v.toStdString();
+        auto it = parent.FindMember(key);
+        if (it == parent.MemberEnd()) {
+            rapidjson::Value k;
+            k.SetString(key, alloc);
+            rapidjson::Value val;
+            val.SetString(s.c_str(), static_cast<rapidjson::SizeType>(s.size()), alloc);
+            parent.AddMember(k, val, alloc);
+        } else {
+            it->value.SetString(s.c_str(), static_cast<rapidjson::SizeType>(s.size()), alloc);
+        }
+    };
+
+    rapidjson::Value& window = ensureObject(doc, "window");
+    setInt(window, "width", window_width);
+    setInt(window, "height", window_height);
+    setString(window, "title", window_title);
+
+    rapidjson::Value& gl = ensureObject(window, "gl_version");
+    setInt(gl, "major", gl_major);
+    setInt(gl, "minor", gl_minor);
+
+    setInt(doc, "main_scene_id", main_scene_id);
+    setString(doc, "resource_packages", resource_packages);
+
+    rapidjson::Value scenes_arr(rapidjson::kArrayType);
+    for (const auto& s : scenes) {
+        rapidjson::Value o(rapidjson::kObjectType);
+        o.AddMember("id", s.id, alloc);
+        const std::string path = s.path.toStdString();
+        rapidjson::Value path_val;
+        path_val.SetString(path.c_str(), static_cast<rapidjson::SizeType>(path.size()), alloc);
+        o.AddMember("path", path_val, alloc);
+        scenes_arr.PushBack(o, alloc);
+    }
+    if (auto it = doc.FindMember("scenes"); it != doc.MemberEnd()) {
+        it->value.Swap(scenes_arr);
+    } else {
+        rapidjson::Value k;
+        k.SetString("scenes", alloc);
+        doc.AddMember(k, scenes_arr, alloc);
+    }
+
+    engine_settings->save();
+    engine_settings->load();
+}
+
 void SceneNodeTree::moveEvent(QMoveEvent* event)
 {
     QMainWindow::moveEvent(event);
@@ -512,6 +830,7 @@ void SceneNodeTree::initMenuBar()
     fileMenu->addAction("&Save Scene", this, &SceneNodeTree::onSaveScene);
     fileMenu->addAction("&Select Scene", this, &SceneNodeTree::onSelectScene);
     fileMenu->addAction("&Add Scene", this, &SceneNodeTree::onAddScene);
+    fileMenu->addAction("&Engine settings", this, &SceneNodeTree::onEngineSettings);
     fileMenu->addSeparator();
     fileMenu->addAction("&Exit", this, &SceneNodeTree::close);
 }

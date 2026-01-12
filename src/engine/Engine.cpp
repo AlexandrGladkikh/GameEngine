@@ -19,6 +19,7 @@
 #include "Utils.h"
 #include "Window.h"
 #include "SceneConfig.h"
+#include "EngineSettings.h"
 
 #include <rapidjson/document.h>
 
@@ -33,8 +34,10 @@ std::optional<std::unique_ptr<Window>> configWindow(const rapidjson::Value& valu
     GLint window_width = value["width"].GetInt();
     GLint window_height = value["height"].GetInt();
     std::string window_title = value["title"].GetString();
+    GLint gl_version_major = value["gl_version"]["major"].GetInt();
+    GLint gl_version_minor = value["gl_version"]["minor"].GetInt();
 
-    auto window = std::make_unique<Window>(window_title, window_width, window_height);
+    auto window = std::make_unique<Window>(window_title, window_width, window_height, gl_version_major, gl_version_minor);
 
     return window;
 }
@@ -91,18 +94,14 @@ bool Engine::initialize(const std::filesystem::path& config_path)
 {
     Logger::info(__FUNCTION__);
 
-    if (!FileSystem::exists(config_path) || !FileSystem::isFile(config_path)) {
-        Logger::error("config file not found");
+    m_engine_settings = std::make_shared<EngineSettings>(config_path);
+    if (!m_engine_settings->load()) {
         return false;
     }
 
-    FileSystem::File config_file(config_path, std::ios::in);
-    auto config_text = config_file.readText();
+    auto& settings = m_engine_settings->settings();
 
-    rapidjson::Document document;
-    document.Parse(config_text.c_str());
-
-    auto window = configWindow(document["window"]);
+    auto window = configWindow(settings["window"]);
 
     if (window.has_value()) {
         m_context->window = std::move(window.value());
@@ -112,13 +111,13 @@ bool Engine::initialize(const std::filesystem::path& config_path)
 
     m_context->inputManager = std::make_unique<InputManager>(m_context->window);
 
-    m_context->resourcePackageStore->initResourcePackagesInformation(document["resource_packages"].GetString());
+    m_context->resourcePackageStore->initResourcePackagesInformation(settings["resource_packages"].GetString());
 
-    if (!configScenesInfo(document["scenes"], m_scenes_info, m_engine_config_scene_id_to_scene_id)) {
+    if (!configScenesInfo(settings["scenes"], m_scenes_info, m_engine_config_scene_id_to_scene_id)) {
         return false;
     }
 
-    m_active_scene_id = m_engine_config_scene_id_to_scene_id[document["main_scene_id"].GetUint()];
+    m_active_scene_id = m_engine_config_scene_id_to_scene_id[settings["main_scene_id"].GetUint()];
 
     return m_sceneTransition->transition(m_scenes_info, -1, m_active_scene_id);
 }
@@ -136,76 +135,20 @@ void Engine::run()
     uint64_t delta_time = 0;
 
     while (m_run) {
-        if (m_need_reload_resource_package) {
-            m_need_reload_resource_package = false;
-
-            auto resource_package = m_context->resourcePackageStore->get(m_reload_resource_package_id);
-
-            if (resource_package.has_value()) {
-                loadResourcePackage(m_context, resource_package.value());
-            }
-        }
-
-        {
-            std::unique_lock<std::mutex> lock(m_scene_changed_mutex);
-            if (m_need_change_scene) {
-                uint32_t old_active_scene = m_active_scene_id;
-                m_active_scene_id = m_new_active_scene_id;
-                m_sceneTransition->transition(m_scenes_info, old_active_scene, m_active_scene_id);
-
-                m_need_change_scene = false;
-
-                m_scene_change_cv.notify_all();
-            }
-        }
+        prepareTick();
 
         delta_time = (glfwGetTime() - update_time) * 1000000;
         update_time = glfwGetTime();
 
-        while (m_pause.load() != 0) {
-            int expected = m_pause.load();
-            m_on_pause.store(true);
-            m_on_pause.notify_all();
-            m_pause.wait(expected);
-        }
-
-        m_on_pause.store(false);
-        m_on_pause.notify_all();
-
-        Logger::info("delta time: {}", delta_time);
-
-        m_context->window->update(delta_time);
-        m_context->inputManager->update(delta_time);
-
-        auto scene = m_context->sceneStore->get(m_active_scene_id);
-        if (scene.has_value()) {
-            for (auto& component : scene.value()->getComponents() | std::views::values) {
-                if (component->getNode().value()->isActive() && component->isActive() && component->isValid()) {
-                    component->update(delta_time);
-                }
-            }
-
-            Renderer::render(m_context, scene.value());
-        }
-
-        m_context->window->swapBuffer();
+        tick(delta_time);
     }
 }
 
-void Engine::pause()
+void Engine::performTick(uint64_t dt)
 {
-    m_pause.fetch_add(1);
-    m_pause.notify_all();
+    prepareTick();
 
-    m_on_pause.wait(false);
-}
-
-void Engine::resume()
-{
-    m_pause.fetch_sub(1);
-    m_pause.notify_all();
-
-    m_on_pause.wait(true);
+    tick(dt);
 }
 
 auto Engine::context() const -> std::shared_ptr<Context>
@@ -221,6 +164,11 @@ auto Engine::getActiveSceneId() const -> uint32_t
 auto Engine::getScenesInfo() const -> std::unordered_map<uint32_t, std::shared_ptr<SceneConfig>>
 {
     return m_scenes_info;
+}
+
+auto Engine::getEngineSettings() const -> std::shared_ptr<EngineSettings>
+{
+    return m_engine_settings;
 }
 
 bool Engine::saveScene(uint32_t id)
@@ -251,15 +199,13 @@ uint32_t Engine::addEmptyScene(const std::string& name, const std::filesystem::p
 
 bool Engine::changeActiveScene(uint32_t id)
 {
-    std::unique_lock<std::mutex> lock(m_scene_changed_mutex);
     if (m_active_scene_id == id) {
         return true;
     }
 
-    m_new_active_scene_id = id;
-
-    m_need_change_scene = true;
-    m_scene_change_cv.wait(lock, [this] { return !m_need_change_scene; });
+    uint32_t old_active_scene = m_active_scene_id;
+    m_active_scene_id = id;
+    m_sceneTransition->transition(m_scenes_info, old_active_scene, m_active_scene_id);
 
     return true;
 }
@@ -268,6 +214,40 @@ void Engine::needReloadResourcePackage(uint32_t id)
 {
     m_need_reload_resource_package = true;
     m_reload_resource_package_id = id;
+}
+
+void Engine::prepareTick()
+{
+    if (m_need_reload_resource_package) {
+        m_need_reload_resource_package = false;
+
+        auto resource_package = m_context->resourcePackageStore->get(m_reload_resource_package_id);
+
+        if (resource_package.has_value()) {
+            loadResourcePackage(m_context, resource_package.value());
+        }
+    }
+}
+
+void Engine::tick(uint64_t dt)
+{
+    Logger::info("tick: {}", dt);
+
+    m_context->window->update(dt);
+    m_context->inputManager->update(dt);
+
+    auto scene = m_context->sceneStore->get(m_active_scene_id);
+    if (scene.has_value()) {
+        for (auto& component : scene.value()->getComponents() | std::views::values) {
+            if (component->getNode().value()->isActive() && component->isActive() && component->isValid()) {
+                component->update(dt);
+            }
+        }
+
+        Renderer::render(m_context, scene.value());
+    }
+
+    m_context->window->swapBuffer();
 }
 
 }
