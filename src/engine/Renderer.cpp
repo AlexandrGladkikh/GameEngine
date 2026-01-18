@@ -117,12 +117,14 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
         float absoluteNodePositionX = absolute_node_position.x - camera_position.x;
         float absoluteNodePositionY = absolute_node_position.y - camera_position.y;
 
-        auto ortho = camera->getOrtho();
+        if (camera->projectionType() == CameraComponent::ProjectionType::Orthographic) {
+            auto ortho = camera->getOrtho();
 
-        if ((absoluteNodePositionX + texture_size.first < 0 || absoluteNodePositionX - texture_size.first > (ortho.right)) ||
-            (absoluteNodePositionY + texture_size.second < 0 || absoluteNodePositionY - texture_size.second > (ortho.top))) {
-            Logger::info("skip render node: {}", node->name());
-            continue;
+            if ((absoluteNodePositionX + texture_size.first < 0 || absoluteNodePositionX - texture_size.first > (ortho.right)) ||
+                (absoluteNodePositionY + texture_size.second < 0 || absoluteNodePositionY - texture_size.second > (ortho.top))) {
+                Logger::info("skip render node: {}", node->name());
+                continue;
+            }
         }
 
         auto transform_mtx = transformTune(model_mtx, texture.value()->width(), texture.value()->height());

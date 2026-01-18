@@ -6,6 +6,7 @@
 class QWidget;
 class QTreeWidget;
 class QTreeWidgetItem;
+class QLabel;
 
 namespace engine {
 class Component;
@@ -38,9 +39,11 @@ private:
     ComponentWidget* buildTransformWidget(const std::shared_ptr<engine::TransformComponent>& transform);
     ComponentWidget* buildMaterialWidget(const std::shared_ptr<engine::MaterialComponent>& material);
     ComponentWidget* buildMeshWidget(const std::shared_ptr<engine::MeshComponent>& mesh);
-    ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camera);
+    ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camera, QTreeWidgetItem* item);
     ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidgetItem* item);
     ComponentWidget* buildMouseEventFilterWidget(const std::shared_ptr<engine::MouseEventFilterComponent>& mouse_event_filter);
+
+    void decorateLabel(QLabel* label);
 
     SceneNodeTree* m_scene_node_tree;
 

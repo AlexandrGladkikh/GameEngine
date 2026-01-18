@@ -16,6 +16,9 @@
 #include "engine/Window.h"
 #include "engine/SceneConfig.h"
 #include "engine/EngineSettings.h"
+#include "engine/Context.h"
+#include "engine/ResourcePackage.h"
+#include "engine/ResourcePackageStore.h"
 
 #include <QTreeWidget>
 #include <QAction>
@@ -32,7 +35,9 @@
 #include <QGroupBox>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QComboBox>
 #include <QLineEdit>
+#include <QListWidget>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSpinBox>
@@ -40,6 +45,10 @@
 #include <QVBoxLayout>
 
 #include <limits>
+
+namespace {
+[[maybe_unused]] void _editorIncludeSanity(engine::SceneConfig*, engine::EngineSettings*) {}
+}
 
 namespace editor {
 
@@ -238,18 +247,29 @@ void SceneNodeTree::onAddComponent()
 
     auto component_value = component.value();
 
-    auto* componentItem = new QTreeWidgetItem(m_selected_item);
+    int insertIndex = m_selected_item->childCount();
+    for (int i = 0; i < m_selected_item->childCount(); ++i) {
+        auto* childWidget = m_scene_tree->itemWidget(m_selected_item->child(i), 0);
+        if (dynamic_cast<NodeWidget*>(childWidget) != nullptr) {
+            insertIndex = i;
+            break;
+        }
+    }
+    
+    auto* component_item = new QTreeWidgetItem();
+    m_selected_item->insertChild(insertIndex, component_item);
 
-    auto component_widget = m_scene_tree_widget_builder->buildWidgetForComponent(component_value, componentItem);
+    auto component_widget = m_scene_tree_widget_builder->buildWidgetForComponent(component_value, component_item);
     if (!component_widget.has_value()) {
         component_widget = m_user_tree_widget_builder->buildWidgetForComponent(component_value);
     }
     if (!component_widget.has_value()) {
         return;
     }
+
     component_widget.value()->setComponent(component_value);
 
-    m_scene_tree->setItemWidget(componentItem, 0, component_widget.value());
+    m_scene_tree->setItemWidget(component_item, 0, component_widget.value());
 
     m_selected_item = nullptr;
 }
@@ -334,7 +354,17 @@ void SceneNodeTree::onPaste()
             if (scene.has_value()) {
                 scene.value()->addComponent(clone->id(), clone);
 
-                auto* clone_item = new QTreeWidgetItem(m_selected_item);
+                int insertIndex = m_selected_item->childCount();
+                for (int i = 0; i < m_selected_item->childCount(); ++i) {
+                    auto* childWidget = m_scene_tree->itemWidget(m_selected_item->child(i), 0);
+                    if (dynamic_cast<NodeWidget*>(childWidget) != nullptr) {
+                        insertIndex = i;
+                        break;
+                    }
+                }
+
+                auto* clone_item = new QTreeWidgetItem();
+                m_selected_item->insertChild(insertIndex, clone_item);
                 createComponentWidget(clone_item, clone);
             }
         }
@@ -470,6 +500,49 @@ void SceneNodeTree::onAddScene()
     if (!new_scene.has_value()) {
         return;
     }
+
+    auto engine_settings = m_engine->getEngineSettings();
+    if (!engine_settings) {
+        QMessageBox::warning(this, "Engine settings", "EngineSettings is not initialized.");
+        return;
+    }
+
+    auto& doc = const_cast<rapidjson::Document&>(engine_settings->settings());
+    if (!doc.IsObject()) {
+        QMessageBox::warning(this, "Engine settings", "Engine config root must be an object.");
+        return;
+    }
+
+    auto scenes_it = doc.FindMember("scenes");
+    if (scenes_it == doc.MemberEnd() || !scenes_it->value.IsArray()) {
+        QMessageBox::warning(this, "Engine settings", "Scenes array not found in engine config.");
+        return;
+    }
+
+    auto scenes_arr = scenes_it->value.GetArray();
+    for (const auto& v : scenes_arr) {
+        if (!v.IsObject()) {
+            continue;
+        }
+        int id = v["id"].GetInt();
+        if (id == new_scene.value()->id()) {
+            return;
+        }
+    }
+
+    auto& alloc = doc.GetAllocator();
+
+    rapidjson::Value o(rapidjson::kObjectType);
+    o.AddMember("id", new_scene.value()->id(), alloc);
+    rapidjson::Value path_val;
+    std::string path = "../configs/scenes/" + scene_name.toStdString() + ".json";
+    path_val.SetString(path.c_str(), static_cast<rapidjson::SizeType>(path.size()), alloc);
+    o.AddMember("path", path_val, alloc);
+    scenes_arr.PushBack(o, alloc);
+
+    engine_settings->save();
+    engine_settings->load();
+
     build(new_scene.value());
 }
 
@@ -777,11 +850,180 @@ void SceneNodeTree::onEngineSettings()
     engine_settings->load();
 }
 
+void SceneNodeTree::onSceneSettings()
+{
+    auto ctx = m_engine->context();
+    if (!ctx || !ctx->sceneStore || !ctx->resourcePackageStore) {
+        QMessageBox::warning(this, "Scene settings", "Engine context is not initialized.");
+        return;
+    }
+
+    auto scene_opt = ctx->sceneStore->get(m_engine->getActiveSceneId());
+    if (!scene_opt.has_value()) {
+        QMessageBox::warning(this, "Scene settings", "Active scene is not loaded.");
+        return;
+    }
+
+    auto scene = scene_opt.value();
+    QString scene_name = QString::fromStdString(scene->name());
+
+    const auto& available_packages_info = ctx->resourcePackageStore->getResourcePackagesInformation();
+
+    const auto& current_resources_ref = scene->getResources();
+    std::vector<uint32_t> selected_resources(current_resources_ref.begin(), current_resources_ref.end());
+
+    QDialog dialog(this);
+    dialog.setWindowTitle("Scene settings");
+    dialog.setModal(true);
+    dialog.resize(700, 500);
+
+    auto* root_layout = new QVBoxLayout(&dialog);
+
+    auto* scene_group = new QGroupBox("Scene", &dialog);
+    auto* scene_form = new QFormLayout(scene_group);
+    auto* name_edit = new QLineEdit(scene_name, scene_group);
+    scene_form->addRow("Name", name_edit);
+    root_layout->addWidget(scene_group);
+
+    auto* resources_group = new QGroupBox("Resources (resource packages)", &dialog);
+    auto* resources_layout = new QVBoxLayout(resources_group);
+
+    auto* selected_list = new QListWidget(resources_group);
+    selected_list->setSelectionMode(QAbstractItemView::SingleSelection);
+
+    auto displayForId = [&](uint32_t id) -> QString {
+        if (auto it = available_packages_info.find(id); it != available_packages_info.end()) {
+            const auto& p = it->second;
+            return QString("%1  (%2)").arg(QString::number(id), QString::fromStdString(p.filename().string()));
+        }
+        return QString::number(id);
+    };
+
+    auto repopulateSelected = [&]() {
+        selected_list->clear();
+        for (auto id : selected_resources) {
+            auto* item = new QListWidgetItem(displayForId(id), selected_list);
+            item->setData(Qt::UserRole, static_cast<qulonglong>(id));
+            if (auto it = available_packages_info.find(id); it != available_packages_info.end()) {
+                item->setToolTip(QString::fromStdString(it->second.string()));
+            }
+            selected_list->addItem(item);
+        }
+    };
+    repopulateSelected();
+
+    auto* controls_row = new QHBoxLayout();
+    auto* available_combo = new QComboBox(resources_group);
+    available_combo->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+    available_combo->setMinimumContentsLength(40);
+
+    std::vector<std::pair<uint32_t, std::filesystem::path>> avail_sorted;
+    avail_sorted.reserve(available_packages_info.size());
+    for (const auto& [id, path] : available_packages_info) {
+        avail_sorted.emplace_back(id, path);
+    }
+    std::ranges::sort(avail_sorted, [](const auto& a, const auto& b) { return a.second.filename() < b.second.filename(); });
+    for (const auto& [id, path] : avail_sorted) {
+        available_combo->addItem(QString("%1  (%2)").arg(QString::number(id), QString::fromStdString(path.filename().string())),
+                                static_cast<qulonglong>(id));
+    }
+
+    auto* add_btn = new QPushButton("Add", resources_group);
+    auto* remove_btn = new QPushButton("Remove selected", resources_group);
+
+    controls_row->addWidget(new QLabel("Available:", resources_group));
+    controls_row->addWidget(available_combo, 1);
+    controls_row->addWidget(add_btn);
+    controls_row->addWidget(remove_btn);
+
+    resources_layout->addLayout(controls_row);
+    resources_layout->addWidget(selected_list, 1);
+
+    root_layout->addWidget(resources_group, 1);
+
+    auto* button_box = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel, &dialog);
+    root_layout->addWidget(button_box);
+
+    QObject::connect(name_edit, &QLineEdit::textChanged, [&scene_name](const QString& v) { scene_name = v; });
+
+    QObject::connect(add_btn, &QPushButton::clicked, [&]() {
+        if (available_combo->count() == 0) {
+            return;
+        }
+        const auto id = static_cast<uint32_t>(available_combo->currentData().toULongLong());
+        if (std::ranges::find(selected_resources, id) != selected_resources.end()) {
+            return;
+        }
+        selected_resources.push_back(id);
+        repopulateSelected();
+    });
+
+    QObject::connect(remove_btn, &QPushButton::clicked, [&]() {
+        auto* item = selected_list->currentItem();
+        if (!item) {
+            return;
+        }
+        const auto id = static_cast<uint32_t>(item->data(Qt::UserRole).toULongLong());
+        auto it = std::ranges::find(selected_resources, id);
+        if (it != selected_resources.end()) {
+            selected_resources.erase(it);
+        }
+        repopulateSelected();
+    });
+
+    QObject::connect(button_box, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    QObject::connect(button_box, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+
+    if (dialog.exec() != QDialog::Accepted) {
+        return;
+    }
+
+    const auto old_name = scene->name();
+    const auto old_resources = scene->getResources();
+
+    scene->setName(scene_name.toStdString());
+    scene->setResources(selected_resources);
+
+    if (scene->name() != old_name) {
+        m_scene_tree->setHeaderLabel(QString::fromStdString(scene->name()));
+    }
+
+    std::unordered_set<uint32_t> old_set(old_resources.begin(), old_resources.end());
+    for (auto id : scene->getResources()) {
+        if (old_set.contains(id)) {
+            continue;
+        }
+
+        auto pkg = ctx->resourcePackageStore->get(id);
+        if (!pkg.has_value()) {
+            auto path = ctx->resourcePackageStore->getResourcePackageInformation(id);
+            if (!path.has_value()) {
+                continue;
+            }
+            auto built = engine::buildResourcePackage(path.value());
+            if (!built.has_value()) {
+                continue;
+            }
+            ctx->resourcePackageStore->add(id, built.value());
+            pkg = built.value();
+        }
+
+        if (pkg.has_value()) {
+            engine::loadResourcePackage(ctx, pkg.value());
+        }
+    }
+
+    m_engine->saveScene(scene->id());
+    
+    build(scene);
+}
+
 void SceneNodeTree::moveEvent(QMoveEvent* event)
 {
     QMainWindow::moveEvent(event);
 
     positioningEngineWindow();
+    positioningResourcePackageEditorWindow();
 }
 
 void SceneNodeTree::resizeEvent(QResizeEvent* event)
@@ -789,6 +1031,7 @@ void SceneNodeTree::resizeEvent(QResizeEvent* event)
     QMainWindow::resizeEvent(event);
 
     positioningEngineWindow();
+    positioningResourcePackageEditorWindow();
 }
 
 void SceneNodeTree::build(std::optional<std::shared_ptr<engine::Scene>> scene)
@@ -831,6 +1074,7 @@ void SceneNodeTree::initMenuBar()
     fileMenu->addAction("&Select Scene", this, &SceneNodeTree::onSelectScene);
     fileMenu->addAction("&Add Scene", this, &SceneNodeTree::onAddScene);
     fileMenu->addAction("&Engine settings", this, &SceneNodeTree::onEngineSettings);
+    fileMenu->addAction("&Scene settings", this, &SceneNodeTree::onSceneSettings);
     fileMenu->addSeparator();
     fileMenu->addAction("&Exit", this, &SceneNodeTree::close);
 }
@@ -992,6 +1236,15 @@ void SceneNodeTree::positioningEngineWindow()
     int x = (frame.x() + frame.width() + 10) * dpr;
     int y = frame.y() * dpr;
     ctx->window->setWindowPosition(x, y);
+}
+
+void SceneNodeTree::positioningResourcePackageEditorWindow()
+{
+    qreal dpr = windowHandle()->devicePixelRatio();
+    QRect frame = frameGeometry();
+    int x = frame.x() * dpr;
+    int y = (frame.y() + frame.height() + 10) * dpr;
+    m_resource_package_editor->move(x, y);
 }
 
 }

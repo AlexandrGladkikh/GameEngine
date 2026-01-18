@@ -9,8 +9,17 @@ namespace engine {
 
 class CameraComponent final : public Component {
 public:
+
+    enum class ProjectionType {
+        Orthographic,
+        Perspective
+    };
+
     struct Ortho {
-        GLfloat left, right, top, bottom, near, far;
+        GLfloat left = 0.0f;
+        GLfloat right = 360.0f;
+        GLfloat top = 640.0f;
+        GLfloat bottom = 0.0f;
     };
 
     explicit CameraComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene);
@@ -27,11 +36,26 @@ public:
 
     auto type() const -> std::string override;
 
+    auto projectionType() const -> ProjectionType;
+    void setProjectionType(ProjectionType type);
+
     auto clone(uint32_t owner_node_id) const -> std::unique_ptr<Component> override;
 
     void setOrtho(GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat near, GLfloat far);
     void setOrtho(const Ortho& ortho);
     auto getOrtho() const -> Ortho;
+
+    void setFov(GLfloat fov);
+    auto getFov() const -> GLfloat;
+
+    void setNear(GLfloat near);
+    auto getNear() const -> GLfloat;
+
+    void setFar(GLfloat far);
+    auto getFar() const -> GLfloat;
+
+    void setAspect(GLfloat aspect);
+    auto getAspect() const -> GLfloat;
 
     auto getView() const -> glm::mat4;
     auto getProjection() const -> glm::mat4;
@@ -48,6 +72,8 @@ public:
 private:
     void updateView();
 
+    ProjectionType m_projection_type;
+
     Ortho m_ortho;
 
     glm::vec3 m_position;
@@ -60,6 +86,8 @@ private:
     GLfloat m_pitch;
 
     GLfloat m_fov;
+    GLfloat m_aspect;
+
     GLfloat m_near;
     GLfloat m_far;
 
@@ -70,6 +98,7 @@ private:
     bool m_dirty;
 
     constexpr static GLfloat DEFAULT_FOV = 45.0f;
+    constexpr static GLfloat DEFAULT_ASPECT = 16.0f / 9.0f;
     constexpr static GLfloat DEFAULT_NEAR = 0.1f;
     constexpr static GLfloat DEFAULT_FAR = 100.0f;
 

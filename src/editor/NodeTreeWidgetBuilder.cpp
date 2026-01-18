@@ -19,6 +19,7 @@
 #include "engine/Utils.h"
 #include "engine/TextureStore.h"
 #include "engine/ShaderStore.h"
+#include "engine/MeshStore.h"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -27,6 +28,7 @@
 #include <QLineEdit>
 #include <QGraphicsOpacityEffect>
 
+#include <QtCore/qnamespace.h>
 #include <string>
 #include <functional>
 
@@ -43,6 +45,7 @@ ComponentWidget* TreeWidgetBuilder::buildTransformWidget(const std::shared_ptr<e
 
     std::string name = "Transform name \"" + transform->name() + "\"";
     auto* label = new QLabel(QString::fromStdString(name));
+    decorateLabel(label);
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(label);
 
@@ -131,9 +134,9 @@ ComponentWidget* TreeWidgetBuilder::buildTransformWidget(const std::shared_ptr<e
     };
 
     std::vector<EditorBlockLayoutData> rotation_data = {
-        { "X", formatFloat(transform->getRotation().x), rotationXChangeHandler, rotationXUpdater },
-        { "Y", formatFloat(transform->getRotation().y), rotationYChangeHandler, rotationYUpdater },
-        { "Z", formatFloat(transform->getRotation().z), rotationZChangeHandler, rotationZUpdater },
+        { "X", formatFloat(transform->getRotation().x), rotationXChangeHandler, rotationXUpdater, false, false, {}, true, -1000.0f, 1000.0f },
+        { "Y", formatFloat(transform->getRotation().y), rotationYChangeHandler, rotationYUpdater, false, false, {}, true, -1000.0f, 1000.0f },
+        { "Z", formatFloat(transform->getRotation().z), rotationZChangeHandler, rotationZUpdater, false, false, {}, true, -1000.0f, 1000.0f },
     };
     auto rotation_layout = createEditorBlockLayout("Rotation", rotation_data, m_engine_controller);
     layout->addLayout(rotation_layout);
@@ -177,9 +180,9 @@ ComponentWidget* TreeWidgetBuilder::buildTransformWidget(const std::shared_ptr<e
     };
 
     std::vector<EditorBlockLayoutData> scale_data = {
-        { "X", formatFloat(transform->getScale().x), scaleXChangeHandler, scaleXUpdater },
-        { "Y", formatFloat(transform->getScale().y), scaleYChangeHandler, scaleYUpdater },
-        { "Z", formatFloat(transform->getScale().z), scaleZChangeHandler, scaleZUpdater },
+        { "X", formatFloat(transform->getScale().x), scaleXChangeHandler, scaleXUpdater, false, false, {}, true, 0.0f, 1000.0f },
+        { "Y", formatFloat(transform->getScale().y), scaleYChangeHandler, scaleYUpdater, false, false, {}, true, 0.0f, 1000.0f },
+        { "Z", formatFloat(transform->getScale().z), scaleZChangeHandler, scaleZUpdater, false, false, {}, true, 0.0f, 1000.0f },
     };
     auto scale_layout = createEditorBlockLayout("Scale", scale_data, m_engine_controller);
     layout->addLayout(scale_layout);
@@ -202,6 +205,7 @@ ComponentWidget* TreeWidgetBuilder::buildMaterialWidget(const std::shared_ptr<en
 
     std::string name = "Material name \"" + material->name() + "\"";
     auto* label = new QLabel(QString::fromStdString(name));
+    decorateLabel(label);
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(label);
 
@@ -257,6 +261,7 @@ ComponentWidget* TreeWidgetBuilder::buildMeshWidget(const std::shared_ptr<engine
 
     std::string name = "Mesh name \"" + mesh->name() + "\"";
     auto* label = new QLabel(QString::fromStdString(name));
+    decorateLabel(label);
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(label);
 
@@ -272,7 +277,7 @@ ComponentWidget* TreeWidgetBuilder::buildMeshWidget(const std::shared_ptr<engine
     };
 
     std::vector<EditorBlockLayoutData> mesh_data = {
-        { "mesh", mesh->meshName(), meshChangeHandler, meshUpdater },
+        { "mesh", mesh->meshName(), meshChangeHandler, meshUpdater, false, true, mesh->context().lock()->meshStore->names() },
     };
     auto mesh_layout = createEditorBlockLayout("Mesh", mesh_data, m_engine_controller);
     layout->addLayout(mesh_layout);
@@ -284,7 +289,7 @@ ComponentWidget* TreeWidgetBuilder::buildMeshWidget(const std::shared_ptr<engine
     return mesh_widget;
 }
 
-ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camera)
+ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camera, QTreeWidgetItem* item)
 {
     ComponentWidget* camera_widget = new ComponentWidget;
     m_tree_widget_builder_helper->subscribeOnActiveComponent(camera_widget, camera);
@@ -295,105 +300,198 @@ ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engi
 
     std::string name = "Camera name \"" + camera->name() + "\"";
     auto* label = new QLabel(QString::fromStdString(name));
+    decorateLabel(label);
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(label);
 
-    auto orthoLeftChangeHandler = [camera](const std::string& value) {
-        float param = 0.0f;
-        if (parseFloat(value, param)) {
+    auto projectionTypeUpdater = [camera]() {
+        return camera->projectionType() == engine::CameraComponent::ProjectionType::Orthographic ? "orthographic" : "perspective";
+    };
+
+    std::vector<std::string> projection_type_values = { "orthographic", "perspective" };
+    std::map<std::string, engine::CameraComponent::ProjectionType> projection_type_map = {
+        {"orthographic", engine::CameraComponent::ProjectionType::Orthographic},
+        {"perspective", engine::CameraComponent::ProjectionType::Perspective} };
+    engine::CameraComponent::ProjectionType projection_type = projection_type_map.at(projectionTypeUpdater());
+    
+    auto projectionTypeChangeHandler = [this, camera, projection_type_map, item](const std::string& value) {
+        camera->setProjectionType(projection_type_map.at(value));
+        m_scene_node_tree->rebuildComponentWidget(item);
+    };
+
+    std::vector<EditorBlockLayoutData> projection_type_data = {
+        { "projection type", projection_type_values[static_cast<int>(projection_type)], projectionTypeChangeHandler, projectionTypeUpdater, false, true, projection_type_values }
+    };
+    QHBoxLayout* projection_type_layout = createEditorBlockLayout("Projection type", projection_type_data, m_engine_controller);
+    layout->addLayout(projection_type_layout);
+
+    if (camera->projectionType() == engine::CameraComponent::ProjectionType::Orthographic) {
+        auto orthoLeftChangeHandler = [camera](const std::string& value) {
+            float param = 0.0f;
+            if (parseFloat(value, param)) {
+                auto ortho = camera->getOrtho();
+                ortho.left = param;
+                camera->setOrtho(ortho);
+            }
+        };
+
+        auto orthoRightChangeHandler = [camera](const std::string& value) {
+            float param = 0.0f;
+            if (parseFloat(value, param)) {
+                auto ortho = camera->getOrtho();
+                ortho.right = param;
+                camera->setOrtho(ortho);
+            }
+        };
+
+        auto orthoTopChangeHandler = [camera](const std::string& value) {
+            float param = 0.0f;
+            if (parseFloat(value, param)) {
+                auto ortho = camera->getOrtho();
+                ortho.top = param;
+                camera->setOrtho(ortho);
+            }
+        };
+
+        auto orthoBottomChangeHandler = [camera](const std::string& value) {
+            float param = 0.0f;
+            if (parseFloat(value, param)) {
+                auto ortho = camera->getOrtho();
+                ortho.bottom = param;
+                camera->setOrtho(ortho);
+            }
+        };
+
+        auto orthoNearChangeHandler = [camera](const std::string& value) {
+            float param = 0.0f;
+            if (parseFloat(value, param)) {
+                camera->setNear(param);
+            }
+        };
+
+        auto orthoFarChangeHandler = [camera](const std::string& value) {
+            float param = 0.0f;
+            if (parseFloat(value, param)) {
+                camera->setFar(param);
+            }
+        };
+
+        auto orthoLeftUpdater = [camera]() {
             auto ortho = camera->getOrtho();
-            ortho.left = param;
-            camera->setOrtho(ortho);
-        }
-    };
+            return formatFloat(ortho.left);
+        };
 
-    auto orthoRightChangeHandler = [camera](const std::string& value) {
-        float param = 0.0f;
-        if (parseFloat(value, param)) {
+        auto orthoRightUpdater = [camera]() {
             auto ortho = camera->getOrtho();
-            ortho.right = param;
-            camera->setOrtho(ortho);
-        }
-    };
+            return formatFloat(ortho.right);
+        };
 
-    auto orthoTopChangeHandler = [camera](const std::string& value) {
-        float param = 0.0f;
-        if (parseFloat(value, param)) {
+        auto orthoTopUpdater = [camera]() {
             auto ortho = camera->getOrtho();
-            ortho.top = param;
-            camera->setOrtho(ortho);
-        }
-    };
+            return formatFloat(ortho.top);
+        };
 
-    auto orthoBottomChangeHandler = [camera](const std::string& value) {
-        float param = 0.0f;
-        if (parseFloat(value, param)) {
+        auto orthoBottomUpdater = [camera]() {
             auto ortho = camera->getOrtho();
-            ortho.bottom = param;
-            camera->setOrtho(ortho);
-        }
-    };
+            return formatFloat(ortho.bottom);
+        };
 
-    auto orthoNearChangeHandler = [camera](const std::string& value) {
-        float param = 0.0f;
-        if (parseFloat(value, param)) {
-            auto ortho = camera->getOrtho();
-            ortho.near = param;
-            camera->setOrtho(ortho);
-        }
-    };
+        auto orthoNearUpdater = [camera]() {
+            return formatFloat(camera->getNear());
+        };
 
-    auto orthoFarChangeHandler = [camera](const std::string& value) {
-        float param = 0.0f;
-        if (parseFloat(value, param)) {
-            auto ortho = camera->getOrtho();
-            ortho.far = param;
-            camera->setOrtho(ortho);
-        }
-    };
+        auto orthoFarUpdater = [camera]() {
+            return formatFloat(camera->getFar());
+        };
 
-    auto orthoLeftUpdater = [camera]() {
         auto ortho = camera->getOrtho();
-        return formatFloat(ortho.left);
-    };
 
-    auto orthoRightUpdater = [camera]() {
-        auto ortho = camera->getOrtho();
-        return formatFloat(ortho.right);
-    };
+        std::vector<EditorBlockLayoutData> ortho_data = {};
+        ortho_data.push_back({ "left", formatFloat(ortho.left), orthoLeftChangeHandler, orthoLeftUpdater, false, false, {}, true, -1000.0f, 1000.0f });
+        ortho_data.push_back({ "right", formatFloat(ortho.right), orthoRightChangeHandler, orthoRightUpdater, false, false, {}, true, -1000.0f, 1000.0f });
+        ortho_data.push_back({ "top", formatFloat(ortho.top), orthoTopChangeHandler, orthoTopUpdater, false, false, {}, true, -1000.0f, 1000.0f });
+        ortho_data.push_back({ "bottom", formatFloat(ortho.bottom), orthoBottomChangeHandler, orthoBottomUpdater, false, false, {}, true, -1000.0f, 1000.0f });
+        ortho_data.push_back({ "near", formatFloat(camera->getNear()), orthoNearChangeHandler, orthoNearUpdater, false, false, {}, true, -1000.0f, 1000.0f });
+        ortho_data.push_back({ "far", formatFloat(camera->getFar()), orthoFarChangeHandler, orthoFarUpdater, false, false, {}, true, -1000.0f, 1000.0f });
 
-    auto orthoTopUpdater = [camera]() {
-        auto ortho = camera->getOrtho();
-        return formatFloat(ortho.top);
-    };
+        QHBoxLayout* ortho_layout = createEditorBlockLayout("Ortho", ortho_data, m_engine_controller);
+        layout->addLayout(ortho_layout);
+    } else if (camera->projectionType() == engine::CameraComponent::ProjectionType::Perspective) {
+        auto fovChangeHandler = [camera](const std::string& value) {
+            float param = 0.0f;
+            if (parseFloat(value, param)) {
+                camera->setFov(param);
+            }
+        };
 
-    auto orthoBottomUpdater = [camera]() {
-        auto ortho = camera->getOrtho();
-        return formatFloat(ortho.bottom);
-    };
+        auto fovUpdater = [camera]() {
+            if (!camera->isValid()) {
+                return std::string();
+            }
+            return formatFloat(camera->getFov());
+        };
+    
+        std::vector<EditorBlockLayoutData> fov_data = {
+            { "fov", formatFloat(camera->getFov()), fovChangeHandler, fovUpdater, false, false, {}, true, 0.0f, 180.0f }
+        };
+        QHBoxLayout* fov_layout = createEditorBlockLayout("Fov", fov_data, m_engine_controller);
+        layout->addLayout(fov_layout);
 
-    auto orthoNearUpdater = [camera]() {
-        auto ortho = camera->getOrtho();
-        return formatFloat(ortho.near);
-    };
+        auto nearChangeHandler = [camera](const std::string& value) {
+            float param = 0.0f;
+            if (parseFloat(value, param)) {
+                camera->setNear(param);
+            }
+        };
+        
+        auto nearUpdater = [camera]() {
+            if (!camera->isValid()) {
+                return std::string();
+            }
+            return formatFloat(camera->getNear());
+        };
+        std::vector<EditorBlockLayoutData> near_data = {
+            { "near", formatFloat(camera->getNear()), nearChangeHandler, nearUpdater, false, false, {}, true, 0.0f, 1000.0f }
+        };
+        QHBoxLayout* near_layout = createEditorBlockLayout("Near", near_data, m_engine_controller);
+        layout->addLayout(near_layout);
 
-    auto orthoFarUpdater = [camera]() {
-        auto ortho = camera->getOrtho();
-        return formatFloat(ortho.far);
-    };
+        auto farChangeHandler = [camera](const std::string& value) {
+            float param = 0.0f;
+            if (parseFloat(value, param)) {
+                camera->setFar(param);
+            }
+        };
+        auto farUpdater = [camera]() {
+            if (!camera->isValid()) {
+                return std::string();
+            }
+            return formatFloat(camera->getFar());
+        };
+        std::vector<EditorBlockLayoutData> far_data = {
+            { "far", formatFloat(camera->getFar()), farChangeHandler, farUpdater, false, false, {}, true, 0.0f, 1000.0f }
+        };
+        QHBoxLayout* far_layout = createEditorBlockLayout("Far", far_data, m_engine_controller);
+        layout->addLayout(far_layout);
 
-    auto ortho = camera->getOrtho();
-
-    std::vector<EditorBlockLayoutData> ortho_data = {};
-    ortho_data.push_back({ "left", formatFloat(ortho.left), orthoLeftChangeHandler, orthoLeftUpdater });
-    ortho_data.push_back({ "right", formatFloat(ortho.right), orthoRightChangeHandler, orthoRightUpdater });
-    ortho_data.push_back({ "top", formatFloat(ortho.top), orthoTopChangeHandler, orthoTopUpdater });
-    ortho_data.push_back({ "bottom", formatFloat(ortho.bottom), orthoBottomChangeHandler, orthoBottomUpdater });
-    ortho_data.push_back({ "near", formatFloat(ortho.near), orthoNearChangeHandler, orthoNearUpdater });
-    ortho_data.push_back({ "far", formatFloat(ortho.far), orthoFarChangeHandler, orthoFarUpdater });
-
-    QHBoxLayout* ortho_layout = createEditorBlockLayout("Ortho", ortho_data, m_engine_controller);
-    layout->addLayout(ortho_layout);
+        auto aspectChangeHandler = [camera](const std::string& value) {
+            float param = 0.0f;
+            if (parseFloat(value, param)) {
+                camera->setAspect(param);
+            }
+        };
+        auto aspectUpdater = [camera]() {
+            if (!camera->isValid()) {
+                return std::string();
+            }
+            return formatFloat(camera->getAspect());
+        };
+        std::vector<EditorBlockLayoutData> aspect_data = {
+            { "aspect", formatFloat(camera->getAspect()), aspectChangeHandler, aspectUpdater, false, false, {}, true, 0.0f, 1000.0f }
+        };
+        QHBoxLayout* aspect_layout = createEditorBlockLayout("Aspect", aspect_data, m_engine_controller);
+        layout->addLayout(aspect_layout);
+    }
 
     auto yawChangeHandler = [camera](const std::string& value) {
         float param = 0.0f;
@@ -410,7 +508,7 @@ ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engi
     };
 
     std::vector<EditorBlockLayoutData> yaw_data = {
-        { "yaw", formatFloat(camera->getYaw()), yawChangeHandler, yawUpdater }
+        { "yaw", formatFloat(camera->getYaw()), yawChangeHandler, yawUpdater, false, false, {}, true, -1000.0f, 1000.0f }
     };
 
     QHBoxLayout* yaw_layout = createEditorBlockLayout("Yaw", yaw_data, m_engine_controller);
@@ -431,7 +529,7 @@ ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engi
     };
 
     std::vector<EditorBlockLayoutData> pitch_data = {
-        { "pitch", formatFloat(camera->getPitch()), pitchChangeHandler, pitchUpdater }
+        { "pitch", formatFloat(camera->getPitch()), pitchChangeHandler, pitchUpdater, false, false, {}, true, -1000.0f, 1000.0f }
     };
 
     QHBoxLayout* pitch_layout = createEditorBlockLayout("Pitch", pitch_data, m_engine_controller);
@@ -455,6 +553,7 @@ ComponentWidget* TreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shar
 
     std::string name = "Flipbook Animation name \"" + animation->name() + "\"";
     auto* label = new QLabel(QString::fromStdString(name));
+    decorateLabel(label);
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(label);
 
@@ -485,7 +584,7 @@ ComponentWidget* TreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shar
     };
 
     std::vector<EditorBlockLayoutData> update_time_data = {
-        { "update time", formatFloat(animation->updateTime()), updateTimeChangeHandler, updateTimeUpdater }
+        { "update time", formatFloat(animation->updateTime()), updateTimeChangeHandler, updateTimeUpdater, false, false, {}, true, 0.0f, 1000.0f }
     };
     QHBoxLayout* update_time_layout = createEditorBlockLayout("Update time", update_time_data, m_engine_controller);
     layout->addLayout(update_time_layout);
@@ -576,6 +675,7 @@ ComponentWidget* TreeWidgetBuilder::buildMouseEventFilterWidget(const std::share
 
     std::string name = "Mouse Event Filter name \"" + mouse_event_filter->name() + "\"";
     auto* label = new QLabel(QString::fromStdString(name));
+    decorateLabel(label);
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(label);
 
@@ -607,6 +707,15 @@ ComponentWidget* TreeWidgetBuilder::buildMouseEventFilterWidget(const std::share
     return mouse_event_filter_widget;
 }
 
+void TreeWidgetBuilder::decorateLabel(QLabel* label)
+{
+    label->setStyleSheet(
+        "color:rgba(240, 185, 21, 0.81);"
+        "font-weight: bold;"
+        "font-size: 15px;"
+    );
+}
+
 TreeWidgetBuilder::TreeWidgetBuilder(SceneNodeTree* scene_node_tree, const std::shared_ptr<EngineController>& engine_controller) :
     m_scene_node_tree(scene_node_tree),
     m_engine_controller(engine_controller),
@@ -618,8 +727,19 @@ TreeWidgetBuilder::TreeWidgetBuilder(SceneNodeTree* scene_node_tree, const std::
 auto TreeWidgetBuilder::buildWidgetForNode(const std::shared_ptr<engine::Node>& node) -> std::optional<NodeWidget*>
 {
     NodeWidget* new_widget = new NodeWidget();
+    new_widget->setAttribute(Qt::WA_StyledBackground, true);
+    new_widget->setStyleSheet(
+        "background-color: #2b2f36;"
+        "border: 1px solid #4a5664;"
+        "border-radius: 4px;"
+    );
+    
     auto label = new QLabel(new_widget);
     label->setText(QString::fromStdString(node->name()));
+    label->setStyleSheet(
+        "color: #e8edf2;"
+        "font-weight: bold;"
+    );
 
     m_tree_widget_builder_helper->subscribeOnActiveNode(new_widget, node);
 
@@ -633,7 +753,7 @@ auto TreeWidgetBuilder::buildWidgetForComponent(std::shared_ptr<engine::Componen
     } else if (component->type() == "mesh") {
         return buildMeshWidget(std::dynamic_pointer_cast<engine::MeshComponent>(component));
     } else if (component->type() == "camera") {
-        return buildCameraWidget(std::dynamic_pointer_cast<engine::CameraComponent>(component));
+        return buildCameraWidget(std::dynamic_pointer_cast<engine::CameraComponent>(component), item);
     } else if (component->type() == "transform") {
         return buildTransformWidget(std::dynamic_pointer_cast<engine::TransformComponent>(component));
     } else if (component->type() == "flipbook_animation") {

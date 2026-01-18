@@ -22,6 +22,7 @@ public:
 
     uint32_t id() const;
     auto name() const -> std::string;
+    void setName(std::string name);
 
     auto context() const -> std::shared_ptr<Context>;
 
@@ -53,6 +54,7 @@ public:
 
     auto getResources() const -> const std::vector<uint32_t>&;
     void addResource(uint32_t id);
+    void setResources(std::vector<uint32_t> ids);
 
 private:
     uint32_t m_id;

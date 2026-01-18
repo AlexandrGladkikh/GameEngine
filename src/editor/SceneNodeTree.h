@@ -60,6 +60,7 @@ private slots:
     void onSelectScene();
     void onAddScene();
     void onEngineSettings();
+    void onSceneSettings();
 
 protected:
     void moveEvent(QMoveEvent* event) override;
@@ -77,6 +78,7 @@ private:
     void changeActiveWidget(bool active);
 
     void positioningEngineWindow();
+    void positioningResourcePackageEditorWindow();
 
     engine::Engine* m_engine;
 

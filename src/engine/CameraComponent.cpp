@@ -1,5 +1,6 @@
 #include "CameraComponent.h"
 #include "Utils.h"
+#include "Logger.h"
 
 #include <glm/ext/matrix_clip_space.hpp>
 #include <glm/ext/matrix_transform.hpp>
@@ -8,6 +9,8 @@ namespace engine {
 
 CameraComponent::CameraComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene) :
     Component(id, name, owner_node, owner_scene),
+    m_projection_type(ProjectionType::Orthographic),
+    m_ortho(Ortho()),
     m_position(DEFAULT_POS),
     m_front(DEFAULT_FRONT),
     m_up(DEFAULT_UP),
@@ -16,6 +19,7 @@ CameraComponent::CameraComponent(uint32_t id, const std::string& name, uint32_t 
     m_yaw(DEFAULT_YAW),
     m_pitch(DEFAULT_PITCH),
     m_fov(DEFAULT_FOV),
+    m_aspect(DEFAULT_ASPECT),
     m_near(DEFAULT_NEAR),
     m_far(DEFAULT_FAR),
     m_view(glm::mat4(1.0f)),
@@ -54,6 +58,22 @@ auto CameraComponent::type() const -> std::string
     return "camera";
 }
 
+auto CameraComponent::projectionType() const -> CameraComponent::ProjectionType
+{
+    return m_projection_type;
+}
+
+void CameraComponent::setProjectionType(CameraComponent::ProjectionType type)
+{
+    m_projection_type = type;
+    if (type == ProjectionType::Orthographic) {
+        m_projection = glm::ortho(m_ortho.left, m_ortho.right, m_ortho.bottom, m_ortho.top, m_near, m_far);
+    } else {
+        m_projection = glm::perspective(glm::radians(m_fov), m_aspect, m_near, m_far);
+    }
+    markDirty();
+}
+
 auto CameraComponent::clone(uint32_t owner_node_id) const -> std::unique_ptr<Component>
 {
     auto clone_component = std::make_unique<CameraComponent>(generateUniqueId(), name(), owner_node_id, ownerScene());
@@ -66,30 +86,119 @@ auto CameraComponent::clone(uint32_t owner_node_id) const -> std::unique_ptr<Com
     clone_component->setYaw(m_yaw);
     clone_component->setPitch(m_pitch);
     clone_component->setOrtho(m_ortho);
+    clone_component->setProjectionType(m_projection_type);
 
     return clone_component;
 }
 
 void CameraComponent::setOrtho(GLfloat left, GLfloat right, GLfloat top, GLfloat bottom, GLfloat near, GLfloat far)
 {
+    if (m_projection_type != ProjectionType::Orthographic) {
+        Logger::error("CameraComponent::setOrtho: Projection type is not orthographic");
+        return;
+    }
+
     m_ortho.left = left;
     m_ortho.right = right;
     m_ortho.top = top;
     m_ortho.bottom = bottom;
-    m_ortho.near = near;
-    m_ortho.far = far;
-    m_projection = glm::ortho(left, right, bottom, top, near, far);
+    m_near = near;
+    m_far = far;
+    markDirty();
+    m_projection = glm::ortho(left, right, bottom, top, m_near, m_far);
 }
 
 void CameraComponent::setOrtho(const Ortho &ortho)
 {
+    if (m_projection_type != ProjectionType::Orthographic) {
+        Logger::error("CameraComponent::setOrtho: Projection type is not orthographic");
+        return;
+    }
+
     m_ortho = ortho;
-    m_projection = glm::ortho(ortho.left, ortho.right, ortho.bottom, ortho.top, ortho.near, ortho.far);
+    markDirty();
+    m_projection = glm::ortho(ortho.left, ortho.right, ortho.bottom, ortho.top, m_near, m_far);
 }
 
 auto CameraComponent::getOrtho() const -> Ortho
 {
+    if (m_projection_type != ProjectionType::Orthographic) {
+        Logger::error("CameraComponent::getOrtho: Projection type is not orthographic");
+        return Ortho();
+    }
+
     return m_ortho;
+}
+
+void CameraComponent::setFov(GLfloat fov)
+{
+    if (m_projection_type != ProjectionType::Perspective) {
+        Logger::error("CameraComponent::setFov: Projection type is not perspective");
+        return;
+    }
+
+    m_fov = fov;
+    markDirty();
+    m_projection = glm::perspective(glm::radians(m_fov), m_aspect, m_near, m_far);
+}
+
+auto CameraComponent::getFov() const -> GLfloat
+{
+    return m_fov;
+}
+
+void CameraComponent::setNear(GLfloat near)
+{
+    if (m_projection_type != ProjectionType::Perspective) {
+        Logger::error("CameraComponent::setNear: Projection type is not perspective");
+        return;
+    }
+
+    m_near = near;
+    markDirty();
+    if (m_projection_type == ProjectionType::Perspective) {
+        m_projection = glm::perspective(glm::radians(m_fov), m_aspect, m_near, m_far);
+    } else {
+        m_projection = glm::ortho(m_ortho.left, m_ortho.right, m_ortho.bottom, m_ortho.top, m_near, m_far);
+    }
+}
+
+auto CameraComponent::getNear() const -> GLfloat
+{
+    return m_near;
+}
+
+void CameraComponent::setFar(GLfloat far)
+{
+    if (m_projection_type != ProjectionType::Perspective) {
+        Logger::error("CameraComponent::setFar: Projection type is not perspective");
+        return;
+    }
+
+    m_far = far;
+    markDirty();
+    if (m_projection_type == ProjectionType::Perspective) {
+        m_projection = glm::perspective(glm::radians(m_fov), m_aspect, m_near, m_far);
+    } else {
+        m_projection = glm::ortho(m_ortho.left, m_ortho.right, m_ortho.bottom, m_ortho.top, m_near, m_far);
+    }
+}
+
+auto CameraComponent::getFar() const -> GLfloat
+{
+    return m_far;
+}
+
+void CameraComponent::setAspect(GLfloat aspect)
+{
+    m_aspect = aspect;
+    markDirty();
+    m_projection = glm::perspective(glm::radians(m_fov), m_aspect, m_near, m_far);
+}
+
+auto CameraComponent::getAspect() const -> GLfloat
+{
+    return m_aspect;
 }
 
 auto CameraComponent::getView() const -> glm::mat4

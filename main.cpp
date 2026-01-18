@@ -10,8 +10,7 @@
 #include "engine/MouseEventFilterComponent.h"
 
 #include <GLFW/glfw3.h>
-
-#include <thread>
+#include <cstdint>
 
 #ifdef ENABLE_EDITOR
 #include <QApplication>
@@ -473,18 +472,21 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
         layout->addWidget(label);
 
         auto cameraIdChangeHandler = [camera_follow](const std::string& value) {
-            camera_follow->setCameraId(std::stof(value));
+            uint32_t id = 0;
+            if (editor::parseUint32(value, id)) {
+                camera_follow->setCameraId(id);
+            }
         };
 
         auto cameraIdUpdater = [camera_follow]() {
             if (!camera_follow->isValid()) {
                 return std::string();
             }
-            return editor::formatFloat(camera_follow->getCameraId());
+            return editor::formatUint32(camera_follow->getCameraId());
         };
 
         std::vector<editor::EditorBlockLayoutData> camera_id_data = {
-            { "camera id", editor::formatFloat(camera_follow->getCameraId()), cameraIdChangeHandler, cameraIdUpdater }
+            { "camera id", editor::formatUint32(camera_follow->getCameraId()), cameraIdChangeHandler, cameraIdUpdater }
         };
         QHBoxLayout* camera_id_layout = editor::createEditorBlockLayout("", camera_id_data, engineObserver());
         layout->addLayout(camera_id_layout);
@@ -582,7 +584,7 @@ std::optional<std::unique_ptr<engine::Component>> EngineComponentBuilder::buildC
         auto owner_scene = component["owner_scene"].GetUint();
 
         auto new_component = std::make_unique<RotateComponent>(id, name, owner_node, owner_scene);
-        auto axis = component["axis"].GetString();
+        std::string axis = component["axis"].GetString();
         if (axis == "x") {
             new_component->setAxis(RotateComponent::Axis::X);
         } else if (axis == "y") {

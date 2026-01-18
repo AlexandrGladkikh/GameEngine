@@ -81,8 +81,8 @@ if (APPLE)
     find_package(glfw3 3.3 REQUIRED)   # обычно работает с brew-версией glfw
     find_package(OpenGL REQUIRED)
 
-    target_link_libraries(engine PRIVATE glfw OpenGL::GL)
-    target_include_directories(engine PRIVATE ${OPENGL_INCLUDE_DIRS})
+    target_link_libraries(engine PUBLIC glfw OpenGL::GL)
+    target_include_directories(engine PUBLIC ${OPENGL_INCLUDE_DIRS})
 
     target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/3rdparts)
 elseif(WIN32)

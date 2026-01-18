@@ -47,6 +47,15 @@ std::string Scene::name() const
     return m_name;
 }
 
+void Scene::setName(std::string name)
+{
+    if (m_name == name) {
+        return;
+    }
+    m_name = std::move(name);
+    setDirty(true);
+}
+
 auto Scene::context() const -> std::shared_ptr<Context>
 {
     return m_context.lock();
@@ -204,7 +213,29 @@ auto Scene::getResources() const -> const std::vector<uint32_t>&
 
 void Scene::addResource(uint32_t id)
 {
+    if (std::ranges::find(m_resources_id, id) != m_resources_id.end()) {
+        return;
+    }
     m_resources_id.push_back(id);
+    setDirty(true);
+}
+
+void Scene::setResources(std::vector<uint32_t> ids)
+{
+    std::vector<uint32_t> unique;
+    unique.reserve(ids.size());
+    for (auto id : ids) {
+        if (std::ranges::find(unique, id) == unique.end()) {
+            unique.push_back(id);
+        }
+    }
+
+    if (m_resources_id == unique) {
+        return;
+    }
+
+    m_resources_id = std::move(unique);
+    setDirty(true);
 }
 
 auto saveSceneToFile(const std::shared_ptr<Scene>& scene, const std::filesystem::path& path) -> bool

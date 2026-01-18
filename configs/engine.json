@@ -16,8 +16,16 @@
         {
             "id": 2,
             "path": "../configs/scenes/New scene.json"
+        },
+        {
+            "id": 3,
+            "path": "../configs/scenes/test scene.json"
+        },
+        {
+            "id": 3409275422,
+            "path": "../configs/scenes/prekol.json"
         }
     ],
-    "main_scene_id": 2,
+    "main_scene_id": 3,
     "resource_packages": "../configs/packages_info.json"
 }

@@ -10,7 +10,7 @@ namespace editor {
 EngineController::EngineController(engine::Engine* engine, QWidget* parent)
 {
     m_timer = new QTimer(parent);
-    m_timer->setInterval(10);
+    m_timer->setInterval(33);
     m_timer->setTimerType(Qt::PreciseTimer);
     auto update_time = std::chrono::steady_clock::now();
     QObject::connect(m_timer, &QTimer::timeout, [this, engine, update_time]() mutable {

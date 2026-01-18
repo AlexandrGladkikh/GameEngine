@@ -86,12 +86,27 @@ auto buildCameraComponent(const rapidjson::Value& componentData) -> std::optiona
     auto right = projection["right"].GetFloat();
     auto top = projection["top"].GetFloat();
     auto bottom = projection["bottom"].GetFloat();
-    auto near = projection["near"].GetFloat();
-    auto far = projection["far"].GetFloat();
+
+    auto fov = componentData["fov"].GetFloat();
+    auto aspect = componentData["aspect"].GetFloat();
+
+    auto near = componentData["near"].GetFloat();
+    auto far = componentData["far"].GetFloat();
+
+    auto projection_type = static_cast<CameraComponent::ProjectionType>(componentData["projection_type"].GetInt());
 
     auto component = std::make_unique<CameraComponent>(id, name, owner_node, owner_scene);
 
-    component->setOrtho(left, right, top, bottom, near, far);
+    if (projection_type == CameraComponent::ProjectionType::Orthographic) {
+        component->setProjectionType(projection_type);
+        component->setOrtho(left, right, top, bottom, near, far);
+    } else if (projection_type == CameraComponent::ProjectionType::Perspective) {
+        component->setProjectionType(projection_type);
+        component->setFov(fov);
+        component->setNear(near);
+        component->setFar(far);
+        component->setAspect(aspect);
+    }
 
     return component;
 }
@@ -113,9 +128,15 @@ void saveCameraComponent(const std::shared_ptr<CameraComponent>& component, rapi
     projection.AddMember("right", ortho.right, allocator);
     projection.AddMember("top", ortho.top, allocator);
     projection.AddMember("bottom", ortho.bottom, allocator);
-    projection.AddMember("near", ortho.near, allocator);
-    projection.AddMember("far", ortho.far, allocator);
     component_json.AddMember("projection", projection, allocator);
+
+    component_json.AddMember("fov", component->getFov(), allocator);
+    component_json.AddMember("aspect", component->getAspect(), allocator);
+
+    component_json.AddMember("near", component->getNear(), allocator);
+    component_json.AddMember("far", component->getFar(), allocator);
+
+    component_json.AddMember("projection_type", static_cast<int>(component->projectionType()), allocator);
 }
 
 auto buildTransformComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<TransformComponent>>

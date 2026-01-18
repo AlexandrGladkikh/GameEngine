@@ -6,6 +6,7 @@ bin/
 lib/
 cmake-build-*/
 .cache/
+.vscode/
 
 # CMake файлы
 CMakeFiles/

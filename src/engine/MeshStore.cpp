@@ -1,5 +1,7 @@
 #include "MeshStore.h"
 
+#include <ranges>
+
 namespace engine {
 
 void MeshData::bind() const
@@ -41,14 +43,22 @@ auto MeshStore::getIdByName(const std::string &name) const -> std::optional<uint
     return std::nullopt;
 }
 
-void MeshStore::remove(uint32_t id)
-{
-    m_meshes.erase(id);
-}
-
 void MeshStore::add(uint32_t id, const std::shared_ptr<MeshData>& meshData)
 {
     m_meshes[id] = meshData;
 }
 
+void MeshStore::remove(uint32_t id)
+{
+    m_meshes.erase(id);
+}
+
+auto MeshStore::names() const -> std::vector<std::string>
+{
+    std::vector<std::string> names;
+    for (const auto& meshData : m_meshes | std::views::values) {
+        names.push_back(meshData->name);
+    }
+    return names;
+}
 }
