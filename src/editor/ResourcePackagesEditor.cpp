@@ -8,6 +8,8 @@
 #include <engine/ResourcePackageStore.h>
 #include <engine/ResourcePackage.h>
 #include <engine/Utils.h>
+#include <engine/SceneStore.h>
+#include <engine/Scene.h>
 
 #include <QListView>
 #include <QVBoxLayout>
@@ -120,6 +122,11 @@ ResourcePackagesEditor::ResourcePackagesEditor(engine::Engine* engine, QWidget* 
     loadContent();
 }
 
+void ResourcePackagesEditor::updateContent()
+{
+    loadContent();
+}
+
 void ResourcePackagesEditor::onDropNewPackageItems(const QStringList& files)
 {
     auto context = m_engine->context();
@@ -161,34 +168,47 @@ void ResourcePackagesEditor::onDropNewPackageItems(const QStringList& files)
 void ResourcePackagesEditor::loadContent()
 {
     m_item_model->clear();
+    m_packages_list->clear();
 
-    auto context = m_engine->context();
-
-    auto& resource_packages = context->resourcePackageStore->getResourcePackages();
-
-    if (resource_packages.empty()) {
+    auto active_scene = m_engine->context()->sceneStore->get(m_engine->getActiveSceneId());
+    if (!active_scene.has_value()) {
         return;
     }
 
-    for (const auto& [id, package]: resource_packages) {
-        QListWidgetItem* item = new QListWidgetItem(package->name.c_str());
+    auto& scene_value = active_scene.value();
+
+    auto context = m_engine->context();
+
+    bool selected_package = false;
+    for (auto id : scene_value->getResources()) {
+        auto package = context->resourcePackageStore->get(id);
+        if (!package.has_value()) {
+            continue;
+        }
+
+        QListWidgetItem* item = new QListWidgetItem(package.value()->name.c_str());
         m_packages_list->addItem(item);
+
+        if (!selected_package) {
+            m_selected_package_id = id;
+            selected_package = true;
+        }
     }
 
-    const auto& first_package = resource_packages.begin()->second;
-    m_selected_package_id = resource_packages.begin()->first;
-
-    for (auto& texture_info: first_package->textures) {
-        auto texture_name = QString(texture_info.path.stem().c_str());
-        QIcon texture_icon(QString(texture_info.path.c_str()));
-        QStandardItem* item = new QStandardItem(texture_name);
-        item->setIcon(texture_icon);
-        item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt:: ItemIsDragEnabled);
-        item->setData(texture_name, Qt::DisplayRole);
-        item->setData(texture_name, Qt::UserRole);
-
-        m_item_model->appendRow(item);
+    auto package = context->resourcePackageStore->get(m_selected_package_id);
+    if (package.has_value()) {
+        for (auto& texture_info: package.value()->textures) {
+            auto texture_name = QString(texture_info.path.stem().c_str());
+            QIcon texture_icon(QString(texture_info.path.c_str()));
+            QStandardItem* item = new QStandardItem(texture_name);
+            item->setIcon(texture_icon);
+            item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt:: ItemIsDragEnabled);
+            item->setData(texture_name, Qt::DisplayRole);
+            item->setData(texture_name, Qt::UserRole);
+            m_item_model->appendRow(item);
+        }
     }
+
 }
 
 }

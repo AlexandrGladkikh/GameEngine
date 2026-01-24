@@ -20,6 +20,8 @@ class ResourcePackagesEditor : public QMainWindow {
 public:
     explicit ResourcePackagesEditor(engine::Engine* engine, QWidget* parent = nullptr);
 
+    void updateContent();
+
 private slots:
     void onDropNewPackageItems(const QStringList& files);
 

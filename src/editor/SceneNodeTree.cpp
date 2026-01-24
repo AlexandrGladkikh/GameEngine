@@ -479,6 +479,8 @@ void SceneNodeTree::onSelectScene()
         return;
     }
     build(selected);
+
+    m_resource_package_editor->updateContent();
 }
 
 void SceneNodeTree::onAddScene()
@@ -544,6 +546,8 @@ void SceneNodeTree::onAddScene()
     engine_settings->load();
 
     build(new_scene.value());
+
+    m_resource_package_editor->updateContent();
 }
 
 void SceneNodeTree::onEngineSettings()
@@ -1016,6 +1020,8 @@ void SceneNodeTree::onSceneSettings()
     m_engine->saveScene(scene->id());
     
     build(scene);
+
+    m_resource_package_editor->updateContent();
 }
 
 void SceneNodeTree::moveEvent(QMoveEvent* event)
@@ -1244,6 +1250,10 @@ void SceneNodeTree::positioningResourcePackageEditorWindow()
     QRect frame = frameGeometry();
     int x = frame.x() * dpr;
     int y = (frame.y() + frame.height() + 10) * dpr;
+
+    auto frame_height = m_resource_package_editor->height();
+
+    m_resource_package_editor->resize(frame.width() * dpr, frame_height);
     m_resource_package_editor->move(x, y);
 }
 
