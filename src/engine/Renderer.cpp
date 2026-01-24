@@ -127,7 +127,7 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
             }
         }
 
-        auto transform_mtx = transformTune(model_mtx, texture.value()->width(), texture.value()->height());
+        auto transform_mtx = model_mtx;//transformTune(model_mtx, texture.value()->width(), texture.value()->height());
 
         shader_program.value()->use();
         shader_program.value()->setUniform4mat("model", transform_mtx);
