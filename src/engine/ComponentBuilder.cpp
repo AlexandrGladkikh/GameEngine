@@ -8,9 +8,9 @@
 #include "Utils.h"
 #include "FlipbookAnimationComponent.h"
 #include "MouseEventFilterComponent.h"
+#include "RenderComponent.h"
 
 #include <optional>
-#include <functional>
 
 namespace engine {
 
@@ -276,9 +276,38 @@ void saveMouseEventFilterComponent(const std::shared_ptr<MouseEventFilterCompone
     component_json.AddMember("action", component->action(), allocator);
 }
 
+auto buildRenderComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<RenderComponent>>
+{
+    Logger::info(__FUNCTION__);
+
+    auto id = componentData["id"].GetUint();
+    auto name = componentData["name"].GetString();
+    auto owner_node = componentData["owner_node"].GetUint();
+    auto owner_scene = componentData["owner_scene"].GetUint();
+
+    auto component = std::make_unique<RenderComponent>(id, name, owner_node, owner_scene);
+
+    auto sprite = componentData["sprite"].GetBool();
+    component->setSprite(sprite);
+
+    return component;
+}
+
+void saveRenderComponent(const std::shared_ptr<RenderComponent>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value value;
+    value.SetString(component->name().c_str(), allocator);
+    component_json.AddMember("type", "render", allocator);
+    component_json.AddMember("id", component->id(), allocator);
+    component_json.AddMember("name", value, allocator);
+    component_json.AddMember("owner_node", component->ownerNode(), allocator);
+    component_json.AddMember("owner_scene", component->ownerScene(), allocator);
+    component_json.AddMember("sprite", component->isSprite(), allocator);
+}
+
 auto ComponentBuilder::componentTypes() -> const std::vector<std::string>&
 {
-    static const std::vector<std::string> types = {"material", "mesh", "camera", "transform", "flipbook_animation", "mouse_event_filter"};
+    static const std::vector<std::string> types = {"material", "mesh", "camera", "transform", "flipbook_animation", "mouse_event_filter", "render"};
     return types;
 }
 
@@ -298,6 +327,8 @@ auto ComponentBuilder::buildFromJson(const std::string& type, const rapidjson::V
         return buildFlipbookAnimationComponent(component);
     } else if (type == "mouse_event_filter") {
         return buildMouseEventFilterComponent(component);
+    } else if (type == "render") {
+        return buildRenderComponent(component);
     }
 
     return std::nullopt;
@@ -317,6 +348,8 @@ void ComponentBuilder::saveToJson(const std::shared_ptr<Component>& component, r
         saveFlipbookAnimationComponent(std::dynamic_pointer_cast<FlipbookAnimationComponent>(component), component_json, allocator);
     } else if (component->type() == "mouse_event_filter") {
         saveMouseEventFilterComponent(std::dynamic_pointer_cast<MouseEventFilterComponent>(component), component_json, allocator);
+    } else if (component->type() == "render") {
+        saveRenderComponent(std::dynamic_pointer_cast<RenderComponent>(component), component_json, allocator);
     }
 }
 
@@ -336,6 +369,8 @@ auto ComponentBuilder::buildEmptyComponent(const std::string& type, const std::s
         return std::make_unique<FlipbookAnimationComponent>(generateUniqueId(), name, owner_node, owner_scene);
     } else if (type == "mouse_event_filter") {
         return std::make_unique<MouseEventFilterComponent>(generateUniqueId(), name, owner_node, owner_scene);
+    } else if (type == "render") {
+        return std::make_unique<RenderComponent>(generateUniqueId(), name, owner_node, owner_scene);
     }
 
     return std::nullopt;
@@ -375,6 +410,12 @@ template <>
 std::optional<std::unique_ptr<MouseEventFilterComponent>> ComponentBuilder::buildEmptyComponent<MouseEventFilterComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
 {
     return std::make_unique<MouseEventFilterComponent>(generateUniqueId(), name, owner_node, owner_scene);
+}
+
+template<>
+std::optional<std::unique_ptr<RenderComponent>> ComponentBuilder::buildEmptyComponent<RenderComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
+{
+    return std::make_unique<RenderComponent>(generateUniqueId(), name, owner_node, owner_scene);
 }
 
 }

@@ -1,0 +1,848 @@
+[
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Debug -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /FoCMakeFiles\\gameEngine.dir\\Debug\\gameEngine_autogen\\mocs_compilation_Debug.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Debug\\ -c -- D:\\GameEngine\\build-Release\\gameEngine_autogen\\mocs_compilation_Debug.cpp",
+  "file": "D:/GameEngine/build-Release/gameEngine_autogen/mocs_compilation_Debug.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Debug/gameEngine_autogen/mocs_compilation_Debug.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Debug -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /FoCMakeFiles\\gameEngine.dir\\Debug\\main.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Debug\\ -c -- D:\\GameEngine\\main.cpp",
+  "file": "D:/GameEngine/main.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Debug/main.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Debug -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /FoCMakeFiles\\gameEngine.dir\\Debug\\src\\editor\\ComponentWidget.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Debug\\ -c -- D:\\GameEngine\\src\\editor\\ComponentWidget.cpp",
+  "file": "D:/GameEngine/src/editor/ComponentWidget.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Debug/src/editor/ComponentWidget.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Debug -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /FoCMakeFiles\\gameEngine.dir\\Debug\\src\\editor\\EngineController.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Debug\\ -c -- D:\\GameEngine\\src\\editor\\EngineController.cpp",
+  "file": "D:/GameEngine/src/editor/EngineController.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Debug/src/editor/EngineController.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Debug -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /FoCMakeFiles\\gameEngine.dir\\Debug\\src\\editor\\NodeTreeWidgetBuilder.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Debug\\ -c -- D:\\GameEngine\\src\\editor\\NodeTreeWidgetBuilder.cpp",
+  "file": "D:/GameEngine/src/editor/NodeTreeWidgetBuilder.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Debug/src/editor/NodeTreeWidgetBuilder.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Debug -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /FoCMakeFiles\\gameEngine.dir\\Debug\\src\\editor\\NodeWidget.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Debug\\ -c -- D:\\GameEngine\\src\\editor\\NodeWidget.cpp",
+  "file": "D:/GameEngine/src/editor/NodeWidget.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Debug/src/editor/NodeWidget.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Debug -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /FoCMakeFiles\\gameEngine.dir\\Debug\\src\\editor\\PackageContentView.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Debug\\ -c -- D:\\GameEngine\\src\\editor\\PackageContentView.cpp",
+  "file": "D:/GameEngine/src/editor/PackageContentView.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Debug/src/editor/PackageContentView.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Debug -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /FoCMakeFiles\\gameEngine.dir\\Debug\\src\\editor\\ResourcePackagesEditor.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Debug\\ -c -- D:\\GameEngine\\src\\editor\\ResourcePackagesEditor.cpp",
+  "file": "D:/GameEngine/src/editor/ResourcePackagesEditor.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Debug/src/editor/ResourcePackagesEditor.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Debug -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /FoCMakeFiles\\gameEngine.dir\\Debug\\src\\editor\\ResourcePackagesItemModel.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Debug\\ -c -- D:\\GameEngine\\src\\editor\\ResourcePackagesItemModel.cpp",
+  "file": "D:/GameEngine/src/editor/ResourcePackagesItemModel.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Debug/src/editor/ResourcePackagesItemModel.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Debug -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /FoCMakeFiles\\gameEngine.dir\\Debug\\src\\editor\\SceneNodeTree.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Debug\\ -c -- D:\\GameEngine\\src\\editor\\SceneNodeTree.cpp",
+  "file": "D:/GameEngine/src/editor/SceneNodeTree.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Debug/src/editor/SceneNodeTree.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Debug -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /FoCMakeFiles\\gameEngine.dir\\Debug\\src\\editor\\TreeWidgetBuilderHelper.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Debug\\ -c -- D:\\GameEngine\\src\\editor\\TreeWidgetBuilderHelper.cpp",
+  "file": "D:/GameEngine/src/editor/TreeWidgetBuilderHelper.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Debug/src/editor/TreeWidgetBuilderHelper.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Debug -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /FoCMakeFiles\\gameEngine.dir\\Debug\\src\\editor\\UserTreeWidgetBuilder.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Debug\\ -c -- D:\\GameEngine\\src\\editor\\UserTreeWidgetBuilder.cpp",
+  "file": "D:/GameEngine/src/editor/UserTreeWidgetBuilder.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Debug/src/editor/UserTreeWidgetBuilder.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Debug -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /FoCMakeFiles\\gameEngine.dir\\Debug\\src\\editor\\Utils.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Debug\\ -c -- D:\\GameEngine\\src\\editor\\Utils.cpp",
+  "file": "D:/GameEngine/src/editor/Utils.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Debug/src/editor/Utils.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Release -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /FoCMakeFiles\\gameEngine.dir\\Release\\gameEngine_autogen\\mocs_compilation_Release.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Release\\ -c -- D:\\GameEngine\\build-Release\\gameEngine_autogen\\mocs_compilation_Release.cpp",
+  "file": "D:/GameEngine/build-Release/gameEngine_autogen/mocs_compilation_Release.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Release/gameEngine_autogen/mocs_compilation_Release.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Release -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /FoCMakeFiles\\gameEngine.dir\\Release\\main.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Release\\ -c -- D:\\GameEngine\\main.cpp",
+  "file": "D:/GameEngine/main.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Release/main.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Release -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /FoCMakeFiles\\gameEngine.dir\\Release\\src\\editor\\ComponentWidget.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Release\\ -c -- D:\\GameEngine\\src\\editor\\ComponentWidget.cpp",
+  "file": "D:/GameEngine/src/editor/ComponentWidget.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Release/src/editor/ComponentWidget.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Release -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /FoCMakeFiles\\gameEngine.dir\\Release\\src\\editor\\EngineController.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Release\\ -c -- D:\\GameEngine\\src\\editor\\EngineController.cpp",
+  "file": "D:/GameEngine/src/editor/EngineController.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Release/src/editor/EngineController.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Release -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /FoCMakeFiles\\gameEngine.dir\\Release\\src\\editor\\NodeTreeWidgetBuilder.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Release\\ -c -- D:\\GameEngine\\src\\editor\\NodeTreeWidgetBuilder.cpp",
+  "file": "D:/GameEngine/src/editor/NodeTreeWidgetBuilder.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Release/src/editor/NodeTreeWidgetBuilder.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Release -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /FoCMakeFiles\\gameEngine.dir\\Release\\src\\editor\\NodeWidget.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Release\\ -c -- D:\\GameEngine\\src\\editor\\NodeWidget.cpp",
+  "file": "D:/GameEngine/src/editor/NodeWidget.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Release/src/editor/NodeWidget.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Release -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /FoCMakeFiles\\gameEngine.dir\\Release\\src\\editor\\PackageContentView.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Release\\ -c -- D:\\GameEngine\\src\\editor\\PackageContentView.cpp",
+  "file": "D:/GameEngine/src/editor/PackageContentView.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Release/src/editor/PackageContentView.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Release -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /FoCMakeFiles\\gameEngine.dir\\Release\\src\\editor\\ResourcePackagesEditor.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Release\\ -c -- D:\\GameEngine\\src\\editor\\ResourcePackagesEditor.cpp",
+  "file": "D:/GameEngine/src/editor/ResourcePackagesEditor.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Release/src/editor/ResourcePackagesEditor.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Release -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /FoCMakeFiles\\gameEngine.dir\\Release\\src\\editor\\ResourcePackagesItemModel.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Release\\ -c -- D:\\GameEngine\\src\\editor\\ResourcePackagesItemModel.cpp",
+  "file": "D:/GameEngine/src/editor/ResourcePackagesItemModel.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Release/src/editor/ResourcePackagesItemModel.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Release -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /FoCMakeFiles\\gameEngine.dir\\Release\\src\\editor\\SceneNodeTree.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Release\\ -c -- D:\\GameEngine\\src\\editor\\SceneNodeTree.cpp",
+  "file": "D:/GameEngine/src/editor/SceneNodeTree.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Release/src/editor/SceneNodeTree.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Release -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /FoCMakeFiles\\gameEngine.dir\\Release\\src\\editor\\TreeWidgetBuilderHelper.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Release\\ -c -- D:\\GameEngine\\src\\editor\\TreeWidgetBuilderHelper.cpp",
+  "file": "D:/GameEngine/src/editor/TreeWidgetBuilderHelper.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Release/src/editor/TreeWidgetBuilderHelper.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Release -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /FoCMakeFiles\\gameEngine.dir\\Release\\src\\editor\\UserTreeWidgetBuilder.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Release\\ -c -- D:\\GameEngine\\src\\editor\\UserTreeWidgetBuilder.cpp",
+  "file": "D:/GameEngine/src/editor/UserTreeWidgetBuilder.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Release/src/editor/UserTreeWidgetBuilder.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_Release -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /FoCMakeFiles\\gameEngine.dir\\Release\\src\\editor\\Utils.cpp.obj /FdCMakeFiles\\gameEngine.dir\\Release\\ -c -- D:\\GameEngine\\src\\editor\\Utils.cpp",
+  "file": "D:/GameEngine/src/editor/Utils.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/Release/src/editor/Utils.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_RelWithDebInfo -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /FoCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\gameEngine_autogen\\mocs_compilation_RelWithDebInfo.cpp.obj /FdCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\ -c -- D:\\GameEngine\\build-Release\\gameEngine_autogen\\mocs_compilation_RelWithDebInfo.cpp",
+  "file": "D:/GameEngine/build-Release/gameEngine_autogen/mocs_compilation_RelWithDebInfo.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/RelWithDebInfo/gameEngine_autogen/mocs_compilation_RelWithDebInfo.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_RelWithDebInfo -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /FoCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\main.cpp.obj /FdCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\ -c -- D:\\GameEngine\\main.cpp",
+  "file": "D:/GameEngine/main.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/RelWithDebInfo/main.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_RelWithDebInfo -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /FoCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\src\\editor\\ComponentWidget.cpp.obj /FdCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\ -c -- D:\\GameEngine\\src\\editor\\ComponentWidget.cpp",
+  "file": "D:/GameEngine/src/editor/ComponentWidget.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/RelWithDebInfo/src/editor/ComponentWidget.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_RelWithDebInfo -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /FoCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\src\\editor\\EngineController.cpp.obj /FdCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\ -c -- D:\\GameEngine\\src\\editor\\EngineController.cpp",
+  "file": "D:/GameEngine/src/editor/EngineController.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/RelWithDebInfo/src/editor/EngineController.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_RelWithDebInfo -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /FoCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\src\\editor\\NodeTreeWidgetBuilder.cpp.obj /FdCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\ -c -- D:\\GameEngine\\src\\editor\\NodeTreeWidgetBuilder.cpp",
+  "file": "D:/GameEngine/src/editor/NodeTreeWidgetBuilder.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/RelWithDebInfo/src/editor/NodeTreeWidgetBuilder.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_RelWithDebInfo -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /FoCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\src\\editor\\NodeWidget.cpp.obj /FdCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\ -c -- D:\\GameEngine\\src\\editor\\NodeWidget.cpp",
+  "file": "D:/GameEngine/src/editor/NodeWidget.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/RelWithDebInfo/src/editor/NodeWidget.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_RelWithDebInfo -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /FoCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\src\\editor\\PackageContentView.cpp.obj /FdCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\ -c -- D:\\GameEngine\\src\\editor\\PackageContentView.cpp",
+  "file": "D:/GameEngine/src/editor/PackageContentView.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/RelWithDebInfo/src/editor/PackageContentView.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_RelWithDebInfo -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /FoCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\src\\editor\\ResourcePackagesEditor.cpp.obj /FdCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\ -c -- D:\\GameEngine\\src\\editor\\ResourcePackagesEditor.cpp",
+  "file": "D:/GameEngine/src/editor/ResourcePackagesEditor.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/RelWithDebInfo/src/editor/ResourcePackagesEditor.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_RelWithDebInfo -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /FoCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\src\\editor\\ResourcePackagesItemModel.cpp.obj /FdCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\ -c -- D:\\GameEngine\\src\\editor\\ResourcePackagesItemModel.cpp",
+  "file": "D:/GameEngine/src/editor/ResourcePackagesItemModel.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/RelWithDebInfo/src/editor/ResourcePackagesItemModel.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_RelWithDebInfo -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /FoCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\src\\editor\\SceneNodeTree.cpp.obj /FdCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\ -c -- D:\\GameEngine\\src\\editor\\SceneNodeTree.cpp",
+  "file": "D:/GameEngine/src/editor/SceneNodeTree.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/RelWithDebInfo/src/editor/SceneNodeTree.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_RelWithDebInfo -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /FoCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\src\\editor\\TreeWidgetBuilderHelper.cpp.obj /FdCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\ -c -- D:\\GameEngine\\src\\editor\\TreeWidgetBuilderHelper.cpp",
+  "file": "D:/GameEngine/src/editor/TreeWidgetBuilderHelper.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/RelWithDebInfo/src/editor/TreeWidgetBuilderHelper.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_RelWithDebInfo -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /FoCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\src\\editor\\UserTreeWidgetBuilder.cpp.obj /FdCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\ -c -- D:\\GameEngine\\src\\editor\\UserTreeWidgetBuilder.cpp",
+  "file": "D:/GameEngine/src/editor/UserTreeWidgetBuilder.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/RelWithDebInfo/src/editor/UserTreeWidgetBuilder.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DENABLE_EDITOR -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64 -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine -imsvcD:\\GameEngine\\build-Release\\gameEngine_autogen\\include_RelWithDebInfo -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtCore -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\mkspecs\\win32-msvc -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtGui -imsvcC:\\Qt\\6.10.1\\msvc2022_64\\include\\QtWidgets /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /FoCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\src\\editor\\Utils.cpp.obj /FdCMakeFiles\\gameEngine.dir\\RelWithDebInfo\\ -c -- D:\\GameEngine\\src\\editor\\Utils.cpp",
+  "file": "D:/GameEngine/src/editor/Utils.cpp",
+  "output": "D:/GameEngine/build-Release/CMakeFiles/gameEngine.dir/RelWithDebInfo/src/editor/Utils.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /Ob0 /Od /RTC1 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\glad.c.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\glad.c",
+  "file": "D:/GameEngine/src/engine/glad.c",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/glad.c.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MeshComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshComponent.cpp",
+  "file": "D:/GameEngine/src/engine/MeshComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/MeshComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MaterialComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MaterialComponent.cpp",
+  "file": "D:/GameEngine/src/engine/MaterialComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/MaterialComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Texture.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Texture.cpp",
+  "file": "D:/GameEngine/src/engine/Texture.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Texture.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\FileSystem.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FileSystem.cpp",
+  "file": "D:/GameEngine/src/engine/FileSystem.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/FileSystem.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MeshStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshStore.cpp",
+  "file": "D:/GameEngine/src/engine/MeshStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/MeshStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Component.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Component.cpp",
+  "file": "D:/GameEngine/src/engine/Component.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Component.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\TextureStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TextureStore.cpp",
+  "file": "D:/GameEngine/src/engine/TextureStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/TextureStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MeshBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshBuilder.cpp",
+  "file": "D:/GameEngine/src/engine/MeshBuilder.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/MeshBuilder.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Shader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Shader.cpp",
+  "file": "D:/GameEngine/src/engine/Shader.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Shader.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\ShaderStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ShaderStore.cpp",
+  "file": "D:/GameEngine/src/engine/ShaderStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/ShaderStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\ResourcePackage.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackage.cpp",
+  "file": "D:/GameEngine/src/engine/ResourcePackage.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/ResourcePackage.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\ResourcePackageStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackageStore.cpp",
+  "file": "D:/GameEngine/src/engine/ResourcePackageStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/ResourcePackageStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Scene.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Scene.cpp",
+  "file": "D:/GameEngine/src/engine/Scene.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Scene.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Node.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Node.cpp",
+  "file": "D:/GameEngine/src/engine/Node.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Node.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneStore.cpp",
+  "file": "D:/GameEngine/src/engine/SceneStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/SceneStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\ComponentBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ComponentBuilder.cpp",
+  "file": "D:/GameEngine/src/engine/ComponentBuilder.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/ComponentBuilder.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\CameraComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\CameraComponent.cpp",
+  "file": "D:/GameEngine/src/engine/CameraComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/CameraComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\TransformComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TransformComponent.cpp",
+  "file": "D:/GameEngine/src/engine/TransformComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/TransformComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneLoader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneLoader.cpp",
+  "file": "D:/GameEngine/src/engine/SceneLoader.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/SceneLoader.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Window.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Window.cpp",
+  "file": "D:/GameEngine/src/engine/Window.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Window.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Engine.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Engine.cpp",
+  "file": "D:/GameEngine/src/engine/Engine.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Engine.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneTransition.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneTransition.cpp",
+  "file": "D:/GameEngine/src/engine/SceneTransition.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/SceneTransition.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Renderer.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Renderer.cpp",
+  "file": "D:/GameEngine/src/engine/Renderer.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Renderer.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneRequester.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneRequester.cpp",
+  "file": "D:/GameEngine/src/engine/SceneRequester.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/SceneRequester.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Logger.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Logger.cpp",
+  "file": "D:/GameEngine/src/engine/Logger.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Logger.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\InputManager.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\InputManager.cpp",
+  "file": "D:/GameEngine/src/engine/InputManager.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/InputManager.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Utils.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Utils.cpp",
+  "file": "D:/GameEngine/src/engine/Utils.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Utils.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\FlipbookAnimationComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FlipbookAnimationComponent.cpp",
+  "file": "D:/GameEngine/src/engine/FlipbookAnimationComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/FlipbookAnimationComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MouseEventFilterComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MouseEventFilterComponent.cpp",
+  "file": "D:/GameEngine/src/engine/MouseEventFilterComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/MouseEventFilterComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\NodePositioningHelper.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\NodePositioningHelper.cpp",
+  "file": "D:/GameEngine/src/engine/NodePositioningHelper.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/NodePositioningHelper.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneConfig.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneConfig.cpp",
+  "file": "D:/GameEngine/src/engine/SceneConfig.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/SceneConfig.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\EngineSettings.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\EngineSettings.cpp",
+  "file": "D:/GameEngine/src/engine/EngineSettings.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/EngineSettings.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\RenderComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderComponent.cpp",
+  "file": "D:/GameEngine/src/engine/RenderComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/RenderComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /O2 /Ob2 /DNDEBUG -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\glad.c.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\glad.c",
+  "file": "D:/GameEngine/src/engine/glad.c",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/glad.c.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MeshComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshComponent.cpp",
+  "file": "D:/GameEngine/src/engine/MeshComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/MeshComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MaterialComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MaterialComponent.cpp",
+  "file": "D:/GameEngine/src/engine/MaterialComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/MaterialComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Texture.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Texture.cpp",
+  "file": "D:/GameEngine/src/engine/Texture.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Texture.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\FileSystem.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FileSystem.cpp",
+  "file": "D:/GameEngine/src/engine/FileSystem.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/FileSystem.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MeshStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshStore.cpp",
+  "file": "D:/GameEngine/src/engine/MeshStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/MeshStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Component.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Component.cpp",
+  "file": "D:/GameEngine/src/engine/Component.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Component.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\TextureStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TextureStore.cpp",
+  "file": "D:/GameEngine/src/engine/TextureStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/TextureStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MeshBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshBuilder.cpp",
+  "file": "D:/GameEngine/src/engine/MeshBuilder.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/MeshBuilder.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Shader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Shader.cpp",
+  "file": "D:/GameEngine/src/engine/Shader.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Shader.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\ShaderStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ShaderStore.cpp",
+  "file": "D:/GameEngine/src/engine/ShaderStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/ShaderStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\ResourcePackage.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackage.cpp",
+  "file": "D:/GameEngine/src/engine/ResourcePackage.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/ResourcePackage.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\ResourcePackageStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackageStore.cpp",
+  "file": "D:/GameEngine/src/engine/ResourcePackageStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/ResourcePackageStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Scene.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Scene.cpp",
+  "file": "D:/GameEngine/src/engine/Scene.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Scene.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Node.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Node.cpp",
+  "file": "D:/GameEngine/src/engine/Node.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Node.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneStore.cpp",
+  "file": "D:/GameEngine/src/engine/SceneStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/SceneStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\ComponentBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ComponentBuilder.cpp",
+  "file": "D:/GameEngine/src/engine/ComponentBuilder.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/ComponentBuilder.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\CameraComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\CameraComponent.cpp",
+  "file": "D:/GameEngine/src/engine/CameraComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/CameraComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\TransformComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TransformComponent.cpp",
+  "file": "D:/GameEngine/src/engine/TransformComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/TransformComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneLoader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneLoader.cpp",
+  "file": "D:/GameEngine/src/engine/SceneLoader.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/SceneLoader.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Window.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Window.cpp",
+  "file": "D:/GameEngine/src/engine/Window.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Window.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Engine.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Engine.cpp",
+  "file": "D:/GameEngine/src/engine/Engine.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Engine.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneTransition.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneTransition.cpp",
+  "file": "D:/GameEngine/src/engine/SceneTransition.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/SceneTransition.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Renderer.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Renderer.cpp",
+  "file": "D:/GameEngine/src/engine/Renderer.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Renderer.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneRequester.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneRequester.cpp",
+  "file": "D:/GameEngine/src/engine/SceneRequester.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/SceneRequester.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Logger.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Logger.cpp",
+  "file": "D:/GameEngine/src/engine/Logger.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Logger.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\InputManager.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\InputManager.cpp",
+  "file": "D:/GameEngine/src/engine/InputManager.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/InputManager.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Utils.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Utils.cpp",
+  "file": "D:/GameEngine/src/engine/Utils.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Utils.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\FlipbookAnimationComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FlipbookAnimationComponent.cpp",
+  "file": "D:/GameEngine/src/engine/FlipbookAnimationComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/FlipbookAnimationComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MouseEventFilterComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MouseEventFilterComponent.cpp",
+  "file": "D:/GameEngine/src/engine/MouseEventFilterComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/MouseEventFilterComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\NodePositioningHelper.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\NodePositioningHelper.cpp",
+  "file": "D:/GameEngine/src/engine/NodePositioningHelper.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/NodePositioningHelper.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneConfig.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneConfig.cpp",
+  "file": "D:/GameEngine/src/engine/SceneConfig.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/SceneConfig.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\EngineSettings.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\EngineSettings.cpp",
+  "file": "D:/GameEngine/src/engine/EngineSettings.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/EngineSettings.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\RenderComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderComponent.cpp",
+  "file": "D:/GameEngine/src/engine/RenderComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/RenderComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /O2 /Ob1 /DNDEBUG -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\glad.c.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\glad.c",
+  "file": "D:/GameEngine/src/engine/glad.c",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/glad.c.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MeshComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshComponent.cpp",
+  "file": "D:/GameEngine/src/engine/MeshComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/MeshComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MaterialComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MaterialComponent.cpp",
+  "file": "D:/GameEngine/src/engine/MaterialComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/MaterialComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Texture.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Texture.cpp",
+  "file": "D:/GameEngine/src/engine/Texture.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Texture.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\FileSystem.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FileSystem.cpp",
+  "file": "D:/GameEngine/src/engine/FileSystem.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/FileSystem.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MeshStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshStore.cpp",
+  "file": "D:/GameEngine/src/engine/MeshStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/MeshStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Component.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Component.cpp",
+  "file": "D:/GameEngine/src/engine/Component.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Component.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\TextureStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TextureStore.cpp",
+  "file": "D:/GameEngine/src/engine/TextureStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/TextureStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MeshBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshBuilder.cpp",
+  "file": "D:/GameEngine/src/engine/MeshBuilder.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/MeshBuilder.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Shader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Shader.cpp",
+  "file": "D:/GameEngine/src/engine/Shader.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Shader.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\ShaderStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ShaderStore.cpp",
+  "file": "D:/GameEngine/src/engine/ShaderStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/ShaderStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\ResourcePackage.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackage.cpp",
+  "file": "D:/GameEngine/src/engine/ResourcePackage.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/ResourcePackage.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\ResourcePackageStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackageStore.cpp",
+  "file": "D:/GameEngine/src/engine/ResourcePackageStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/ResourcePackageStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Scene.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Scene.cpp",
+  "file": "D:/GameEngine/src/engine/Scene.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Scene.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Node.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Node.cpp",
+  "file": "D:/GameEngine/src/engine/Node.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Node.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneStore.cpp",
+  "file": "D:/GameEngine/src/engine/SceneStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/SceneStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\ComponentBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ComponentBuilder.cpp",
+  "file": "D:/GameEngine/src/engine/ComponentBuilder.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/ComponentBuilder.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\CameraComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\CameraComponent.cpp",
+  "file": "D:/GameEngine/src/engine/CameraComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/CameraComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\TransformComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TransformComponent.cpp",
+  "file": "D:/GameEngine/src/engine/TransformComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/TransformComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneLoader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneLoader.cpp",
+  "file": "D:/GameEngine/src/engine/SceneLoader.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/SceneLoader.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Window.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Window.cpp",
+  "file": "D:/GameEngine/src/engine/Window.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Window.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Engine.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Engine.cpp",
+  "file": "D:/GameEngine/src/engine/Engine.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Engine.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneTransition.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneTransition.cpp",
+  "file": "D:/GameEngine/src/engine/SceneTransition.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/SceneTransition.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Renderer.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Renderer.cpp",
+  "file": "D:/GameEngine/src/engine/Renderer.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Renderer.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneRequester.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneRequester.cpp",
+  "file": "D:/GameEngine/src/engine/SceneRequester.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/SceneRequester.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Logger.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Logger.cpp",
+  "file": "D:/GameEngine/src/engine/Logger.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Logger.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\InputManager.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\InputManager.cpp",
+  "file": "D:/GameEngine/src/engine/InputManager.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/InputManager.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Utils.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Utils.cpp",
+  "file": "D:/GameEngine/src/engine/Utils.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Utils.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\FlipbookAnimationComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FlipbookAnimationComponent.cpp",
+  "file": "D:/GameEngine/src/engine/FlipbookAnimationComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/FlipbookAnimationComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MouseEventFilterComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MouseEventFilterComponent.cpp",
+  "file": "D:/GameEngine/src/engine/MouseEventFilterComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/MouseEventFilterComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\NodePositioningHelper.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\NodePositioningHelper.cpp",
+  "file": "D:/GameEngine/src/engine/NodePositioningHelper.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/NodePositioningHelper.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneConfig.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneConfig.cpp",
+  "file": "D:/GameEngine/src/engine/SceneConfig.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/SceneConfig.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\EngineSettings.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\EngineSettings.cpp",
+  "file": "D:/GameEngine/src/engine/EngineSettings.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/EngineSettings.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\RenderComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderComponent.cpp",
+  "file": "D:/GameEngine/src/engine/RenderComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/RenderComponent.cpp.obj"
+}
+]

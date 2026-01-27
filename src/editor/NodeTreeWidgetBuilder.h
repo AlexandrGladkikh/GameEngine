@@ -16,6 +16,7 @@ class MeshComponent;
 class CameraComponent;
 class FlipbookAnimationComponent;
 class MouseEventFilterComponent;
+class RenderComponent;
 class Node;
 }
 
@@ -42,6 +43,7 @@ private:
     ComponentWidget* buildCameraWidget(const std::shared_ptr<engine::CameraComponent>& camera, QTreeWidgetItem* item);
     ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidgetItem* item);
     ComponentWidget* buildMouseEventFilterWidget(const std::shared_ptr<engine::MouseEventFilterComponent>& mouse_event_filter);
+    ComponentWidget* buildRenderWidget(const std::shared_ptr<engine::RenderComponent>& render);
 
     void decorateLabel(QLabel* label);
 

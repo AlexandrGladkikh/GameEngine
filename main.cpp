@@ -534,7 +534,8 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
             engine::Logger::info("RotateComponent::axisChangeHandler: " + value);
             rotate->setAxis(axes_map.at(value));
         };
-        auto axis_widget = editor::createComboBoxWidget("Axis", axes, axis_handler);
+        RotateComponent::Axis axis = rotate->getAxis();
+        auto axis_widget = editor::createComboBoxWidget("Axis", axes, axis_handler, axes[static_cast<int>(axis)]);
         layout->addWidget(axis_widget);
 
         layout->addStretch();

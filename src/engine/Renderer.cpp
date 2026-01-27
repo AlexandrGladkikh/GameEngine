@@ -7,6 +7,7 @@
 #include "MaterialComponent.h"
 #include "TransformComponent.h"
 #include "CameraComponent.h"
+#include "RenderComponent.h"
 #include "ShaderStore.h"
 #include "Shader.h"
 #include "TextureStore.h"
@@ -127,7 +128,15 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
             }
         }
 
-        auto transform_mtx = model_mtx;//transformTune(model_mtx, texture.value()->width(), texture.value()->height());
+        auto render = SceneRequesterHelper::getComponent<RenderComponent>(scene, node->components());
+        if (!render.has_value()) {
+            continue;
+        }
+
+        auto transform_mtx = model_mtx;
+        if (render.value()->isSprite()) {
+            transform_mtx = transformTune(model_mtx, texture.value()->width(), texture.value()->height());
+        }
 
         shader_program.value()->use();
         shader_program.value()->setUniform4mat("model", transform_mtx);

@@ -4,9 +4,11 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
+#include <rapidjson/document.h>
+
 namespace engine {
 
-Shader::Shader(const std::string& name, const std::string& vertexShader, const std::string& fragmentShader) :
+Shader::Shader(const std::string& name, const std::string& vertexShader, const std::string& fragmentShader, const std::string& config) :
     m_name(name)
 {
     Logger::info(__FUNCTION__);
@@ -27,6 +29,7 @@ Shader::Shader(const std::string& name, const std::string& vertexShader, const s
     if (!success) {
         glGetShaderInfoLog(vertex, 512, nullptr, infoLog);
         Logger::error("ERROR::SHADER::VERTEX::COMPILATION_FAILED, info: {}", infoLog);
+        return;
     }
 
     const char* fragmentSource = fragmentShader.c_str();
@@ -37,6 +40,7 @@ Shader::Shader(const std::string& name, const std::string& vertexShader, const s
     if (!success) {
         glGetShaderInfoLog(fragment, 512, nullptr, infoLog);
         Logger::error("ERROR::SHADER::VERTEX::COMPILATION_FAILED, info: {}", infoLog);
+        return;
     }
 
     m_program = glCreateProgram();
@@ -48,10 +52,21 @@ Shader::Shader(const std::string& name, const std::string& vertexShader, const s
     if (!success) {
         glGetProgramInfoLog(m_program, 512, nullptr, infoLog);
         Logger::error("ERROR::SHADER::PROGRAM::LINKING_FAILED, info: {}", infoLog);
+        return;
     }
 
     glDeleteShader(vertex);
     glDeleteShader(fragment);
+
+    rapidjson::Document configJson = rapidjson::Document();
+    configJson.Parse(config.c_str());
+
+    if (configJson.HasMember("uniforms")) {
+        auto uniforms = configJson["uniforms"].GetArray();
+        for (const auto& uniform : uniforms) {
+            m_uniforms.push_back({ uniform.GetString(), glGetUniformLocation(m_program, uniform.GetString())});
+        }
+    }
 }
 
 Shader::~Shader()
@@ -67,6 +82,11 @@ auto Shader::name() const -> std::string
 void Shader::use() const
 {
     glUseProgram(m_program);
+}
+
+auto Shader::uniforms() const -> const std::vector<Uniform>&
+{
+    return m_uniforms;
 }
 
 void Shader::setUniform4mat(const std::string& name, const glm::mat4& value) const
@@ -92,15 +112,20 @@ auto buildShader(const std::filesystem::path& path) -> std::optional<std::unique
     auto vertexShaderPath = shaderDirectory.path() / "vert.glsl";
     auto fragmentShaderPath = shaderDirectory.path() / "frag.glsl";
 
+    auto configPath = shaderDirectory.path() / "config.json";
+
     if (!FileSystem::exists(vertexShaderPath) || !FileSystem::isFile(vertexShaderPath) ||
-        !FileSystem::exists(fragmentShaderPath) || !FileSystem::isFile(fragmentShaderPath))
+        !FileSystem::exists(fragmentShaderPath) || !FileSystem::isFile(fragmentShaderPath) ||
+        !FileSystem::exists(configPath) || !FileSystem::isFile(configPath))
     {
         return std::nullopt;
     }
 
     auto vertexShaderSource = FileSystem::file(vertexShaderPath, std::ios::in).readText();
     auto fragmentShaderSource = FileSystem::file(fragmentShaderPath, std::ios::in).readText();
-    return std::make_unique<Shader>(path.stem().string(), vertexShaderSource, fragmentShaderSource);
+    auto configSource = FileSystem::file(configPath, std::ios::in).readText();
+
+    return std::make_unique<Shader>(path.stem().string(), vertexShaderSource, fragmentShaderSource, configSource);
 }
 
 }

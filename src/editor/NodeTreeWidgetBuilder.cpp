@@ -13,6 +13,7 @@
 #include "engine/CameraComponent.h"
 #include "engine/FlipbookAnimationComponent.h"
 #include "engine/MouseEventFilterComponent.h"
+#include "engine/RenderComponent.h"
 #include "engine/Context.h"
 #include "engine/Node.h"
 #include "engine/Helpers.h"
@@ -687,7 +688,8 @@ ComponentWidget* TreeWidgetBuilder::buildMouseEventFilterWidget(const std::share
     std::function<void(const std::string&)> key_handler = [mouse_event_filter, keys_map](const std::string& value) {
         mouse_event_filter->setKey(keys_map.at(value));
     };
-    auto key_widget = createComboBoxWidget("Key", keys, key_handler);
+    int key = mouse_event_filter->key();
+    auto key_widget = createComboBoxWidget("Key", keys, key_handler, keys[key]);
     layout->addWidget(key_widget);
 
     std::vector<std::string> actions = { "Press", "Release", "Repeat" };
@@ -697,7 +699,8 @@ ComponentWidget* TreeWidgetBuilder::buildMouseEventFilterWidget(const std::share
     std::function<void(const std::string&)> action_handler = [mouse_event_filter, actions_map](const std::string& value) {
         mouse_event_filter->setAction(actions_map.at(value));
     };
-    auto action_widget = createComboBoxWidget("Action", actions, action_handler);
+    bool action = mouse_event_filter->action();
+    auto action_widget = createComboBoxWidget("Action", actions, action_handler, action == 1 ? "Press" : action == 0 ? "Release" : "Repeat");
     layout->addWidget(action_widget);
 
     layout->addStretch();
@@ -705,6 +708,36 @@ ComponentWidget* TreeWidgetBuilder::buildMouseEventFilterWidget(const std::share
     mouse_event_filter_widget->setLayout(layout);
 
     return mouse_event_filter_widget;
+}
+
+ComponentWidget* TreeWidgetBuilder::buildRenderWidget(const std::shared_ptr<engine::RenderComponent>& render)
+{
+    ComponentWidget* render_widget = new ComponentWidget;
+    m_tree_widget_builder_helper->subscribeOnActiveComponent(render_widget, render);
+
+    QVBoxLayout* layout = new QVBoxLayout;
+    layout->setSpacing(1);
+    layout->setContentsMargins(0, 0, 0, 0);
+
+    std::string name = "Render name \"" + render->name() + "\"";
+    auto* label = new QLabel(QString::fromStdString(name));
+    decorateLabel(label);
+    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    layout->addWidget(label);
+
+    std::vector<std::string> is_sprite = { "Yes", "No" };
+    std::map<std::string, bool> sprite_map = { {"Yes", true},
+                                               {"No", false} };
+    auto sprite_widget = createComboBoxWidget("Sprite", is_sprite, [render, sprite_map](const std::string& value) {
+        render->setSprite(sprite_map.at(value));
+    }, render->isSprite() ? "Yes" : "No");
+    layout->addWidget(sprite_widget);
+
+    layout->addStretch();
+
+    render_widget->setLayout(layout);
+
+    return render_widget;
 }
 
 void TreeWidgetBuilder::decorateLabel(QLabel* label)
@@ -760,6 +793,8 @@ auto TreeWidgetBuilder::buildWidgetForComponent(std::shared_ptr<engine::Componen
         return buildFlipbookAnimationWidget(std::dynamic_pointer_cast<engine::FlipbookAnimationComponent>(component), item);
     } else if (component->type() == "mouse_event_filter") {
         return buildMouseEventFilterWidget(std::dynamic_pointer_cast<engine::MouseEventFilterComponent>(component));
+    } else if (component->type() == "render") {
+        return buildRenderWidget(std::dynamic_pointer_cast<engine::RenderComponent>(component));
     }
 
     return std::nullopt;

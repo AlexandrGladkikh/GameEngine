@@ -13,7 +13,12 @@ namespace engine {
 
 class Shader {
 public:
-    Shader(const std::string& name, const std::string& vertexShader, const std::string& fragmentShader);
+    struct Uniform {
+        std::string name;
+        GLint location;
+    };
+
+    explicit Shader(const std::string& name, const std::string& vertexShader, const std::string& fragmentShader, const std::string& config);
     ~Shader();
     Shader(const Shader&) = delete;
     Shader& operator=(const Shader&) = delete;
@@ -24,6 +29,8 @@ public:
 
     void use() const;
 
+    auto uniforms() const -> const std::vector<Uniform>&;
+
     void setUniform4mat(const std::string& name, const glm::mat4& value) const;
     void setUniform1i(const std::string& name, int value) const;
 
@@ -31,6 +38,8 @@ private:
     std::string m_name;
 
     GLuint m_program;
+
+    std::vector<Uniform> m_uniforms{};
 };
 
 auto buildShader(const std::filesystem::path& path) -> std::optional<std::unique_ptr<Shader>>;

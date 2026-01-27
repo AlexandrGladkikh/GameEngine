@@ -35,6 +35,7 @@
             "children": [],
             "components": [
                 2359788454,
+                212602637,
                 1165295472,
                 1564948390
             ]
@@ -48,6 +49,24 @@
             "owner_node": 1139540731,
             "owner_scene": 3615596102,
             "mesh": 2
+        },
+        {
+            "type": "camera",
+            "id": 1190861598,
+            "name": "camera",
+            "owner_node": 1158088549,
+            "owner_scene": 3615596102,
+            "projection": {
+                "left": 0.0,
+                "right": 360.0,
+                "top": 640.0,
+                "bottom": 0.0
+            },
+            "fov": 45.0,
+            "aspect": 0.7799999713897705,
+            "near": 0.10000000149011612,
+            "far": 1000.0,
+            "projection_type": 1
         },
         {
             "type": "transform",
@@ -79,12 +98,12 @@
             "owner_scene": 3615596102,
             "position": [
                 0.0,
-                -246.6699981689453,
-                -700.0
+                -11.600000381469727,
+                -32.279998779296875
             ],
             "rotation": [
                 0.0,
-                -73.33000183105469,
+                -50.529998779296875,
                 0.0
             ],
             "scale": [
@@ -92,6 +111,14 @@
                 1.0,
                 1.0
             ]
+        },
+        {
+            "type": "render",
+            "id": 212602637,
+            "name": "render",
+            "owner_node": 1139540731,
+            "owner_scene": 3615596102,
+            "sprite": false
         },
         {
             "type": "material",
@@ -123,24 +150,6 @@
                 1.0,
                 1.0
             ]
-        },
-        {
-            "type": "camera",
-            "id": 1190861598,
-            "name": "camera",
-            "owner_node": 1158088549,
-            "owner_scene": 3615596102,
-            "projection": {
-                "left": 0.0,
-                "right": 360.0,
-                "top": 640.0,
-                "bottom": 0.0
-            },
-            "fov": 45.0,
-            "aspect": 0.7799999713897705,
-            "near": 0.10000000149011612,
-            "far": 1000.0,
-            "projection_type": 1
         }
     ],
     "resources": [

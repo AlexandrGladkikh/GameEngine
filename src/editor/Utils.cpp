@@ -283,7 +283,7 @@ void setupEditorBlockLayout(QHBoxLayout* layout, const std::string& title, const
     layout->addStretch();
 }
 
-ComponentWidget* createComboBoxWidget(const std::string& title, const std::vector<std::string>& names, const std::function<void(const std::string&)>& handler)
+ComponentWidget* createComboBoxWidget(const std::string& title, const std::vector<std::string>& names, const std::function<void(const std::string&)>& handler, const std::string& currentValue)
 {
     ComponentWidget* widget = new ComponentWidget;
     QHBoxLayout* layout = new QHBoxLayout;
@@ -300,6 +300,8 @@ ComponentWidget* createComboBoxWidget(const std::string& title, const std::vecto
     for (const auto& name : names) {
         combo->addItem(name.c_str());
     }
+
+    combo->setCurrentText(currentValue.c_str());
 
     QObject::connect(combo, &QComboBox::currentIndexChanged, [combo, handler](int index) {
         handler(combo->currentText().toStdString());

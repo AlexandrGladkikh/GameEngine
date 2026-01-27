@@ -47,7 +47,7 @@ ComponentWidget* createButtonLineWidget(const std::vector<std::string>& names, c
 QHBoxLayout* createEditorBlockLayout(const std::string& title, const std::vector<EditorBlockLayoutData>& data, const std::shared_ptr<EngineController>& observer);
 void setupEditorBlockLayout(QHBoxLayout* layout, const std::string& title, const std::vector<EditorBlockLayoutData>& data, const std::shared_ptr<EngineController>& observer);
 
-ComponentWidget* createComboBoxWidget(const std::string& title, const std::vector<std::string>& names, const std::function<void(const std::string&)>& handler);
+ComponentWidget* createComboBoxWidget(const std::string& title, const std::vector<std::string>& names, const std::function<void(const std::string&)>& handler, const std::string& currentValue);
 
 std::string formatFloat(float value, uint32_t precision = 2);
 bool parseFloat(const std::string& value, float& out);

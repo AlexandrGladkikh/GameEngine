@@ -75,6 +75,8 @@ add_library(engine
         SceneConfig.h
         EngineSettings.cpp
         EngineSettings.h
+        RenderComponent.cpp
+        RenderComponent.h
 )
 
 if (APPLE)
@@ -86,7 +88,7 @@ if (APPLE)
 
     target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/3rdparts)
 elseif(WIN32)
-    get_filename_component(THIRD_PARTIES_DIR ${CMAKE_CURRENT_LIST_DIR}/../../../3rdparts/ ABSOLUTE)
+    get_filename_component(THIRD_PARTIES_DIR ${CMAKE_CURRENT_LIST_DIR}/3rdparts/ ABSOLUTE)
     target_include_directories(engine PUBLIC ${THIRD_PARTIES_DIR}/include/)
 
     target_link_directories(engine PUBLIC ${THIRD_PARTIES_DIR}/libs/)
