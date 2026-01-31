@@ -16,7 +16,7 @@ class MaterialComponent;
 class TransformComponent;
 class FlipbookAnimationComponent;
 class MouseEventFilterComponent;
-class RenderComponent;
+class RenderScopeComponent;
 
 class ComponentBuilder {
 public:
@@ -48,6 +48,6 @@ template <>
 std::optional<std::unique_ptr<MouseEventFilterComponent>> ComponentBuilder::buildEmptyComponent<MouseEventFilterComponent>(const std::string &name, uint32_t owner_node, uint32_t owner_scene);
 
 template<>
-std::optional<std::unique_ptr<RenderComponent>> ComponentBuilder::buildEmptyComponent<RenderComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene);
+std::optional<std::unique_ptr<RenderScopeComponent>> ComponentBuilder::buildEmptyComponent<RenderScopeComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene);
 
 }

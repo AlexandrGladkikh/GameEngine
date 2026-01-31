@@ -5,17 +5,19 @@
 #include <string>
 #include <cstdint>
 #include <unordered_map>
+#include <any>
 
 namespace engine {
 
-class RenderComponent final : public Component {
+class RenderScopeComponent final : public Component {
 public:
     struct RenderData {
-        std::unordered_map<std::string, std::string> uniforms{};
+        std::unordered_map<std::string, std::any> uniforms{};
+        bool is_sprite = false;
     };
 
-    explicit RenderComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene);
-    ~RenderComponent() = default;
+    explicit RenderScopeComponent(uint32_t id, const std::string& name, uint32_t owner_node, uint32_t owner_scene);
+    ~RenderScopeComponent() = default;
 
     void init() override;
     void update(uint64_t dt) override;
@@ -28,16 +30,20 @@ public:
     auto type() const -> std::string override;
 
     auto clone(uint32_t owner_node_id) const -> std::unique_ptr<Component> override;
-
+    
+    [[nodiscard]]
     auto isSprite() const -> bool;
-    void setSprite(bool sprite);
+    void setIsSprite(bool is_sprite);
 
     [[nodiscard]]
     auto renderData() const -> const RenderData&;
     void setRenderData(const RenderData& render_data);
 
+    [[nodiscard]]
+    auto renderData(const std::string& name) const -> std::optional<std::any>;
+    void addRenderData(const std::string& name, const std::any& value);
+
 private:
-    bool m_sprite = false;
     RenderData m_render_data;
 };
 

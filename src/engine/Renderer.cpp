@@ -7,7 +7,7 @@
 #include "MaterialComponent.h"
 #include "TransformComponent.h"
 #include "CameraComponent.h"
-#include "RenderComponent.h"
+#include "RenderScopeComponent.h"
 #include "ShaderStore.h"
 #include "Shader.h"
 #include "TextureStore.h"
@@ -15,8 +15,11 @@
 #include "MeshStore.h"
 #include "Logger.h"
 #include "Node.h"
+#include "UtilGL.h"
 
 #include <glm/ext/matrix_transform.hpp>
+
+#include <any>
 
 namespace engine {
 
@@ -83,6 +86,8 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
             continue;
         }
 
+        auto shader_program_value = shader_program.value();
+
         auto texture_id = material.value()->textureId();
         auto texture = context->textureStore->get(texture_id);
         if (!texture.has_value()) {
@@ -128,24 +133,55 @@ void Renderer::render(const std::shared_ptr<Context>& context, const std::shared
             }
         }
 
-        auto render = SceneRequesterHelper::getComponent<RenderComponent>(scene, node->components());
-        if (!render.has_value()) {
+        auto render_scope_component = SceneRequesterHelper::getComponent<RenderScopeComponent>(scene, node->components());
+        if (!render_scope_component.has_value()) {
             continue;
         }
 
         auto transform_mtx = model_mtx;
-        if (render.value()->isSprite()) {
+        if (render_scope_component.value()->isSprite()) {
             transform_mtx = transformTune(model_mtx, texture.value()->width(), texture.value()->height());
         }
 
-        shader_program.value()->use();
-        shader_program.value()->setUniform4mat("model", transform_mtx);
-        shader_program.value()->setUniform4mat("view", camera->getView());
-        shader_program.value()->setUniform4mat("projection", camera->getProjection());
+        shader_program_value->use();
+        shader_program_value->setUniform4mat("model", transform_mtx);
+        shader_program_value->setUniform4mat("view", camera->getView());
+        shader_program_value->setUniform4mat("projection", camera->getProjection());
+
+        for (const auto& uniform : shader_program_value->uniforms()) {
+            const auto uniform_value_opt = render_scope_component.value()->renderData(uniform.name);
+            if (!uniform_value_opt.has_value()) {
+                continue;
+            }
+            const auto& uniform_value = uniform_value_opt.value();
+            if (uniform.type == Uniform::Type::Float && uniform_value.type() == typeid(float)) {
+                shader_program_value->setUniform1f(uniform.name, std::any_cast<float>(uniform_value));
+            } else if (uniform.type == Uniform::Type::Double && uniform_value.type() == typeid(double)) {
+                shader_program_value->setUniform1d(uniform.name, std::any_cast<double>(uniform_value));
+            } else if (uniform.type == Uniform::Type::Int && uniform_value.type() == typeid(int)) {
+                shader_program_value->setUniform1i(uniform.name, std::any_cast<int>(uniform_value));
+            } else if (uniform.type == Uniform::Type::UInt && uniform_value.type() == typeid(uint32_t)) {
+                shader_program_value->setUniform1ui(uniform.name, std::any_cast<uint32_t>(uniform_value));
+            } else if (uniform.type == Uniform::Type::Bool && uniform_value.type() == typeid(bool)) {
+                shader_program_value->setUniform1b(uniform.name, std::any_cast<bool>(uniform_value));
+            } else if (uniform.type == Uniform::Type::Vec2 && uniform_value.type() == typeid(glm::vec2)) {
+                shader_program_value->setUniform2vec(uniform.name, std::any_cast<glm::vec2>(uniform_value));
+            } else if (uniform.type == Uniform::Type::Vec3 && uniform_value.type() == typeid(glm::vec3)) {
+                shader_program_value->setUniform3vec(uniform.name, std::any_cast<glm::vec3>(uniform_value));
+            } else if (uniform.type == Uniform::Type::Vec4 && uniform_value.type() == typeid(glm::vec4)) {
+                shader_program_value->setUniform4vec(uniform.name, std::any_cast<glm::vec4>(uniform_value));
+            } else if (uniform.type == Uniform::Type::Mat2 && uniform_value.type() == typeid(glm::mat2)) {
+                shader_program_value->setUniform2mat(uniform.name, std::any_cast<glm::mat2>(uniform_value));
+            } else if (uniform.type == Uniform::Type::Mat3 && uniform_value.type() == typeid(glm::mat3)) {
+                    shader_program_value->setUniform3mat(uniform.name, std::any_cast<glm::mat3>(uniform_value));
+            } else if (uniform.type == Uniform::Type::Mat4 && uniform_value.type() == typeid(glm::mat4)) {
+                shader_program_value->setUniform4mat(uniform.name, std::any_cast<glm::mat4>(uniform_value));
+            }
+        }
 
         glActiveTexture(GL_TEXTURE0);
         texture.value()->bind();
-        shader_program.value()->setUniform1i("texture1", 0);
+        shader_program_value->setUniform1i("texture1", 0);
 
         mesh.value()->bind();
 

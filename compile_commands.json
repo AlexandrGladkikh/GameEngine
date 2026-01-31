@@ -433,9 +433,9 @@
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\RenderComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderComponent.cpp",
-  "file": "D:/GameEngine/src/engine/RenderComponent.cpp",
-  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/RenderComponent.cpp.obj"
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\RenderScopeComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderScopeComponent.cpp",
+  "file": "D:/GameEngine/src/engine/RenderScopeComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/RenderScopeComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
@@ -637,9 +637,9 @@
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\RenderComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderComponent.cpp",
-  "file": "D:/GameEngine/src/engine/RenderComponent.cpp",
-  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/RenderComponent.cpp.obj"
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\RenderScopeComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderScopeComponent.cpp",
+  "file": "D:/GameEngine/src/engine/RenderScopeComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/RenderScopeComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
@@ -841,8 +841,8 @@
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\RenderComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderComponent.cpp",
-  "file": "D:/GameEngine/src/engine/RenderComponent.cpp",
-  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/RenderComponent.cpp.obj"
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\RenderScopeComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderScopeComponent.cpp",
+  "file": "D:/GameEngine/src/engine/RenderScopeComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/RenderScopeComponent.cpp.obj"
 }
 ]

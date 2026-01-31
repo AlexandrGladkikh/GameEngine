@@ -13,7 +13,7 @@
 #include "engine/CameraComponent.h"
 #include "engine/FlipbookAnimationComponent.h"
 #include "engine/MouseEventFilterComponent.h"
-#include "engine/RenderComponent.h"
+#include "engine/RenderScopeComponent.h"
 #include "engine/Context.h"
 #include "engine/Node.h"
 #include "engine/Helpers.h"
@@ -28,10 +28,14 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QGraphicsOpacityEffect>
+#include <QComboBox>
+#include <QPushButton>
 
 #include <QtCore/qnamespace.h>
 #include <string>
 #include <functional>
+#include <algorithm>
+#include <glm/glm.hpp>
 
 namespace editor {
 
@@ -710,34 +714,461 @@ ComponentWidget* TreeWidgetBuilder::buildMouseEventFilterWidget(const std::share
     return mouse_event_filter_widget;
 }
 
-ComponentWidget* TreeWidgetBuilder::buildRenderWidget(const std::shared_ptr<engine::RenderComponent>& render)
+ComponentWidget* TreeWidgetBuilder::buildRenderScopeWidget(const std::shared_ptr<engine::RenderScopeComponent>& render_scope, QTreeWidgetItem* item)
 {
-    ComponentWidget* render_widget = new ComponentWidget;
-    m_tree_widget_builder_helper->subscribeOnActiveComponent(render_widget, render);
+    ComponentWidget* render_scope_widget = new ComponentWidget;
+    m_tree_widget_builder_helper->subscribeOnActiveComponent(render_scope_widget, render_scope);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->setSpacing(1);
     layout->setContentsMargins(0, 0, 0, 0);
 
-    std::string name = "Render name \"" + render->name() + "\"";
+    std::string name = "Render scope name \"" + render_scope->name() + "\"";
     auto* label = new QLabel(QString::fromStdString(name));
     decorateLabel(label);
     label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(label);
 
-    std::vector<std::string> is_sprite = { "Yes", "No" };
+    std::vector<std::string> sprite_values = { "Yes", "No" };
     std::map<std::string, bool> sprite_map = { {"Yes", true},
                                                {"No", false} };
-    auto sprite_widget = createComboBoxWidget("Sprite", is_sprite, [render, sprite_map](const std::string& value) {
-        render->setSprite(sprite_map.at(value));
-    }, render->isSprite() ? "Yes" : "No");
-    layout->addWidget(sprite_widget);
+    auto spriteChangeHandler = [render_scope, sprite_map](const std::string& value) {
+        render_scope->setIsSprite(sprite_map.at(value));
+    };
+    auto spriteUpdater = [render_scope]() {
+        if (!render_scope->isValid()) {
+            return std::string();
+        }
+        return render_scope->isSprite() ? std::string("Yes") : std::string("No");
+    };
+
+    std::vector<EditorBlockLayoutData> sprite_data = {
+        { "sprite", render_scope->isSprite() ? std::string("Yes") : std::string("No"), spriteChangeHandler, spriteUpdater, false, true, sprite_values }
+    };
+    auto sprite_layout = createEditorBlockLayout("Sprite", sprite_data, m_engine_controller);
+    layout->addLayout(sprite_layout);
+
+    auto make_sorted_uniform_names = [render_scope]() {
+        std::vector<std::string> names;
+        for (const auto& uniform : render_scope->renderData().uniforms) {
+            names.push_back(uniform.first);
+        }
+        std::sort(names.begin(), names.end());
+        return names;
+    };
+
+    std::vector<std::string> uniform_type_values = {
+        "Float", "Double", "Int", "UInt", "Bool",
+        "Vec2", "Vec3", "Vec4", "Mat2", "Mat3", "Mat4"
+    };
+    auto selected_uniform_type = std::make_shared<std::string>(uniform_type_values.front());
+    auto new_uniform_name = std::make_shared<std::string>();
+
+    auto make_default_uniform = [](const std::string& type) -> std::any {
+        if (type == "Float") return 0.0f;
+        if (type == "Double") return 0.0;
+        if (type == "Int") return 0;
+        if (type == "UInt") return static_cast<uint32_t>(0);
+        if (type == "Bool") return false;
+        if (type == "Vec2") return glm::vec2(0.0f);
+        if (type == "Vec3") return glm::vec3(0.0f);
+        if (type == "Vec4") return glm::vec4(0.0f);
+        if (type == "Mat2") return glm::mat2(1.0f);
+        if (type == "Mat3") return glm::mat3(1.0f);
+        return glm::mat4(1.0f);
+    };
+
+    auto add_handler = [this, render_scope, item, selected_uniform_type, new_uniform_name, make_default_uniform]() {
+        if (new_uniform_name->empty()) {
+            return;
+        }
+        auto data = render_scope->renderData();
+        if (data.uniforms.find(*new_uniform_name) != data.uniforms.end()) {
+            return;
+        }
+        render_scope->addRenderData(*new_uniform_name, make_default_uniform(*selected_uniform_type));
+        m_scene_node_tree->rebuildComponentWidget(item);
+    };
+
+    auto uniform_add_widget = new ComponentWidget;
+    auto* uniform_add_layout = new QHBoxLayout;
+    uniform_add_layout->setSpacing(1);
+    uniform_add_layout->setContentsMargins(0, 0, 0, 0);
+    uniform_add_layout->addWidget(new QLabel("Type"));
+
+    auto* uniform_type_combo = new QComboBox;
+    for (const auto& value : uniform_type_values) {
+        uniform_type_combo->addItem(value.c_str());
+    }
+    uniform_type_combo->setCurrentText(selected_uniform_type->c_str());
+    QObject::connect(uniform_type_combo, &QComboBox::currentTextChanged, [selected_uniform_type](const QString& value) {
+        *selected_uniform_type = value.toStdString();
+    });
+    uniform_add_layout->addWidget(uniform_type_combo);
+
+    uniform_add_layout->addWidget(new QLabel("Name"));
+    auto* uniform_name_edit = new QLineEdit;
+    QObject::connect(uniform_name_edit, &QLineEdit::textChanged, [new_uniform_name](const QString& value) {
+        *new_uniform_name = value.toStdString();
+    });
+    uniform_add_layout->addWidget(uniform_name_edit);
+
+    auto* add_button = new QPushButton("Add");
+    QObject::connect(add_button, &QPushButton::clicked, [add_handler]() {
+        add_handler();
+    });
+    uniform_add_layout->addWidget(add_button);
+
+    uniform_add_widget->setLayout(uniform_add_layout);
+    layout->addWidget(uniform_add_widget);
+
+    auto uniform_names = make_sorted_uniform_names();
+    auto selected_uniform_name = std::make_shared<std::string>(uniform_names.empty() ? std::string() : uniform_names.front());
+
+    auto delete_handler = [this, render_scope, item, selected_uniform_name]() {
+        if (selected_uniform_name->empty()) {
+            return;
+        }
+        auto data = render_scope->renderData();
+        if (data.uniforms.erase(*selected_uniform_name) == 0) {
+            return;
+        }
+        render_scope->setRenderData(data);
+        m_scene_node_tree->rebuildComponentWidget(item);
+    };
+
+    auto uniform_delete_widget = new ComponentWidget;
+    auto* uniform_delete_layout = new QHBoxLayout;
+    uniform_delete_layout->setSpacing(1);
+    uniform_delete_layout->setContentsMargins(0, 0, 0, 0);
+    uniform_delete_layout->addWidget(new QLabel("Uniform"));
+
+    auto* uniform_name_combo = new QComboBox;
+    for (const auto& name : uniform_names) {
+        uniform_name_combo->addItem(name.c_str());
+    }
+    uniform_name_combo->setCurrentText(selected_uniform_name->c_str());
+    QObject::connect(uniform_name_combo, &QComboBox::currentTextChanged, [selected_uniform_name](const QString& value) {
+        *selected_uniform_name = value.toStdString();
+    });
+    uniform_delete_layout->addWidget(uniform_name_combo);
+
+    auto* delete_button = new QPushButton("Delete");
+    QObject::connect(delete_button, &QPushButton::clicked, [delete_handler]() {
+        delete_handler();
+    });
+    uniform_delete_layout->addWidget(delete_button);
+
+    uniform_delete_widget->setLayout(uniform_delete_layout);
+    layout->addWidget(uniform_delete_widget);
+
+    const auto& uniforms = render_scope->renderData().uniforms;
+    if (!uniforms.empty()) {
+        auto* uniforms_label = new QLabel("Uniforms");
+        decorateLabel(uniforms_label);
+        uniforms_label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+        layout->addWidget(uniforms_label);
+    }
+
+    auto get_uniform_value = [render_scope](const std::string& name, const std::function<std::string(const std::any&)>& getter) {
+        if (!render_scope->isValid()) {
+            return std::string();
+        }
+        auto data = render_scope->renderData();
+        auto it = data.uniforms.find(name);
+        if (it == data.uniforms.end()) {
+            return std::string();
+        }
+        try {
+            return getter(it->second);
+        } catch (...) {
+            return std::string();
+        }
+    };
+
+    auto set_uniform_value = [render_scope](const std::string& name, const std::function<bool(std::any&)>& setter) {
+        auto data = render_scope->renderData();
+        auto it = data.uniforms.find(name);
+        if (it == data.uniforms.end()) {
+            return;
+        }
+        if (!setter(it->second)) {
+            return;
+        }
+        render_scope->setRenderData(data);
+    };
+
+    auto add_single_uniform = [this, layout, get_uniform_value, set_uniform_value](const std::string& name,
+                                                                                   const std::function<bool(const std::string&, std::any&)>& apply,
+                                                                                   const std::function<std::string(const std::any&)>& format) {
+        auto changeHandler = [set_uniform_value, name, apply](const std::string& value) {
+            set_uniform_value(name, [apply, value](std::any& current) {
+                return apply(value, current);
+            });
+        };
+        auto updateHandler = [get_uniform_value, name, format]() {
+            return get_uniform_value(name, format);
+        };
+        std::vector<EditorBlockLayoutData> data = {
+            { name, updateHandler(), changeHandler, updateHandler }
+        };
+        layout->addLayout(createEditorBlockLayout("Uniform", data, m_engine_controller));
+    };
+
+    auto add_combo_uniform = [this, layout, get_uniform_value, set_uniform_value](const std::string& name,
+                                                                                  const std::vector<std::string>& values,
+                                                                                  const std::function<std::string(const std::any&)>& format,
+                                                                                  const std::function<bool(const std::string&, std::any&)>& apply) {
+        auto changeHandler = [set_uniform_value, name, apply](const std::string& value) {
+            set_uniform_value(name, [apply, value](std::any& current) {
+                return apply(value, current);
+            });
+        };
+        auto updateHandler = [get_uniform_value, name, format]() {
+            return get_uniform_value(name, format);
+        };
+        std::vector<EditorBlockLayoutData> data = {
+            { name, updateHandler(), changeHandler, updateHandler, false, true, values }
+        };
+        layout->addLayout(createEditorBlockLayout("Uniform", data, m_engine_controller));
+    };
+
+    auto add_vec_uniform = [this, layout, get_uniform_value, set_uniform_value](const std::string& name,
+                                                                                const std::vector<std::string>& labels,
+                                                                                const std::function<float(const std::any&, int)>& get_comp,
+                                                                                const std::function<bool(std::any&, int, float)>& set_comp) {
+        std::vector<EditorBlockLayoutData> data;
+        for (int index = 0; index < static_cast<int>(labels.size()); ++index) {
+            auto changeHandler = [set_uniform_value, name, index, set_comp](const std::string& value) {
+                float param = 0.0f;
+                if (!parseFloat(value, param)) {
+                    return;
+                }
+                set_uniform_value(name, [set_comp, index, param](std::any& current) {
+                    return set_comp(current, index, param);
+                });
+            };
+            auto updateHandler = [get_uniform_value, name, index, get_comp]() {
+                return get_uniform_value(name, [get_comp, index](const std::any& value) {
+                    return formatFloat(get_comp(value, index));
+                });
+            };
+            data.push_back({ labels[index], updateHandler(), changeHandler, updateHandler, false, false, {}, true, -1000.0f, 1000.0f });
+        }
+        layout->addLayout(createEditorBlockLayout("Uniform " + name, data, m_engine_controller));
+    };
+
+    auto add_mat_uniform = [this, layout, get_uniform_value, set_uniform_value](const std::string& name, int size,
+                                                                                const std::function<float(const std::any&, int, int)>& get_cell,
+                                                                                const std::function<bool(std::any&, int, int, float)>& set_cell) {
+        for (int row = 0; row < size; ++row) {
+            std::vector<EditorBlockLayoutData> data;
+            for (int col = 0; col < size; ++col) {
+                auto changeHandler = [set_uniform_value, name, row, col, set_cell](const std::string& value) {
+                    float param = 0.0f;
+                    if (!parseFloat(value, param)) {
+                        return;
+                    }
+                    set_uniform_value(name, [set_cell, row, col, param](std::any& current) {
+                        return set_cell(current, row, col, param);
+                    });
+                };
+                auto updateHandler = [get_uniform_value, name, row, col, get_cell]() {
+                    return get_uniform_value(name, [get_cell, row, col](const std::any& value) {
+                        return formatFloat(get_cell(value, row, col));
+                    });
+                };
+                data.push_back({ std::to_string(col), updateHandler(), changeHandler, updateHandler, false, false, {}, true, -1000.0f, 1000.0f });
+            }
+            layout->addLayout(createEditorBlockLayout(row == 0 ? "Uniform " + name : "", data, m_engine_controller));
+        }
+    };
+
+    for (const auto& uniform_name : make_sorted_uniform_names()) {
+        auto data = render_scope->renderData();
+        auto it = data.uniforms.find(uniform_name);
+        if (it == data.uniforms.end()) {
+            continue;
+        }
+        const std::type_info& uniform_type = it->second.type();
+
+        if (uniform_type == typeid(float)) {
+            add_single_uniform(uniform_name,
+                [](const std::string& value, std::any& current) {
+                    float param = 0.0f;
+                    if (!parseFloat(value, param)) {
+                        return false;
+                    }
+                    current = param;
+                    return true;
+                },
+                [](const std::any& value) {
+                    return formatFloat(std::any_cast<float>(value));
+                });
+        } else if (uniform_type == typeid(double)) {
+            add_single_uniform(uniform_name,
+                [](const std::string& value, std::any& current) {
+                    float param = 0.0f;
+                    if (!parseFloat(value, param)) {
+                        return false;
+                    }
+                    current = static_cast<double>(param);
+                    return true;
+                },
+                [](const std::any& value) {
+                    return formatFloat(static_cast<float>(std::any_cast<double>(value)));
+                });
+        } else if (uniform_type == typeid(int)) {
+            add_single_uniform(uniform_name,
+                [](const std::string& value, std::any& current) {
+                    float param = 0.0f;
+                    if (!parseFloat(value, param)) {
+                        return false;
+                    }
+                    current = static_cast<int>(param);
+                    return true;
+                },
+                [](const std::any& value) {
+                    return std::to_string(std::any_cast<int>(value));
+                });
+        } else if (uniform_type == typeid(uint32_t)) {
+            add_single_uniform(uniform_name,
+                [](const std::string& value, std::any& current) {
+                    uint32_t param = 0;
+                    if (!parseUint32(value, param)) {
+                        return false;
+                    }
+                    current = param;
+                    return true;
+                },
+                [](const std::any& value) {
+                    return formatUint32(std::any_cast<uint32_t>(value));
+                });
+        } else if (uniform_type == typeid(bool)) {
+            add_combo_uniform(uniform_name,
+                { "True", "False" },
+                [](const std::any& value) {
+                    return std::any_cast<bool>(value) ? "True" : "False";
+                },
+                [](const std::string& value, std::any& current) {
+                    current = (value == "True");
+                    return true;
+                });
+        } else if (uniform_type == typeid(glm::vec2)) {
+            add_vec_uniform(uniform_name, { "X", "Y" },
+                [](const std::any& value, int index) {
+                    auto vec = std::any_cast<glm::vec2>(value);
+                    return index == 0 ? vec.x : vec.y;
+                },
+                [](std::any& current, int index, float param) {
+                    try {
+                        auto vec = std::any_cast<glm::vec2>(current);
+                        if (index == 0) vec.x = param;
+                        if (index == 1) vec.y = param;
+                        current = vec;
+                        return true;
+                    } catch (...) {
+                        return false;
+                    }
+                });
+        } else if (uniform_type == typeid(glm::vec3)) {
+            add_vec_uniform(uniform_name, { "X", "Y", "Z" },
+                [](const std::any& value, int index) {
+                    auto vec = std::any_cast<glm::vec3>(value);
+                    if (index == 0) return vec.x;
+                    if (index == 1) return vec.y;
+                    return vec.z;
+                },
+                [](std::any& current, int index, float param) {
+                    try {
+                        auto vec = std::any_cast<glm::vec3>(current);
+                        if (index == 0) vec.x = param;
+                        if (index == 1) vec.y = param;
+                        if (index == 2) vec.z = param;
+                        current = vec;
+                        return true;
+                    } catch (...) {
+                        return false;
+                    }
+                });
+        } else if (uniform_type == typeid(glm::vec4)) {
+            add_vec_uniform(uniform_name, { "X", "Y", "Z", "W" },
+                [](const std::any& value, int index) {
+                    auto vec = std::any_cast<glm::vec4>(value);
+                    if (index == 0) return vec.x;
+                    if (index == 1) return vec.y;
+                    if (index == 2) return vec.z;
+                    return vec.w;
+                },
+                [](std::any& current, int index, float param) {
+                    try {
+                        auto vec = std::any_cast<glm::vec4>(current);
+                        if (index == 0) vec.x = param;
+                        if (index == 1) vec.y = param;
+                        if (index == 2) vec.z = param;
+                        if (index == 3) vec.w = param;
+                        current = vec;
+                        return true;
+                    } catch (...) {
+                        return false;
+                    }
+                });
+        } else if (uniform_type == typeid(glm::mat2)) {
+            add_mat_uniform(uniform_name, 2,
+                [](const std::any& value, int row, int col) {
+                    auto mat = std::any_cast<glm::mat2>(value);
+                    return mat[col][row];
+                },
+                [](std::any& current, int row, int col, float param) {
+                    try {
+                        auto mat = std::any_cast<glm::mat2>(current);
+                        mat[col][row] = param;
+                        current = mat;
+                        return true;
+                    } catch (...) {
+                        return false;
+                    }
+                });
+        } else if (uniform_type == typeid(glm::mat3)) {
+            add_mat_uniform(uniform_name, 3,
+                [](const std::any& value, int row, int col) {
+                    auto mat = std::any_cast<glm::mat3>(value);
+                    return mat[col][row];
+                },
+                [](std::any& current, int row, int col, float param) {
+                    try {
+                        auto mat = std::any_cast<glm::mat3>(current);
+                        mat[col][row] = param;
+                        current = mat;
+                        return true;
+                    } catch (...) {
+                        return false;
+                    }
+                });
+        } else if (uniform_type == typeid(glm::mat4)) {
+            add_mat_uniform(uniform_name, 4,
+                [](const std::any& value, int row, int col) {
+                    auto mat = std::any_cast<glm::mat4>(value);
+                    return mat[col][row];
+                },
+                [](std::any& current, int row, int col, float param) {
+                    try {
+                        auto mat = std::any_cast<glm::mat4>(current);
+                        mat[col][row] = param;
+                        current = mat;
+                        return true;
+                    } catch (...) {
+                        return false;
+                    }
+                });
+        }
+    }
 
     layout->addStretch();
 
-    render_widget->setLayout(layout);
+    render_scope_widget->setLayout(layout);
 
-    return render_widget;
+    return render_scope_widget;
 }
 
 void TreeWidgetBuilder::decorateLabel(QLabel* label)
@@ -793,8 +1224,8 @@ auto TreeWidgetBuilder::buildWidgetForComponent(std::shared_ptr<engine::Componen
         return buildFlipbookAnimationWidget(std::dynamic_pointer_cast<engine::FlipbookAnimationComponent>(component), item);
     } else if (component->type() == "mouse_event_filter") {
         return buildMouseEventFilterWidget(std::dynamic_pointer_cast<engine::MouseEventFilterComponent>(component));
-    } else if (component->type() == "render") {
-        return buildRenderWidget(std::dynamic_pointer_cast<engine::RenderComponent>(component));
+    } else if (component->type() == "render_scope") {
+        return buildRenderScopeWidget(std::dynamic_pointer_cast<engine::RenderScopeComponent>(component), item);
     }
 
     return std::nullopt;

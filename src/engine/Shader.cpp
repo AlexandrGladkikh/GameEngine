@@ -64,7 +64,39 @@ Shader::Shader(const std::string& name, const std::string& vertexShader, const s
     if (configJson.HasMember("uniforms")) {
         auto uniforms = configJson["uniforms"].GetArray();
         for (const auto& uniform : uniforms) {
-            m_uniforms.push_back({ uniform.GetString(), glGetUniformLocation(m_program, uniform.GetString())});
+            if (uniform.IsObject() && uniform.HasMember("name") && uniform["name"].IsString() && uniform.HasMember("type") && uniform["type"].IsString()) {
+                std::string name = uniform["name"].GetString();
+                std::string type = uniform["type"].GetString();
+                Uniform::Type uniformType;
+                if (type == "Float") {
+                    uniformType = Uniform::Type::Float;
+                } else if (type == "Double") {
+                    uniformType = Uniform::Type::Double;
+                } else if (type == "Int") {
+                    uniformType = Uniform::Type::Int;
+                } else if (type == "UInt") {
+                    uniformType = Uniform::Type::UInt;
+                } else if (type == "Bool") {
+                    uniformType = Uniform::Type::Bool;
+                } else if (type == "Vec2") {
+                    uniformType = Uniform::Type::Vec2;
+                } else if (type == "Vec3") {
+                    uniformType = Uniform::Type::Vec3;
+                } else if (type == "Vec4") {
+                    uniformType = Uniform::Type::Vec4;
+                } else if (type == "Mat2") {
+                    uniformType = Uniform::Type::Mat2;
+                } else if (type == "Mat3") {
+                    uniformType = Uniform::Type::Mat3;
+                } else if (type == "Mat4") {
+                    uniformType = Uniform::Type::Mat4;
+                } else {
+                    Logger::error("ERROR::SHADER::UNIFORM::INVALID, name: {}, type: {}", name, type);
+                    continue;
+                }
+
+                m_uniforms.push_back({ name, glGetUniformLocation(m_program, name.c_str()), uniformType });
+            }
         }
     }
 }
@@ -92,6 +124,56 @@ auto Shader::uniforms() const -> const std::vector<Uniform>&
 void Shader::setUniform4mat(const std::string& name, const glm::mat4& value) const
 {
     glUniformMatrix4fv(glGetUniformLocation(m_program, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+}
+
+void Shader::setUniform3mat(const std::string& name, const glm::mat3& value) const
+{
+    glUniformMatrix3fv(glGetUniformLocation(m_program, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+}
+
+void Shader::setUniform2mat(const std::string& name, const glm::mat2& value) const
+{
+    glUniformMatrix2fv(glGetUniformLocation(m_program, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+}
+
+void Shader::setUniform4vec(const std::string& name, const glm::vec4& value) const
+{
+    glUniform4fv(glGetUniformLocation(m_program, name.c_str()), 1, glm::value_ptr(value));
+}
+
+void Shader::setUniform3vec(const std::string& name, const glm::vec3& value) const
+{
+    glUniform3fv(glGetUniformLocation(m_program, name.c_str()), 1, glm::value_ptr(value));
+}
+
+void Shader::setUniform2vec(const std::string& name, const glm::vec2& value) const
+{
+    glUniform2fv(glGetUniformLocation(m_program, name.c_str()), 1, glm::value_ptr(value));
+}
+
+void Shader::setUniform1vec(const std::string& name, const glm::vec1& value) const
+{
+    glUniform1fv(glGetUniformLocation(m_program, name.c_str()), 1, glm::value_ptr(value));
+}
+
+void Shader::setUniform1f(const std::string& name, float value) const
+{
+    glUniform1f(glGetUniformLocation(m_program, name.c_str()), value);
+}
+
+void Shader::setUniform1d(const std::string& name, double value) const
+{
+    glUniform1d(glGetUniformLocation(m_program, name.c_str()), value);
+}
+
+void Shader::setUniform1ui(const std::string& name, uint32_t value) const
+{
+    glUniform1ui(glGetUniformLocation(m_program, name.c_str()), value);
+}
+
+void Shader::setUniform1b(const std::string& name, bool value) const
+{
+    glUniform1i(glGetUniformLocation(m_program, name.c_str()), value ? 1 : 0);
 }
 
 void Shader::setUniform1i(const std::string& name, int value) const

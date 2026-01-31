@@ -8,7 +8,7 @@
 #include "Utils.h"
 #include "FlipbookAnimationComponent.h"
 #include "MouseEventFilterComponent.h"
-#include "RenderComponent.h"
+#include "RenderScopeComponent.h"
 
 #include <optional>
 
@@ -276,7 +276,7 @@ void saveMouseEventFilterComponent(const std::shared_ptr<MouseEventFilterCompone
     component_json.AddMember("action", component->action(), allocator);
 }
 
-auto buildRenderComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<RenderComponent>>
+auto buildRenderScopeComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<RenderScopeComponent>>
 {
     Logger::info(__FUNCTION__);
 
@@ -285,29 +285,241 @@ auto buildRenderComponent(const rapidjson::Value& componentData) -> std::optiona
     auto owner_node = componentData["owner_node"].GetUint();
     auto owner_scene = componentData["owner_scene"].GetUint();
 
-    auto component = std::make_unique<RenderComponent>(id, name, owner_node, owner_scene);
+    auto component = std::make_unique<RenderScopeComponent>(id, name, owner_node, owner_scene);
 
-    auto sprite = componentData["sprite"].GetBool();
-    component->setSprite(sprite);
+    RenderScopeComponent::RenderData render_data;
+    if (componentData.HasMember("render_data") && componentData["render_data"].IsObject()) {
+        const auto& render_data_obj = componentData["render_data"];
+        if (render_data_obj.HasMember("is_sprite") && render_data_obj["is_sprite"].IsBool()) {
+            render_data.is_sprite = render_data_obj["is_sprite"].GetBool();
+        }
+        if (render_data_obj.HasMember("uniforms") && render_data_obj["uniforms"].IsObject()) {
+            auto render_data_src = render_data_obj["uniforms"].GetObject();
+            auto read_vec = [](const rapidjson::Value& value, int size) -> std::optional<std::vector<float>> {
+                if (!value.IsArray() || static_cast<int>(value.Size()) != size) {
+                    return std::nullopt;
+                }
+                std::vector<float> out;
+                out.reserve(size);
+                for (rapidjson::SizeType i = 0; i < value.Size(); ++i) {
+                    if (!value[i].IsNumber()) {
+                        return std::nullopt;
+                    }
+                    out.push_back(static_cast<float>(value[i].GetDouble()));
+                }
+                return out;
+            };
+            auto read_mat_flat = [&read_vec](const rapidjson::Value& value, int size) -> std::optional<std::vector<float>> {
+                if (value.IsArray()) {
+                    if (value.Size() == static_cast<rapidjson::SizeType>(size)) {
+                        return read_vec(value, size);
+                    }
+                    if (value.Size() == static_cast<rapidjson::SizeType>(std::sqrt(size))) {
+                        std::vector<float> out;
+                        out.reserve(size);
+                        for (rapidjson::SizeType c = 0; c < value.Size(); ++c) {
+                            if (!value[c].IsArray() || value[c].Size() != value.Size()) {
+                                return std::nullopt;
+                            }
+                            for (rapidjson::SizeType r = 0; r < value[c].Size(); ++r) {
+                                if (!value[c][r].IsNumber()) {
+                                    return std::nullopt;
+                                }
+                                out.push_back(static_cast<float>(value[c][r].GetDouble()));
+                            }
+                        }
+                        if (out.size() == static_cast<size_t>(size)) {
+                            return out;
+                        }
+                    }
+                }
+                return std::nullopt;
+            };
+
+            for (rapidjson::Value::ConstMemberIterator itr = render_data_src.MemberBegin(); itr != render_data_src.MemberEnd(); ++itr) {
+                const std::string uniform_name = itr->name.GetString();
+                const auto& uniform_value = itr->value;
+
+                if (uniform_value.IsObject() && uniform_value.HasMember("type") && uniform_value["type"].IsString() &&
+                    uniform_value.HasMember("value")) {
+                    const std::string type = uniform_value["type"].GetString();
+                    const auto& value = uniform_value["value"];
+
+                    if (type == "Float" && value.IsNumber()) {
+                        render_data.uniforms[uniform_name] = static_cast<float>(value.GetDouble());
+                    } else if (type == "Double" && value.IsNumber()) {
+                        render_data.uniforms[uniform_name] = static_cast<double>(value.GetDouble());
+                    } else if (type == "Int" && value.IsInt()) {
+                        render_data.uniforms[uniform_name] = value.GetInt();
+                    } else if (type == "UInt" && value.IsUint()) {
+                        render_data.uniforms[uniform_name] = value.GetUint();
+                    } else if (type == "Bool" && value.IsBool()) {
+                        render_data.uniforms[uniform_name] = value.GetBool();
+                    } else if (type == "Vec2") {
+                        auto vec = read_vec(value, 2);
+                        if (vec.has_value()) {
+                            render_data.uniforms[uniform_name] = glm::vec2((*vec)[0], (*vec)[1]);
+                        }
+                    } else if (type == "Vec3") {
+                        auto vec = read_vec(value, 3);
+                        if (vec.has_value()) {
+                            render_data.uniforms[uniform_name] = glm::vec3((*vec)[0], (*vec)[1], (*vec)[2]);
+                        }
+                    } else if (type == "Vec4") {
+                        auto vec = read_vec(value, 4);
+                        if (vec.has_value()) {
+                            render_data.uniforms[uniform_name] = glm::vec4((*vec)[0], (*vec)[1], (*vec)[2], (*vec)[3]);
+                        }
+                    } else if (type == "Mat2") {
+                        auto mat = read_mat_flat(value, 4);
+                        if (mat.has_value()) {
+                            glm::mat2 out(1.0f);
+                            out[0][0] = (*mat)[0];
+                            out[0][1] = (*mat)[1];
+                            out[1][0] = (*mat)[2];
+                            out[1][1] = (*mat)[3];
+                            render_data.uniforms[uniform_name] = out;
+                        }
+                    } else if (type == "Mat3") {
+                        auto mat = read_mat_flat(value, 9);
+                        if (mat.has_value()) {
+                            glm::mat3 out(1.0f);
+                            int idx = 0;
+                            for (int c = 0; c < 3; ++c) {
+                                for (int r = 0; r < 3; ++r) {
+                                    out[c][r] = (*mat)[idx++];
+                                }
+                            }
+                            render_data.uniforms[uniform_name] = out;
+                        }
+                    } else if (type == "Mat4") {
+                        auto mat = read_mat_flat(value, 16);
+                        if (mat.has_value()) {
+                            glm::mat4 out(1.0f);
+                            int idx = 0;
+                            for (int c = 0; c < 4; ++c) {
+                                for (int r = 0; r < 4; ++r) {
+                                    out[c][r] = (*mat)[idx++];
+                                }
+                            }
+                            render_data.uniforms[uniform_name] = out;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    component->setRenderData(render_data);
 
     return component;
 }
 
-void saveRenderComponent(const std::shared_ptr<RenderComponent>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
+void saveRenderScopeComponent(const std::shared_ptr<RenderScopeComponent>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
 {
     rapidjson::Value value;
     value.SetString(component->name().c_str(), allocator);
-    component_json.AddMember("type", "render", allocator);
+    component_json.AddMember("type", "render_scope", allocator);
     component_json.AddMember("id", component->id(), allocator);
     component_json.AddMember("name", value, allocator);
     component_json.AddMember("owner_node", component->ownerNode(), allocator);
     component_json.AddMember("owner_scene", component->ownerScene(), allocator);
-    component_json.AddMember("sprite", component->isSprite(), allocator);
+
+    rapidjson::Value render_data(rapidjson::kObjectType);
+    render_data.AddMember("is_sprite", component->isSprite(), allocator);
+    rapidjson::Value uniforms_json(rapidjson::kObjectType);
+    for (const auto& uniform : component->renderData().uniforms) {
+        rapidjson::Value uniform_key;
+        uniform_key.SetString(uniform.first.c_str(), allocator);
+
+        rapidjson::Value uniform_obj(rapidjson::kObjectType);
+        rapidjson::Value type_value;
+        rapidjson::Value data_value;
+
+        if (uniform.second.type() == typeid(float)) {
+            type_value.SetString("Float", allocator);
+            data_value.SetFloat(std::any_cast<float>(uniform.second));
+        } else if (uniform.second.type() == typeid(double)) {
+            type_value.SetString("Double", allocator);
+            data_value.SetDouble(std::any_cast<double>(uniform.second));
+        } else if (uniform.second.type() == typeid(int)) {
+            type_value.SetString("Int", allocator);
+            data_value.SetInt(std::any_cast<int>(uniform.second));
+        } else if (uniform.second.type() == typeid(uint32_t)) {
+            type_value.SetString("UInt", allocator);
+            data_value.SetUint(std::any_cast<uint32_t>(uniform.second));
+        } else if (uniform.second.type() == typeid(bool)) {
+            type_value.SetString("Bool", allocator);
+            data_value.SetBool(std::any_cast<bool>(uniform.second));
+        } else if (uniform.second.type() == typeid(glm::vec2)) {
+            type_value.SetString("Vec2", allocator);
+            auto vec = std::any_cast<glm::vec2>(uniform.second);
+            data_value.SetArray();
+            data_value.PushBack(vec.x, allocator);
+            data_value.PushBack(vec.y, allocator);
+        } else if (uniform.second.type() == typeid(glm::vec3)) {
+            type_value.SetString("Vec3", allocator);
+            auto vec = std::any_cast<glm::vec3>(uniform.second);
+            data_value.SetArray();
+            data_value.PushBack(vec.x, allocator);
+            data_value.PushBack(vec.y, allocator);
+            data_value.PushBack(vec.z, allocator);
+        } else if (uniform.second.type() == typeid(glm::vec4)) {
+            type_value.SetString("Vec4", allocator);
+            auto vec = std::any_cast<glm::vec4>(uniform.second);
+            data_value.SetArray();
+            data_value.PushBack(vec.x, allocator);
+            data_value.PushBack(vec.y, allocator);
+            data_value.PushBack(vec.z, allocator);
+            data_value.PushBack(vec.w, allocator);
+        } else if (uniform.second.type() == typeid(glm::mat2)) {
+            type_value.SetString("Mat2", allocator);
+            auto mat = std::any_cast<glm::mat2>(uniform.second);
+            data_value.SetArray();
+            for (int c = 0; c < 2; ++c) {
+                rapidjson::Value col(rapidjson::kArrayType);
+                col.PushBack(mat[c][0], allocator);
+                col.PushBack(mat[c][1], allocator);
+                data_value.PushBack(col, allocator);
+            }
+        } else if (uniform.second.type() == typeid(glm::mat3)) {
+            type_value.SetString("Mat3", allocator);
+            auto mat = std::any_cast<glm::mat3>(uniform.second);
+            data_value.SetArray();
+            for (int c = 0; c < 3; ++c) {
+                rapidjson::Value col(rapidjson::kArrayType);
+                col.PushBack(mat[c][0], allocator);
+                col.PushBack(mat[c][1], allocator);
+                col.PushBack(mat[c][2], allocator);
+                data_value.PushBack(col, allocator);
+            }
+        } else if (uniform.second.type() == typeid(glm::mat4)) {
+            type_value.SetString("Mat4", allocator);
+            auto mat = std::any_cast<glm::mat4>(uniform.second);
+            data_value.SetArray();
+            for (int c = 0; c < 4; ++c) {
+                rapidjson::Value col(rapidjson::kArrayType);
+                col.PushBack(mat[c][0], allocator);
+                col.PushBack(mat[c][1], allocator);
+                col.PushBack(mat[c][2], allocator);
+                col.PushBack(mat[c][3], allocator);
+                data_value.PushBack(col, allocator);
+            }
+        } else {
+            continue;
+        }
+
+        uniform_obj.AddMember("type", type_value, allocator);
+        uniform_obj.AddMember("value", data_value, allocator);
+        uniforms_json.AddMember(uniform_key, uniform_obj, allocator);
+    }
+    render_data.AddMember("uniforms", uniforms_json, allocator);
+    component_json.AddMember("render_data", render_data, allocator);
 }
 
 auto ComponentBuilder::componentTypes() -> const std::vector<std::string>&
 {
-    static const std::vector<std::string> types = {"material", "mesh", "camera", "transform", "flipbook_animation", "mouse_event_filter", "render"};
+    static const std::vector<std::string> types = {"material", "mesh", "camera", "transform", "flipbook_animation", "mouse_event_filter", "render_scope"};
     return types;
 }
 
@@ -327,8 +539,8 @@ auto ComponentBuilder::buildFromJson(const std::string& type, const rapidjson::V
         return buildFlipbookAnimationComponent(component);
     } else if (type == "mouse_event_filter") {
         return buildMouseEventFilterComponent(component);
-    } else if (type == "render") {
-        return buildRenderComponent(component);
+    } else if (type == "render_scope") {
+        return buildRenderScopeComponent(component);
     }
 
     return std::nullopt;
@@ -348,8 +560,8 @@ void ComponentBuilder::saveToJson(const std::shared_ptr<Component>& component, r
         saveFlipbookAnimationComponent(std::dynamic_pointer_cast<FlipbookAnimationComponent>(component), component_json, allocator);
     } else if (component->type() == "mouse_event_filter") {
         saveMouseEventFilterComponent(std::dynamic_pointer_cast<MouseEventFilterComponent>(component), component_json, allocator);
-    } else if (component->type() == "render") {
-        saveRenderComponent(std::dynamic_pointer_cast<RenderComponent>(component), component_json, allocator);
+    } else if (component->type() == "render_scope") {
+        saveRenderScopeComponent(std::dynamic_pointer_cast<RenderScopeComponent>(component), component_json, allocator);
     }
 }
 
@@ -369,8 +581,8 @@ auto ComponentBuilder::buildEmptyComponent(const std::string& type, const std::s
         return std::make_unique<FlipbookAnimationComponent>(generateUniqueId(), name, owner_node, owner_scene);
     } else if (type == "mouse_event_filter") {
         return std::make_unique<MouseEventFilterComponent>(generateUniqueId(), name, owner_node, owner_scene);
-    } else if (type == "render") {
-        return std::make_unique<RenderComponent>(generateUniqueId(), name, owner_node, owner_scene);
+    } else if (type == "render_scope") {
+        return std::make_unique<RenderScopeComponent>(generateUniqueId(), name, owner_node, owner_scene);
     }
 
     return std::nullopt;
@@ -413,9 +625,9 @@ std::optional<std::unique_ptr<MouseEventFilterComponent>> ComponentBuilder::buil
 }
 
 template<>
-std::optional<std::unique_ptr<RenderComponent>> ComponentBuilder::buildEmptyComponent<RenderComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
+std::optional<std::unique_ptr<RenderScopeComponent>> ComponentBuilder::buildEmptyComponent<RenderScopeComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
 {
-    return std::make_unique<RenderComponent>(generateUniqueId(), name, owner_node, owner_scene);
+    return std::make_unique<RenderScopeComponent>(generateUniqueId(), name, owner_node, owner_scene);
 }
 
 }

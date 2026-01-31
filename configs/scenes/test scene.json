@@ -103,7 +103,7 @@
             ],
             "rotation": [
                 0.0,
-                -50.529998779296875,
+                -37.20000076293945,
                 0.0
             ],
             "scale": [
@@ -113,12 +113,25 @@
             ]
         },
         {
-            "type": "render",
+            "type": "render_scope",
             "id": 212602637,
-            "name": "render",
+            "name": "render scope",
             "owner_node": 1139540731,
             "owner_scene": 3615596102,
-            "sprite": false
+            "render_data": {
+                "is_sprite": false,
+                "uniforms": {
+                    "inColor": {
+                        "type": "Vec4",
+                        "value": [
+                            1.0,
+                            0.14000000059604645,
+                            1.0,
+                            1.0
+                        ]
+                    }
+                }
+            }
         },
         {
             "type": "material",
@@ -126,7 +139,7 @@
             "name": "material",
             "owner_node": 1139540731,
             "owner_scene": 3615596102,
-            "shader": 1,
+            "shader": 2,
             "texture": 6
         },
         {

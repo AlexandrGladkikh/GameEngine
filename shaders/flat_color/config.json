@@ -1,5 +1,8 @@
 {
     "uniforms": [
-        "inColor"
+        {
+            "name": "inColor",
+            "type": "Vec4"
+        }
     ]
 }

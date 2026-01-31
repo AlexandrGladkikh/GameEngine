@@ -75,8 +75,8 @@ add_library(engine
         SceneConfig.h
         EngineSettings.cpp
         EngineSettings.h
-        RenderComponent.cpp
-        RenderComponent.h
+        RenderScopeComponent.cpp
+        RenderScopeComponent.h
 )
 
 if (APPLE)
