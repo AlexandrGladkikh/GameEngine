@@ -11,7 +11,7 @@ namespace engine {
 Shader::Shader(const std::string& name, const std::string& vertexShader, const std::string& fragmentShader, const std::string& config) :
     m_name(name)
 {
-    Logger::info(__FUNCTION__);
+    Logger::debug(__FUNCTION__);
 
     GLuint vertex = 0;
     GLuint fragment = 0;
@@ -183,7 +183,7 @@ void Shader::setUniform1i(const std::string& name, int value) const
 
 auto buildShader(const std::filesystem::path& path) -> std::optional<std::unique_ptr<Shader>>
 {
-    Logger::info(__FUNCTION__);
+    Logger::debug(__FUNCTION__);
 
     if (!FileSystem::exists(path) || !FileSystem::isDirectory(path)) {
         return std::nullopt;

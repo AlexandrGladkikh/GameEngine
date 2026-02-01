@@ -235,614 +235,704 @@
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /Ob0 /Od /RTC1 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\glad.c.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\glad.c",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /Ob0 /Od /RTC1 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\glad.c.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\glad.c",
   "file": "D:/GameEngine/src/engine/glad.c",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/glad.c.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MeshComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MeshComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshComponent.cpp",
   "file": "D:/GameEngine/src/engine/MeshComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/MeshComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MaterialComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MaterialComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MaterialComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MaterialComponent.cpp",
   "file": "D:/GameEngine/src/engine/MaterialComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/MaterialComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Texture.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Texture.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Texture.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Texture.cpp",
   "file": "D:/GameEngine/src/engine/Texture.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Texture.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\FileSystem.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FileSystem.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\FileSystem.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FileSystem.cpp",
   "file": "D:/GameEngine/src/engine/FileSystem.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/FileSystem.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MeshStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MeshStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshStore.cpp",
   "file": "D:/GameEngine/src/engine/MeshStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/MeshStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Component.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Component.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Component.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Component.cpp",
   "file": "D:/GameEngine/src/engine/Component.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Component.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\TextureStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TextureStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\TextureStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TextureStore.cpp",
   "file": "D:/GameEngine/src/engine/TextureStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/TextureStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MeshBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshBuilder.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MeshBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshBuilder.cpp",
   "file": "D:/GameEngine/src/engine/MeshBuilder.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/MeshBuilder.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Shader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Shader.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Shader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Shader.cpp",
   "file": "D:/GameEngine/src/engine/Shader.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Shader.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\ShaderStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ShaderStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\ShaderStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ShaderStore.cpp",
   "file": "D:/GameEngine/src/engine/ShaderStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/ShaderStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\ResourcePackage.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackage.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\ResourcePackage.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackage.cpp",
   "file": "D:/GameEngine/src/engine/ResourcePackage.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/ResourcePackage.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\ResourcePackageStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackageStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\ResourcePackageStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackageStore.cpp",
   "file": "D:/GameEngine/src/engine/ResourcePackageStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/ResourcePackageStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Scene.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Scene.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Scene.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Scene.cpp",
   "file": "D:/GameEngine/src/engine/Scene.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Scene.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Node.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Node.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Node.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Node.cpp",
   "file": "D:/GameEngine/src/engine/Node.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Node.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneStore.cpp",
   "file": "D:/GameEngine/src/engine/SceneStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/SceneStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\ComponentBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ComponentBuilder.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\ComponentBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ComponentBuilder.cpp",
   "file": "D:/GameEngine/src/engine/ComponentBuilder.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/ComponentBuilder.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\CameraComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\CameraComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\CameraComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\CameraComponent.cpp",
   "file": "D:/GameEngine/src/engine/CameraComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/CameraComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\TransformComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TransformComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\TransformComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TransformComponent.cpp",
   "file": "D:/GameEngine/src/engine/TransformComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/TransformComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneLoader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneLoader.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneLoader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneLoader.cpp",
   "file": "D:/GameEngine/src/engine/SceneLoader.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/SceneLoader.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Window.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Window.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Window.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Window.cpp",
   "file": "D:/GameEngine/src/engine/Window.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Window.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Engine.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Engine.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Engine.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Engine.cpp",
   "file": "D:/GameEngine/src/engine/Engine.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Engine.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneTransition.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneTransition.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneTransition.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneTransition.cpp",
   "file": "D:/GameEngine/src/engine/SceneTransition.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/SceneTransition.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Renderer.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Renderer.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Renderer.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Renderer.cpp",
   "file": "D:/GameEngine/src/engine/Renderer.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Renderer.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneRequester.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneRequester.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneRequester.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneRequester.cpp",
   "file": "D:/GameEngine/src/engine/SceneRequester.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/SceneRequester.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Logger.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Logger.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Logger.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Logger.cpp",
   "file": "D:/GameEngine/src/engine/Logger.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Logger.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\InputManager.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\InputManager.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\InputManager.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\InputManager.cpp",
   "file": "D:/GameEngine/src/engine/InputManager.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/InputManager.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Utils.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Utils.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\Utils.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Utils.cpp",
   "file": "D:/GameEngine/src/engine/Utils.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/Utils.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\FlipbookAnimationComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FlipbookAnimationComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\FlipbookAnimationComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FlipbookAnimationComponent.cpp",
   "file": "D:/GameEngine/src/engine/FlipbookAnimationComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/FlipbookAnimationComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MouseEventFilterComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MouseEventFilterComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\MouseEventFilterComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MouseEventFilterComponent.cpp",
   "file": "D:/GameEngine/src/engine/MouseEventFilterComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/MouseEventFilterComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\NodePositioningHelper.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\NodePositioningHelper.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\NodePositioningHelper.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\NodePositioningHelper.cpp",
   "file": "D:/GameEngine/src/engine/NodePositioningHelper.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/NodePositioningHelper.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneConfig.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneConfig.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\SceneConfig.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneConfig.cpp",
   "file": "D:/GameEngine/src/engine/SceneConfig.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/SceneConfig.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\EngineSettings.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\EngineSettings.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\EngineSettings.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\EngineSettings.cpp",
   "file": "D:/GameEngine/src/engine/EngineSettings.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/EngineSettings.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\RenderScopeComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderScopeComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\RenderScopeComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderScopeComponent.cpp",
   "file": "D:/GameEngine/src/engine/RenderScopeComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/RenderScopeComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /O2 /Ob2 /DNDEBUG -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\glad.c.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\glad.c",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\renderpasses\\BaseRenderPass.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\renderpasses\\BaseRenderPass.cpp",
+  "file": "D:/GameEngine/src/engine/renderpasses/BaseRenderPass.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/renderpasses/BaseRenderPass.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\renderpasses\\BaseLightRenderPass.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\renderpasses\\BaseLightRenderPass.cpp",
+  "file": "D:/GameEngine/src/engine/renderpasses/BaseLightRenderPass.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/renderpasses/BaseLightRenderPass.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\RenderPassComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderPassComponent.cpp",
+  "file": "D:/GameEngine/src/engine/RenderPassComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/RenderPassComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\RenderPassStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderPassStore.cpp",
+  "file": "D:/GameEngine/src/engine/RenderPassStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/RenderPassStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Debug\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /Ob0 /Od /RTC1 -clang:-std=c++23 -MDd -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\Debug\\LightSourceComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Debug\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\LightSourceComponent.cpp",
+  "file": "D:/GameEngine/src/engine/LightSourceComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Debug/LightSourceComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /O2 /Ob2 /DNDEBUG -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\glad.c.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\glad.c",
   "file": "D:/GameEngine/src/engine/glad.c",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/glad.c.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MeshComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MeshComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshComponent.cpp",
   "file": "D:/GameEngine/src/engine/MeshComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/MeshComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MaterialComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MaterialComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MaterialComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MaterialComponent.cpp",
   "file": "D:/GameEngine/src/engine/MaterialComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/MaterialComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Texture.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Texture.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Texture.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Texture.cpp",
   "file": "D:/GameEngine/src/engine/Texture.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Texture.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\FileSystem.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FileSystem.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\FileSystem.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FileSystem.cpp",
   "file": "D:/GameEngine/src/engine/FileSystem.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/FileSystem.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MeshStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MeshStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshStore.cpp",
   "file": "D:/GameEngine/src/engine/MeshStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/MeshStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Component.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Component.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Component.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Component.cpp",
   "file": "D:/GameEngine/src/engine/Component.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Component.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\TextureStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TextureStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\TextureStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TextureStore.cpp",
   "file": "D:/GameEngine/src/engine/TextureStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/TextureStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MeshBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshBuilder.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MeshBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshBuilder.cpp",
   "file": "D:/GameEngine/src/engine/MeshBuilder.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/MeshBuilder.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Shader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Shader.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Shader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Shader.cpp",
   "file": "D:/GameEngine/src/engine/Shader.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Shader.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\ShaderStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ShaderStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\ShaderStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ShaderStore.cpp",
   "file": "D:/GameEngine/src/engine/ShaderStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/ShaderStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\ResourcePackage.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackage.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\ResourcePackage.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackage.cpp",
   "file": "D:/GameEngine/src/engine/ResourcePackage.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/ResourcePackage.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\ResourcePackageStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackageStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\ResourcePackageStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackageStore.cpp",
   "file": "D:/GameEngine/src/engine/ResourcePackageStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/ResourcePackageStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Scene.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Scene.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Scene.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Scene.cpp",
   "file": "D:/GameEngine/src/engine/Scene.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Scene.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Node.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Node.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Node.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Node.cpp",
   "file": "D:/GameEngine/src/engine/Node.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Node.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneStore.cpp",
   "file": "D:/GameEngine/src/engine/SceneStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/SceneStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\ComponentBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ComponentBuilder.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\ComponentBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ComponentBuilder.cpp",
   "file": "D:/GameEngine/src/engine/ComponentBuilder.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/ComponentBuilder.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\CameraComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\CameraComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\CameraComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\CameraComponent.cpp",
   "file": "D:/GameEngine/src/engine/CameraComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/CameraComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\TransformComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TransformComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\TransformComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TransformComponent.cpp",
   "file": "D:/GameEngine/src/engine/TransformComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/TransformComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneLoader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneLoader.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneLoader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneLoader.cpp",
   "file": "D:/GameEngine/src/engine/SceneLoader.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/SceneLoader.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Window.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Window.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Window.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Window.cpp",
   "file": "D:/GameEngine/src/engine/Window.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Window.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Engine.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Engine.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Engine.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Engine.cpp",
   "file": "D:/GameEngine/src/engine/Engine.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Engine.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneTransition.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneTransition.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneTransition.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneTransition.cpp",
   "file": "D:/GameEngine/src/engine/SceneTransition.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/SceneTransition.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Renderer.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Renderer.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Renderer.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Renderer.cpp",
   "file": "D:/GameEngine/src/engine/Renderer.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Renderer.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneRequester.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneRequester.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneRequester.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneRequester.cpp",
   "file": "D:/GameEngine/src/engine/SceneRequester.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/SceneRequester.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Logger.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Logger.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Logger.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Logger.cpp",
   "file": "D:/GameEngine/src/engine/Logger.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Logger.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\InputManager.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\InputManager.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\InputManager.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\InputManager.cpp",
   "file": "D:/GameEngine/src/engine/InputManager.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/InputManager.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Utils.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Utils.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\Utils.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Utils.cpp",
   "file": "D:/GameEngine/src/engine/Utils.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/Utils.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\FlipbookAnimationComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FlipbookAnimationComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\FlipbookAnimationComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FlipbookAnimationComponent.cpp",
   "file": "D:/GameEngine/src/engine/FlipbookAnimationComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/FlipbookAnimationComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MouseEventFilterComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MouseEventFilterComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\MouseEventFilterComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MouseEventFilterComponent.cpp",
   "file": "D:/GameEngine/src/engine/MouseEventFilterComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/MouseEventFilterComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\NodePositioningHelper.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\NodePositioningHelper.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\NodePositioningHelper.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\NodePositioningHelper.cpp",
   "file": "D:/GameEngine/src/engine/NodePositioningHelper.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/NodePositioningHelper.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneConfig.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneConfig.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\SceneConfig.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneConfig.cpp",
   "file": "D:/GameEngine/src/engine/SceneConfig.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/SceneConfig.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\EngineSettings.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\EngineSettings.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\EngineSettings.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\EngineSettings.cpp",
   "file": "D:/GameEngine/src/engine/EngineSettings.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/EngineSettings.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\RenderScopeComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderScopeComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\RenderScopeComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderScopeComponent.cpp",
   "file": "D:/GameEngine/src/engine/RenderScopeComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/RenderScopeComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /O2 /Ob1 /DNDEBUG -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\glad.c.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\glad.c",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\renderpasses\\BaseRenderPass.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\renderpasses\\BaseRenderPass.cpp",
+  "file": "D:/GameEngine/src/engine/renderpasses/BaseRenderPass.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/renderpasses/BaseRenderPass.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\renderpasses\\BaseLightRenderPass.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\renderpasses\\BaseLightRenderPass.cpp",
+  "file": "D:/GameEngine/src/engine/renderpasses/BaseLightRenderPass.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/renderpasses/BaseLightRenderPass.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\RenderPassComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderPassComponent.cpp",
+  "file": "D:/GameEngine/src/engine/RenderPassComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/RenderPassComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\RenderPassStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderPassStore.cpp",
+  "file": "D:/GameEngine/src/engine/RenderPassStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/RenderPassStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"Release\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob2 /DNDEBUG -clang:-std=c++23 -MD /Fosrc\\engine\\CMakeFiles\\engine.dir\\Release\\LightSourceComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\Release\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\LightSourceComponent.cpp",
+  "file": "D:/GameEngine/src/engine/LightSourceComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/Release/LightSourceComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /O2 /Ob1 /DNDEBUG -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\glad.c.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\glad.c",
   "file": "D:/GameEngine/src/engine/glad.c",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/glad.c.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MeshComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MeshComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshComponent.cpp",
   "file": "D:/GameEngine/src/engine/MeshComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/MeshComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MaterialComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MaterialComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MaterialComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MaterialComponent.cpp",
   "file": "D:/GameEngine/src/engine/MaterialComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/MaterialComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Texture.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Texture.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Texture.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Texture.cpp",
   "file": "D:/GameEngine/src/engine/Texture.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Texture.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\FileSystem.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FileSystem.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\FileSystem.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FileSystem.cpp",
   "file": "D:/GameEngine/src/engine/FileSystem.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/FileSystem.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MeshStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MeshStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshStore.cpp",
   "file": "D:/GameEngine/src/engine/MeshStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/MeshStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Component.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Component.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Component.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Component.cpp",
   "file": "D:/GameEngine/src/engine/Component.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Component.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\TextureStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TextureStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\TextureStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TextureStore.cpp",
   "file": "D:/GameEngine/src/engine/TextureStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/TextureStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MeshBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshBuilder.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MeshBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MeshBuilder.cpp",
   "file": "D:/GameEngine/src/engine/MeshBuilder.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/MeshBuilder.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Shader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Shader.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Shader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Shader.cpp",
   "file": "D:/GameEngine/src/engine/Shader.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Shader.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\ShaderStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ShaderStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\ShaderStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ShaderStore.cpp",
   "file": "D:/GameEngine/src/engine/ShaderStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/ShaderStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\ResourcePackage.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackage.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\ResourcePackage.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackage.cpp",
   "file": "D:/GameEngine/src/engine/ResourcePackage.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/ResourcePackage.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\ResourcePackageStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackageStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\ResourcePackageStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ResourcePackageStore.cpp",
   "file": "D:/GameEngine/src/engine/ResourcePackageStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/ResourcePackageStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Scene.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Scene.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Scene.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Scene.cpp",
   "file": "D:/GameEngine/src/engine/Scene.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Scene.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Node.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Node.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Node.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Node.cpp",
   "file": "D:/GameEngine/src/engine/Node.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Node.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneStore.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneStore.cpp",
   "file": "D:/GameEngine/src/engine/SceneStore.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/SceneStore.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\ComponentBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ComponentBuilder.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\ComponentBuilder.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\ComponentBuilder.cpp",
   "file": "D:/GameEngine/src/engine/ComponentBuilder.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/ComponentBuilder.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\CameraComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\CameraComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\CameraComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\CameraComponent.cpp",
   "file": "D:/GameEngine/src/engine/CameraComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/CameraComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\TransformComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TransformComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\TransformComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\TransformComponent.cpp",
   "file": "D:/GameEngine/src/engine/TransformComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/TransformComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneLoader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneLoader.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneLoader.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneLoader.cpp",
   "file": "D:/GameEngine/src/engine/SceneLoader.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/SceneLoader.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Window.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Window.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Window.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Window.cpp",
   "file": "D:/GameEngine/src/engine/Window.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Window.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Engine.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Engine.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Engine.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Engine.cpp",
   "file": "D:/GameEngine/src/engine/Engine.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Engine.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneTransition.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneTransition.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneTransition.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneTransition.cpp",
   "file": "D:/GameEngine/src/engine/SceneTransition.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/SceneTransition.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Renderer.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Renderer.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Renderer.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Renderer.cpp",
   "file": "D:/GameEngine/src/engine/Renderer.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Renderer.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneRequester.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneRequester.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneRequester.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneRequester.cpp",
   "file": "D:/GameEngine/src/engine/SceneRequester.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/SceneRequester.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Logger.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Logger.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Logger.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Logger.cpp",
   "file": "D:/GameEngine/src/engine/Logger.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Logger.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\InputManager.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\InputManager.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\InputManager.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\InputManager.cpp",
   "file": "D:/GameEngine/src/engine/InputManager.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/InputManager.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Utils.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Utils.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\Utils.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\Utils.cpp",
   "file": "D:/GameEngine/src/engine/Utils.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/Utils.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\FlipbookAnimationComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FlipbookAnimationComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\FlipbookAnimationComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\FlipbookAnimationComponent.cpp",
   "file": "D:/GameEngine/src/engine/FlipbookAnimationComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/FlipbookAnimationComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MouseEventFilterComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MouseEventFilterComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\MouseEventFilterComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\MouseEventFilterComponent.cpp",
   "file": "D:/GameEngine/src/engine/MouseEventFilterComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/MouseEventFilterComponent.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\NodePositioningHelper.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\NodePositioningHelper.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\NodePositioningHelper.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\NodePositioningHelper.cpp",
   "file": "D:/GameEngine/src/engine/NodePositioningHelper.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/NodePositioningHelper.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneConfig.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneConfig.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\SceneConfig.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\SceneConfig.cpp",
   "file": "D:/GameEngine/src/engine/SceneConfig.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/SceneConfig.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\EngineSettings.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\EngineSettings.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\EngineSettings.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\EngineSettings.cpp",
   "file": "D:/GameEngine/src/engine/EngineSettings.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/EngineSettings.cpp.obj"
 },
 {
   "directory": "D:/GameEngine/build-Release",
-  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\RenderScopeComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderScopeComponent.cpp",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\RenderScopeComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderScopeComponent.cpp",
   "file": "D:/GameEngine/src/engine/RenderScopeComponent.cpp",
   "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/RenderScopeComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\renderpasses\\BaseRenderPass.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\renderpasses\\BaseRenderPass.cpp",
+  "file": "D:/GameEngine/src/engine/renderpasses/BaseRenderPass.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/renderpasses/BaseRenderPass.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\renderpasses\\BaseLightRenderPass.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\renderpasses\\BaseLightRenderPass.cpp",
+  "file": "D:/GameEngine/src/engine/renderpasses/BaseLightRenderPass.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/renderpasses/BaseLightRenderPass.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\RenderPassComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderPassComponent.cpp",
+  "file": "D:/GameEngine/src/engine/RenderPassComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/RenderPassComponent.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\RenderPassStore.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\RenderPassStore.cpp",
+  "file": "D:/GameEngine/src/engine/RenderPassStore.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/RenderPassStore.cpp.obj"
+},
+{
+  "directory": "D:/GameEngine/build-Release",
+  "command": "C:\\PROGRA~1\\LLVM\\bin\\clang-cl.exe  /nologo -TP -DCMAKE_INTDIR=\\\"RelWithDebInfo\\\" -ID:\\GameEngine\\src\\engine\\3rdparts\\include -ID:\\GameEngine\\src\\engine /DWIN32 /D_WINDOWS /EHsc /O2 /Ob1 /DNDEBUG -clang:-std=c++23 -MD -Zi /Fosrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\LightSourceComponent.cpp.obj /Fdsrc\\engine\\CMakeFiles\\engine.dir\\RelWithDebInfo\\engine.pdb -c -- D:\\GameEngine\\src\\engine\\LightSourceComponent.cpp",
+  "file": "D:/GameEngine/src/engine/LightSourceComponent.cpp",
+  "output": "D:/GameEngine/build-Release/src/engine/CMakeFiles/engine.dir/RelWithDebInfo/LightSourceComponent.cpp.obj"
 }
 ]

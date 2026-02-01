@@ -17,7 +17,7 @@ namespace engine {
 
 std::optional<std::shared_ptr<ResourcePackage>> buildResourcePackage(const std::filesystem::path& path)
 {
-    Logger::info(__FUNCTION__);
+    Logger::debug(__FUNCTION__);
 
     if (!FileSystem::exists(path) || !FileSystem::isFile(path) || (path.extension() != ".pkg" && path.extension() != ".json")) {
         return {};
@@ -94,7 +94,7 @@ void saveResourcePackage(const std::shared_ptr<ResourcePackage>& package, uint32
 
 void loadResourcePackage(const std::shared_ptr<Context>& context, const std::shared_ptr<ResourcePackage>& package)
 {
-    Logger::info(__FUNCTION__);
+    Logger::debug(__FUNCTION__);
 
     for (auto& shaderInfo : package->shaders) {
         auto shader_exist = context->shaderStore->get(shaderInfo.id);

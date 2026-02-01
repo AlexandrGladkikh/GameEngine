@@ -125,7 +125,7 @@ void MouseEventFilterComponent::registerMouseHandler()
 
     if (ctx != nullptr) {
         ctx->inputManager->registerMouseHandler(m_key, [this](int action, int x, int y) {
-                Logger::info("{}: mouse click cb", __FUNCTION__);
+                Logger::debug("{}: mouse click cb", __FUNCTION__);
                 if (action == m_action) {
                     auto node_scale = m_transform->getScale();
                     auto texture_size = m_material->textureSize();
@@ -160,7 +160,7 @@ void MouseEventFilterComponent::registerMouseHandler()
                     const float ly = -dx * s + dy * c;
 
                     if (std::fabs(lx) <= texture_size.first && std::fabs(ly) <= texture_size.second) {
-                        Logger::info("{}: mouse click on {}", __FUNCTION__, id());
+                        Logger::debug("{}: mouse click on {}", __FUNCTION__, id());
                         if (m_mouse_click_callback) {
                             m_mouse_click_callback(x, y);
                         }

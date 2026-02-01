@@ -4,6 +4,13 @@
 #include <format>
 
 namespace engine {
+    
+enum class Level {
+    INFO = 0,
+    DEBUG = 1,
+    WARNING = 2,
+    ERROR = 3
+};
 
 class Logger final {
 public:
@@ -12,6 +19,13 @@ public:
     {
         std::string message = std::vformat(fmt_str, std::make_format_args(args...));
         logImpl(Level::INFO, message);
+    }
+    
+    template<typename... Args>
+    static void debug(const std::string& fmt_str, Args&&... args)
+    {
+        std::string message = std::vformat(fmt_str, std::make_format_args(args...));
+        logImpl(Level::DEBUG, message);
     }
 
     template<typename... Args>
@@ -28,12 +42,10 @@ public:
         logImpl(Level::ERROR, message);
     }
 
+    static void setLogLevel(Level level);
+
 private:
-    enum class Level {
-        INFO = 0,
-        WARNING = 1,
-        ERROR = 2
-    };
+    static Level m_level;
 
     static void logImpl(Level level, const std::string& message);
 };

@@ -531,7 +531,7 @@ std::optional<editor::ComponentWidget*> EditorComponentBuilder::buildWidgetForCo
                                                 {"Z", RotateComponent::Axis::Z}
                                               };
         std::function<void(const std::string&)> axis_handler = [rotate, axes_map](const std::string& value) {
-            engine::Logger::info("RotateComponent::axisChangeHandler: " + value);
+            engine::Logger::debug("RotateComponent::axisChangeHandler: {}", value);
             rotate->setAxis(axes_map.at(value));
         };
         RotateComponent::Axis axis = rotate->getAxis();
@@ -578,7 +578,7 @@ std::optional<std::unique_ptr<engine::Component>> EngineComponentBuilder::buildC
 
         return new_component;
     } else if (type == "rotate") {
-        engine::Logger::info("EngineComponentBuilder::buildComponent: rotate");
+        engine::Logger::debug("EngineComponentBuilder::buildComponent: rotate");
         auto id = component["id"].GetUint();
         auto name = component["name"].GetString();
         auto owner_node = component["owner_node"].GetUint();

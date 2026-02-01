@@ -12,7 +12,7 @@ InputManager::InputManager(const std::unique_ptr<Window>& window)
         m_key_action.push_back(action);
     });
     window->setMouseInputHandler([this](int key, int action, int x_pos, int y_pos) {
-        Logger::info("{}: window->setMouseInputHandler", __FUNCTION__);
+        Logger::debug("{}: window->setMouseInputHandler", __FUNCTION__);
         m_mouse_key.push_back(key);
         m_mouse_key_action.push_back(action);
         m_mouse_pos.push_back({x_pos, y_pos});
@@ -71,14 +71,14 @@ void InputManager::unregisterKeyHandler(int key)
 
 void InputManager::registerMouseHandler(int key, const std::function<void(int, int, int)>& handler)
 {
-    Logger::info("{}: registerMouseHandler key: {}", __FUNCTION__, key);
+    Logger::debug("{}: registerMouseHandler key: {}", __FUNCTION__, key);
     auto& handlers = m_mouse_handlers[key];
     handlers.push_back(handler);
 }
 
 void InputManager::unregisterMouseHandler(int key)
 {
-    Logger::info("{}: unregisterMouseHandler key: {}", __FUNCTION__, key);
+    Logger::debug("{}: unregisterMouseHandler key: {}", __FUNCTION__, key);
     m_mouse_handlers.erase(key);
 }
 

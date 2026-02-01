@@ -294,15 +294,15 @@ auto saveSceneToFile(const std::shared_ptr<Scene>& scene, const std::filesystem:
     rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
     document.Accept(writer);
 
-    Logger::info("Saving scene: {}", path.string());
-    Logger::info("Scene data: {}", buffer.GetString());
+    Logger::debug("Saving scene: {}", path.string());
+    Logger::debug("Scene data: {}", buffer.GetString());
 
     return file.writeText(buffer.GetString());
 }
 
 auto buildScene(const std::shared_ptr<Context>& context, const std::shared_ptr<SceneConfig>& scene_config) -> std::optional<std::unique_ptr<Scene>>
 {
-    Logger::info(__FUNCTION__);
+    Logger::debug(__FUNCTION__);
 
     const auto& document = scene_config->document();
     auto id = scene_config->id();
@@ -339,7 +339,7 @@ auto buildScene(const std::shared_ptr<Context>& context, const std::shared_ptr<S
 
         component.value()->setContext(context);
 
-        Logger::info("add component type: {}", type);
+        Logger::debug("add component type: {}", type);
         uint32_t id = component.value()->id();
         scene->addComponent(id, std::move(component.value()));
     }
@@ -348,7 +348,7 @@ auto buildScene(const std::shared_ptr<Context>& context, const std::shared_ptr<S
     for (auto& resource_json : resources_json) {
         auto id = resource_json["id"].GetUint();
 
-        Logger::info("add resource id: {}", id);
+        Logger::debug("add resource id: {}", id);
         scene->addResource(id);
     }
 

@@ -8,6 +8,8 @@
 #include <memory>
 #include <string>
 
+#include <glm/glm.hpp>
+
 namespace engine {
 
 struct MeshData {
@@ -15,6 +17,8 @@ struct MeshData {
 
     std::vector<GLfloat> vertices;
     std::vector<GLuint> indices;
+    std::vector<glm::vec3> normals;
+    std::vector<glm::vec2> textureCoords;
 
     GLuint stride = 0;
     GLuint offset = 0;

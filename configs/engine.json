@@ -27,5 +27,6 @@
         }
     ],
     "main_scene_id": 3,
-    "resource_packages": "../configs/packages_info.json"
+    "resource_packages": "../configs/packages_info.json",
+    "log_level": "DEBUG"
 }

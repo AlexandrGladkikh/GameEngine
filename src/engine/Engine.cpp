@@ -15,6 +15,7 @@
 #include "SceneTransition.h"
 #include "ShaderStore.h"
 #include "TextureStore.h"
+#include "RenderPassStore.h"
 #include "UserComponentsBuilder.h"
 #include "Utils.h"
 #include "Window.h"
@@ -29,7 +30,7 @@ namespace engine {
 
 std::optional<std::unique_ptr<Window>> configWindow(const rapidjson::Value& value)
 {
-    Logger::info(__FUNCTION__);
+    Logger::debug(__FUNCTION__);
 
     GLint window_width = value["width"].GetInt();
     GLint window_height = value["height"].GetInt();
@@ -44,7 +45,7 @@ std::optional<std::unique_ptr<Window>> configWindow(const rapidjson::Value& valu
 
 bool configScenesInfo(const rapidjson::Value& value, std::unordered_map<uint32_t, std::shared_ptr<SceneConfig>>& infos, std::unordered_map<uint32_t, uint32_t>& engine_config_scene_id_to_scene_id)
 {
-    Logger::info(__FUNCTION__);
+    Logger::debug(__FUNCTION__);
 
     if (!value.IsArray()) {
         Logger::error("scenes must be an array");
@@ -75,7 +76,7 @@ Engine::Engine() :
     m_context(std::make_shared<Context>()),
     m_sceneTransition(std::make_unique<SceneTransition>(m_context))
 {
-    Logger::info(__FUNCTION__);
+    Logger::debug(__FUNCTION__);
 
     m_context->meshStore = std::make_unique<MeshStore>();
     m_context->shaderStore = std::make_unique<ShaderStore>();
@@ -83,6 +84,7 @@ Engine::Engine() :
     m_context->resourcePackageStore = std::make_unique<ResourcePackageStore>();
     m_context->sceneStore = std::make_unique<SceneStore>();
     m_context->engineAccessor = std::make_unique<EngineAccessor>(*this);
+    m_context->renderPassStore = std::make_unique<RenderPassStore>();
 }
 
 Engine::~Engine()
@@ -92,7 +94,7 @@ Engine::~Engine()
 
 bool Engine::initialize(const std::filesystem::path& config_path)
 {
-    Logger::info(__FUNCTION__);
+    Logger::debug(__FUNCTION__);
 
     m_engine_settings = std::make_shared<EngineSettings>(config_path);
     if (!m_engine_settings->load()) {
@@ -100,6 +102,20 @@ bool Engine::initialize(const std::filesystem::path& config_path)
     }
 
     auto& settings = m_engine_settings->settings();
+
+    auto log_level = std::string(settings["log_level"].GetString());
+    if (log_level == "DEBUG") {
+        Logger::setLogLevel(Level::DEBUG);
+    } else if (log_level == "INFO") {
+        Logger::setLogLevel(Level::INFO);
+    } else if (log_level == "WARNING") {
+        Logger::setLogLevel(Level::WARNING);
+    } else if (log_level == "ERROR") {
+        Logger::setLogLevel(Level::ERROR);
+    } else {
+        Logger::setLogLevel(Level::INFO);
+        Logger::warning("Unknown log level: {}, using INFO", log_level);
+    }
 
     auto window = configWindow(settings["window"]);
 

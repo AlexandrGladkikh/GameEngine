@@ -5,12 +5,14 @@
 
 #include <QComboBox>
 #include <QHBoxLayout>
+#include <QGuiApplication>
 #include <QLabel>
 #include <QLineEdit>
 #include <QMimeData>
 #include <QPushButton>
 #include <QTimer>
 #include <QMouseEvent>
+#include <QScreen>
 #include <QtGlobal>
 
 #include <algorithm>
@@ -24,10 +26,10 @@ class LineEditDragValueFilter final : public QObject
 {
 public:
     LineEditDragValueFilter(QLineEdit* lineEdit, float minValue, float maxValue)
-        : QObject(lineEdit)
-        , m_lineEdit(lineEdit)
-        , m_minValue(minValue)
-        , m_maxValue(maxValue)
+        : QObject(lineEdit),
+        m_lineEdit(lineEdit),
+        m_minValue(minValue),
+        m_maxValue(maxValue)
     {
     }
 
@@ -50,6 +52,13 @@ protected:
                 parsedValue = 0.0f;
             }
 
+            m_pixelsPerMm = 3.78f;
+            if (auto* screen = QGuiApplication::screenAt(mouseEvent->globalPosition().toPoint())) {
+                m_pixelsPerMm = screen->logicalDotsPerInchX() / 25.4f;
+            } else if (auto* screen = QGuiApplication::primaryScreen()) {
+                m_pixelsPerMm = screen->logicalDotsPerInchX() / 25.4f;
+            }
+
             m_startGlobalX = mouseEvent->globalPosition().x();
             m_startValue = std::clamp(parsedValue, m_minValue, m_maxValue);
             m_dragging = true;
@@ -70,21 +79,14 @@ protected:
             const float currentGlobalX = mouseEvent->globalPosition().x();
             const float dx = currentGlobalX - m_startGlobalX;
 
-            float range = m_maxValue - m_minValue;
-            if (range <= 0.000001f) {
-                range = 1.0f;
-            }
-
-            float stepPerPixel = range / 300.0f;
+            const float mmPerPixel = 1.0f / std::max(0.001f, m_pixelsPerMm);
+            float stepPerPixel = mmPerPixel;
             const auto mods = mouseEvent->modifiers();
             if (mods.testFlag(Qt::ShiftModifier)) {
-                stepPerPixel *= 0.1f;
+                stepPerPixel *= 10.0f;
             }
             if (mods.testFlag(Qt::ControlModifier)) {
-                stepPerPixel *= 0.01f;
-            }
-            if (mods.testFlag(Qt::AltModifier)) {
-                stepPerPixel *= 10.0f;
+                stepPerPixel *= 0.1f;
             }
 
             const float newValue = std::clamp(m_startValue + dx * stepPerPixel, m_minValue, m_maxValue);
@@ -116,6 +118,7 @@ private:
     QLineEdit* m_lineEdit = nullptr;
     float m_minValue = -1000.0f;
     float m_maxValue = 1000.0f;
+    float m_pixelsPerMm = 3.78f;
 
     bool m_dragging = false;
     float m_startGlobalX = 0.0f;

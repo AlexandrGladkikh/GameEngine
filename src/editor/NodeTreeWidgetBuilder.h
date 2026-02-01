@@ -17,6 +17,8 @@ class CameraComponent;
 class FlipbookAnimationComponent;
 class MouseEventFilterComponent;
 class RenderScopeComponent;
+class RenderPassComponent;
+class LightSourceComponent;
 class Node;
 }
 
@@ -44,7 +46,9 @@ private:
     ComponentWidget* buildFlipbookAnimationWidget(const std::shared_ptr<engine::FlipbookAnimationComponent>& animation, QTreeWidgetItem* item);
     ComponentWidget* buildMouseEventFilterWidget(const std::shared_ptr<engine::MouseEventFilterComponent>& mouse_event_filter);
     ComponentWidget* buildRenderScopeWidget(const std::shared_ptr<engine::RenderScopeComponent>& render_scope, QTreeWidgetItem* item);
-
+    ComponentWidget* buildRenderPassWidget(const std::shared_ptr<engine::RenderPassComponent>& render_pass, QTreeWidgetItem* item);
+    ComponentWidget* buildLightSourceWidget(const std::shared_ptr<engine::LightSourceComponent>& light_source);
+    
     void decorateLabel(QLabel* label);
 
     SceneNodeTree* m_scene_node_tree;

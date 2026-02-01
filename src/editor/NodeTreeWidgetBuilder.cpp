@@ -14,6 +14,9 @@
 #include "engine/FlipbookAnimationComponent.h"
 #include "engine/MouseEventFilterComponent.h"
 #include "engine/RenderScopeComponent.h"
+#include "engine/RenderPassComponent.h"
+#include "engine/LightSourceComponent.h"
+
 #include "engine/Context.h"
 #include "engine/Node.h"
 #include "engine/Helpers.h"
@@ -21,6 +24,7 @@
 #include "engine/TextureStore.h"
 #include "engine/ShaderStore.h"
 #include "engine/MeshStore.h"
+#include "engine/RenderPassStore.h"
 
 #include <QWidget>
 #include <QHBoxLayout>
@@ -36,6 +40,8 @@
 #include <functional>
 #include <algorithm>
 #include <glm/glm.hpp>
+
+#include <limits>
 
 namespace editor {
 
@@ -93,9 +99,9 @@ ComponentWidget* TreeWidgetBuilder::buildTransformWidget(const std::shared_ptr<e
     };
 
     std::vector<EditorBlockLayoutData> position_data = {
-        { "X", formatFloat(transform->getPosition().x), positionXChangeHandler, positionXUpdater, false, false, {}, true, -1000.0f, 1000.0f },
-        { "Y", formatFloat(transform->getPosition().y), positionYChangeHandler, positionYUpdater, false, false, {}, true, -1000.0f, 1000.0f },
-        { "Z", formatFloat(transform->getPosition().z), positionZChangeHandler, positionZUpdater, false, false, {}, true, -1000.0f, 1000.0f },
+        { "X", formatFloat(transform->getPosition().x), positionXChangeHandler, positionXUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() },
+        { "Y", formatFloat(transform->getPosition().y), positionYChangeHandler, positionYUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() },
+        { "Z", formatFloat(transform->getPosition().z), positionZChangeHandler, positionZUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() },
     };
     auto position_layout = createEditorBlockLayout("Position", position_data, m_engine_controller);
     layout->addLayout(position_layout);
@@ -139,9 +145,9 @@ ComponentWidget* TreeWidgetBuilder::buildTransformWidget(const std::shared_ptr<e
     };
 
     std::vector<EditorBlockLayoutData> rotation_data = {
-        { "X", formatFloat(transform->getRotation().x), rotationXChangeHandler, rotationXUpdater, false, false, {}, true, -1000.0f, 1000.0f },
-        { "Y", formatFloat(transform->getRotation().y), rotationYChangeHandler, rotationYUpdater, false, false, {}, true, -1000.0f, 1000.0f },
-        { "Z", formatFloat(transform->getRotation().z), rotationZChangeHandler, rotationZUpdater, false, false, {}, true, -1000.0f, 1000.0f },
+        { "X", formatFloat(transform->getRotation().x), rotationXChangeHandler, rotationXUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() },
+        { "Y", formatFloat(transform->getRotation().y), rotationYChangeHandler, rotationYUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() },
+        { "Z", formatFloat(transform->getRotation().z), rotationZChangeHandler, rotationZUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() },
     };
     auto rotation_layout = createEditorBlockLayout("Rotation", rotation_data, m_engine_controller);
     layout->addLayout(rotation_layout);
@@ -185,9 +191,9 @@ ComponentWidget* TreeWidgetBuilder::buildTransformWidget(const std::shared_ptr<e
     };
 
     std::vector<EditorBlockLayoutData> scale_data = {
-        { "X", formatFloat(transform->getScale().x), scaleXChangeHandler, scaleXUpdater, false, false, {}, true, 0.0f, 1000.0f },
-        { "Y", formatFloat(transform->getScale().y), scaleYChangeHandler, scaleYUpdater, false, false, {}, true, 0.0f, 1000.0f },
-        { "Z", formatFloat(transform->getScale().z), scaleZChangeHandler, scaleZUpdater, false, false, {}, true, 0.0f, 1000.0f },
+        { "X", formatFloat(transform->getScale().x), scaleXChangeHandler, scaleXUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() },
+        { "Y", formatFloat(transform->getScale().y), scaleYChangeHandler, scaleYUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() },
+        { "Z", formatFloat(transform->getScale().z), scaleZChangeHandler, scaleZUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() },
     };
     auto scale_layout = createEditorBlockLayout("Scale", scale_data, m_engine_controller);
     layout->addLayout(scale_layout);
@@ -412,12 +418,12 @@ ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engi
         auto ortho = camera->getOrtho();
 
         std::vector<EditorBlockLayoutData> ortho_data = {};
-        ortho_data.push_back({ "left", formatFloat(ortho.left), orthoLeftChangeHandler, orthoLeftUpdater, false, false, {}, true, -1000.0f, 1000.0f });
-        ortho_data.push_back({ "right", formatFloat(ortho.right), orthoRightChangeHandler, orthoRightUpdater, false, false, {}, true, -1000.0f, 1000.0f });
-        ortho_data.push_back({ "top", formatFloat(ortho.top), orthoTopChangeHandler, orthoTopUpdater, false, false, {}, true, -1000.0f, 1000.0f });
-        ortho_data.push_back({ "bottom", formatFloat(ortho.bottom), orthoBottomChangeHandler, orthoBottomUpdater, false, false, {}, true, -1000.0f, 1000.0f });
-        ortho_data.push_back({ "near", formatFloat(camera->getNear()), orthoNearChangeHandler, orthoNearUpdater, false, false, {}, true, -1000.0f, 1000.0f });
-        ortho_data.push_back({ "far", formatFloat(camera->getFar()), orthoFarChangeHandler, orthoFarUpdater, false, false, {}, true, -1000.0f, 1000.0f });
+        ortho_data.push_back({ "left", formatFloat(ortho.left), orthoLeftChangeHandler, orthoLeftUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() });
+        ortho_data.push_back({ "right", formatFloat(ortho.right), orthoRightChangeHandler, orthoRightUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() });
+        ortho_data.push_back({ "top", formatFloat(ortho.top), orthoTopChangeHandler, orthoTopUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() });
+        ortho_data.push_back({ "bottom", formatFloat(ortho.bottom), orthoBottomChangeHandler, orthoBottomUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() });
+        ortho_data.push_back({ "near", formatFloat(camera->getNear()), orthoNearChangeHandler, orthoNearUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() });
+        ortho_data.push_back({ "far", formatFloat(camera->getFar()), orthoFarChangeHandler, orthoFarUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() });
 
         QHBoxLayout* ortho_layout = createEditorBlockLayout("Ortho", ortho_data, m_engine_controller);
         layout->addLayout(ortho_layout);
@@ -456,7 +462,7 @@ ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engi
             return formatFloat(camera->getNear());
         };
         std::vector<EditorBlockLayoutData> near_data = {
-            { "near", formatFloat(camera->getNear()), nearChangeHandler, nearUpdater, false, false, {}, true, 0.0f, 1000.0f }
+            { "near", formatFloat(camera->getNear()), nearChangeHandler, nearUpdater, false, false, {}, true, 0.0f, std::numeric_limits<float>::max() }
         };
         QHBoxLayout* near_layout = createEditorBlockLayout("Near", near_data, m_engine_controller);
         layout->addLayout(near_layout);
@@ -474,7 +480,7 @@ ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engi
             return formatFloat(camera->getFar());
         };
         std::vector<EditorBlockLayoutData> far_data = {
-            { "far", formatFloat(camera->getFar()), farChangeHandler, farUpdater, false, false, {}, true, 0.0f, 1000.0f }
+            { "far", formatFloat(camera->getFar()), farChangeHandler, farUpdater, false, false, {}, true, 0.0f, std::numeric_limits<float>::max() }
         };
         QHBoxLayout* far_layout = createEditorBlockLayout("Far", far_data, m_engine_controller);
         layout->addLayout(far_layout);
@@ -492,7 +498,7 @@ ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engi
             return formatFloat(camera->getAspect());
         };
         std::vector<EditorBlockLayoutData> aspect_data = {
-            { "aspect", formatFloat(camera->getAspect()), aspectChangeHandler, aspectUpdater, false, false, {}, true, 0.0f, 1000.0f }
+            { "aspect", formatFloat(camera->getAspect()), aspectChangeHandler, aspectUpdater, false, false, {}, true, 0.0f, std::numeric_limits<float>::max() }
         };
         QHBoxLayout* aspect_layout = createEditorBlockLayout("Aspect", aspect_data, m_engine_controller);
         layout->addLayout(aspect_layout);
@@ -513,7 +519,7 @@ ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engi
     };
 
     std::vector<EditorBlockLayoutData> yaw_data = {
-        { "yaw", formatFloat(camera->getYaw()), yawChangeHandler, yawUpdater, false, false, {}, true, -1000.0f, 1000.0f }
+        { "yaw", formatFloat(camera->getYaw()), yawChangeHandler, yawUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() }
     };
 
     QHBoxLayout* yaw_layout = createEditorBlockLayout("Yaw", yaw_data, m_engine_controller);
@@ -534,7 +540,7 @@ ComponentWidget* TreeWidgetBuilder::buildCameraWidget(const std::shared_ptr<engi
     };
 
     std::vector<EditorBlockLayoutData> pitch_data = {
-        { "pitch", formatFloat(camera->getPitch()), pitchChangeHandler, pitchUpdater, false, false, {}, true, -1000.0f, 1000.0f }
+        { "pitch", formatFloat(camera->getPitch()), pitchChangeHandler, pitchUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() }
     };
 
     QHBoxLayout* pitch_layout = createEditorBlockLayout("Pitch", pitch_data, m_engine_controller);
@@ -589,7 +595,7 @@ ComponentWidget* TreeWidgetBuilder::buildFlipbookAnimationWidget(const std::shar
     };
 
     std::vector<EditorBlockLayoutData> update_time_data = {
-        { "update time", formatFloat(animation->updateTime()), updateTimeChangeHandler, updateTimeUpdater, false, false, {}, true, 0.0f, 1000.0f }
+        { "update time", formatFloat(animation->updateTime()), updateTimeChangeHandler, updateTimeUpdater, false, false, {}, true, 0.0f, std::numeric_limits<float>::max() }
     };
     QHBoxLayout* update_time_layout = createEditorBlockLayout("Update time", update_time_data, m_engine_controller);
     layout->addLayout(update_time_layout);
@@ -953,7 +959,7 @@ ComponentWidget* TreeWidgetBuilder::buildRenderScopeWidget(const std::shared_ptr
                     return formatFloat(get_comp(value, index));
                 });
             };
-            data.push_back({ labels[index], updateHandler(), changeHandler, updateHandler, false, false, {}, true, -1000.0f, 1000.0f });
+            data.push_back({ labels[index], updateHandler(), changeHandler, updateHandler, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() });
         }
         layout->addLayout(createEditorBlockLayout("Uniform " + name, data, m_engine_controller));
     };
@@ -978,7 +984,7 @@ ComponentWidget* TreeWidgetBuilder::buildRenderScopeWidget(const std::shared_ptr
                         return formatFloat(get_cell(value, row, col));
                     });
                 };
-                data.push_back({ std::to_string(col), updateHandler(), changeHandler, updateHandler, false, false, {}, true, -1000.0f, 1000.0f });
+                data.push_back({ std::to_string(col), updateHandler(), changeHandler, updateHandler, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() });
             }
             layout->addLayout(createEditorBlockLayout(row == 0 ? "Uniform " + name : "", data, m_engine_controller));
         }
@@ -1171,6 +1177,137 @@ ComponentWidget* TreeWidgetBuilder::buildRenderScopeWidget(const std::shared_ptr
     return render_scope_widget;
 }
 
+ComponentWidget* TreeWidgetBuilder::buildRenderPassWidget(const std::shared_ptr<engine::RenderPassComponent>& render_pass, QTreeWidgetItem* item)
+{
+    ComponentWidget* render_pass_widget = new ComponentWidget;
+    m_tree_widget_builder_helper->subscribeOnActiveComponent(render_pass_widget, render_pass);
+
+    QVBoxLayout* layout = new QVBoxLayout;
+    layout->setSpacing(1);
+    layout->setContentsMargins(0, 0, 0, 0);
+
+    std::string name = "Render pass name \"" + render_pass->name() + "\"";
+    auto* label = new QLabel(QString::fromStdString(name));
+    decorateLabel(label);
+    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    layout->addWidget(label);
+
+    auto render_pass_changeHandler = [render_pass](const std::string& value) {
+        render_pass->setRenderPassName(value);
+    };
+
+    auto render_pass_updater = [render_pass]() {
+        if (!render_pass->isValid()) {
+            return std::string();
+        }
+        return render_pass->renderPassName();
+    };
+
+    std::vector<EditorBlockLayoutData> render_pass_data = {
+        { "render_pass", render_pass->renderPassName(), render_pass_changeHandler, render_pass_updater, false, true, render_pass->context().lock()->renderPassStore->names() },
+    };
+    auto render_pass_layout = createEditorBlockLayout("Render pass", render_pass_data, m_engine_controller);
+    layout->addLayout(render_pass_layout);
+
+    layout->addStretch();
+
+    render_pass_widget->setLayout(layout);
+
+    return render_pass_widget;
+}
+
+ComponentWidget* TreeWidgetBuilder::buildLightSourceWidget(const std::shared_ptr<engine::LightSourceComponent>& light_source)
+{
+    ComponentWidget* light_source_widget = new ComponentWidget;
+    m_tree_widget_builder_helper->subscribeOnActiveComponent(light_source_widget, light_source);
+
+    QVBoxLayout* layout = new QVBoxLayout;
+    layout->setSpacing(1);
+    layout->setContentsMargins(0, 0, 0, 0);
+
+    std::string name = "Light source name \"" + light_source->name() + "\"";
+    auto* label = new QLabel(QString::fromStdString(name));
+    decorateLabel(label);
+    label->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    layout->addWidget(label);
+
+    auto colorRedChangeHandler = [light_source](const std::string& value) {
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            auto color = light_source->color();
+            color.x = param;
+            light_source->setColor(color);
+        }
+    };
+    auto colorGreenChangeHandler = [light_source](const std::string& value) {
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            auto color = light_source->color();
+            color.y = param;
+            light_source->setColor(color);
+        }
+    };
+    auto colorBlueChangeHandler = [light_source](const std::string& value) {
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            auto color = light_source->color();
+            color.z = param;
+            light_source->setColor(color);
+        }
+    };
+
+    auto colorRedUpdater = [light_source]() {
+        if (!light_source->isValid()) {
+            return std::string();
+        }
+        return formatFloat(light_source->color().x);
+    };
+    auto colorGreenUpdater = [light_source]() {
+        if (!light_source->isValid()) {
+            return std::string();
+        }
+        return formatFloat(light_source->color().y);
+    };
+    auto colorBlueUpdater = [light_source]() {
+        if (!light_source->isValid()) {
+            return std::string();
+        }
+        return formatFloat(light_source->color().z);
+    };
+
+    std::vector<EditorBlockLayoutData> color_data = {
+        { "Red", formatFloat(light_source->color().x), colorRedChangeHandler, colorRedUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() },
+        { "Green", formatFloat(light_source->color().y), colorGreenChangeHandler, colorGreenUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() },
+        { "Blue", formatFloat(light_source->color().z), colorBlueChangeHandler, colorBlueUpdater, false, false, {}, true, std::numeric_limits<float>::lowest(), std::numeric_limits<float>::max() },
+    };
+    auto color_layout = createEditorBlockLayout("Color", color_data, m_engine_controller);
+    layout->addLayout(color_layout);
+
+    auto intensityChangeHandler = [light_source](const std::string& value) {
+        float param = 0.0f;
+        if (parseFloat(value, param)) {
+            light_source->setIntensity(param);
+        }
+    };
+    auto intensityUpdater = [light_source]() {
+        if (!light_source->isValid()) {
+            return std::string();
+        }
+        return formatFloat(light_source->intensity());
+    };
+    std::vector<EditorBlockLayoutData> intensity_data = {
+        { "intensity", formatFloat(light_source->intensity()), intensityChangeHandler, intensityUpdater, false, false, {}, true, 0.0f, std::numeric_limits<float>::max() },
+    };
+    auto intensity_layout = createEditorBlockLayout("Light source", intensity_data, m_engine_controller);
+    layout->addLayout(intensity_layout);
+
+    layout->addStretch();
+
+    light_source_widget->setLayout(layout);
+
+    return light_source_widget;
+}
+
 void TreeWidgetBuilder::decorateLabel(QLabel* label)
 {
     label->setStyleSheet(
@@ -1226,6 +1363,10 @@ auto TreeWidgetBuilder::buildWidgetForComponent(std::shared_ptr<engine::Componen
         return buildMouseEventFilterWidget(std::dynamic_pointer_cast<engine::MouseEventFilterComponent>(component));
     } else if (component->type() == "render_scope") {
         return buildRenderScopeWidget(std::dynamic_pointer_cast<engine::RenderScopeComponent>(component), item);
+    } else if (component->type() == "render_pass") {
+        return buildRenderPassWidget(std::dynamic_pointer_cast<engine::RenderPassComponent>(component), item);
+    } else if (component->type() == "light_source") {
+        return buildLightSourceWidget(std::dynamic_pointer_cast<engine::LightSourceComponent>(component));
     }
 
     return std::nullopt;

@@ -313,14 +313,14 @@ bool Node::hasComponent(const std::string& type) const
 
 auto buildNode(const rapidjson::Value& node_json) -> std::optional<std::unique_ptr<Node>>
 {
-    Logger::info(__FUNCTION__);
+    Logger::debug(__FUNCTION__);
 
     auto id = node_json["id"].GetUint();
     auto name = node_json["name"].GetString();
     auto parent = node_json["parent"].GetUint();
     auto owner_scene = node_json["owner_scene"].GetUint();
 
-    Logger::info("id: {}, name: {}, parent: {}, owner_scene: {}", id, name, parent, owner_scene);
+    Logger::debug("id: {}, name: {}, parent: {}, owner_scene: {}", id, name, parent, owner_scene);
 
     auto node = std::make_unique<Node>(id, name, parent, owner_scene);
 

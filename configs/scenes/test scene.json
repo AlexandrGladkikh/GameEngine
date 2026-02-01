@@ -10,7 +10,8 @@
             "owner_scene": 3615596102,
             "children": [
                 1158088549,
-                1139540731
+                1139540731,
+                3110428429
             ],
             "components": [
                 2753390057
@@ -29,7 +30,7 @@
         },
         {
             "id": 1139540731,
-            "name": "bird",
+            "name": "man",
             "parent": 2349933204,
             "owner_scene": 3615596102,
             "children": [],
@@ -37,7 +38,22 @@
                 2359788454,
                 212602637,
                 1165295472,
-                1564948390
+                1564948390,
+                2662374509
+            ]
+        },
+        {
+            "id": 3110428429,
+            "name": "light source",
+            "parent": 2349933204,
+            "owner_scene": 3615596102,
+            "children": [],
+            "components": [
+                2062186324,
+                2750923814,
+                2995432622,
+                3386642451,
+                2924486990
             ]
         }
     ],
@@ -99,11 +115,11 @@
             "position": [
                 0.0,
                 -11.600000381469727,
-                -32.279998779296875
+                -35.97999954223633
             ],
             "rotation": [
                 0.0,
-                -37.20000076293945,
+                43.59000015258789,
                 0.0
             ],
             "scale": [
@@ -111,6 +127,14 @@
                 1.0,
                 1.0
             ]
+        },
+        {
+            "type": "render_pass",
+            "id": 3386642451,
+            "name": "render_pass",
+            "owner_node": 3110428429,
+            "owner_scene": 3615596102,
+            "render_pass_name": "base_render_pass"
         },
         {
             "type": "render_scope",
@@ -132,6 +156,14 @@
                     }
                 }
             }
+        },
+        {
+            "type": "render_pass",
+            "id": 2662374509,
+            "name": "render_pass",
+            "owner_node": 1139540731,
+            "owner_scene": 3615596102,
+            "render_pass_name": "base_render_pass"
         },
         {
             "type": "material",
@@ -156,6 +188,58 @@
             "rotation": [
                 0.0,
                 0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        {
+            "type": "mesh",
+            "id": 2750923814,
+            "name": "mesh",
+            "owner_node": 3110428429,
+            "owner_scene": 3615596102,
+            "mesh": 1
+        },
+        {
+            "type": "light_source",
+            "id": 2062186324,
+            "name": "light_source",
+            "owner_node": 3110428429,
+            "owner_scene": 3615596102,
+            "color": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "intensity": 1.0
+        },
+        {
+            "type": "material",
+            "id": 2995432622,
+            "name": "material",
+            "owner_node": 3110428429,
+            "owner_scene": 3615596102,
+            "shader": 1,
+            "texture": 1
+        },
+        {
+            "type": "transform",
+            "id": 2924486990,
+            "name": "transform",
+            "owner_node": 3110428429,
+            "owner_scene": 3615596102,
+            "position": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                -37.20000076293945,
                 0.0
             ],
             "scale": [

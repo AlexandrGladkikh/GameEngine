@@ -13,6 +13,7 @@ class Window;
 class InputManager;
 class UserComponentsBuilder;
 class EngineAccessor;
+class RenderPassStore;
 
 struct Context {
     std::unique_ptr<MeshStore> meshStore;
@@ -24,6 +25,7 @@ struct Context {
     std::unique_ptr<InputManager> inputManager;
     std::unique_ptr<UserComponentsBuilder> userComponentsBuilder;
     std::unique_ptr<EngineAccessor> engineAccessor;
+    std::unique_ptr<RenderPassStore> renderPassStore;
 };
 
 }

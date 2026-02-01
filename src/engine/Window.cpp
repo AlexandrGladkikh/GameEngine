@@ -38,7 +38,7 @@ Window::Window(const std::string& title, GLint width, GLint height, GLint gl_ver
         window_ptr->m_key_action.push_back(action);
     });
     glfwSetMouseButtonCallback(m_window, [](GLFWwindow* window, int key, int action, int mods) {
-        Logger::info("glfwSetMouseButtonCallback");
+        Logger::debug("glfwSetMouseButtonCallback");
         auto window_ptr = static_cast<Window*>(glfwGetWindowUserPointer(window));
         window_ptr->m_mouse_key.push_back(key);
         window_ptr->m_mouse_key_action.push_back(action);

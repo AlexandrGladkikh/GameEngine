@@ -77,6 +77,17 @@ add_library(engine
         EngineSettings.h
         RenderScopeComponent.cpp
         RenderScopeComponent.h
+        renderpasses/RenderPass.h
+        renderpasses/BaseRenderPass.cpp
+        renderpasses/BaseRenderPass.h
+        renderpasses/BaseLightRenderPass.cpp
+        renderpasses/BaseLightRenderPass.h
+        RenderPassComponent.cpp
+        RenderPassComponent.h
+        RenderPassStore.cpp
+        RenderPassStore.h
+        LightSourceComponent.cpp
+        LightSourceComponent.h
 )
 
 if (APPLE)
@@ -95,4 +106,4 @@ elseif(WIN32)
     target_link_libraries(engine PUBLIC glfw3 opengl32)
 endif ()
 
-target_include_directories(engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})

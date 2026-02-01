@@ -9,6 +9,8 @@
 #include "FlipbookAnimationComponent.h"
 #include "MouseEventFilterComponent.h"
 #include "RenderScopeComponent.h"
+#include "RenderPassComponent.h"
+#include "LightSourceComponent.h"
 
 #include <optional>
 
@@ -141,7 +143,7 @@ void saveCameraComponent(const std::shared_ptr<CameraComponent>& component, rapi
 
 auto buildTransformComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<TransformComponent>>
 {
-    Logger::info(__FUNCTION__);
+    Logger::debug(__FUNCTION__);
 
     auto id = componentData["id"].GetUint();
     auto name = componentData["name"].GetString();
@@ -196,7 +198,7 @@ void saveTransformComponent(const std::shared_ptr<TransformComponent>& component
 
 auto buildFlipbookAnimationComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<FlipbookAnimationComponent>>
 {
-    Logger::info(__FUNCTION__);
+    Logger::debug(__FUNCTION__);
 
     auto id = componentData["id"].GetUint();
     auto name = componentData["name"].GetString();
@@ -247,7 +249,7 @@ void saveFlipbookAnimationComponent(const std::shared_ptr<FlipbookAnimationCompo
 
 auto buildMouseEventFilterComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<Component>>
 {
-    Logger::info(__FUNCTION__);
+    Logger::debug(__FUNCTION__);
 
     auto id = componentData["id"].GetUint();
     auto name = componentData["name"].GetString();
@@ -278,7 +280,7 @@ void saveMouseEventFilterComponent(const std::shared_ptr<MouseEventFilterCompone
 
 auto buildRenderScopeComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<RenderScopeComponent>>
 {
-    Logger::info(__FUNCTION__);
+    Logger::debug(__FUNCTION__);
 
     auto id = componentData["id"].GetUint();
     auto name = componentData["name"].GetString();
@@ -517,15 +519,77 @@ void saveRenderScopeComponent(const std::shared_ptr<RenderScopeComponent>& compo
     component_json.AddMember("render_data", render_data, allocator);
 }
 
+auto buildRenderPassComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<RenderPassComponent>>
+{
+    Logger::debug(__FUNCTION__);
+
+    auto id = componentData["id"].GetUint();
+    auto name = componentData["name"].GetString();
+    auto owner_node = componentData["owner_node"].GetUint();
+    auto owner_scene = componentData["owner_scene"].GetUint();
+
+    auto component = std::make_unique<RenderPassComponent>(id, name, owner_node, owner_scene);
+    component->setRenderPassName(componentData["render_pass_name"].GetString());
+
+    return component;
+}
+
+void saveRenderPassComponent(const std::shared_ptr<RenderPassComponent>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value name_value;
+    name_value.SetString(component->name().c_str(), allocator);
+    component_json.AddMember("type", "render_pass", allocator);
+    component_json.AddMember("id", component->id(), allocator);
+    component_json.AddMember("name", name_value, allocator);
+    component_json.AddMember("owner_node", component->ownerNode(), allocator);
+    component_json.AddMember("owner_scene", component->ownerScene(), allocator);
+    rapidjson::Value render_pass_name_value;
+    render_pass_name_value.SetString(component->renderPassName().c_str(), allocator);
+    component_json.AddMember("render_pass_name", render_pass_name_value, allocator);
+}
+
+auto buildLightSourceComponent(const rapidjson::Value& componentData) -> std::optional<std::unique_ptr<LightSourceComponent>>
+{
+    Logger::debug(__FUNCTION__);
+
+    auto id = componentData["id"].GetUint();
+    auto name = componentData["name"].GetString();
+    auto owner_node = componentData["owner_node"].GetUint();
+    auto owner_scene = componentData["owner_scene"].GetUint();
+
+    auto component = std::make_unique<LightSourceComponent>(id, name, owner_node, owner_scene);
+    component->setColor(glm::vec3(componentData["color"].GetArray()[0].GetFloat(), componentData["color"].GetArray()[1].GetFloat(), componentData["color"].GetArray()[2].GetFloat()));
+    component->setIntensity(componentData["intensity"].GetFloat());
+
+    return component;
+}
+
+void saveLightSourceComponent(const std::shared_ptr<LightSourceComponent>& component, rapidjson::Value& component_json, rapidjson::Document::AllocatorType& allocator)
+{
+    rapidjson::Value value;
+    value.SetString(component->name().c_str(), allocator);
+    component_json.AddMember("type", "light_source", allocator);
+    component_json.AddMember("id", component->id(), allocator);
+    component_json.AddMember("name", value, allocator);
+    component_json.AddMember("owner_node", component->ownerNode(), allocator);
+    component_json.AddMember("owner_scene", component->ownerScene(), allocator);
+    rapidjson::Value color_value(rapidjson::kArrayType);
+    color_value.PushBack(component->color().x, allocator);
+    color_value.PushBack(component->color().y, allocator);
+    color_value.PushBack(component->color().z, allocator);
+    component_json.AddMember("color", color_value, allocator);
+    component_json.AddMember("intensity", component->intensity(), allocator);
+}
+
 auto ComponentBuilder::componentTypes() -> const std::vector<std::string>&
 {
-    static const std::vector<std::string> types = {"material", "mesh", "camera", "transform", "flipbook_animation", "mouse_event_filter", "render_scope"};
+    static const std::vector<std::string> types = {"material", "mesh", "camera", "transform", "flipbook_animation", "mouse_event_filter", "render_scope", "render_pass", "light_source"};
     return types;
 }
 
 auto ComponentBuilder::buildFromJson(const std::string& type, const rapidjson::Value& component) -> std::optional<std::unique_ptr<Component>>
 {
-    Logger::info(std::string(__FUNCTION__) + " component type: {}", type);
+    Logger::debug(std::string(__FUNCTION__) + " component type: {}", type);
 
     if (type == "material") {
         return buildMaterialComponent(component);
@@ -541,6 +605,10 @@ auto ComponentBuilder::buildFromJson(const std::string& type, const rapidjson::V
         return buildMouseEventFilterComponent(component);
     } else if (type == "render_scope") {
         return buildRenderScopeComponent(component);
+    } else if (type == "render_pass") {
+        return buildRenderPassComponent(component);
+    } else if (type == "light_source") {
+        return buildLightSourceComponent(component);
     }
 
     return std::nullopt;
@@ -562,12 +630,16 @@ void ComponentBuilder::saveToJson(const std::shared_ptr<Component>& component, r
         saveMouseEventFilterComponent(std::dynamic_pointer_cast<MouseEventFilterComponent>(component), component_json, allocator);
     } else if (component->type() == "render_scope") {
         saveRenderScopeComponent(std::dynamic_pointer_cast<RenderScopeComponent>(component), component_json, allocator);
+    } else if (component->type() == "render_pass") {
+        saveRenderPassComponent(std::dynamic_pointer_cast<RenderPassComponent>(component), component_json, allocator);
+    } else if (component->type() == "light_source") {
+        saveLightSourceComponent(std::dynamic_pointer_cast<LightSourceComponent>(component), component_json, allocator);
     }
 }
 
 auto ComponentBuilder::buildEmptyComponent(const std::string& type, const std::string& name, uint32_t owner_node, uint32_t owner_scene) -> std::optional<std::unique_ptr<Component>>
 {
-    Logger::info(std::string(__FUNCTION__) + " component type: {}", type);
+    Logger::debug(std::string(__FUNCTION__) + " component type: {}", type);
 
     if (type == "material") {
         return std::make_unique<MaterialComponent>(generateUniqueId(), name, owner_node, owner_scene);
@@ -583,6 +655,10 @@ auto ComponentBuilder::buildEmptyComponent(const std::string& type, const std::s
         return std::make_unique<MouseEventFilterComponent>(generateUniqueId(), name, owner_node, owner_scene);
     } else if (type == "render_scope") {
         return std::make_unique<RenderScopeComponent>(generateUniqueId(), name, owner_node, owner_scene);
+    } else if (type == "render_pass") {
+        return std::make_unique<RenderPassComponent>(generateUniqueId(), name, owner_node, owner_scene);
+    } else if (type == "light_source") {
+        return std::make_unique<LightSourceComponent>(generateUniqueId(), name, owner_node, owner_scene);
     }
 
     return std::nullopt;
@@ -628,6 +704,18 @@ template<>
 std::optional<std::unique_ptr<RenderScopeComponent>> ComponentBuilder::buildEmptyComponent<RenderScopeComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
 {
     return std::make_unique<RenderScopeComponent>(generateUniqueId(), name, owner_node, owner_scene);
+}
+
+template<>
+std::optional<std::unique_ptr<RenderPassComponent>> ComponentBuilder::buildEmptyComponent<RenderPassComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
+{
+    return std::make_unique<RenderPassComponent>(generateUniqueId(), name, owner_node, owner_scene);
+}
+
+template<>
+std::optional<std::unique_ptr<LightSourceComponent>> ComponentBuilder::buildEmptyComponent<LightSourceComponent>(const std::string& name, uint32_t owner_node, uint32_t owner_scene)
+{
+    return std::make_unique<LightSourceComponent>(generateUniqueId(), name, owner_node, owner_scene);
 }
 
 }
