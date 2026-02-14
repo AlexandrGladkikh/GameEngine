@@ -39,7 +39,7 @@ Shader::Shader(const std::string& name, const std::string& vertexShader, const s
     glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
     if (!success) {
         glGetShaderInfoLog(fragment, 512, nullptr, infoLog);
-        Logger::error("ERROR::SHADER::VERTEX::COMPILATION_FAILED, info: {}", infoLog);
+        Logger::error("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED, info: {}", infoLog);
         return;
     }
 

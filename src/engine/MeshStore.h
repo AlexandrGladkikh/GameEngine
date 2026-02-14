@@ -15,14 +15,6 @@ namespace engine {
 struct MeshData {
     std::string name;
 
-    std::vector<GLfloat> vertices;
-    std::vector<GLuint> indices;
-    std::vector<glm::vec3> normals;
-    std::vector<glm::vec2> textureCoords;
-
-    GLuint stride = 0;
-    GLuint offset = 0;
-
     GLuint VAO = 0;
     GLuint VBO = 0;
     GLuint EBO = 0;

@@ -1,0 +1,20 @@
+{
+    "uniforms": [
+        {
+            "name": "object_color",
+            "type": "Vec3"
+        },
+        {
+            "name": "light_color",
+            "type": "Vec3"
+        },
+        {
+            "name": "light_intensity",
+            "type": "Float"
+        },
+        {
+            "name": "light_position",
+            "type": "Vec3"
+        }
+    ]
+}

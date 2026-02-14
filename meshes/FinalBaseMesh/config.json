@@ -1,0 +1,18 @@
+{
+    "stride": 8,
+    "vertices":
+    {
+        "offset": 0,
+        "size": 3
+    },
+    "textureCoords":
+    {
+        "offset": 3,
+        "size": 2
+    },
+    "normals":
+    {
+        "offset": 5,
+        "size": 3
+    }
+}
